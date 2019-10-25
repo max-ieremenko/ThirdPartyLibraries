@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RootNamespace>ThirdPartyLibraries.Server.NuGet</RootNamespace>
+    <NoWarn>1701;1702;8002</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="NuGetApiTest.MIT.html" />
+    <None Remove="NuGetApiTest.Mixed.html" />
+    <None Remove="NuGetApiTest.Newtonsoft.Json.12.0.2.nuspec.xml" />
+    <None Remove="ProjectFileParserTest.csproj.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="NuGetApiTest.MIT.html" />
+    <EmbeddedResource Include="NuGetApiTest.Mixed.html" />
+    <EmbeddedResource Include="NuGetApiTest.Newtonsoft.Json.12.0.2.nuspec.xml" />
+    <EmbeddedResource Include="ProjectFileParserTest.csproj.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.Server.NuGet\ThirdPartyLibraries.Server.NuGet.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries\ThirdPartyLibraries.csproj" />
+  </ItemGroup>
+
+</Project>

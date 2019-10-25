@@ -1,0 +1,25 @@
+{
+  "name": "LICENSE.md",
+  "path": "LICENSE.md",
+  "sha": "dfaadbe4938e4994f3975c73701c9f9c7735a60b",
+  "size": 1084,
+  "url": "https://api.github.com/repos/JamesNK/Newtonsoft.Json/contents/LICENSE.md?ref=master",
+  "html_url": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md",
+  "git_url": "https://api.github.com/repos/JamesNK/Newtonsoft.Json/git/blobs/dfaadbe4938e4994f3975c73701c9f9c7735a60b",
+  "download_url": "https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md",
+  "type": "file",
+  "content": "VGhlIE1JVCBMaWNlbnNlIChNSVQpCgpDb3B5cmlnaHQgKGMpIDIwMDcgSmFt\nZXMgTmV3dG9uLUtpbmcKClBlcm1pc3Npb24gaXMgaGVyZWJ5IGdyYW50ZWQs\nIGZyZWUgb2YgY2hhcmdlLCB0byBhbnkgcGVyc29uIG9idGFpbmluZyBhIGNv\ncHkgb2YKdGhpcyBzb2Z0d2FyZSBhbmQgYXNzb2NpYXRlZCBkb2N1bWVudGF0\naW9uIGZpbGVzICh0aGUgIlNvZnR3YXJlIiksIHRvIGRlYWwgaW4KdGhlIFNv\nZnR3YXJlIHdpdGhvdXQgcmVzdHJpY3Rpb24sIGluY2x1ZGluZyB3aXRob3V0\nIGxpbWl0YXRpb24gdGhlIHJpZ2h0cyB0bwp1c2UsIGNvcHksIG1vZGlmeSwg\nbWVyZ2UsIHB1Ymxpc2gsIGRpc3RyaWJ1dGUsIHN1YmxpY2Vuc2UsIGFuZC9v\nciBzZWxsIGNvcGllcyBvZgp0aGUgU29mdHdhcmUsIGFuZCB0byBwZXJtaXQg\ncGVyc29ucyB0byB3aG9tIHRoZSBTb2Z0d2FyZSBpcyBmdXJuaXNoZWQgdG8g\nZG8gc28sCnN1YmplY3QgdG8gdGhlIGZvbGxvd2luZyBjb25kaXRpb25zOgoK\nVGhlIGFib3ZlIGNvcHlyaWdodCBub3RpY2UgYW5kIHRoaXMgcGVybWlzc2lv\nbiBub3RpY2Ugc2hhbGwgYmUgaW5jbHVkZWQgaW4gYWxsCmNvcGllcyBvciBz\ndWJzdGFudGlhbCBwb3J0aW9ucyBvZiB0aGUgU29mdHdhcmUuCgpUSEUgU09G\nVFdBUkUgSVMgUFJPVklERUQgIkFTIElTIiwgV0lUSE9VVCBXQVJSQU5UWSBP\nRiBBTlkgS0lORCwgRVhQUkVTUyBPUgpJTVBMSUVELCBJTkNMVURJTkcgQlVU\nIE5PVCBMSU1JVEVEIFRPIFRIRSBXQVJSQU5USUVTIE9GIE1FUkNIQU5UQUJJ\nTElUWSwgRklUTkVTUwpGT1IgQSBQQVJUSUNVTEFSIFBVUlBPU0UgQU5EIE5P\nTklORlJJTkdFTUVOVC4gSU4gTk8gRVZFTlQgU0hBTEwgVEhFIEFVVEhPUlMg\nT1IKQ09QWVJJR0hUIEhPTERFUlMgQkUgTElBQkxFIEZPUiBBTlkgQ0xBSU0s\nIERBTUFHRVMgT1IgT1RIRVIgTElBQklMSVRZLCBXSEVUSEVSCklOIEFOIEFD\nVElPTiBPRiBDT05UUkFDVCwgVE9SVCBPUiBPVEhFUldJU0UsIEFSSVNJTkcg\nRlJPTSwgT1VUIE9GIE9SIElOCkNPTk5FQ1RJT04gV0lUSCBUSEUgU09GVFdB\nUkUgT1IgVEhFIFVTRSBPUiBPVEhFUiBERUFMSU5HUyBJTiBUSEUgU09GVFdB\nUkUuCg==\n",
+  "encoding": "base64",
+  "_links": {
+    "self": "https://api.github.com/repos/JamesNK/Newtonsoft.Json/contents/LICENSE.md?ref=master",
+    "git": "https://api.github.com/repos/JamesNK/Newtonsoft.Json/git/blobs/dfaadbe4938e4994f3975c73701c9f9c7735a60b",
+    "html": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md"
+  },
+  "license": {
+    "key": "mit",
+    "name": "MIT License",
+    "spdx_id": "MIT",
+    "url": "https://api.github.com/licenses/mit",
+    "node_id": "MDc6TGljZW5zZTEz"
+  }
+}

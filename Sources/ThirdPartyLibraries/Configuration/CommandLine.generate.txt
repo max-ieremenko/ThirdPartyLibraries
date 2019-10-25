@@ -1,0 +1,17 @@
+﻿Usage: ThirdPartyLibraries generate [options]...
+
+Generate "third party notices" from the repository
+
+[options]
+  -appName: a name of the current application. Repeat -appName to aggregate information from several applications
+  -repository: a path to a repository folder
+  -to: a path to an output folder
+  -github.com:personalAccessToken: optional personal access token for github.com web api
+
+exit codes:
+  0 - OK
+  1 - invalid command line
+  2 - errors during execution
+
+example:
+> ThirdPartyLibraries generate -appName MyApp1 -appName MyApp2 -repository c:\ThirdPartyLibraries -to c:\notices

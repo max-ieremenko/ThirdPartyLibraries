@@ -1,0 +1,65 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true,
+      "TargetFrameworks": [
+        "netcoreapp3.0"
+      ],
+      "Dependencies": [
+        {
+          "Name": "Microsoft.DotNet.InternalAbstractions",
+          "Version": "1.0.0"
+        },
+        {
+          "Name": "System.ComponentModel.EventBasedAsync",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.ComponentModel.TypeConverter",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.Runtime.InteropServices.RuntimeInformation",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.Threading.Thread",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.Xml.XPath.XmlDocument",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.Xml.XmlDocument",
+          "Version": "4.3.0"
+        }
+      ]
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": null,
+      "HRef": null,
+      "Description": null
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://raw.githubusercontent.com/nunit/nunit3-vs-adapter/master/LICENSE.txt",
+      "Description": null
+    },
+    {
+      "Subject": "project",
+      "Code": null,
+      "HRef": "https://github.com/nunit/docs/wiki/Visual-Studio-Test-Adapter",
+      "Description": "License should be verified on https://github.com/nunit/docs/wiki/Visual-Studio-Test-Adapter"
+    }
+  ]
+}

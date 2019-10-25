@@ -1,0 +1,12 @@
+{
+  "nuget.org": {
+    "allowToUseLocalCache": true,
+    "ignorePackages": {
+      "byName": [ "Abc.*" ]
+    },
+    "internalPackages": {
+      "byName": [ "StyleCop\\.Analyzers" ],
+      "byProjectName": [ "\\.Test$" ]
+    }
+  }
+}

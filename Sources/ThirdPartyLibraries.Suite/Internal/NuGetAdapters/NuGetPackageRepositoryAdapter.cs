@@ -1,0 +1,238 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using ThirdPartyLibraries.NuGet;
+using ThirdPartyLibraries.Repository;
+using ThirdPartyLibraries.Repository.Template;
+using ThirdPartyLibraries.Shared;
+using Unity;
+
+namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
+{
+    internal sealed class NuGetPackageRepositoryAdapter : IPackageRepositoryAdapter
+    {
+        private const string RemarksFileName = "remarks.md";
+
+        [Dependency]
+        public INuGetApi Api { get; set; }
+
+        [Dependency]
+        public IStorage Storage { get; set; }
+
+        public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
+        {
+            var (spec, index) = await RepositoryReadAsync(id, token);
+            if (spec == null)
+            {
+                return null;
+            }
+
+            var result = NuGetConstants.CreatePackage(spec, index.License.Code, index.License.Status);
+
+            foreach (var license in index.Licenses)
+            {
+                result.Licenses.Add(new PackageLicense
+                {
+                    Code = license.Code,
+                    HRef = license.HRef,
+                    Subject = license.Subject,
+                    CodeDescription = license.Description
+                });
+            }
+
+            return result;
+        }
+
+        public async Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token)
+        {
+            reference.AssertNotNull(nameof(reference));
+            package.AssertNotNull(nameof(package));
+            appName.AssertNotNull(nameof(appName));
+
+            var model = await Storage.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(reference.Id, token);
+            
+            if (model == null)
+            {
+                model = new NuGetLibraryIndexJson();
+            }
+
+            model.License.Code = package.LicenseCode;
+            model.License.Status = package.ApprovalStatus.ToString();
+
+            model.Licenses.Clear();
+            foreach (var license in package.Licenses)
+            {
+                model.Licenses.Add(new NuGetLibraryLicense { Code = license.Code, Description = license.CodeDescription, HRef = license.HRef, Subject = license.Subject });
+            }
+
+            var app = model.UsedBy.FirstOrDefault(i => appName.EqualsIgnoreCase(i.Name));
+            if (app == null)
+            {
+                app = new Application { Name = appName };
+                model.UsedBy.Add(app);
+            }
+
+            app.InternalOnly = reference.IsInternal;
+            app.TargetFrameworks = reference.TargetFrameworks;
+            app.Dependencies.Clear();
+            foreach (var dependency in reference.Dependencies)
+            {
+                app.Dependencies.Add(new LibraryDependency { Name = dependency.Name, Version = dependency.Version });
+            }
+
+            foreach (var attachment in package.Attachments)
+            {
+                await Storage.WriteLibraryFileAsync(reference.Id, attachment.Name, attachment.Content, token);
+            }
+
+            await Storage.WriteLibraryIndexJsonAsync(reference.Id, model, token);
+        }
+
+        public async Task<PackageReadMe> UpdatePackageReadMeAsync(LibraryId id, CancellationToken token)
+        {
+            var (spec, index) = await RepositoryReadAsync(id, token);
+
+            var context = CreateReadMeContext(spec, index);
+
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, RemarksFileName, CancellationToken.None))
+            {
+                if (stream == null)
+                {
+                    context.Remarks = "no remarks";
+                    await Storage.WriteLibraryFileAsync(id, RemarksFileName, Encoding.UTF8.GetBytes(context.Remarks), token);
+                }
+                else
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        context.Remarks = reader.ReadToEnd();
+                    }   
+                }
+            }
+
+            var metadata = new PackageReadMe
+            {
+                SourceCode = PackageSources.NuGet,
+                Name = context.Name,
+                Version = context.Version,
+                HRef = context.HRef,
+                LicenseCode = context.LicenseCode,
+                ApprovalStatus = Enum.Parse<PackageApprovalStatus>(index.License.Status),
+                UsedBy = context.UsedBy
+            };
+
+            if (context.LicenseCode.IsNullOrEmpty())
+            {
+                context.LicenseCode = "Unknown";
+            }
+
+            await Storage.WriteLibraryReadMeAsync(id, context, token);
+
+            return metadata;
+        }
+
+        public async Task<PackageNotices> LoadPackageNoticesAsync(LibraryId id, CancellationToken token)
+        {
+            var (spec, index) = await RepositoryReadAsync(id, token);
+            return new PackageNotices
+            {
+                Name = spec.Id,
+                Version = spec.Version,
+                LicenseCode = index.License.Code,
+                HRef = spec.PackageHRef,
+                Author = spec.Authors,
+                Copyright = spec.Copyright
+            };
+        }
+
+        public async ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token)
+        {
+            appName.AssertNotNull(nameof(appName));
+
+            var model = await Storage.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(id, token);
+            var result = PackageRemoveResult.None;
+
+            var index = model.UsedBy.IndexOf(i => i.Name.EqualsIgnoreCase(appName));
+            if (index >= 0)
+            {
+                model.UsedBy.RemoveAt(index);
+                await Storage.WriteLibraryIndexJsonAsync(id, model, token);
+
+                result = model.UsedBy.Count == 0 ? PackageRemoveResult.RemovedNoRefs : PackageRemoveResult.Removed;
+            }
+
+            return result;
+        }
+
+        private async Task<(NuGetSpec Spec, NuGetLibraryIndexJson Index)> RepositoryReadAsync(LibraryId id, CancellationToken token)
+        {
+            var indexTask = Storage.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(id, CancellationToken.None);
+
+            NuGetSpec spec = null;
+            using (var specContent = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositorySpecFileName, token))
+            {
+                if (specContent != null)
+                {
+                    spec = Api.ParseSpec(specContent);
+                }
+            }
+
+            var index = await indexTask;
+
+            return (spec, index);
+        }
+
+        private NuGetReadMeContext CreateReadMeContext(NuGetSpec spec, NuGetLibraryIndexJson index)
+        {
+            var context = new NuGetReadMeContext
+            {
+                Name = spec.Id,
+                Version = spec.Version,
+                HRef = spec.PackageHRef,
+                LicenseCode = index.License.Code,
+                UsedBy = PackageReadMe.BuildUsedBy(index.UsedBy),
+                TargetFrameworks = string.Join(", ", index.UsedBy.SelectMany(i => i.TargetFrameworks).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(i => i)),
+                Description = spec.Description
+            };
+
+            if (!context.LicenseCode.IsNullOrEmpty())
+            {
+                context.LicenseLocalHRef = Storage.GetLicenseLocalHRef(context.LicenseCode, RelativeTo.Library);
+                if (Enum.Parse<PackageApprovalStatus>(index.License.Status) == PackageApprovalStatus.HasToBeApproved)
+                {
+                    context.LicenseDescription = "has to approved";
+                }
+            }
+
+            foreach (var license in index.Licenses)
+            {
+                if (license.Code.IsNullOrEmpty())
+                {
+                    license.Code = "Unknown";
+                }
+
+                context.Licenses.Add(license);
+            }
+
+            var dependencies = index
+                .UsedBy
+                .SelectMany(i => i.Dependencies)
+                .Select(i => new LibraryId(PackageSources.NuGet, i.Name, i.Version))
+                .Distinct();
+            foreach (var dependency in dependencies)
+            {
+                context.Dependencies.Add(new NuGetReadMeDependencyContext
+                {
+                    Name = dependency.Name,
+                    Version = dependency.Version,
+                    LocalHRef = Storage.GetPackageLocalHRef(dependency, RelativeTo.Library)
+                });
+            }
+
+            return context;
+        }
+    }
+}

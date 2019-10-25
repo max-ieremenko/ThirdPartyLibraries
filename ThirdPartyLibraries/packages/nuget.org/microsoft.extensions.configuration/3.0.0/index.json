@@ -1,0 +1,41 @@
+{
+  "License": {
+    "Code": "Apache-2.0",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": false,
+      "TargetFrameworks": [
+        "netcoreapp3.0"
+      ],
+      "Dependencies": [
+        {
+          "Name": "Microsoft.Extensions.Configuration.Abstractions",
+          "Version": "3.0.0"
+        }
+      ]
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "Apache-2.0",
+      "HRef": "https://licenses.nuget.org/Apache-2.0",
+      "Description": null
+    },
+    {
+      "Subject": "repository",
+      "Code": "Apache-2.0",
+      "HRef": "https://raw.githubusercontent.com/aspnet/Extensions/master/LICENSE.txt",
+      "Description": null
+    },
+    {
+      "Subject": "project",
+      "Code": null,
+      "HRef": "https://asp.net/",
+      "Description": "License should be verified on https://asp.net/"
+    }
+  ]
+}

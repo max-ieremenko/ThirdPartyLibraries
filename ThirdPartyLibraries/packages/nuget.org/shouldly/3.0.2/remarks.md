@@ -1,0 +1,1 @@
+Git repository is under the BSD-2-Clause license.

@@ -1,0 +1,16 @@
+﻿Usage: ThirdPartyLibraries update [options]...
+
+Update the storage from existing sources
+
+[options]
+  -appName: a name of the current application
+  -source: a path to a folder with solution/projects or to a project file. Folder will be anlized recursively. Repeat -source to setup several folders
+  -repository: a path to a repository folder
+
+exit codes:
+  0 - OK
+  1 - invalid command line
+  2 - errors during execution
+
+example:
+> ThirdPartyLibraries update -appName MyApp -source c:\MySolution -repository c:\ThirdPartyLibraries

@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RootNamespace>ThirdPartyLibraries.Repository</RootNamespace>
+    <OutputPath>..\bin\test</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Storage\licenses\mit\index.json" />
+    <None Remove="Storage\packages\nuget.org\newtonsoft.json\12.0.2\index.json" />
+    <None Remove="Storage\packages\nuget.org\newtonsoft.json\12.0.2\package.nuspec" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Storage\licenses\mit\index.json" />
+    <EmbeddedResource Include="Storage\packages\nuget.org\newtonsoft.json\12.0.2\index.json" />
+    <EmbeddedResource Include="Storage\packages\nuget.org\newtonsoft.json\12.0.2\package.nuspec" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Unity" Version="5.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.Repository\ThirdPartyLibraries.Repository.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
+  </ItemGroup>
+
+</Project>

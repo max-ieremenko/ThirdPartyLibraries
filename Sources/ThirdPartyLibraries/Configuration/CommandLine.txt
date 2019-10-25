@@ -1,0 +1,9 @@
+﻿Usage: ThirdPartyLibraries <command> [options]...
+
+<command>
+  update: update the repository from existing sources
+  validate: validate existing sources against the repository
+  refresh: update .md files in the repository
+  generate: generate "third party notices" from the repository
+
+Run 'ThirdPartyLibraries <command> --help' for more information on a command.

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         ToolsVersion="4.0">
+
+  <PropertyGroup>
+    <BuildOut>$(MSBuildProjectDirectory)\..\build.out</BuildOut>
+    <BuildOutApp>$(BuildOut)\app</BuildOutApp>
+    <BuildOutThirdNotices>$(BuildOut)\ThirdNotices</BuildOutThirdNotices>
+    <Sources>$(MSBuildProjectDirectory)\..\Sources</Sources>
+    <Repository>$(MSBuildProjectDirectory)\..\ThirdPartyLibraries</Repository>
+  </PropertyGroup>
+
+  <Target Name="main">
+    <RemoveDir Directories="$(BuildOut)" />
+    <MakeDir Directories="$(BuildOut)" />
+
+    <Exec Command="dotnet restore $(Sources)\ThirdPartyLibraries.sln" />
+
+    <ExtractVersion AssemblyInfo="$(Sources)\GlobalAssemblyInfo.cs">
+      <Output TaskParameter="Version"
+              PropertyName="PackageVersion" />
+    </ExtractVersion>
+
+    <MSBuild Projects="$(Sources)\ThirdPartyLibraries\ThirdPartyLibraries.csproj"
+             Properties="Configuration=Release;OutDir=$(BuildOutApp)"/>
+
+    <Message Text="Update repository" />
+    <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe update -appName ThirdPartyLibraries -source $(Sources) -repository $(Repository)" />
+
+    <Message Text="Update ThirdPartyNotices.txt" />
+    <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe generate -appName ThirdPartyLibraries -repository $(Repository) -to $(BuildOutThirdNotices)" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\LICENSE" DestinationFolder="$(BuildOutThirdNotices)" />
+
+    <Message Text="PackageVersion: $(PackageVersion)" />
+    <Exec Command="dotnet pack $(Sources)\ThirdPartyLibraries\ThirdPartyLibraries.csproj -c Release -p:PackAsTool=true -p:PackageVersion=$(PackageVersion) -o $(BuildOut)" />
+  </Target>
+
+  <UsingTask TaskName="ExtractVersion"
+             TaskFactory="CodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <AssemblyInfo ParameterType="System.String"
+                    Required="true" />
+      <Version ParameterType="System.String"
+               Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment"
+            Language="cs">
+        <![CDATA[  
+            const string Anchor = "AssemblyVersion(\"";
+
+            var text = File.ReadAllText(AssemblyInfo);
+            
+            var index = text.IndexOf(Anchor);
+            text = text.Substring(index + Anchor.Length);
+
+            index = text.IndexOf('"');
+            text = text.Substring(0, index);
+
+            Version = new Version(text).ToString();
+            if (Version.EndsWith(".0"))
+            {
+                Version = Version.Substring(0, Version.Length - 2);
+            }
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>

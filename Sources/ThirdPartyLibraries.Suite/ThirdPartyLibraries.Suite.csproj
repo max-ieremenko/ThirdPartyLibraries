@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\app</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Unity" Version="5.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.Generic\ThirdPartyLibraries.Generic.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.GitHub\ThirdPartyLibraries.GitHub.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.NuGet\ThirdPartyLibraries.NuGet.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Repository\ThirdPartyLibraries.Repository.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

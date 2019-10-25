@@ -1,0 +1,49 @@
+{
+  "License": {
+    "Code": "BSD-2-Clause",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": false,
+      "TargetFrameworks": [
+        "netcoreapp3.0"
+      ],
+      "Dependencies": [
+        {
+          "Name": "Microsoft.CSharp",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.Dynamic.Runtime",
+          "Version": "4.3.0"
+        },
+        {
+          "Name": "System.Reflection.TypeExtensions",
+          "Version": "4.3.0"
+        }
+      ]
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": null,
+      "HRef": "https://github.com/shouldly/shouldly/blob/master/LICENSE.txt",
+      "Description": "License should be verified on https://github.com/shouldly/shouldly/blob/master/LICENSE.txt"
+    },
+    {
+      "Subject": "repository",
+      "Code": null,
+      "HRef": "https://raw.githubusercontent.com/shouldly/shouldly/master/LICENSE.txt",
+      "Description": "License should be verified on https://raw.githubusercontent.com/shouldly/shouldly/master/LICENSE.txt"
+    },
+    {
+      "Subject": "project",
+      "Code": null,
+      "HRef": "http://shouldly.github.com/",
+      "Description": "License should be verified on http://shouldly.github.com/"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true,
+      "TargetFrameworks": [
+        "netcoreapp3.0"
+      ],
+      "Dependencies": []
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": null,
+      "HRef": null,
+      "Description": null
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://raw.githubusercontent.com/nunit/nunit/master/LICENSE.txt",
+      "Description": null
+    },
+    {
+      "Subject": "project",
+      "Code": null,
+      "HRef": "https://nunit.org/",
+      "Description": "License should be verified on https://nunit.org/"
+    }
+  ]
+}

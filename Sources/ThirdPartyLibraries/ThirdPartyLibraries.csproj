@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\app</OutputPath>
+    <UserSecretsId>c903410c-3d05-49fe-bc8b-b95a2f4dfc69</UserSecretsId>
+    <PackageId>ThirdPartyLibraries.GlobalTool</PackageId>
+    <Authors>Max Ieremenko</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Configuration\CommandLine.generate.txt" />
+    <None Remove="Configuration\CommandLine.refresh.txt" />
+    <None Remove="Configuration\CommandLine.txt" />
+    <None Remove="Configuration\CommandLine.update.txt" />
+    <None Remove="Configuration\CommandLine.validate.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Configuration\CommandLine.generate.txt" />
+    <EmbeddedResource Include="Configuration\CommandLine.validate.txt" />
+    <EmbeddedResource Include="Configuration\CommandLine.refresh.txt" />
+    <EmbeddedResource Include="Configuration\CommandLine.update.txt" />
+    <EmbeddedResource Include="Configuration\CommandLine.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Unity" Version="5.11.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.Generic\ThirdPartyLibraries.Generic.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.NuGet\ThirdPartyLibraries.NuGet.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Suite\ThirdPartyLibraries.Suite.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Packaging">
+    <Content Include="..\..\build.out\ThirdParty\**\*" PackagePath="" />
+  </ItemGroup>
+</Project>

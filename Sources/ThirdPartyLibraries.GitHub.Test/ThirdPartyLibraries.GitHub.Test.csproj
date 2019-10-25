@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RootNamespace>ThirdPartyLibraries.GitHub</RootNamespace>
+    <NoWarn>1701;1702;8002</NoWarn>
+    <OutputPath>..\bin\test</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="GitHubApiTest.License.Newtonsoft.Json.json" />
+    <None Remove="GitHubApiTest.License.Shouldly.Json.json" />
+    <None Remove="GitHubApiTest.LoadLicenseUnauthorized.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GitHubApiTest.LoadLicenseUnauthorized.json" />
+    <EmbeddedResource Include="GitHubApiTest.License.Shouldly.Json.json" />
+    <EmbeddedResource Include="GitHubApiTest.License.Newtonsoft.Json.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="RichardSzalay.MockHttp" Version="5.0.0" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.GitHub\ThirdPartyLibraries.GitHub.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
+  </ItemGroup>
+
+</Project>

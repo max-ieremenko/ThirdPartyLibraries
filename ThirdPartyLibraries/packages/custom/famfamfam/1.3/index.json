@@ -1,0 +1,14 @@
+{
+  "Name": "FAMFAMFAM",
+  "Version": "1.3",
+  "LicenseCode": "CC-BY-2.5 OR CC-BY-3.0",
+  "HRef": "http://www.famfamfam.com/",
+  "Author": "Mark James",
+  "Copyright": "Copyright (c) Mark James",
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true
+    }
+  ]
+}

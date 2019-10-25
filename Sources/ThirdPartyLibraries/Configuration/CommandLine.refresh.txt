@@ -1,0 +1,14 @@
+﻿Usage: ThirdPartyLibraries refresh [options]...
+
+Update .md files in the repository
+
+[options]
+  -repository: a path to a repository folder
+
+exit codes:
+  0 - OK
+  1 - invalid command line
+  2 - errors during execution
+
+example:
+> ThirdPartyLibraries refresh -repository c:\ThirdPartyLibraries
