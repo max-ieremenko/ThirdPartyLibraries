@@ -18,6 +18,7 @@
     <RepositoryUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
+    <PackageTags>licenses third-party-libraries nuget-references</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -61,6 +62,6 @@
   </ItemGroup>
 
   <ItemGroup Label="Packaging">
-    <Content Include="..\..\build.out\ThirdParty\**\*" PackagePath="" />
+    <Content Include="..\..\build.out\ThirdNotices\**\*" PackagePath="" />
   </ItemGroup>
 </Project>
