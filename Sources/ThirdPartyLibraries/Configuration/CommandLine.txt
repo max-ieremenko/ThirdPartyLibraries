@@ -6,4 +6,4 @@
   refresh: update .md files in the repository
   generate: generate "third party notices" from the repository
 
-Run 'ThirdPartyLibraries <command> --help' for more information on a command.
+Run 'ThirdPartyLibraries <command> -help' for more information on a command.

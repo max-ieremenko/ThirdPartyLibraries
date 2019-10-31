@@ -73,7 +73,7 @@ namespace ThirdPartyLibraries
             {
                 if (IsHelp(line.Options))
                 {
-                    return CreateHelp(CommandValidate);
+                    return CreateHelp(CommandGenerate);
                 }
 
                 result = CreateGenerateCommand(line.Options, out repository);
