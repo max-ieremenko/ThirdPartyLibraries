@@ -57,7 +57,8 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
                 LicenseCode = index.LicenseCode,
                 Copyright = index.Copyright,
                 HRef = index.HRef,
-                Author = index.Author
+                Author = index.Author,
+                UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray()
             };
         }
 

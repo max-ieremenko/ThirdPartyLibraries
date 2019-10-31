@@ -40,7 +40,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             var rootContext = new ThirdPartyNoticesContext();
 
-            foreach (var package in packages.Where(i => !i.LicenseCode.IsNullOrEmpty()))
+            foreach (var package in packages.Where(UsePackage))
             {
                 var license = await state.GetLicensesAsync(package.LicenseCode, token);
 
@@ -65,6 +65,25 @@ namespace ThirdPartyLibraries.Suite.Commands
             }
 
             return true;
+        }
+
+        private bool UsePackage(PackageNotices package)
+        {
+            if (package.LicenseCode.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            foreach (var appName in AppNames)
+            {
+                var appIndex = package.UsedBy.IndexOf(i => appName.EqualsIgnoreCase(i.Name) && !i.InternalOnly);
+                if (appIndex >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -145,7 +145,8 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 LicenseCode = index.License.Code,
                 HRef = spec.PackageHRef,
                 Author = spec.Authors,
-                Copyright = spec.Copyright
+                Copyright = spec.Copyright,
+                UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray()
             };
         }
 
