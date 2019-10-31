@@ -18,9 +18,9 @@ Table of Contents
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Create or update a libraries repository](#update)
-- [Refresh or update .md files in the libraries repository](#refresh)
-- [Validate repository](#validate)
-- [Generate ThirdPartyNotices.txt out of the libraries repository](#generate)
+- [Refresh or update .md files in a libraries repository](#refresh)
+- [Validate a libraries repository](#validate)
+- [Generate ThirdPartyNotices.txt out of a libraries repository](#generate)
 - [Configuration](#configuration)
 - [GitHub personal access token](#personalAccessToken)
 - [Manage licenses](#licenses)
@@ -94,7 +94,7 @@ Commit and push c:\RepositoryDemo into GitHub or BitBucket, it helps you to easy
 
 [Back to ToC](#table-of-contents)
 
-Refresh or update .md files in the libraries repository <a name="refresh"></a>
+Refresh or update .md files in a libraries repository <a name="refresh"></a>
 -------------------------------------------------
 
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
@@ -108,7 +108,7 @@ $ ThirdPartyLibraries refresh -appName ThirdPartyLibraries -repository c:\Reposi
 
 [Back to ToC](#table-of-contents)
 
-Validate repository <a name="validate"></a>
+Validate a libraries repository <a name="validate"></a>
 -------------------------------------------------
 
 To validate sources against a library repository run the tool
@@ -127,7 +127,7 @@ Error: Following libraries are not approved:
 
 [Back to ToC](#table-of-contents)
 
-Generate ThirdPartyNotices.txt out of the libraries repository <a name="generate"></a>
+Generate ThirdPartyNotices.txt out of a libraries repository <a name="generate"></a>
 -------------------------------------------------
 
 ```bash
