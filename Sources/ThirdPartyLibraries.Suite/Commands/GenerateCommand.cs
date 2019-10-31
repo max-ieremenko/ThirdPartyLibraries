@@ -32,7 +32,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         
         public string To { get; set; }
 
-        public async Task ExecuteAsync(CancellationToken token)
+        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
         {
             var repository = Container.Resolve<IPackageRepository>();
             var state = new GenerateCommandState(repository, To, Logger);
@@ -63,6 +63,8 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 DotLiquidTemplate.RenderTo(file, template, rootContext);
             }
+
+            return true;
         }
     }
 }

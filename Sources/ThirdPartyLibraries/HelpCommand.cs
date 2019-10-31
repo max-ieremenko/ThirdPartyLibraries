@@ -15,12 +15,12 @@ namespace ThirdPartyLibraries
 
         public string Command { get; set; }
 
-        public Task ExecuteAsync(CancellationToken token)
+        public ValueTask<bool> ExecuteAsync(CancellationToken token)
         {
             var fileName = Command.IsNullOrEmpty() ? "CommandLine.txt" : "CommandLine.{0}.txt".FormatWith(Command);
             Logger.Info(LoadContent(fileName));
 
-            return Task.CompletedTask;
+            return new ValueTask<bool>(true);
         }
 
         private static string LoadContent(string fileName)

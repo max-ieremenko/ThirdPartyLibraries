@@ -13,6 +13,7 @@ namespace ThirdPartyLibraries
         private const int ExitCodeOk = 0;
         private const int ExitCodeInvalidCommandLine = 1;
         private const int ExitCodeExecutionErrors = 2;
+        private const int ExitCodeCommandError = 3;
 
         public static async Task<int> Main(string[] args)
         {
@@ -29,6 +30,7 @@ namespace ThirdPartyLibraries
                 return ExitCodeExecutionErrors;
             }
 
+            bool commandResult;
             using (container)
             {
                 ICommand command;
@@ -44,7 +46,7 @@ namespace ThirdPartyLibraries
 
                 try
                 {
-                    await command.ExecuteAsync(CancellationToken.None);
+                    commandResult = await command.ExecuteAsync(CancellationToken.None);
                 }
                 catch (Exception ex)
                 {
@@ -54,7 +56,7 @@ namespace ThirdPartyLibraries
                 }
             }
 
-            return ExitCodeOk;
+            return commandResult ? ExitCodeOk : ExitCodeCommandError;
         }
 
         private static Task<ICommand> ResolveCommandAsync(IUnityContainer container, string[] args, CancellationToken token)

@@ -5,6 +5,6 @@ namespace ThirdPartyLibraries.Suite
 {
     public interface ICommand
     {
-        Task ExecuteAsync(CancellationToken token);
+        ValueTask<bool> ExecuteAsync(CancellationToken token);
     }
 }
