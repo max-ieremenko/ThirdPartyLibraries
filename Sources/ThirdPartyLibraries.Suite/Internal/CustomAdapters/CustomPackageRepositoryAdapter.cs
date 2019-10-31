@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
@@ -13,9 +14,18 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
         [Dependency]
         public IStorage Storage { get; set; }
 
-        public Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
+        public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
         {
-            throw new NotSupportedException();
+            var index = await Storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, CancellationToken.None);
+            return new Package
+            {
+                SourceCode = PackageSources.Custom,
+                Name = index.Name,
+                Version = index.Version,
+                LicenseCode = index.LicenseCode,
+                UsedBy = index.UsedBy.Select(i => i.Name).ToArray(),
+                ApprovalStatus = PackageApprovalStatus.Approved
+            };
         }
 
         public Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token)

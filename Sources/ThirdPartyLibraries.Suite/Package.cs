@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ThirdPartyLibraries.Suite
@@ -23,5 +24,7 @@ namespace ThirdPartyLibraries.Suite
         public IList<PackageLicense> Licenses { get; } = new List<PackageLicense>();
 
         public IList<PackageAttachment> Attachments { get; } = new List<PackageAttachment>();
+
+        public string[] UsedBy { get; set; } = Array.Empty<string>();
     }
 }

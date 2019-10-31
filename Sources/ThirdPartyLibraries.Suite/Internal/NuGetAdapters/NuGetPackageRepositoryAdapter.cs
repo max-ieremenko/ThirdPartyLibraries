@@ -31,6 +31,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             }
 
             var result = NuGetConstants.CreatePackage(spec, index.License.Code, index.License.Status);
+            result.UsedBy = index.UsedBy.Select(i => i.Name).ToArray();
 
             foreach (var license in index.Licenses)
             {

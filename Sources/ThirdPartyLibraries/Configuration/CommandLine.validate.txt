@@ -10,7 +10,8 @@ Update .md files in the repository
 exit codes:
   0 - OK
   1 - invalid command line
-  2 - validation fails
+  2 - errors during execution
+  3 - validation fails
 
 example:
 > ThirdPartyLibraries validate -to c:\ThirdPartyLibraries

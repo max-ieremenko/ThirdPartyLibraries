@@ -27,7 +27,10 @@
     <Message Text="Update repository" />
     <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe update -appName ThirdPartyLibraries -source $(Sources) -repository $(Repository)" />
 
-    <Message Text="Update ThirdPartyNotices.txt" />
+    <Message Text="Validate repository" />
+    <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe validate -appName ThirdPartyLibraries -source $(Sources) -repository $(Repository)" />
+
+    <Message Text="Generate ThirdPartyNotices.txt" />
     <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe generate -appName ThirdPartyLibraries -repository $(Repository) -to $(BuildOutThirdNotices)" />
 
     <Copy SourceFiles="$(MSBuildProjectDirectory)\..\LICENSE" DestinationFolder="$(BuildOutThirdNotices)" />
