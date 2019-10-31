@@ -6,7 +6,6 @@ Generate "third party notices" from the repository
   -appName: a name of the current application. Repeat -appName to aggregate information from several applications
   -repository: a path to a repository folder
   -to: a path to an output folder
-  -github.com:personalAccessToken: optional personal access token for github.com web api
 
 exit codes:
   0 - OK

@@ -1,4 +1,6 @@
-﻿namespace ThirdPartyLibraries.Suite
+﻿using System;
+
+namespace ThirdPartyLibraries.Suite
 {
     public sealed class PackageNotices
     {
@@ -16,5 +18,7 @@
         public string Author { get; set; }
 
         public string Copyright { get; set; }
+
+        public PackageNoticesApplication[] UsedBy { get; set; } = Array.Empty<PackageNoticesApplication>();
     }
 }

@@ -21,19 +21,31 @@
               PropertyName="PackageVersion" />
     </ExtractVersion>
 
+    <GetRepositoryCommit BranchName="master">
+      <Output TaskParameter="CommitId"
+              PropertyName="RepositoryCommitId" />
+    </GetRepositoryCommit>
+
     <MSBuild Projects="$(Sources)\ThirdPartyLibraries\ThirdPartyLibraries.csproj"
              Properties="Configuration=Release;OutDir=$(BuildOutApp)"/>
 
     <Message Text="Update repository" />
     <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe update -appName ThirdPartyLibraries -source $(Sources) -repository $(Repository)" />
 
-    <Message Text="Update ThirdPartyNotices.txt" />
+    <Message Text="Validate repository" />
+    <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe validate -appName ThirdPartyLibraries -source $(Sources) -repository $(Repository)" />
+
+    <Message Text="Generate ThirdPartyNotices.txt" />
     <Exec Command="$(BuildOutApp)\ThirdPartyLibraries.exe generate -appName ThirdPartyLibraries -repository $(Repository) -to $(BuildOutThirdNotices)" />
 
     <Copy SourceFiles="$(MSBuildProjectDirectory)\..\LICENSE" DestinationFolder="$(BuildOutThirdNotices)" />
 
     <Message Text="PackageVersion: $(PackageVersion)" />
-    <Exec Command="dotnet pack $(Sources)\ThirdPartyLibraries\ThirdPartyLibraries.csproj -c Release -p:PackAsTool=true -p:PackageVersion=$(PackageVersion) -o $(BuildOut)" />
+    <Message Text="RepositoryCommitId: $(RepositoryCommitId)" />
+    <Exec Command="dotnet pack $(Sources)\ThirdPartyLibraries\ThirdPartyLibraries.csproj -c Release -p:PackAsTool=true -p:PackageVersion=$(PackageVersion) -p:RepositoryCommit=$(RepositoryCommitId) -o $(BuildOut)" />
+
+    <ZipDirectory SourceDirectory="$(BuildOutApp)"
+                  DestinationFile="$(BuildOut)\ThirdPartyLibraries-$(PackageVersion).zip" />
   </Target>
 
   <UsingTask TaskName="ExtractVersion"
@@ -65,6 +77,45 @@
             if (Version.EndsWith(".0"))
             {
                 Version = Version.Substring(0, Version.Length - 2);
+            }
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="GetRepositoryCommit"
+             TaskFactory="CodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <BranchName ParameterType="System.String"
+                  Required="true" />
+      <CommitId ParameterType="System.String"
+                Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Runtime.Serialization" />
+      <Reference Include="System.Xml" />
+      <Using Namespace="System" />
+      <Using Namespace="System.Net" />
+      <Using Namespace="System.Runtime.Serialization.Json" />
+      <Using Namespace="System.Xml" />
+      <Code Type="Fragment"
+            Language="cs">
+        <![CDATA[
+            var client = new WebClient();
+            client.Headers.Add("User-Agent", "ThirdPartyLibraries");
+
+            using (var stream = client.OpenRead("https://api.github.com/repos/max-ieremenko/ThirdPartyLibraries/commits/master"))
+            using (var reader = JsonReaderWriterFactory.CreateJsonReader(stream, XmlDictionaryReaderQuotas.Max))
+            {
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element && reader.Depth == 1 && "sha".Equals(reader.Name, StringComparison.Ordinal))
+                    {
+                        CommitId = reader.ReadElementContentAsString("sha", string.Empty);
+                        break;
+                    }
+                }
             }
 ]]>
       </Code>

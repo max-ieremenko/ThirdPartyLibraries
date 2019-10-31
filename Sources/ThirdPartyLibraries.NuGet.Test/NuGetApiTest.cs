@@ -141,7 +141,7 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
-        public async Task FileLicenseFileStyleCopAnalyzersInLocalCache()
+        public async Task FindLicenseFileStyleCopAnalyzersInLocalCache()
         {
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
             var file = await _sut.TryFindLicenseFileAsync(package, true, CancellationToken.None);

@@ -23,7 +23,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public ILogger Logger { get; }
      
-        public async Task ExecuteAsync(CancellationToken token)
+        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
         {
             var repository = Container.Resolve<IPackageRepository>();
             var state = new RefreshCommandState(repository);
@@ -76,6 +76,8 @@ namespace ThirdPartyLibraries.Suite.Commands
             rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
 
             await repository.Storage.WriteRootReadMeAsync(rootContext, token);
+
+            return true;
         }
     }
 }

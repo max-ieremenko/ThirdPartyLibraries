@@ -18,8 +18,9 @@ Table of Contents
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Create or update a libraries repository](#update)
-- [Refresh or update .md files in the libraries repository](#refresh)
-- [Generate ThirdPartyNotices.txt out of the libraries repository](#generate)
+- [Refresh or update .md files in a libraries repository](#refresh)
+- [Validate a libraries repository](#validate)
+- [Generate ThirdPartyNotices.txt out of a libraries repository](#generate)
 - [Configuration](#configuration)
 - [GitHub personal access token](#personalAccessToken)
 - [Manage licenses](#licenses)
@@ -93,7 +94,7 @@ Commit and push c:\RepositoryDemo into GitHub or BitBucket, it helps you to easy
 
 [Back to ToC](#table-of-contents)
 
-Refresh or update .md files in the libraries repository <a name="refresh"></a>
+Refresh or update .md files in a libraries repository <a name="refresh"></a>
 -------------------------------------------------
 
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
@@ -107,7 +108,26 @@ $ ThirdPartyLibraries refresh -appName ThirdPartyLibraries -repository c:\Reposi
 
 [Back to ToC](#table-of-contents)
 
-Generate ThirdPartyNotices.txt out of the libraries repository <a name="generate"></a>
+Validate a libraries repository <a name="validate"></a>
+-------------------------------------------------
+
+To validate sources against a library repository run the tool
+
+```bash
+$ ThirdPartyLibraries validate -appName ThirdPartyLibraries -source c:\ThirdPartyLibraries\Sources -repository c:\RepositoryDemo
+```
+
+The tool reports to the current output about any inconsistency between sources and repository or if TODO list in the repository is not empty, for example
+
+```text
+Error: Following libraries are not approved:
+   Newtonsoft.Json 12.0.2 from nuget.org
+   NUnit 3.12.0 from nuget.org
+```
+
+[Back to ToC](#table-of-contents)
+
+Generate ThirdPartyNotices.txt out of a libraries repository <a name="generate"></a>
 -------------------------------------------------
 
 ```bash
@@ -294,7 +314,7 @@ File *index.json* contains a metadata for the tool:
 |:--|:----------|
 |Name|package name|
 |Version|package version|
-|LicenseCode|license code is one of the licenses from folder *license* or *null* if license cannot be resolved)|
+|LicenseCode|license code is one of the licenses from folder *license* or *null* if license cannot be resolved|
 |HRef|any public link to the package information, is used to generate third party notices|
 |Author|package author(s), is used to generate third party notices|
 |Copyright|copyright(s), is used to generate third party notices|

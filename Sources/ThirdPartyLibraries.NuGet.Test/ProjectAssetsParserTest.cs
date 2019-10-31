@@ -23,7 +23,7 @@ namespace ThirdPartyLibraries.NuGet
         {
             var actual = _sut.GetTargetFrameworks();
 
-            actual.ShouldBe(new[] { "net452", "netcoreapp2.2" }, ignoreOrder: true);
+            actual.ShouldBe(new[] { "net452", "netcoreapp2.2", "net472" }, ignoreOrder: true);
         }
 
         [Test]
@@ -54,6 +54,14 @@ namespace ThirdPartyLibraries.NuGet
 
             dependencies[1].Name.ShouldBe("System.Security.Permissions");
             dependencies[1].Version.ShouldBe("4.5.0");
+        }
+
+        [Test]
+        public void GetNet472References()
+        {
+            var actual = _sut.GetReferences("net472").ToList();
+
+            actual.ShouldBeEmpty();
         }
 
         [Test]

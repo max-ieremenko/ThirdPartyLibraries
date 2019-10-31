@@ -4,8 +4,9 @@ Update the storage from existing sources
 
 [options]
   -appName: a name of the current application
-  -source: a path to a folder with solution/projects or to a project file. Folder will be anlized recursively. Repeat -source to setup several folders
+  -source: a path to a folder with solution/projects or to a project file. Folder will be analized recursively. Repeat -source to setup several folders
   -repository: a path to a repository folder
+  -github.com:personalAccessToken: optional personal access token for github.com web api
 
 exit codes:
   0 - OK

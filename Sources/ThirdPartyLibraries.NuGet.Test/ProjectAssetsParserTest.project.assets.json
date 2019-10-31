@@ -408,7 +408,8 @@
       "StyleCop.Analyzers/1.1.118": {
         "type": "package"
       }
-    }
+    },
+    ".NETFramework,Version=v4.7.2": {}
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
@@ -485,6 +486,9 @@
             "version": "[1.1.118, )"
           }
         }
+      },
+      "net472": {
+        "projectReferences": {}
       }
     }
   }

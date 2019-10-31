@@ -12,7 +12,14 @@ namespace ThirdPartyLibraries
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.WriteLine(message);
+            if (_indentation.IsNullOrEmpty())
+            {
+                Console.WriteLine("Error: " + message);
+            }
+            else
+            {
+                Console.WriteLine(_indentation + message);
+            }
 
             Console.ForegroundColor = color;
         }
