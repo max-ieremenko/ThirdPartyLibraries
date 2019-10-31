@@ -66,11 +66,17 @@ namespace ThirdPartyLibraries.NuGet
             var framework = MapTargetFrameworkProjFormatToNuGetFormat(targetFramework);
             
             var projectFrameworks = Content.Value<JObject>("project").Value<JObject>("frameworks");
-            var projectDependencies = projectFrameworks.Value<JObject>(targetFramework)?.Value<JObject>("dependencies");
-            if (projectDependencies == null)
+            var projectFramework = projectFrameworks.Value<JObject>(targetFramework);
+            if (projectFramework == null)
             {
                 var frameworks = projectFrameworks.Properties().Select(i => i.Name);
                 throw new InvalidOperationException("project/frameworks/{0} not found in {1}.".FormatWith(targetFramework, string.Join(", ", frameworks)));
+            }
+
+            var projectDependencies = projectFramework.Value<JObject>("dependencies");
+            if (projectDependencies == null)
+            {
+                return Enumerable.Empty<(NuGetPackageId, IList<NuGetPackageId>)>();
             }
 
             var targetPackageByName = ParseTarget(framework);
