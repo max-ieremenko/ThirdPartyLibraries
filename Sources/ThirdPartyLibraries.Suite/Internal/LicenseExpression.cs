@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Suite.Commands
+namespace ThirdPartyLibraries.Suite.Internal
 {
     internal static class LicenseExpression
     {
@@ -18,7 +21,32 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToArray();
         }
-        
+
+        public static string ReplaceCodes(string expression, Func<string, string> codeReplacement)
+        {
+            expression.AssertNotNull(nameof(expression));
+            codeReplacement.AssertNotNull(nameof(codeReplacement));
+
+            var codes = GetCodes(expression);
+            var replacementByCode = new Dictionary<string, string>(codes.Count, StringComparer.OrdinalIgnoreCase);
+            
+            var pattern = new StringBuilder();
+            foreach (var code in codes.OrderByDescending(i => i.Length))
+            {
+                replacementByCode.Add(code, codeReplacement(code));
+
+                if (pattern.Length > 0)
+                {
+                    pattern.Append("|");
+                }
+
+                // (?<n1>code)
+                pattern.Append("(").Append(Regex.Escape(code)).Append(")");
+            }
+
+            return Regex.Replace(expression, pattern.ToString(), match => replacementByCode[match.Value], RegexOptions.IgnoreCase);
+        }
+
         private static bool IsOperator(string word)
         {
             return "AND".EqualsIgnoreCase(word)

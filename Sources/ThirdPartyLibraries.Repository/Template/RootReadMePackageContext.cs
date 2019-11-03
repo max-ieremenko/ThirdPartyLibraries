@@ -15,6 +15,8 @@ namespace ThirdPartyLibraries.Repository.Template
 
         public string LicenseLocalHRef { get; set; }
 
+        public string LicenseMarkdownExpression { get; set; }
+
         public bool IsApproved { get; set; }
 
         public string ApprovalStatus { get; set; }

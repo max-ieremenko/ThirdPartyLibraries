@@ -12,6 +12,8 @@ namespace ThirdPartyLibraries.Repository.Template
 
         public string LicenseLocalHRef { get; set; }
 
+        public string LicenseMarkdownExpression { get; set; }
+
         public string LicenseDescription { get; set; }
 
         public string HRef { get; set; }

@@ -57,6 +57,8 @@ namespace ThirdPartyLibraries.Suite.Commands
                 license.Packages.Add(packageContext);
             }
 
+            rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.FullName));
+
             var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token);
             var fileName = Path.Combine(To, OutputFileName);
             using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
+using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 
 namespace ThirdPartyLibraries.Suite.Commands
@@ -23,12 +24,17 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public IEnumerable<RootReadMeLicenseContext> Licenses => _licenseByCode.Values;
 
-        public async Task<IList<RootReadMeLicenseContext>> GetLicensesAsync(string licenseExpression, CancellationToken token)
+        public async Task<(IList<RootReadMeLicenseContext> Licenses, string MarkdownExpression)> GetLicensesAsync(string licenseExpression, CancellationToken token)
         {
+            if (licenseExpression.IsNullOrEmpty())
+            {
+                return (Array.Empty<RootReadMeLicenseContext>(), null);
+            }
+
             var codes = LicenseExpression.GetCodes(licenseExpression);
 
-            var result = new RootReadMeLicenseContext[codes.Count];
-            for (var i = 0; i < result.Length; i++)
+            var licenses = new RootReadMeLicenseContext[codes.Count];
+            for (var i = 0; i < licenses.Length; i++)
             {
                 var code = codes[i];
                 if (!_licenseByCode.TryGetValue(code, out var license))
@@ -44,10 +50,12 @@ namespace ThirdPartyLibraries.Suite.Commands
                     _licenseByCode.Add(code, license);
                 }
 
-                result[i] = license;
+                licenses[i] = license;
             }
 
-            return result;
+            var markdownExpression = LicenseExpression.ReplaceCodes(licenseExpression, code => "[{0}]({1})".FormatWith(code, _licenseByCode[code].LocalHRef));
+
+            return (licenses, markdownExpression);
         }
     }
 }

@@ -33,11 +33,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             foreach (var metadata in packages.OrderBy(i => i.Name).ThenBy(i => i.Version).ThenBy(i => i.SourceCode))
             {
-                IList<RootReadMeLicenseContext> licenses = Array.Empty<RootReadMeLicenseContext>();
-                if (!metadata.LicenseCode.IsNullOrEmpty())
-                {
-                    licenses = await state.GetLicensesAsync(metadata.LicenseCode, token);
-                }
+                var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token);
 
                 foreach (var license in licenses)
                 {
@@ -55,7 +51,8 @@ namespace ThirdPartyLibraries.Suite.Commands
                     UsedBy = metadata.UsedBy,
                     SourceHRef = metadata.HRef,
                     LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version), RelativeTo.Root),
-                    LicenseLocalHRef = licenses.FirstOrDefault()?.LocalHRef
+                    LicenseLocalHRef = licenses.FirstOrDefault()?.LocalHRef,
+                    LicenseMarkdownExpression = markdownExpression
                 };
 
                 if (packageContext.SourceHRef.IsNullOrEmpty())
