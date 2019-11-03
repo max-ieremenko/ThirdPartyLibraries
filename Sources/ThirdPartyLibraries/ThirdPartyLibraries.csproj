@@ -19,6 +19,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
     <PackageTags>licenses third-party-libraries nuget-references</PackageTags>
+    <Description>This command line tool helps to manage third party libraries and their licenses in .net applications.</Description>
   </PropertyGroup>
 
   <ItemGroup>
