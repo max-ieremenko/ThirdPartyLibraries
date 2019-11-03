@@ -20,7 +20,7 @@ Packages 55
 |----------|:----|:----|:----|:----|
 |[Castle.Core](packages/nuget.org/castle.core/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/Castle.Core/4.4.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[DotLiquid](packages/nuget.org/dotliquid/2.0.314)|2.0.314|[nuget.org](https://www.nuget.org/packages/DotLiquid/2.0.314)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
-|[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](packages/custom/famfamfam/1.3)|[CC-BY-2.5 OR CC-BY-3.0](licenses/cc-by-2.5)|ThirdPartyLibraries internal|
+|[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](packages/custom/famfamfam/1.3)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
 |[JetBrains.Annotations](packages/nuget.org/jetbrains.annotations/2019.1.3)|2019.1.3|[nuget.org](https://www.nuget.org/packages/JetBrains.Annotations/2019.1.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/16.3.0)|16.3.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/16.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
 |[Microsoft.CSharp](packages/nuget.org/microsoft.csharp/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CSharp/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries|

@@ -5,7 +5,7 @@ Used by: {{UsedBy}}
 
 Target frameworks: {{TargetFrameworks}}
 
-License: [{{LicenseCode}}]({{LicenseLocalHRef}}) {% if LicenseDescription %}, {{LicenseDescription}}{% endif %}
+License: {{LicenseMarkdownExpression}} {% if LicenseDescription %}, {{LicenseDescription}}{% endif %}
 
 {%- for license in Licenses -%}
 - {{license.Subject}} license: [{{license.Code}}]({{license.HRef}}) {% if license.Description %}, {{license.Description}}{% endif %}
