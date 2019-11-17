@@ -19,6 +19,8 @@ namespace ThirdPartyLibraries.Suite
 
         public string Copyright { get; set; }
 
+        public string ThirdPartyNotices { get; set; }
+
         public PackageNoticesApplication[] UsedBy { get; set; } = Array.Empty<PackageNoticesApplication>();
     }
 }

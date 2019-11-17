@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -22,6 +24,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         private TempFolder _to;
         private Mock<IPackageRepository> _packageRepository;
         private Mock<IStorage> _storage;
+        private IList<PackageNotices> _noticeses;
 
         [SetUp]
         public void BeforeEachTest()
@@ -32,6 +35,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             Directory.CreateDirectory(Path.Combine(_to.Location, "configuration"));
 
             var container = new UnityContainer();
+            _noticeses = new List<PackageNotices>();
 
             _storage = new Mock<IStorage>(MockBehavior.Strict);
             _storage
@@ -50,11 +54,21 @@ namespace ThirdPartyLibraries.Suite.Commands
                     File.WriteAllBytes(path, content);
                     return Task.CompletedTask;
                 });
+            _storage
+                .Setup(s => s.GetAllLibrariesAsync(CancellationToken.None))
+                .ReturnsAsync(() => _noticeses.Select(i => new LibraryId(PackageSources.NuGet, i.Name, i.Version)).ToArray());
 
             _packageRepository = new Mock<IPackageRepository>(MockBehavior.Strict);
             _packageRepository
                 .SetupGet(r => r.Storage)
                 .Returns(_storage.Object);
+            _packageRepository
+                .Setup(r => r.LoadPackagesNoticesAsync(It.IsAny<LibraryId>(), CancellationToken.None))
+                .Returns<LibraryId, CancellationToken>((id, _) =>
+                {
+                    var package = _noticeses.Single(i => i.Name == id.Name && i.Version == id.Version);
+                    return Task.FromResult(package);
+                });
             container.RegisterInstance(_packageRepository.Object);
 
             _sut = new GenerateCommand(container, _logger.Object)
@@ -81,8 +95,10 @@ namespace ThirdPartyLibraries.Suite.Commands
                 HRef = "https://www.nuget.org/packages/Newtonsoft.Json/12.0.2",
                 Author = "James Newton-King",
                 Copyright = "Copyright © James Newton-King 2008",
-                UsedBy = new[] { new PackageNoticesApplication(AppName, false) }
+                UsedBy = new[] { new PackageNoticesApplication(AppName, false) },
+                ThirdPartyNotices = "some extra notices"
             };
+            _noticeses.Add(notice);
 
             var license = new LicenseIndexJson
             {
@@ -100,10 +116,6 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Setup(s => s.OpenLicenseFileReadAsync("MIT", "license.txt", CancellationToken.None))
                 .ReturnsAsync(() => new MemoryStream("MIT license text".AsBytes()));
 
-            _packageRepository
-                .Setup(r => r.LoadAllPackagesNoticesAsync(CancellationToken.None))
-                .ReturnsAsync(new[] { notice });
-
             await _sut.ExecuteAsync(CancellationToken.None);
 
             FileAssert.Exists(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
@@ -115,7 +127,8 @@ namespace ThirdPartyLibraries.Suite.Commands
             output.ShouldContain(notice.HRef);
             output.ShouldContain(notice.Author);
             output.ShouldContain(notice.Copyright);
-            
+            output.ShouldContain(notice.ThirdPartyNotices);
+
             output.ShouldContain(license.HRef);
             output.ShouldContain(license.FileName);
             output.ShouldContain(license.FullName);
@@ -130,18 +143,18 @@ namespace ThirdPartyLibraries.Suite.Commands
             var notice1 = new PackageNotices
             {
                 Name = "internal package",
+                Version = "1",
                 UsedBy = new[] { new PackageNoticesApplication(AppName, true) }
             };
+            _noticeses.Add(notice1);
 
             var notice2 = new PackageNotices
             {
                 Name = "other application",
+                Version = "1",
                 UsedBy = new[] { new PackageNoticesApplication(AppName + "2", false) }
             };
-
-            _packageRepository
-                .Setup(r => r.LoadAllPackagesNoticesAsync(CancellationToken.None))
-                .ReturnsAsync(new[] { notice1, notice2 });
+            _noticeses.Add(notice2);
 
             await _sut.ExecuteAsync(CancellationToken.None);
 

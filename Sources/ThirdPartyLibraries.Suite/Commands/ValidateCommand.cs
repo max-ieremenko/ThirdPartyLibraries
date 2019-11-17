@@ -79,11 +79,21 @@ namespace ThirdPartyLibraries.Suite.Commands
                 if (state.GetPackageLicenseCode(reference.Id).IsNullOrEmpty())
                 {
                     yield return (reference.Id, "have no license");
+                    continue;
                 }
 
-                if (state.GetPackageApprovalStatus(reference.Id) == PackageApprovalStatus.HasToBeApproved)
+                var approvalStatus = state.GetPackageApprovalStatus(reference.Id);
+                var requiresApproval = state.GetLicenseRequiresApproval(reference.Id);
+
+                if (approvalStatus == PackageApprovalStatus.HasToBeApproved
+                    || (requiresApproval && approvalStatus == PackageApprovalStatus.AutomaticallyApproved))
                 {
                     yield return (reference.Id, "are not approved");
+                }
+
+                if (state.GetLicenseRequiresThirdPartyNotices(reference.Id) && !state.GetPackageHasThirdPartyNotices(reference.Id))
+                {
+                    yield return (reference.Id, "have no third party notices");
                 }
             }
 

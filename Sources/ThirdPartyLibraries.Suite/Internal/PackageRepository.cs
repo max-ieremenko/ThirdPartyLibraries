@@ -31,6 +31,11 @@ namespace ThirdPartyLibraries.Suite.Internal
             return ResolveAdapter(id.SourceCode).LoadPackageAsync(id, token);
         }
 
+        public Task<PackageNotices> LoadPackagesNoticesAsync(LibraryId id, CancellationToken token)
+        {
+            return ResolveAdapter(id.SourceCode).LoadPackageNoticesAsync(id, token);
+        }
+
         public Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token)
         {
             package.AssertNotNull(nameof(package));
@@ -38,7 +43,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             return ResolveAdapter(package.SourceCode).UpdatePackageAsync(reference, package, appName, token);
         }
 
-        public async Task<RepositoryLicense> LoadLicenseAsync(string licenseCode, CancellationToken token)
+        public async Task<RepositoryLicense> LoadOrCreateLicenseAsync(string licenseCode, CancellationToken token)
         {
             licenseCode.AssertNotNull(nameof(licenseCode));
 
@@ -65,7 +70,8 @@ namespace ThirdPartyLibraries.Suite.Internal
                 FullName = info.FullName,
                 HRef = info.FileHRef,
                 FileName = info.FileName,
-                RequiresApproval = true
+                RequiresApproval = true,
+                RequiresThirdPartyNotices = false
             };
             await Storage.CreateLicenseIndexJsonAsync(index, token);
             await Storage.CreateLicenseFileAsync(info.Code, info.FileName, info.FileContent, token);
@@ -85,24 +91,6 @@ namespace ThirdPartyLibraries.Suite.Internal
                 foreach (var id in entry)
                 {
                     result.Add(await adapter.UpdatePackageReadMeAsync(id, token));
-                }
-            }
-
-            return result;
-        }
-
-        public async Task<IList<PackageNotices>> LoadAllPackagesNoticesAsync(CancellationToken token)
-        {
-            var libraries = await Storage.GetAllLibrariesAsync(token);
-            var result = new List<PackageNotices>(libraries.Count);
-
-            var librariesBySourceCode = libraries.GroupBy(i => i.SourceCode, StringComparer.OrdinalIgnoreCase);
-            foreach (var entry in librariesBySourceCode)
-            {
-                var adapter = ResolveAdapter(entry.Key);
-                foreach (var id in entry)
-                {
-                    result.Add(await adapter.LoadPackageNoticesAsync(id, token));
                 }
             }
 

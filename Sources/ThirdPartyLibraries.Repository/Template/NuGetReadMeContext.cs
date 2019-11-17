@@ -31,5 +31,7 @@ namespace ThirdPartyLibraries.Repository.Template
         public IList<NuGetReadMeDependencyContext> Dependencies { get; } = new List<NuGetReadMeDependencyContext>();
         
         public string Remarks { get; set; }
+
+        public string ThirdPartyNotices { get; set; }
     }
 }

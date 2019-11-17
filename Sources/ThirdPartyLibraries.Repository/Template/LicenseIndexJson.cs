@@ -8,6 +8,8 @@
 
         public bool RequiresApproval { get; set; }
 
+        public bool RequiresThirdPartyNotices { get; set; }
+
         public string HRef { get; set; }
 
         public string FileName { get; set; }

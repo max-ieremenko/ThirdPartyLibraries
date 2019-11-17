@@ -218,6 +218,7 @@ File *index.json* contains a metadata for the tool:
   "Code": "MIT",
   "FullName": "MIT License",
   "RequiresApproval": true,
+  "RequiresThirdPartyNotices": false,
   "HRef": "https://spdx.org/licenses/MIT",
   "FileName": "license.txt"
 }
@@ -227,7 +228,8 @@ File *index.json* contains a metadata for the tool:
 |:--|:----------|
 |Code|license code, for some web api is case sensitive|
 |FullName|full license name, is used to generate third party notices|
-|RequiresApproval|*true* or *false* (default) flag to indicate the package can be marked by the tool as AutomaticallyApproved|
+|RequiresApproval|*true* (default) or *false* flag to indicate the package can be marked by the tool as AutomaticallyApproved|
+|RequiresThirdPartyNotices|*true* or *false* (default) flag to indicate the package must contain extra text in ThirdPartyNotices.txt|
 |HRef|public link to the license information, is used to generate third party notices|
 |FileName|name of the file in this folder with a copy of the license text, is used to generate third party notices|
 

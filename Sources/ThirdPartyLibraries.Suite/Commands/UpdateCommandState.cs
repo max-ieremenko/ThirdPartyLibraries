@@ -46,7 +46,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 if (!_licenseByCode.TryGetValue(code, out var license))
                 {
-                    license = await Repository.LoadLicenseAsync(code, token);
+                    license = await Repository.LoadOrCreateLicenseAsync(code, token);
                     _licenseByCode.Add(license.Code, license);
                 }
 

@@ -10,6 +10,8 @@
 
         public string Copyright { get; set; }
 
+        public string ThirdPartyNotices { get; set; }
+
         public ThirdPartyNoticesLicenseContext License { get; set; }
     }
 }

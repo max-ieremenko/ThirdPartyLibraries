@@ -54,7 +54,7 @@ namespace ThirdPartyLibraries.Suite.Internal
                     HRef = "some link"
                 }.JsonSerialize());
 
-            var actual = await _sut.LoadLicenseAsync("MIT", CancellationToken.None);
+            var actual = await _sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
 
             actual.ShouldNotBeNull();
             actual.Code.ShouldBe("MIT");
@@ -96,7 +96,7 @@ namespace ThirdPartyLibraries.Suite.Internal
                 .Setup(r => r.CreateLicenseFileAsync("MIT", "fileName.txt", It.Is<byte[]>(i => i.AsText() == "text"), CancellationToken.None))
                 .Returns(Task.CompletedTask);
 
-            var actual = await _sut.LoadLicenseAsync("MIT", CancellationToken.None);
+            var actual = await _sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
 
             _storage.VerifyAll();
 
@@ -132,7 +132,7 @@ namespace ThirdPartyLibraries.Suite.Internal
                 .Setup(r => r.CreateLicenseFileAsync("MIT", "license.txt", Array.Empty<byte>(), CancellationToken.None))
                 .Returns(Task.CompletedTask);
 
-            var actual = await _sut.LoadLicenseAsync("MIT", CancellationToken.None);
+            var actual = await _sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
 
             _storage.VerifyAll();
 

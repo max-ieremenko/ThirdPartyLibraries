@@ -15,6 +15,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
     internal sealed class NuGetPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
         private const string RemarksFileName = "remarks.md";
+        private const string ThirdPartyNoticesFileName = "third-party-notices.txt";
 
         [Dependency]
         public INuGetApi Api { get; set; }
@@ -97,6 +98,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             var (spec, index) = await RepositoryReadAsync(id, token);
 
             var context = CreateReadMeContext(spec, index);
+            context.ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, true, token);
 
             using (var stream = await Storage.OpenLibraryFileReadAsync(id, RemarksFileName, CancellationToken.None))
             {
@@ -138,6 +140,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
         public async Task<PackageNotices> LoadPackageNoticesAsync(LibraryId id, CancellationToken token)
         {
             var (spec, index) = await RepositoryReadAsync(id, token);
+
             return new PackageNotices
             {
                 Name = spec.Id,
@@ -146,7 +149,8 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 HRef = spec.PackageHRef,
                 Author = spec.Authors,
                 Copyright = spec.Copyright,
-                UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray()
+                UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray(),
+                ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, false, token)
             };
         }
 
@@ -241,6 +245,29 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             }
 
             return context;
+        }
+
+        private async Task<string> LoadThirdPartyNoticesAsync(LibraryId id, bool createEmpty, CancellationToken token)
+        {
+            string result = null;
+
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, ThirdPartyNoticesFileName, token))
+            {
+                if (stream == null && createEmpty)
+                {
+                    await Storage.WriteLibraryFileAsync(id, ThirdPartyNoticesFileName, Array.Empty<byte>(), token);
+                }
+
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        result = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            return result.IsNullOrEmpty() ? null : result;
         }
     }
 }

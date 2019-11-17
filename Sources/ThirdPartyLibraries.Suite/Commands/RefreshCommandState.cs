@@ -39,7 +39,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 var code = codes[i];
                 if (!_licenseByCode.TryGetValue(code, out var license))
                 {
-                    var repositoryLicense = await Repository.LoadLicenseAsync(code, token);
+                    var repositoryLicense = await Repository.LoadOrCreateLicenseAsync(code, token);
                     license = new RootReadMeLicenseContext
                     {
                         Code = repositoryLicense.Code,

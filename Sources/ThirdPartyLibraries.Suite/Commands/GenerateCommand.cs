@@ -36,11 +36,11 @@ namespace ThirdPartyLibraries.Suite.Commands
         {
             var repository = Container.Resolve<IPackageRepository>();
             var state = new GenerateCommandState(repository, To, Logger);
-            var packages = await repository.LoadAllPackagesNoticesAsync(token);
+            var packages = await LoadAllPackagesNoticesAsync(repository, token);
 
             var rootContext = new ThirdPartyNoticesContext();
 
-            foreach (var package in packages.Where(UsePackage))
+            foreach (var package in packages)
             {
                 var license = await state.GetLicensesAsync(package.LicenseCode, token);
 
@@ -50,7 +50,8 @@ namespace ThirdPartyLibraries.Suite.Commands
                     License = license,
                     Copyright = package.Copyright,
                     HRef = package.HRef,
-                    Author = package.Author
+                    Author = package.Author,
+                    ThirdPartyNotices = package.ThirdPartyNotices
                 };
 
                 rootContext.Packages.Add(packageContext);
@@ -67,6 +68,23 @@ namespace ThirdPartyLibraries.Suite.Commands
             }
 
             return true;
+        }
+
+        private async Task<IList<PackageNotices>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
+        {
+           var libraries = await repository.Storage.GetAllLibrariesAsync(token);
+           var result = new List<PackageNotices>(libraries.Count);
+
+           foreach (var id in libraries)
+           {
+               var package = await repository.LoadPackagesNoticesAsync(id, token);
+               if (UsePackage(package))
+               {
+                   result.Add(package);
+               }
+           }
+
+           return result;
         }
 
         private bool UsePackage(PackageNotices package)

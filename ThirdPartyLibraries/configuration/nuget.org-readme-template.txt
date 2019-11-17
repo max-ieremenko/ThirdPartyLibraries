@@ -19,6 +19,12 @@ Remarks
 -----------
 {{Remarks}}
 
+{%- if ThirdPartyNotices -%}
+Third party notices
+-----------
+{{ThirdPartyNotices}}
+{%- endif -%}
+
 Dependencies {{DependenciesCount}}
 -----------
 

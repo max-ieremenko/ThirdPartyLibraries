@@ -22,8 +22,9 @@ namespace ThirdPartyLibraries.Suite.Commands
         private ValidateCommand _sut;
         private Mock<IPackageRepository> _packageRepository;
         private Mock<IStorage> _storage;
-        private IList<Package> _storagePackages;
+        private IList<PackageInfo> _storagePackages;
         private IList<LibraryReference> _sourceReferences;
+        private LicenseIndexJson _mitLicense;
         private IList<string> _loggerErrors;
 
         [SetUp]
@@ -43,15 +44,25 @@ namespace ThirdPartyLibraries.Suite.Commands
                     _loggerErrors.Add(message);
                 });
 
-            _storagePackages = new List<Package>();
+            _storagePackages = new List<PackageInfo>();
             _sourceReferences = new List<LibraryReference>();
 
             var container = new UnityContainer();
 
+            _mitLicense = new LicenseIndexJson
+            {
+                Code = "MIT",
+                RequiresApproval = false,
+                RequiresThirdPartyNotices = false
+            };
+
             _storage = new Mock<IStorage>(MockBehavior.Strict);
             _storage
                 .Setup(s => s.GetAllLibrariesAsync(CancellationToken.None))
-                .ReturnsAsync(() => _storagePackages.Select(i => new LibraryId(i.SourceCode, i.Name, i.Version)).ToArray());
+                .ReturnsAsync(() => _storagePackages.Select(i => i.Id).ToArray());
+            _storage
+                .Setup(s => s.OpenLicenseFileReadAsync(_mitLicense.Code, "index.json", CancellationToken.None))
+                .ReturnsAsync(_mitLicense.JsonSerialize);
 
             _packageRepository = new Mock<IPackageRepository>(MockBehavior.Strict);
             _packageRepository
@@ -61,8 +72,18 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Setup(r => r.LoadPackageAsync(It.IsAny<LibraryId>(), CancellationToken.None))
                 .Returns<LibraryId, CancellationToken>((id, _) =>
                 {
-                    var package = _storagePackages.Single(i => i.Name == id.Name && i.SourceCode == id.SourceCode && i.Version == id.Version);
-                    return Task.FromResult(package);
+                    var package = _storagePackages.Single(i => i.Package.Name == id.Name && i.Package.SourceCode == id.SourceCode && i.Package.Version == id.Version);
+                    return Task.FromResult(package.Package);
+                });
+            _packageRepository
+                .Setup(r => r.LoadPackagesNoticesAsync(It.IsAny<LibraryId>(), CancellationToken.None))
+                .Returns<LibraryId, CancellationToken>((id, _) =>
+                {
+                    var package = _storagePackages.Single(i => i.Package.Name == id.Name && i.Package.SourceCode == id.SourceCode && i.Package.Version == id.Version);
+                    return Task.FromResult(new PackageNotices
+                    {
+                        ThirdPartyNotices = package.ThirdPartyNotices
+                    });
                 });
             container.RegisterInstance(_packageRepository.Object);
 
@@ -86,19 +107,22 @@ namespace ThirdPartyLibraries.Suite.Commands
         [Test]
         public async Task Success()
         {
-            var package = new Package
+            var package = new PackageInfo
             {
-                SourceCode = PackageSources.NuGet,
-                Name = "Newtonsoft.Json",
-                Version = "12.0.2",
-                ApprovalStatus = PackageApprovalStatus.Approved,
-                LicenseCode = "MIT",
-                UsedBy = new[] { AppName }
+                Package = new Package
+                {
+                    SourceCode = PackageSources.NuGet,
+                    Name = "Newtonsoft.Json",
+                    Version = "12.0.2",
+                    ApprovalStatus = PackageApprovalStatus.Approved,
+                    LicenseCode = _mitLicense.Code,
+                    UsedBy = new[] { AppName }
+                }
             };
             _storagePackages.Add(package);
 
             _sourceReferences.Add(new LibraryReference(
-                new LibraryId(package.SourceCode, package.Name, package.Version),
+                package.Id,
                 Array.Empty<string>(),
                 Array.Empty<LibraryId>(),
                 false));
@@ -127,18 +151,21 @@ namespace ThirdPartyLibraries.Suite.Commands
         [Test]
         public async Task PackageIsNotAssignedToApp()
         {
-            var package = new Package
+            var package = new PackageInfo
             {
-                SourceCode = "package-source",
-                Name = "package-name",
-                Version = "package-version",
-                ApprovalStatus = PackageApprovalStatus.Approved,
-                LicenseCode = "MIT"
+                Package = new Package
+                {
+                    SourceCode = "package-source",
+                    Name = "package-name",
+                    Version = "package-version",
+                    ApprovalStatus = PackageApprovalStatus.Approved,
+                    LicenseCode = _mitLicense.Code
+                }
             };
             _storagePackages.Add(package);
 
             _sourceReferences.Add(new LibraryReference(
-                new LibraryId(package.SourceCode, package.Name, package.Version),
+                package.Id,
                 Array.Empty<string>(),
                 Array.Empty<LibraryId>(),
                 false));
@@ -152,18 +179,21 @@ namespace ThirdPartyLibraries.Suite.Commands
         [Test]
         public async Task PackageHasNoLicense()
         {
-            var package = new Package
+            var package = new PackageInfo
             {
-                SourceCode = "package-source",
-                Name = "package-name",
-                Version = "package-version",
-                ApprovalStatus = PackageApprovalStatus.Approved,
-                UsedBy = new[] { AppName }
+                Package = new Package
+                {
+                    SourceCode = "package-source",
+                    Name = "package-name",
+                    Version = "package-version",
+                    ApprovalStatus = PackageApprovalStatus.Approved,
+                    UsedBy = new[] { AppName }
+                }
             };
             _storagePackages.Add(package);
 
             _sourceReferences.Add(new LibraryReference(
-                new LibraryId(package.SourceCode, package.Name, package.Version),
+                package.Id,
                 Array.Empty<string>(),
                 Array.Empty<LibraryId>(),
                 false));
@@ -177,19 +207,22 @@ namespace ThirdPartyLibraries.Suite.Commands
         [Test]
         public async Task PackageIsNotApproved()
         {
-            var package = new Package
+            var package = new PackageInfo
             {
-                SourceCode = "package-source",
-                Name = "package-name",
-                Version = "package-version",
-                LicenseCode = "MIT",
-                ApprovalStatus = PackageApprovalStatus.HasToBeApproved,
-                UsedBy = new[] { AppName }
+                Package = new Package
+                {
+                    SourceCode = "package-source",
+                    Name = "package-name",
+                    Version = "package-version",
+                    LicenseCode = _mitLicense.Code,
+                    ApprovalStatus = PackageApprovalStatus.HasToBeApproved,
+                    UsedBy = new[] { AppName }
+                }
             };
             _storagePackages.Add(package);
 
             _sourceReferences.Add(new LibraryReference(
-                new LibraryId(package.SourceCode, package.Name, package.Version),
+                package.Id,
                 Array.Empty<string>(),
                 Array.Empty<LibraryId>(),
                 false));
@@ -201,33 +234,97 @@ namespace ThirdPartyLibraries.Suite.Commands
         }
 
         [Test]
+        public async Task PackageIsTrash()
+        {
+            var package = new PackageInfo
+            {
+                Package = new Package
+                {
+                    SourceCode = "package-source",
+                    Name = "package-name",
+                    Version = "package-version",
+                    LicenseCode = _mitLicense.Code,
+                    ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
+                    UsedBy = new[] { AppName }
+                }
+            };
+            _storagePackages.Add(package);
+
+            var actual = await _sut.ExecuteAsync(CancellationToken.None);
+
+            actual.ShouldBeFalse();
+            _loggerErrors.ShouldContain(i => i.Contains("but references not found in the sources"));
+        }
+
+        [Test]
         public async Task PackageAutomaticallyApprovedIsNotApproved()
         {
-            var package = new Package
+            var package = new PackageInfo
             {
-                SourceCode = "package-source",
-                Name = "package-name",
-                Version = "package-version",
-                LicenseCode = "MIT",
-                ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
-                UsedBy = new[] { AppName }
+                Package = new Package
+                {
+                    SourceCode = "package-source",
+                    Name = "package-name",
+                    Version = "package-version",
+                    LicenseCode = _mitLicense.Code,
+                    ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
+                    UsedBy = new[] { AppName }
+                }
             };
             _storagePackages.Add(package);
 
             _sourceReferences.Add(new LibraryReference(
-                new LibraryId(package.SourceCode, package.Name, package.Version),
+                package.Id,
                 Array.Empty<string>(),
                 Array.Empty<LibraryId>(),
                 false));
 
-            _storage
-                .Setup(s => s.OpenLicenseFileReadAsync("MIT", "index.json", CancellationToken.None))
-                .ReturnsAsync(new LicenseIndexJson { RequiresApproval = true }.JsonSerialize);
+            _mitLicense.RequiresApproval = true;
 
             var actual = await _sut.ExecuteAsync(CancellationToken.None);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("are not approved"));
+        }
+
+        [Test]
+        public async Task PackageHasNoThirdPartyNotices()
+        {
+            var package = new PackageInfo
+            {
+                Package = new Package
+                {
+                    SourceCode = "package-source",
+                    Name = "package-name",
+                    Version = "package-version",
+                    LicenseCode = _mitLicense.Code,
+                    ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
+                    UsedBy = new[] { AppName }
+                }
+            };
+            _storagePackages.Add(package);
+
+            _sourceReferences.Add(new LibraryReference(
+                package.Id,
+                Array.Empty<string>(),
+                Array.Empty<LibraryId>(),
+                false));
+
+            _mitLicense.RequiresThirdPartyNotices = true;
+
+            var actual = await _sut.ExecuteAsync(CancellationToken.None);
+
+            actual.ShouldBeFalse();
+            _loggerErrors.ShouldContain(i => i.Contains("have no third party notices"));
+        }
+
+        private sealed class PackageInfo
+        {
+            public LibraryId Id => new LibraryId(Package.SourceCode, Package.Name, Package.Version);
+
+            public Package Package { get; set; }
+
+            public string ThirdPartyNotices { get; set; }
         }
     }
 }

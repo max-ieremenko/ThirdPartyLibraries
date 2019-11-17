@@ -10,14 +10,14 @@ namespace ThirdPartyLibraries.Suite.Internal
         IStorage Storage { get; }
 
         Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token);
-        
+
+        Task<PackageNotices> LoadPackagesNoticesAsync(LibraryId id, CancellationToken token);
+
         Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token);
 
-        Task<RepositoryLicense> LoadLicenseAsync(string licenseCode, CancellationToken token);
+        Task<RepositoryLicense> LoadOrCreateLicenseAsync(string licenseCode, CancellationToken token);
 
         Task<IList<PackageReadMe>> UpdateAllPackagesReadMeAsync(CancellationToken token);
-
-        Task<IList<PackageNotices>> LoadAllPackagesNoticesAsync(CancellationToken token);
 
         ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token);
     }

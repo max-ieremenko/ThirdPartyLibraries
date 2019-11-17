@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
 {
     internal sealed class CustomPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
+        private const string ThirdPartyNoticesFileName = "third-party-notices.txt";
+
         [Dependency]
         public IStorage Storage { get; set; }
 
@@ -35,6 +38,14 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
 
         public async Task<PackageReadMe> UpdatePackageReadMeAsync(LibraryId id, CancellationToken token)
         {
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, ThirdPartyNoticesFileName, CancellationToken.None))
+            {
+                if (stream == null)
+                {
+                    await Storage.WriteLibraryFileAsync(id, ThirdPartyNoticesFileName, Array.Empty<byte>(), token);
+                }
+            }
+
             var index = await Storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, CancellationToken.None);
             return new PackageReadMe
             {
@@ -42,7 +53,7 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
                 Name = index.Name,
                 Version = index.Version,
                 LicenseCode = index.LicenseCode,
-                ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
+                ApprovalStatus = PackageApprovalStatus.Approved,
                 UsedBy = PackageReadMe.BuildUsedBy(index.UsedBy)
             };
         }
@@ -58,7 +69,8 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
                 Copyright = index.Copyright,
                 HRef = index.HRef,
                 Author = index.Author,
-                UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray()
+                UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray(),
+                ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, token)
             };
         }
 
@@ -66,6 +78,24 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
         {
             // custom packages cannot be removed automatically
             return new ValueTask<PackageRemoveResult>(PackageRemoveResult.None);
+        }
+
+        private async Task<string> LoadThirdPartyNoticesAsync(LibraryId id, CancellationToken token)
+        {
+            string result = null;
+
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, ThirdPartyNoticesFileName, token))
+            {
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        result = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            return result.IsNullOrEmpty() ? null : result;
         }
     }
 }
