@@ -6,7 +6,7 @@ Properties  {
     $repositoryDir
 }
 
-Task default -Depends Initialize, Clean, Build, CreateThirdPartyNotices, PackGlobalTool, PackApp
+Task default -Depends Initialize, Clean, Build, Test, CreateThirdPartyNotices, PackGlobalTool, PackApp
 
 Task Initialize {
     Assert ($buildOutDir -ne $null) "Build output is missing"
@@ -14,6 +14,7 @@ Task Initialize {
     Assert (Test-Path $repositoryDir) "Repository not found"
 
     $script:buildOutAppDir = Join-Path $buildOutDir "app"
+    $script:buildOutTestDir = Join-Path $buildOutDir "test"
     $script:buildOutThirdNoticesDir = Join-Path $buildOutDir "ThirdNotices"
     $script:packageVersion = Get-AssemblyVersion (Join-Path $sourceDir "GlobalAssemblyInfo.cs")
     $script:repositoryCommitId = Get-RepositoryCommitId
@@ -34,6 +35,14 @@ Task Build {
 
     $appProjFile = Join-Path $sourceDir "ThirdPartyLibraries\ThirdPartyLibraries.csproj"
     Exec { & dotnet msbuild "/t:build" "/p:Configuration=Release" "/p:OutDir=$buildOutAppDir" $appProjFile }
+}
+
+Task Test {
+    # https://github.com/nunit/docs/wiki/.NET-Core-and-.NET-Standard
+    $projects = (Get-ChildItem $sourceDir -Recurse -Include *.Test.csproj) | Sort-Object
+    foreach ($project in $projects) {
+        Exec { & dotnet test $project }
+    }
 }
 
 Task CreateThirdPartyNotices {

@@ -23,14 +23,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Configuration\CommandLine.generate.txt" />
-    <None Remove="Configuration\CommandLine.refresh.txt" />
-    <None Remove="Configuration\CommandLine.txt" />
-    <None Remove="Configuration\CommandLine.update.txt" />
-    <None Remove="Configuration\CommandLine.validate.txt" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
   
