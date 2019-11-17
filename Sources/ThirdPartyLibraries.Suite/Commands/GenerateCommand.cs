@@ -13,7 +13,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class GenerateCommand : ICommand
     {
-        private const string OutputFileName = "ThirdPartyNotices.txt";
+        internal const string OutputFileName = "ThirdPartyNotices.txt";
 
         public GenerateCommand(IUnityContainer container, ILogger logger)
         {
