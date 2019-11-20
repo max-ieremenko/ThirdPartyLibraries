@@ -1,6 +1,6 @@
 ﻿Usage: ThirdPartyLibraries validate [options]...
 
-Update .md files in the repository
+Validate sources against a repository
 
 [options]
   -appName: a name of the current application
@@ -14,4 +14,4 @@ exit codes:
   3 - validation fails
 
 example:
-> ThirdPartyLibraries validate -to c:\ThirdPartyLibraries
+> ThirdPartyLibraries validate -appName MyApp -source c:\MySolution -repository c:\ThirdPartyLibraries
