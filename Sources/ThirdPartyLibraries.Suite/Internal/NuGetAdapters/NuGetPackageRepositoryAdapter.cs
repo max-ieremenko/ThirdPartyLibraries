@@ -14,9 +14,6 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 {
     internal sealed class NuGetPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
-        private const string RemarksFileName = "remarks.md";
-        private const string ThirdPartyNoticesFileName = "third-party-notices.txt";
-
         [Dependency]
         public INuGetApi Api { get; set; }
 
@@ -90,6 +87,17 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 await Storage.WriteLibraryFileAsync(reference.Id, attachment.Name, attachment.Content, token);
             }
 
+            if (!await Storage.LibraryFileExistsAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, token))
+            {
+                var content = await Api.LoadPackageAsync(new NuGetPackageId(reference.Id.Name, reference.Id.Version), true, token);
+                if (content == null)
+                {
+                    throw new InvalidOperationException("Package not found on www.nuget.org.");
+                }
+
+                await Storage.WriteLibraryFileAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, content, token);
+            }
+
             await Storage.WriteLibraryIndexJsonAsync(reference.Id, model, token);
         }
 
@@ -100,12 +108,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             var context = CreateReadMeContext(spec, index);
             context.ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, true, token);
 
-            using (var stream = await Storage.OpenLibraryFileReadAsync(id, RemarksFileName, CancellationToken.None))
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositoryRemarksFileName, CancellationToken.None))
             {
                 if (stream == null)
                 {
                     context.Remarks = "no remarks";
-                    await Storage.WriteLibraryFileAsync(id, RemarksFileName, Encoding.UTF8.GetBytes(context.Remarks), token);
+                    await Storage.WriteLibraryFileAsync(id, NuGetConstants.RepositoryRemarksFileName, Encoding.UTF8.GetBytes(context.Remarks), token);
                 }
                 else
                 {
@@ -251,11 +259,11 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
         {
             string result = null;
 
-            using (var stream = await Storage.OpenLibraryFileReadAsync(id, ThirdPartyNoticesFileName, token))
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositoryThirdPartyNoticesFileName, token))
             {
                 if (stream == null && createEmpty)
                 {
-                    await Storage.WriteLibraryFileAsync(id, ThirdPartyNoticesFileName, Array.Empty<byte>(), token);
+                    await Storage.WriteLibraryFileAsync(id, NuGetConstants.RepositoryThirdPartyNoticesFileName, Array.Empty<byte>(), token);
                 }
 
                 if (stream != null)

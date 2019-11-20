@@ -220,7 +220,7 @@ namespace ThirdPartyLibraries.NuGet
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
 
             _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/StyleCop.Analyzers/1.1.118/StyleCop.Analyzers.nupkg")
+                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/stylecop.analyzers/1.1.118/stylecop.analyzers.1.1.118.nupkg")
                 .Respond(
                     MediaTypeNames.Application.Octet,
                     TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"));
@@ -238,7 +238,7 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
-        public async Task FileLicenseFileStyleCopAnalyzers()
+        public async Task FindLicenseFileStyleCopAnalyzers()
         {
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
 
@@ -252,6 +252,32 @@ namespace ThirdPartyLibraries.NuGet
 
             file?.Name.ShouldBe("LICENSE");
             file?.Content.AsText().ShouldContain("Copyright (c) Tunnel Vision Laboratories");
+        }
+
+        [Test]
+        public async Task LoadPackageStyleCopAnalyzersFromWeb()
+        {
+            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
+
+            _mockHttp
+                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/stylecop.analyzers/1.1.118/stylecop.analyzers.1.1.118.nupkg")
+                .Respond(
+                    MediaTypeNames.Application.Octet,
+                    TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"));
+
+            var file = await _sut.LoadPackageAsync(package, false, CancellationToken.None);
+
+            file.ShouldNotBeNull();
+        }
+
+        [Test]
+        public async Task LoadPackageStyleCopAnalyzersFromLocalCache()
+        {
+            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
+
+            var file = await _sut.LoadPackageAsync(package, true, CancellationToken.None);
+
+            file.ShouldNotBeNull();
         }
 
         [Test]

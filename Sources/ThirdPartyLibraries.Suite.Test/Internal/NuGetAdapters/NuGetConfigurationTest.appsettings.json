@@ -1,6 +1,7 @@
 {
   "nuget.org": {
     "allowToUseLocalCache": true,
+    "downloadPackageIntoRepository": true,
     "ignorePackages": {
       "byName": [ "Abc.*" ]
     },

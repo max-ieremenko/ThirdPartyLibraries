@@ -7,5 +7,7 @@
         public NuGetIgnoreFilterConfiguration InternalPackages { get; set; } = new NuGetIgnoreFilterConfiguration();
 
         public bool AllowToUseLocalCache { get; set; }
+
+        public bool DownloadPackageIntoRepository { get; set; }
     }
 }

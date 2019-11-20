@@ -24,6 +24,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             _configuration.GetSection(PackageSources.NuGet).Bind(_sut);
 
             _sut.AllowToUseLocalCache.ShouldBeTrue();
+            _sut.DownloadPackageIntoRepository.ShouldBeTrue();
 
             _sut.IgnorePackages.ByName.ShouldBe(new[] { "Abc.*" });
             _sut.IgnorePackages.ByProjectName.ShouldBeEmpty();

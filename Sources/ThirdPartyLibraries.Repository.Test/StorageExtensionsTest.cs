@@ -115,6 +115,20 @@ namespace ThirdPartyLibraries.Repository
         }
 
         [Test]
+        public async Task LibraryFileExists()
+        {
+            var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
+
+            var actual = await _storage.Object.LibraryFileExistsAsync(id, StorageExtensions.IndexFileName, CancellationToken.None);
+            actual.ShouldBeFalse();
+
+            await _storage.Object.WriteLibraryFileAsync(id, StorageExtensions.IndexFileName, Array.Empty<byte>(), CancellationToken.None);
+
+            actual = await _storage.Object.LibraryFileExistsAsync(id, StorageExtensions.IndexFileName, CancellationToken.None);
+            actual.ShouldBeTrue();
+        }
+
+        [Test]
         public async Task WriteReadCreateNewTemplate()
         {
             var context = new RootReadMeContext

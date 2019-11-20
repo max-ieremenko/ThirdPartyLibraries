@@ -149,6 +149,7 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
 {
   "nuget.org": {
     "allowToUseLocalCache": true,
+    "downloadPackageIntoRepository": false,
     "ignorePackages": {
       "byName": [],
       "byProjectName":  [] 
@@ -167,6 +168,7 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
 |Attribute|Description
 |:--|:----------|
 |nuget.org/allowToUseLocalCache|*true* or *false* flag to allow get package metadata from NuGet local [disk cache](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)|
+|nuget.org/downloadPackageIntoRepository|*true* or *false* flag to download package into a repository|
 |nuget.org/ignorePackages/byName|regex expressions array. Ignore all packages from source code by name|
 |nuget.org/ignorePackages/byProjectName|regex expressions array. Ignore all packages from source code by project name|
 |nuget.org/internalPackages/byName|regex expressions array. Mark all packages from source code by name as InternalOnly=true|

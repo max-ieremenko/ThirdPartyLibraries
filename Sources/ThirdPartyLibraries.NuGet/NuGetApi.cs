@@ -85,6 +85,36 @@ namespace ThirdPartyLibraries.NuGet
             return code;
         }
 
+        public async Task<byte[]> LoadPackageAsync(NuGetPackageId package, bool allowToUseLocalCache, CancellationToken token)
+        {
+            if (allowToUseLocalCache)
+            {
+                var path = GetLocalCachePath(package);
+                if (path != null)
+                {
+                    return LoadPackageFromLocalCache(path, package.Name, package.Version);
+                }
+            }
+
+            var url = GetPackageUri(package);
+
+            using (var client = HttpClientFactory())
+            using (var response = await client.GetAsync(url, token))
+            {
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+
+                await response.AssertStatusCodeOk();
+
+                using (var stream = await response.Content.ReadAsStreamAsync())
+                {
+                    return await stream.ToArrayAsync(token);
+                }
+            }
+        }
+
         public async Task<byte[]> LoadFileContentAsync(NuGetPackageId package, string fileName, bool allowToUseLocalCache, CancellationToken token)
         {
             if (allowToUseLocalCache)
@@ -184,6 +214,18 @@ namespace ThirdPartyLibraries.NuGet
             return File.ReadAllBytes(fileName);
         }
 
+        private static byte[] LoadPackageFromLocalCache(string path, string packageName, string version)
+        {
+            var fileName = Path.Combine(path, "{0}.{1}.nupkg".FormatWith(packageName, version));
+
+            if (!File.Exists(fileName))
+            {
+                return null;
+            }
+
+            return File.ReadAllBytes(fileName);
+        }
+
         private static byte[] LoadFileContentFromLocalCache(string path, string fileName)
         {
             fileName = Path.Combine(path, fileName);
@@ -216,9 +258,13 @@ namespace ThirdPartyLibraries.NuGet
 
         private static string[] GetLicenseFileNames() => new[] { "LICENSE.md", "LICENSE.txt", "LICENSE", "LICENSE.rtf" };
 
+        private static Uri GetPackageUri(NuGetPackageId package) => new Uri(
+            new Uri(Host), 
+            "v3-flatcontainer/{0}/{1}/{0}.{1}.nupkg".FormatWith(package.Name.ToLowerInvariant(), package.Version.ToLowerInvariant()));
+
         private async Task<TResult> AnalyzePackageContentAsync<TResult>(NuGetPackageId package, Func<ZipArchive, Task<TResult>> callback, CancellationToken token)
         {
-            var url = new Uri(new Uri(Host), "v3-flatcontainer/{0}/{1}/{0}.nupkg".FormatWith(package.Name, package.Version));
+            var url = GetPackageUri(package);
 
             using (var client = HttpClientFactory())
             using (var response = await client.GetAsync(url, token))

@@ -7,6 +7,9 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
     internal static class NuGetConstants
     {
         public const string RepositorySpecFileName = "package.nuspec";
+        public const string RepositoryPackageFileName = "package.nupkg";
+        public const string RepositoryRemarksFileName = "remarks.md";
+        public const string RepositoryThirdPartyNoticesFileName = "third-party-notices.txt";
 
         internal static Package CreatePackage(NuGetSpec spec, string licenseCode, string licenseStatus)
         {

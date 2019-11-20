@@ -57,6 +57,18 @@ namespace ThirdPartyLibraries.Repository
             }
         }
 
+        public static async ValueTask<bool> LibraryFileExistsAsync(this IStorage storage, LibraryId id, string fileName, CancellationToken token)
+        {
+            storage.AssertNotNull(nameof(storage));
+            fileName.AssertNotNull(nameof(fileName));
+
+            var content = await storage.OpenLibraryFileReadAsync(id, fileName, token);
+            using (content)
+            {
+                return content != null;
+            }
+        }
+
         public static async Task WriteLibraryIndexJsonAsync<TModel>(this IStorage storage, LibraryId id, TModel model, CancellationToken token)
         {
             storage.AssertNotNull(nameof(storage));
