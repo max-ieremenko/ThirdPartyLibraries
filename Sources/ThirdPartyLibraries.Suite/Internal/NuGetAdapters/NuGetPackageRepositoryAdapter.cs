@@ -92,7 +92,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
             if (Configuration.DownloadPackageIntoRepository && !await Storage.LibraryFileExistsAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, token))
             {
-                var content = await Api.LoadPackageAsync(new NuGetPackageId(reference.Id.Name, reference.Id.Version), true, token);
+                var content = await Api.LoadPackageAsync(new NuGetPackageId(reference.Id.Name, reference.Id.Version), Configuration.AllowToUseLocalCache, token);
                 if (content == null)
                 {
                     throw new InvalidOperationException("Package not found on www.nuget.org.");
