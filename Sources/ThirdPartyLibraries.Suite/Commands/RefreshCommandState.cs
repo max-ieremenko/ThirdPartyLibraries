@@ -43,8 +43,8 @@ namespace ThirdPartyLibraries.Suite.Commands
                     license = new RootReadMeLicenseContext
                     {
                         Code = repositoryLicense.Code,
-                        RequiresApproval = repositoryLicense.RequiresApproval ? "yes" : "no",
-                        RequiresThirdPartyNotices = repositoryLicense.RequiresThirdPartyNotices ? "yes" : "no",
+                        RequiresApproval = repositoryLicense.RequiresApproval,
+                        RequiresThirdPartyNotices = repositoryLicense.RequiresThirdPartyNotices,
                         LocalHRef = Repository.Storage.GetLicenseLocalHRef(repositoryLicense.Code, RelativeTo.Root)
                     };
 
