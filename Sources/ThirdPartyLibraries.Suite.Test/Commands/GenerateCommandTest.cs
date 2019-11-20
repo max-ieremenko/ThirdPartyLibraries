@@ -164,5 +164,76 @@ namespace ThirdPartyLibraries.Suite.Commands
             output.ShouldNotContain(notice1.Name);
             output.ShouldNotContain(notice2.Name);
         }
+
+        [Test]
+        public async Task CopyDependentLicense()
+        {
+            var notice = new PackageNotices
+            {
+                Name = "name",
+                Version = "version",
+                LicenseCode = "LGPL-3.0",
+                UsedBy = new[] { new PackageNoticesApplication(AppName, false) }
+            };
+            _noticeses.Add(notice);
+
+            var lgplLicense = new LicenseIndexJson
+            {
+                Code = "LGPL-3.0",
+                HRef = "https://spdx.org/licenses/LGPL-3.0",
+                FullName = "GNU Lesser General Public License v3.0"
+            };
+
+            var gplLicense = new LicenseIndexJson
+            {
+                Code = "GPL-3.0",
+                HRef = "https://spdx.org/licenses/GPL-3.0",
+                FileName = "license.txt",
+                FullName = "GNU General Public License v3.0"
+            };
+
+            var mitLicense = new LicenseIndexJson
+            {
+                Code = "MIT",
+                HRef = "https://spdx.org/licenses/MIT.html",
+                FileName = "license.txt",
+                FullName = "MIT License"
+            };
+
+            lgplLicense.Dependencies = new[] { gplLicense.Code };
+            gplLicense.Dependencies = new[] { mitLicense.Code };
+            mitLicense.Dependencies = new[] { lgplLicense.Code };
+
+            _storage
+                .Setup(s => s.OpenLicenseFileReadAsync(lgplLicense.Code, "index.json", CancellationToken.None))
+                .ReturnsAsync(lgplLicense.JsonSerialize);
+
+            _storage
+                .Setup(s => s.OpenLicenseFileReadAsync(gplLicense.Code, "index.json", CancellationToken.None))
+                .ReturnsAsync(gplLicense.JsonSerialize);
+
+            _storage
+                .Setup(s => s.OpenLicenseFileReadAsync(mitLicense.Code, "index.json", CancellationToken.None))
+                .ReturnsAsync(mitLicense.JsonSerialize);
+            
+            _storage
+                            .Setup(s => s.OpenLicenseFileReadAsync(gplLicense.Code, "license.txt", CancellationToken.None))
+                .ReturnsAsync(() => new MemoryStream("GPL-3.0 license text".AsBytes()));
+
+            _storage
+                .Setup(s => s.OpenLicenseFileReadAsync(mitLicense.Code, "license.txt", CancellationToken.None))
+                .ReturnsAsync(() => new MemoryStream("MIT license text".AsBytes()));
+
+            await _sut.ExecuteAsync(CancellationToken.None);
+
+            FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
+            FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "GPL-3.0-license.txt"));
+
+            var output = File.ReadAllText(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
+            output.ShouldBe("MIT license text");
+            
+            output = File.ReadAllText(Path.Combine(_to.Location, "Licenses", "GPL-3.0-license.txt"));
+            output.ShouldBe("GPL-3.0 license text");
+        }
     }
 }

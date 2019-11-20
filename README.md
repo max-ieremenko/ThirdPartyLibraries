@@ -220,7 +220,8 @@ File *index.json* contains a metadata for the tool:
   "RequiresApproval": true,
   "RequiresThirdPartyNotices": false,
   "HRef": "https://spdx.org/licenses/MIT",
-  "FileName": "license.txt"
+  "FileName": "license.txt",
+  "Dependencies": []
 }
 ```
 
@@ -232,6 +233,7 @@ File *index.json* contains a metadata for the tool:
 |RequiresThirdPartyNotices|*true* or *false* (default) flag to indicate the package must contain extra text in ThirdPartyNotices.txt|
 |HRef|public link to the license information, is used to generate third party notices|
 |FileName|name of the file in this folder with a copy of the license text, is used to generate third party notices|
+|Dependencies|the array of license codes, to copy license file, is used to generate third party notices|
 
 Such license information can be created either automatically by the tool or manually.
 Once created, the folder becomes read-only for the tool.

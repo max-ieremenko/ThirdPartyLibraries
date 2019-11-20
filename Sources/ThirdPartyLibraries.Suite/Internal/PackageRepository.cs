@@ -50,7 +50,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var index = await Storage.ReadLicenseIndexJsonAsync(licenseCode, token);
             if (index != null)
             {
-                return new RepositoryLicense(index.Code, index.RequiresApproval);
+                return new RepositoryLicense(index.Code, index.RequiresApproval, index.RequiresThirdPartyNotices, index.Dependencies);
             }
 
             var info = await Container.Resolve<ILicenseResolver>().DownloadByCodeAsync(licenseCode, token);
@@ -76,7 +76,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             await Storage.CreateLicenseIndexJsonAsync(index, token);
             await Storage.CreateLicenseFileAsync(info.Code, info.FileName, info.FileContent, token);
 
-            return new RepositoryLicense(index.Code, index.RequiresApproval);
+            return new RepositoryLicense(index.Code, index.RequiresApproval, index.RequiresThirdPartyNotices, index.Dependencies);
         }
 
         public async Task<IList<PackageReadMe>> UpdateAllPackagesReadMeAsync(CancellationToken token)

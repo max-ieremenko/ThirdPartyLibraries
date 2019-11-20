@@ -44,6 +44,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     {
                         Code = repositoryLicense.Code,
                         RequiresApproval = repositoryLicense.RequiresApproval ? "yes" : "no",
+                        RequiresThirdPartyNotices = repositoryLicense.RequiresThirdPartyNotices ? "yes" : "no",
                         LocalHRef = Repository.Storage.GetLicenseLocalHRef(repositoryLicense.Code, RelativeTo.Root)
                     };
 

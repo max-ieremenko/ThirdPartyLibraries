@@ -86,6 +86,8 @@ namespace ThirdPartyLibraries.Suite.Commands
                 HRef = index.HRef
             };
 
+            _indexByCode.Add(code, result);
+
             if (!index.FileName.IsNullOrEmpty())
             {
                 Directory.CreateDirectory(Path.Combine(To, "Licenses"));
@@ -95,6 +97,14 @@ namespace ThirdPartyLibraries.Suite.Commands
                 using (var dest = new FileStream(Path.Combine(To, result.FileName), FileMode.Create, FileAccess.ReadWrite))
                 {
                     await content.CopyToAsync(dest, token);
+                }
+            }
+
+            if (!index.Dependencies.IsNullOrEmpty())
+            {
+                foreach (var dependency in index.Dependencies)
+                {
+                    await LoadLicenseIndexAsync(dependency, token);
                 }
             }
 

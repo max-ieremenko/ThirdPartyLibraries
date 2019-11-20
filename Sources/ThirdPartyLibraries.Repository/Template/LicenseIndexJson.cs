@@ -1,4 +1,6 @@
-﻿namespace ThirdPartyLibraries.Repository.Template
+﻿using System;
+
+namespace ThirdPartyLibraries.Repository.Template
 {
     public sealed class LicenseIndexJson
     {
@@ -13,5 +15,7 @@
         public string HRef { get; set; }
 
         public string FileName { get; set; }
+
+        public string[] Dependencies { get; set; } = Array.Empty<string>();
     }
 }

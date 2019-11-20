@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
+using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 
 namespace ThirdPartyLibraries.Suite.Commands
@@ -44,12 +45,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             var result = false;
             foreach (var code in codes)
             {
-                if (!_licenseByCode.TryGetValue(code, out var license))
-                {
-                    license = await Repository.LoadOrCreateLicenseAsync(code, token);
-                    _licenseByCode.Add(license.Code, license);
-                }
-
+                var license = await LoadLicenseAsync(code, token);
                 if (license.RequiresApproval)
                 {
                     result = true;
@@ -64,6 +60,27 @@ namespace ThirdPartyLibraries.Suite.Commands
             var allIds = await Repository.Storage.GetAllLibrariesAsync(token);
 
             return allIds.Where(i => !_processed.Contains(i)).ToList();
+        }
+
+        private async Task<RepositoryLicense> LoadLicenseAsync(string code, CancellationToken token)
+        {
+            if (_licenseByCode.TryGetValue(code, out var license))
+            {
+                return license;
+            }
+
+            license = await Repository.LoadOrCreateLicenseAsync(code, token);
+            _licenseByCode.Add(license.Code, license);
+
+            if (!license.Dependencies.IsNullOrEmpty())
+            {
+                foreach (var dependency in license.Dependencies)
+                {
+                    await LoadLicenseAsync(dependency, token);
+                }
+            }
+
+            return license;
         }
     }
 }
