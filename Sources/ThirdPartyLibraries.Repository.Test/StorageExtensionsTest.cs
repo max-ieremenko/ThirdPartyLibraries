@@ -139,7 +139,8 @@ namespace ThirdPartyLibraries.Repository
                     {
                         Code = "MIT",
                         LocalHRef = "licenses/mit",
-                        RequiresApproval = "no",
+                        RequiresApproval = false,
+                        RequiresThirdPartyNotices = false,
                         PackagesCount = 1
                     }
                 },
