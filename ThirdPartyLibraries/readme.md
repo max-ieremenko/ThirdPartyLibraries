@@ -1,15 +1,15 @@
 Licenses
 --------
 	
-|Code|Requires approval|Packages count|
-|----------|:----|:----|
-|[Apache-2.0](licenses/apache-2.0)|no|16|
-|[BSD-2-Clause](licenses/bsd-2-clause)|no|1|
-|[BSD-3-Clause](licenses/bsd-3-clause)|no|1|
-|[CC-BY-2.5](licenses/cc-by-2.5)|yes|1|
-|[CC-BY-3.0](licenses/cc-by-3.0)|yes|1|
-|[MIT](licenses/mit)|no|6|
-|[ms-net-library](licenses/ms-net-library)|no|30|
+|Code|Requires approval|Requires third party notices|Packages count|
+|----------|:----|:----|:----|
+|[Apache-2.0](licenses/apache-2.0)|no|no|16|
+|[BSD-2-Clause](licenses/bsd-2-clause)|no|no|1|
+|[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
+|[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
+|[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
+|[MIT](licenses/mit)|no|no|6|
+|[ms-net-library](licenses/ms-net-library)|no|no|30|
 
 
 

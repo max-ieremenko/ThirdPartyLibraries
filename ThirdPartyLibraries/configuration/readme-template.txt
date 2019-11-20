@@ -1,10 +1,10 @@
 ﻿Licenses
 --------
 	
-|Code|Requires approval|Packages count|
-|----------|:----|:----|
+|Code|Requires approval|Requires third party notices|Packages count|
+|----------|:----|:----|:----|
 {% for license in Licenses -%}
-|[{{license.Code}}]({{license.LocalHRef}})|{{license.RequiresApproval}}|{{license.PackagesCount}}|
+|[{{license.Code}}]({{license.LocalHRef}})|{% if license.RequiresApproval%}yes{% else %}no{% endif %}|{% if license.RequiresThirdPartyNotices%}yes{% else %}no{% endif %}|{{license.PackagesCount}}|
 {% endfor -%}
 
 {%- if TodoPackagesCount > 0 -%}
