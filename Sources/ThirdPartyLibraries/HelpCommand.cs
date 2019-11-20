@@ -17,7 +17,8 @@ namespace ThirdPartyLibraries
 
         public ValueTask<bool> ExecuteAsync(CancellationToken token)
         {
-            var fileName = Command.IsNullOrEmpty() ? "CommandLine.txt" : "CommandLine.{0}.txt".FormatWith(Command);
+            var suffix = Command.IsNullOrEmpty() ? "default" : Command;
+            var fileName = "CommandLine.{0}.txt".FormatWith(suffix);
             Logger.Info(LoadContent(fileName));
 
             return new ValueTask<bool>(true);

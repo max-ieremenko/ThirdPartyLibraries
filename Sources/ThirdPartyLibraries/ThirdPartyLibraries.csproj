@@ -31,7 +31,7 @@
     <EmbeddedResource Include="Configuration\CommandLine.validate.txt" />
     <EmbeddedResource Include="Configuration\CommandLine.refresh.txt" />
     <EmbeddedResource Include="Configuration\CommandLine.update.txt" />
-    <EmbeddedResource Include="Configuration\CommandLine.txt" />
+    <EmbeddedResource Include="Configuration\CommandLine.default.txt" />
   </ItemGroup>
   
   <ItemGroup>
