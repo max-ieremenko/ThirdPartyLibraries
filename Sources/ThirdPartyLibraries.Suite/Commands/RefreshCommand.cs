@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
@@ -47,7 +45,6 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = metadata.Version,
                     License = metadata.LicenseCode,
                     IsApproved = metadata.ApprovalStatus == PackageApprovalStatus.Approved || metadata.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved,
-                    ApprovalStatus = "TODO",
                     UsedBy = metadata.UsedBy,
                     SourceHRef = metadata.HRef,
                     LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version), RelativeTo.Root),
@@ -58,11 +55,6 @@ namespace ThirdPartyLibraries.Suite.Commands
                 if (packageContext.SourceHRef.IsNullOrEmpty())
                 {
                     packageContext.SourceHRef = packageContext.LocalHRef;
-                }
-
-                if (packageContext.IsApproved)
-                {
-                    packageContext.ApprovalStatus = metadata.ApprovalStatus == PackageApprovalStatus.Approved ? "OK" : "auto";
                 }
 
                 rootContext.Packages.Add(packageContext);

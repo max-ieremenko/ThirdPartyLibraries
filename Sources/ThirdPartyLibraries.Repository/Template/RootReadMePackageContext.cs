@@ -19,8 +19,6 @@ namespace ThirdPartyLibraries.Repository.Template
 
         public bool IsApproved { get; set; }
 
-        public string ApprovalStatus { get; set; }
-
         public string LocalHRef { get; set; }
 
         public string SourceHRef { get; set; }
