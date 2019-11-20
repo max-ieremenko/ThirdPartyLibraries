@@ -15,6 +15,9 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
     internal sealed class NuGetPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
         [Dependency]
+        public NuGetConfiguration Configuration { get; set; }
+
+        [Dependency]
         public INuGetApi Api { get; set; }
 
         [Dependency]
@@ -87,7 +90,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 await Storage.WriteLibraryFileAsync(reference.Id, attachment.Name, attachment.Content, token);
             }
 
-            if (!await Storage.LibraryFileExistsAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, token))
+            if (Configuration.DownloadPackageIntoRepository && !await Storage.LibraryFileExistsAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, token))
             {
                 var content = await Api.LoadPackageAsync(new NuGetPackageId(reference.Id.Name, reference.Id.Version), true, token);
                 if (content == null)

@@ -26,7 +26,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             _repository = new Mock<IStorage>(MockBehavior.Strict);
             _api = new Mock<INuGetApi>(MockBehavior.Strict);
 
-            _sut = new NuGetPackageRepositoryAdapter { Storage = _repository.Object, Api = _api.Object };
+            _sut = new NuGetPackageRepositoryAdapter
+            {
+                Storage = _repository.Object,
+                Api = _api.Object,
+                Configuration = new NuGetConfiguration()
+            };
         }
 
         [Test]
