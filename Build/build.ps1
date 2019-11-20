@@ -1,4 +1,6 @@
 #Install-Module -Name psake
+#Requires -Modules @{ModuleName='psake'; RequiredVersion='4.9.0'}
+
 $workingDir = $PSScriptRoot
 
 $buildOutDir = Join-Path $workingDir "..\build.out"

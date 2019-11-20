@@ -66,5 +66,5 @@ Task PackGlobalTool {
 
 Task PackApp {
     $destination = Join-Path $buildOutDir "ThirdPartyLibraries-$packageVersion.zip"
-    Compress-Archive -Path "$buildOutAppDir\*" -DestinationPath $destination
+    Compress-Archive -Path "$buildOutAppDir\*","$buildOutThirdNoticesDir\*" -DestinationPath $destination
 }
