@@ -75,7 +75,12 @@ namespace ThirdPartyLibraries.Suite.Commands
            var libraries = await repository.Storage.GetAllLibrariesAsync(token);
            var result = new List<PackageNotices>(libraries.Count);
 
-           foreach (var id in libraries)
+           var sorted = libraries
+               .OrderBy(i => i.Name)
+               .ThenBy(i => i.Version)
+               .ThenBy(i => i.SourceCode);
+
+           foreach (var id in sorted)
            {
                var package = await repository.LoadPackagesNoticesAsync(id, token);
                if (UsePackage(package))
