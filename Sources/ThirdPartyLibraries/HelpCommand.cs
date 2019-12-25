@@ -21,7 +21,7 @@ namespace ThirdPartyLibraries
             var fileName = "CommandLine.{0}.txt".FormatWith(suffix);
             Logger.Info(LoadContent(fileName));
 
-            return new ValueTask<bool>(true);
+            return new ValueTask<bool>(false);
         }
 
         private static string LoadContent(string fileName)
