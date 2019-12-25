@@ -119,6 +119,34 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
+        public async Task Load2010SpecCommonLogging()
+        {
+            var package = new NuGetPackageId("Common.Logging", "2.0.0");
+
+            _mockHttp
+                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/Common.Logging/2.0.0/Common.Logging.nuspec")
+                .Respond(
+                    MediaTypeNames.Application.Xml,
+                    TempFile.OpenResource(GetType(), "NuGetApiTest.Common.Logging.2.0.0.nuspec.xml"));
+
+            var specContent = await _sut.LoadSpecAsync(package, false, CancellationToken.None);
+            var spec = _sut.ParseSpec(new MemoryStream(specContent));
+
+            spec.ShouldNotBeNull();
+            spec.Id.ShouldBe("Common.Logging");
+            spec.Version.ShouldBe("2.0.0");
+            spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/Common.Logging/2.0.0");
+            spec.Description.ShouldBe("Common.Logging library introduces a simple abstraction to allow you to select a specific logging implementation at runtime.");
+            spec.Authors.ShouldBe("Aleksandar Seovic, Mark Pollack, Erich Eichinger");
+            spec.Copyright.ShouldBeNull();
+
+            spec.License.ShouldBeNull();
+            spec.LicenseUrl.ShouldBeNull();
+            spec.ProjectUrl.ShouldBe("http://netcommon.sourceforge.net/");
+            spec.Repository.ShouldBeNull();
+        }
+
+        [Test]
         public async Task LoadSpecStyleCopAnalyzersFromLocalCache()
         {
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
