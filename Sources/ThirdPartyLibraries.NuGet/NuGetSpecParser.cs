@@ -20,14 +20,13 @@ namespace ThirdPartyLibraries.NuGet
 
             var doc = new XPathDocument(stream);
             
-            var navigator = doc.CreateNavigator();
-            navigator.MoveToFollowing(XPathNodeType.Element);
-            var namespaceUri = navigator.GetNamespacesInScope(XmlNamespaceScope.All)[string.Empty];
+            var metadata = FindMetaData(doc);
+            var namespaceUri = metadata.GetNamespacesInScope(XmlNamespaceScope.All)[string.Empty];
 
-            var ns = new XmlNamespaceManager(navigator.NameTable);
+            var ns = new XmlNamespaceManager(metadata.NameTable);
             ns.AddNamespace("n", namespaceUri);
 
-            var spec = ParseSpec(doc.CreateNavigator(), ns);
+            var spec = ParseSpec(FindMetaData(doc), ns);
             spec.PackageHRef = "https://" + KnownHosts.NuGetOrg + "/packages/" + HttpUtility.UrlEncode(spec.Id) + "/" + HttpUtility.UrlEncode(spec.Version);
             spec.Version = new SemanticVersion(spec.Version).Version;
 
@@ -49,19 +48,31 @@ namespace ThirdPartyLibraries.NuGet
             return (noGroup ?? Enumerable.Empty<NuGetPackageId>()).Concat(targetGroup ?? Enumerable.Empty<NuGetPackageId>());
         }
 
-        private static NuGetSpec ParseSpec(XPathNavigator navigator, XmlNamespaceManager ns)
+        private static XPathNavigator FindMetaData(XPathDocument doc)
+        {
+            return doc
+                .CreateNavigator()
+                .SelectChildren(XPathNodeType.Element)
+                .Cast<XPathNavigator>()
+                .First(i => "package".Equals(i.Name, StringComparison.Ordinal))
+                .SelectChildren(XPathNodeType.Element)
+                .Cast<XPathNavigator>()
+                .First(i => "metadata".Equals(i.Name, StringComparison.Ordinal));
+        }
+
+        private static NuGetSpec ParseSpec(XPathNavigator metadata, XmlNamespaceManager ns)
         {
             var spec = new NuGetSpec
             {
-                Id = navigator.SelectSingleNode("n:package/n:metadata/n:id", ns).Value,
-                Version = navigator.SelectSingleNode("n:package/n:metadata/n:version", ns).Value,
-                LicenseUrl = navigator.SelectSingleNode("n:package/n:metadata/n:licenseUrl", ns)?.Value,
-                ProjectUrl = navigator.SelectSingleNode("n:package/n:metadata/n:projectUrl", ns)?.Value,
-                Description = navigator.SelectSingleNode("n:package/n:metadata/n:description", ns)?.Value,
-                Authors = navigator.SelectSingleNode("n:package/n:metadata/n:authors", ns)?.Value,
-                Copyright = navigator.SelectSingleNode("n:package/n:metadata/n:copyright", ns)?.Value,
-                Repository = ParseSpecRepository(navigator, ns),
-                License = ParseSpecLicense(navigator, ns)
+                Id = metadata.SelectSingleNode("n:id", ns).Value,
+                Version = metadata.SelectSingleNode("n:version", ns).Value,
+                LicenseUrl = metadata.SelectSingleNode("n:licenseUrl", ns)?.Value,
+                ProjectUrl = metadata.SelectSingleNode("n:projectUrl", ns)?.Value,
+                Description = metadata.SelectSingleNode("n:description", ns)?.Value,
+                Authors = metadata.SelectSingleNode("n:authors", ns)?.Value,
+                Copyright = metadata.SelectSingleNode("n:copyright", ns)?.Value,
+                Repository = ParseSpecRepository(metadata, ns),
+                License = ParseSpecLicense(metadata, ns)
             };
 
             if (Version.TryParse(spec.Version, out var version) && version.Build < 0)
@@ -73,9 +84,9 @@ namespace ThirdPartyLibraries.NuGet
             return spec;
         }
 
-        private static NuGetSpecLicense ParseSpecLicense(XPathNavigator navigator, XmlNamespaceManager ns)
+        private static NuGetSpecLicense ParseSpecLicense(XPathNavigator metadata, XmlNamespaceManager ns)
         {
-            var node = navigator.SelectSingleNode("n:package/n:metadata/n:license", ns);
+            var node = metadata.SelectSingleNode("n:license", ns);
             if (node == null)
             {
                 return null;
@@ -88,9 +99,9 @@ namespace ThirdPartyLibraries.NuGet
             };
         }
 
-        private static NuGetSpecRepository ParseSpecRepository(XPathNavigator navigator, XmlNamespaceManager ns)
+        private static NuGetSpecRepository ParseSpecRepository(XPathNavigator metadata, XmlNamespaceManager ns)
         {
-            var node = navigator.SelectSingleNode("n:package/n:metadata/n:repository", ns);
+            var node = metadata.SelectSingleNode("n:repository", ns);
             if (node == null)
             {
                 return null;
