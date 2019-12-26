@@ -29,5 +29,9 @@
         public const string DotNetMicrosoftCom = "dotnet.microsoft.com";
 
         public const string CodeProject = "www.codeproject.com";
+
+        public const string NpmRegistry = "registry.npmjs.org";
+
+        public const string Npm = "www.npmjs.com";
     }
 }

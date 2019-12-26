@@ -1,0 +1,80 @@
+{
+  "_from": "@types/angular@^1.6.51",
+  "_id": "@types/angular@1.6.55",
+  "_inBundle": false,
+  "_integrity": "sha512-jpQ5K6t76thd9Ook5x4Xj9K462hMje6/Q84SFxglBmaW8HOLblVnALpvg6w6aV3Oe6o9jWXnYH8gHHKrfSRxNQ==",
+  "_location": "/@types/angular",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@types/angular@^1.6.51",
+    "name": "@types/angular",
+    "escapedName": "@types%2fangular",
+    "scope": "@types",
+    "rawSpec": "^1.6.51",
+    "saveSpec": null,
+    "fetchSpec": "^1.6.51"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "/@types/angular-animate",
+    "/@types/angular-mocks",
+    "/@types/angular-route",
+    "/@types/angular-sanitize"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/angular/-/angular-1.6.55.tgz",
+  "_shasum": "1d745af6deadcb5c2c0f6f6e9d85bc18c25a520b",
+  "_spec": "@types/angular@^1.6.51",
+  "_where": "G:\\octopus\\sources\\Octopus.Frontend",
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Diego Vilar",
+      "url": "https://github.com/diegovilar"
+    },
+    {
+      "name": "Georgii Dolzhykov",
+      "url": "https://github.com/thorn0"
+    },
+    {
+      "name": "Caleb St-Denis",
+      "url": "https://github.com/calebstdenis"
+    },
+    {
+      "name": "Leonard Thieu",
+      "url": "https://github.com/leonard-thieu"
+    },
+    {
+      "name": "Steffen Kowalski",
+      "url": "https://github.com/scipper"
+    }
+  ],
+  "dependencies": {
+    "angular": "^1.7.4",
+    "angular-animate": "^1.7.3"
+  },
+  "devDependencies": {
+    "@types/angular-animate": "^1.5.10",
+    "@types/angular-mocks": "^1.7.0"
+  },
+  "deprecated": false,
+  "description": "TypeScript definitions for Angular JS",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/angular",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "directory": "types/angular"
+  },
+  "scripts": {},
+  "typeScriptVersion": "2.3",
+  "types": "index",
+  "typesPublisherContentHash": "7f873dfa952c6650a830cf1755e9ebcb05b23c97865ae1f886aa11b5b958e11c",
+  "version": "1.6.55"
+}

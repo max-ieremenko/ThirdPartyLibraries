@@ -1,0 +1,4531 @@
+{
+  "_id": "@types/angular",
+  "_rev": "689-dcfdf4dccfe472b377d456907cc1b86c",
+  "name": "@types/angular",
+  "description": "TypeScript definitions for Angular JS",
+  "dist-tags": {
+    "latest": "1.6.57",
+    "ts2.0": "1.6.18",
+    "ts2.1": "1.6.18",
+    "ts2.2": "1.6.18",
+    "ts2.3": "1.6.56",
+    "ts2.4": "1.6.56",
+    "ts2.5": "1.6.56",
+    "ts2.6": "1.6.56",
+    "ts2.7": "1.6.56",
+    "ts2.8": "1.6.57",
+    "ts2.9": "1.6.57",
+    "ts3.0": "1.6.57",
+    "ts3.1": "1.6.57",
+    "ts3.2": "1.6.57",
+    "ts3.3": "1.6.57",
+    "ts3.4": "1.6.57",
+    "ts3.5": "1.6.57",
+    "ts3.6": "1.6.57",
+    "ts3.7": "1.6.57",
+    "ts3.8": "1.6.57"
+  },
+  "versions": {
+    "1.5.1-alpha": {
+      "name": "@types/angular",
+      "version": "1.5.1-alpha",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/angular": "1.5.0-alpha",
+        "@types/jquery": "1.10.22-alpha"
+      },
+      "_id": "@types/angular@1.5.1-alpha",
+      "_shasum": "fd7b9f5d6d214b90050e8e4d7a4a9b0e6f23630d",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.7.2",
+      "_nodeVersion": "6.2.1",
+      "_npmUser": {
+        "name": "types",
+        "email": "ryan.cavanaugh@microsoft.com"
+      },
+      "dist": {
+        "shasum": "fd7b9f5d6d214b90050e8e4d7a4a9b0e6f23630d",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.1-alpha.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.1-alpha.tgz_1467410893153_0.8196998930070549"
+      },
+      "directories": {
+      }
+    },
+    "1.5.2-alpha": {
+      "name": "@types/angular",
+      "version": "1.5.2-alpha",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/angular": "1.5.1-alpha",
+        "@types/jquery": "1.10.23-alpha"
+      },
+      "_id": "@types/angular@1.5.2-alpha",
+      "_shasum": "f3e4970770e690da35eb8b1cb563fb224fe7e0cb",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.7.2",
+      "_nodeVersion": "6.2.1",
+      "_npmUser": {
+        "name": "types",
+        "email": "ryan.cavanaugh@microsoft.com"
+      },
+      "dist": {
+        "shasum": "f3e4970770e690da35eb8b1cb563fb224fe7e0cb",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.2-alpha.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.2-alpha.tgz_1467424407737_0.08610763610340655"
+      },
+      "directories": {
+      }
+    },
+    "1.5.3-alpha": {
+      "name": "@types/angular",
+      "version": "1.5.3-alpha",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/angular": "1.5.3-alpha",
+        "@types/jquery": "1.10.25-alpha"
+      },
+      "_id": "@types/angular@1.5.3-alpha",
+      "_shasum": "2c6c461d2ba30f5c49dce648f9d2aaa5a519dd5c",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.7.2",
+      "_nodeVersion": "6.2.1",
+      "_npmUser": {
+        "name": "types",
+        "email": "ryan.cavanaugh@microsoft.com"
+      },
+      "dist": {
+        "shasum": "2c6c461d2ba30f5c49dce648f9d2aaa5a519dd5c",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.3-alpha.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.3-alpha.tgz_1467589463354_0.9378487023059279"
+      },
+      "directories": {
+      }
+    },
+    "1.5.4-alpha": {
+      "name": "@types/angular",
+      "version": "1.5.4-alpha",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/angular": "1.5.4-alpha",
+        "@types/jquery": "1.10.26-alpha"
+      },
+      "_id": "@types/angular@1.5.4-alpha",
+      "_shasum": "efd9858a953cc6a9194827e7bde2bfae20260197",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.10.3",
+      "_nodeVersion": "6.3.0",
+      "_npmUser": {
+        "name": "types",
+        "email": "ryan.cavanaugh@microsoft.com"
+      },
+      "dist": {
+        "shasum": "efd9858a953cc6a9194827e7bde2bfae20260197",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.4-alpha.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.4-alpha.tgz_1468006344512_0.9814871673006564"
+      },
+      "directories": {
+      }
+    },
+    "1.5.5-alpha": {
+      "name": "@types/angular",
+      "version": "1.5.5-alpha",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/angular": "1.5.4-alpha",
+        "@types/jquery": "1.10.26-alpha"
+      },
+      "_id": "@types/angular@1.5.5-alpha",
+      "_shasum": "4a0e936f631a7e34e513c17b4190e6fecab87cef",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.10.3",
+      "_nodeVersion": "6.3.0",
+      "_npmUser": {
+        "name": "types",
+        "email": "ryan.cavanaugh@microsoft.com"
+      },
+      "dist": {
+        "shasum": "4a0e936f631a7e34e513c17b4190e6fecab87cef",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.5-alpha.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.5-alpha.tgz_1468276057523_0.9003312680870295"
+      },
+      "directories": {
+      }
+    },
+    "1.5.6-alpha": {
+      "name": "@types/angular",
+      "version": "1.5.6-alpha",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/jquery": "1.10.26-alpha"
+      },
+      "_id": "@types/angular@1.5.6-alpha",
+      "_shasum": "ebaf7ac5817493938966057aebb3873d1b82d712",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.10.3",
+      "_nodeVersion": "6.3.0",
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "dist": {
+        "shasum": "ebaf7ac5817493938966057aebb3873d1b82d712",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.6-alpha.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.6-alpha.tgz_1468436806211_0.09590223641134799"
+      },
+      "directories": {
+      }
+    },
+    "1.5.7": {
+      "name": "@types/angular",
+      "version": "1.5.7",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "main": "",
+      "scripts": {
+      },
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "license": "MIT",
+      "typings": "index.d.ts",
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "_id": "@types/angular@1.5.7",
+      "_shasum": "68204a1a271c9b9d0c139a25a4d6fc15c77445d3",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.10.3",
+      "_nodeVersion": "6.3.0",
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "dist": {
+        "shasum": "68204a1a271c9b9d0c139a25a4d6fc15c77445d3",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.7.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.7.tgz_1468504717290_0.5349006827455014"
+      },
+      "directories": {
+      }
+    },
+    "1.5.8": {
+      "name": "@types/angular",
+      "version": "1.5.8",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": {
+        "name": "Diego Vilar",
+        "email": "http://github.com/diegovilar"
+      },
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "typings": "index.d.ts",
+      "_id": "@types/angular@1.5.8",
+      "_shasum": "4b333912f4a1878389cce0dc9091d18c9aed61bc",
+      "_from": "output\\angular",
+      "_resolved": "file:output\\angular",
+      "_npmVersion": "3.10.3",
+      "_nodeVersion": "6.3.0",
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "dist": {
+        "shasum": "4b333912f4a1878389cce0dc9091d18c9aed61bc",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.8.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.8.tgz_1468933745081_0.5024624865036458"
+      },
+      "directories": {
+      }
+    },
+    "1.5.9": {
+      "name": "@types/angular",
+      "version": "1.5.9",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "typings": "index.d.ts",
+      "_id": "@types/angular@1.5.9",
+      "dist": {
+        "shasum": "ded0e54fa7efab5fe9cd12409c21d20c8b14a05a",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.9.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.9.tgz_1470152665362_0.789903388125822"
+      },
+      "directories": {
+      }
+    },
+    "1.5.10": {
+      "name": "@types/angular",
+      "version": "1.5.10",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "typings": "index.d.ts",
+      "_id": "@types/angular@1.5.10",
+      "dist": {
+        "shasum": "af78c61e80d86a9e0aa3c51a32de0c0b502e4442",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.10.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.10.tgz_1470688481902_0.028098448179662228"
+      },
+      "directories": {
+      }
+    },
+    "1.5.11": {
+      "name": "@types/angular",
+      "version": "1.5.11",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "typings": "index.d.ts",
+      "_id": "@types/angular@1.5.11",
+      "dist": {
+        "shasum": "4c7002afed07bb5a4609525a814405e94f1141e6",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.11.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.11.tgz_1471528397306_0.13705950742587447"
+      },
+      "directories": {
+      }
+    },
+    "1.5.12": {
+      "name": "@types/angular",
+      "version": "1.5.12",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "typings": "index.d.ts",
+      "_id": "@types/angular@1.5.12",
+      "dist": {
+        "shasum": "21046c3a37d248229e6f803e82a53a306fa07486",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.12.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.12.tgz_1471619978335_0.9072906621731818"
+      },
+      "directories": {
+      }
+    },
+    "1.5.13": {
+      "name": "@types/angular",
+      "version": "1.5.13",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "1.10.*"
+      },
+      "typings": "index.d.ts",
+      "_id": "@types/angular@1.5.13",
+      "dist": {
+        "shasum": "81251d86572ad9e6b4eb78e7eb44aab76f36937b",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.13.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.13.tgz_1472149983375_0.7168370406143367"
+      },
+      "directories": {
+      }
+    },
+    "1.5.14": {
+      "name": "@types/angular",
+      "version": "1.5.14",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "a5f7c74be768157702170dbd4b742f110cbc5864bb6dfecc0e1b785ac60a8a8b",
+      "_id": "@types/angular@1.5.14",
+      "dist": {
+        "shasum": "1b443be96910fd8080c357c9eb9448928b8b5838",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.14.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-16-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.14.tgz_1474072330865_0.5528906639665365"
+      },
+      "directories": {
+      }
+    },
+    "1.5.15": {
+      "name": "@types/angular",
+      "version": "1.5.15",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "8039e7327a5aa25174feb74023806dda43cde13c182ad63d371f404e13705724",
+      "_id": "@types/angular@1.5.15",
+      "dist": {
+        "shasum": "c8ca3cead006653b937506ec9d150b9f40a2e1c0",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.15.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.15.tgz_1474489587946_0.6400566801894456"
+      },
+      "directories": {
+      }
+    },
+    "1.5.16": {
+      "name": "@types/angular",
+      "version": "1.5.16",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "e9d3b8e335e809f24e44c1ea109abece974bc918b4f0a1ab5cac707bdec1beec",
+      "_id": "@types/angular@1.5.16",
+      "dist": {
+        "shasum": "02a56754b50dbf9209266b4339031a54317702d9",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.16.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.16.tgz_1474653553258_0.8487933673895895"
+      },
+      "directories": {
+      }
+    },
+    "1.5.17": {
+      "name": "@types/angular",
+      "version": "1.5.17",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "bb9d06dbf3179fc1e04eaeb26e1af90848a99619178155999ad26aa138d2af05",
+      "_id": "@types/angular@1.5.17",
+      "dist": {
+        "shasum": "39d1c2d50c07ffdfce46292cdd28978c60a39396",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.17.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.17.tgz_1477509846616_0.8183873144444078"
+      },
+      "directories": {
+      }
+    },
+    "1.5.18": {
+      "name": "@types/angular",
+      "version": "1.5.18",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "f5f626f684994eb627e2d47fb6bcc9613bd8fbc95f97217f8fe606ede9a5187c",
+      "_id": "@types/angular@1.5.18",
+      "dist": {
+        "shasum": "ce3f025dd7b6eacb31fa686cbee982646da54bac",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.18.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.18.tgz_1478005071818_0.7621744335629046"
+      },
+      "directories": {
+      }
+    },
+    "1.5.19": {
+      "name": "@types/angular",
+      "version": "1.5.19",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "adf20d19782951d6ac920dd9e853cfca079d459d624979bef775504eb02258fc",
+      "_id": "@types/angular@1.5.19",
+      "dist": {
+        "shasum": "8fd6503afef2947aa059aa0ff8eda1872044f469",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.19.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.19.tgz_1478005318331_0.12304725032299757"
+      },
+      "directories": {
+      }
+    },
+    "1.5.20": {
+      "name": "@types/angular",
+      "version": "1.5.20",
+      "description": "TypeScript definitions for Angular JS 1.5",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typings": "index.d.ts",
+      "typesPublisherContentHash": "f6e95378e36b3e9c84227a72b6a9b47ec68ba7e270ea85dbe4ccbe8e4f2e9baf",
+      "_id": "@types/angular@1.5.20",
+      "dist": {
+        "shasum": "e1b38a93ab238d68b03e2ff69f0e193212d103d8",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.20.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.20.tgz_1479152136966_0.8842869808431715"
+      },
+      "directories": {
+      }
+    },
+    "1.5.21": {
+      "name": "@types/angular",
+      "version": "1.5.21",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "fc9b6076f25599b2d815ba8ff77c3bbf4ab2653bcbd2b1cd07162a2ba3119f48",
+      "_id": "@types/angular@1.5.21",
+      "dist": {
+        "shasum": "fd0ddff30ae6ed193f793268e09956d5fa580d23",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.21.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.21.tgz_1481583047604_0.3636151140090078"
+      },
+      "directories": {
+      }
+    },
+    "1.5.22": {
+      "name": "@types/angular",
+      "version": "1.5.22",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "936b70e8153c7155645cbed189555ac4ffa2f50b26b3d5dfacc0646dae81fab8",
+      "_id": "@types/angular@1.5.22",
+      "dist": {
+        "shasum": "a243e2297cef6dea06351f5e4af37474d2737d31",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.22.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.22.tgz_1482244656496_0.5134690201375633"
+      },
+      "directories": {
+      }
+    },
+    "1.5.23": {
+      "name": "@types/angular",
+      "version": "1.5.23",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "b0c790ed7ffc6b7a08e031c880e65d4d51da54633b9b7422cf1cd251e3d8974b",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.5.23",
+      "dist": {
+        "shasum": "ccd175556e341064da8e4d6a0c3e49f4b99a2182",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.5.23.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.5.23.tgz_1483638347613_0.48211542586795986"
+      },
+      "directories": {
+      }
+    },
+    "1.6.0": {
+      "name": "@types/angular",
+      "version": "1.6.0",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "1a7655bf11371cfeb87e79fbead98c60b972989266d9aaf4aa6dce9231aa2225",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.0",
+      "dist": {
+        "shasum": "992513ec558e9f217d53502c7624f0b57dca7058",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.0.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.0.tgz_1484155075671_0.4244227479211986"
+      },
+      "directories": {
+      }
+    },
+    "1.6.1": {
+      "name": "@types/angular",
+      "version": "1.6.1",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "11e19c1ab6ac0eac0d091ab07fce7cf24702cbcc0617263c7c020b3bf512e34d",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.1",
+      "dist": {
+        "shasum": "c42e6614171abc8c83089605aacaf434b0e22808",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.1.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.1.tgz_1484410309799_0.45618273108266294"
+      },
+      "directories": {
+      }
+    },
+    "1.6.2": {
+      "name": "@types/angular",
+      "version": "1.6.2",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "6df1d6e5302276f969ac390377d283ddcec5b1f5fc9fce9532b92dcfb3566cf2",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.2",
+      "dist": {
+        "shasum": "a5c323ea5d4426ad18984cc8167fa091f7c8201b",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.2.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.2.tgz_1484672376074_0.9823688624892384"
+      },
+      "directories": {
+      }
+    },
+    "1.6.3": {
+      "name": "@types/angular",
+      "version": "1.6.3",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "1da0b4d6f414479751f68e927448b3c92ab8c5dfb7646901d8f43d285f3b4072",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.3",
+      "dist": {
+        "shasum": "48d0d86cec90ffe3fd90e134da6d54759351f799",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.3.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.3.tgz_1485757438107_0.8866431072819978"
+      },
+      "directories": {
+      }
+    },
+    "1.6.4": {
+      "name": "@types/angular",
+      "version": "1.6.4",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "fa04766c8c451bcdc369147f4c7f8a069f92c1c2b70a46873d0452e4b820f228",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.4",
+      "dist": {
+        "shasum": "1320951883d7c3314084141a5cebea97bbbd824f",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.4.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.4.tgz_1486175337553_0.811837816843763"
+      },
+      "directories": {
+      }
+    },
+    "1.6.5": {
+      "name": "@types/angular",
+      "version": "1.6.5",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "author": "Diego Vilar <http://github.com/diegovilar>, Georgii Dolzhykov <http://github.com/thorn0>",
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "57669bd6be7d20335bc247ba9484a27302321f73b7f2a483405c7e8ab902ee40",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.5",
+      "dist": {
+        "shasum": "5af34642d475eea4c8914b60733fed7aa65e7e47",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.5.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.5.tgz_1486500822799_0.14304695231840014"
+      },
+      "directories": {
+      }
+    },
+    "1.6.6": {
+      "name": "@types/angular",
+      "version": "1.6.6",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "30b439e22ff4795526095bb4669d09dbe830ad0189d06e1bd6bf9e01085fa7e6",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.6",
+      "dist": {
+        "shasum": "5009a7f58542e3325c4b5a8f12c06c2dd8eedd38",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.6.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.6.tgz_1487368213142_0.14970729197375476"
+      },
+      "directories": {
+      }
+    },
+    "1.6.7": {
+      "name": "@types/angular",
+      "version": "1.6.7",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "ae9eea5927db031ff95e9c2b3edca7e2fef5e2ac94843f90003c5c66e903f8f6",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.7",
+      "dist": {
+        "shasum": "8935a2b4a796fe7ca4f59f533f467804722fb0c4",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.7.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.7.tgz_1487863380248_0.5745059887412935"
+      },
+      "directories": {
+      }
+    },
+    "1.6.8": {
+      "name": "@types/angular",
+      "version": "1.6.8",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "681fb344bf5e8f9122c485bdbc2e48d4a9b66d6715fd87f876646ab36df4d195",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.8",
+      "dist": {
+        "shasum": "749727d392f06b370f39df5811e7c00e5eb6dc1c",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.8.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.8.tgz_1489128169684_0.8664073206018656"
+      },
+      "directories": {
+      }
+    },
+    "1.6.9": {
+      "name": "@types/angular",
+      "version": "1.6.9",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "24b26d05e7b28a6b3ddbeac95622024c65f0408035308af6b64be47e14420027",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.9",
+      "dist": {
+        "shasum": "71558dcb26124c5255db78d608a6745cf0739caf",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.9.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.9.tgz_1489129808678_0.8146283675450832"
+      },
+      "directories": {
+      }
+    },
+    "1.6.10": {
+      "name": "@types/angular",
+      "version": "1.6.10",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "b955af4f5d4c3f0d3c970a524c2d38662f59fa7a6b384dc5e5a4ccc7230c77af",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.10",
+      "dist": {
+        "shasum": "1c6a458305c85b16c98fe5173b843a836dbc2b67",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.10.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.10.tgz_1490127563103_0.8219673770945519"
+      },
+      "directories": {
+      }
+    },
+    "1.6.11": {
+      "name": "@types/angular",
+      "version": "1.6.11",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "e7e0baa3c9da16eff2d774087ff8d4e9d1af021c7bf982d84467d6e161c64b19",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.11",
+      "dist": {
+        "shasum": "2d430666a574aeda040265b602ce4271981ede6f",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.11.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.11.tgz_1490827077990_0.4844961913768202"
+      },
+      "directories": {
+      }
+    },
+    "1.6.12": {
+      "name": "@types/angular",
+      "version": "1.6.12",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "55e3c746cd67ce87b3debd2e6ddb7ffbe05725311a7531f0ec3d9d389d37d28b",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.12",
+      "dist": {
+        "shasum": "a9ef895dd06323f0fff59b0448f01178f0e95866",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.12.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.12.tgz_1490902733700_0.930186663987115"
+      },
+      "directories": {
+      }
+    },
+    "1.6.13": {
+      "name": "@types/angular",
+      "version": "1.6.13",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "a1f4f1f9d956e2e50bf8960b64994ed383071d0227c1be4a2e2b8b062d486e77",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.13",
+      "dist": {
+        "shasum": "4763ac63617a9efcb027da82fe4ef7016de2e4fe",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.13.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.13.tgz_1490914547923_0.25134435715153813"
+      },
+      "directories": {
+      }
+    },
+    "1.6.14": {
+      "name": "@types/angular",
+      "version": "1.6.14",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "e51e35e1471fb3c6779ca9741dd26a2286a22fa9b842bb1ffcdb6b7e2d2fa96e",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.14",
+      "dist": {
+        "shasum": "6923ba9f325b80fd9546c856d147782b551f637a",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.14.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ryan.cavanaugh@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.14.tgz_1490915235870_0.3519759171176702"
+      },
+      "directories": {
+      }
+    },
+    "1.6.15": {
+      "name": "@types/angular",
+      "version": "1.6.15",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "fbb23daa439713a9a5f44720f21f102e6de8fd9e7063527ab91f8bf131c3ea91",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.15",
+      "dist": {
+        "shasum": "f7d177deecaecebfa072ea812ceec80dbe1580c9",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.15.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.15.tgz_1492636758808_0.44553876342251897"
+      },
+      "directories": {
+      }
+    },
+    "1.6.16": {
+      "name": "@types/angular",
+      "version": "1.6.16",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "b0c7040940f0d49a341238ea2911050d7ce2f9d38c970ea38ecbdc05f3c33c32",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.16",
+      "dist": {
+        "shasum": "f649ef28dd56311a7d8c10be19af879a2a3a9151",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.16.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.16.tgz_1493233702337_0.5599708366207778"
+      },
+      "directories": {
+      }
+    },
+    "1.6.17": {
+      "name": "@types/angular",
+      "version": "1.6.17",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "74eee7421f3f4e84715cabdbd7bd9469eea27370b499d45bf9af08993df1cc70",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.17",
+      "dist": {
+        "shasum": "5bd59e77350943ffbffb8bb98dfe718acbb6ed27",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.17.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/angular-1.6.17.tgz_1493838699418_0.2802444822154939"
+      },
+      "directories": {
+      }
+    },
+    "1.6.18": {
+      "name": "@types/angular",
+      "version": "1.6.18",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "9cfeaf322d7e4a7cb7798917cdce963ac478df0a0d1e112275af061e7a46b0d8",
+      "typeScriptVersion": "2.0",
+      "_id": "@types/angular@1.6.18",
+      "dist": {
+        "integrity": "sha512-BZW2QjWyr6mbji1liIceUeryvmrpX37fC6Rel6MG9s0BeWMpvOrTHcHcB/8f2oII9R/k/ZNXDBorp+tDhTWTBg==",
+        "shasum": "1df57e3c8b1f1fe629f58f4f1f2269bf57be91a8",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.18.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.18.tgz_1496416126811_0.6521376345772296"
+      },
+      "directories": {
+      }
+    },
+    "1.6.19": {
+      "name": "@types/angular",
+      "version": "1.6.19",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "67338129df55a345815a4a8fbc9516378044285ad9b72bf4334c9edaf55755c4",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.19",
+      "dist": {
+        "integrity": "sha512-LNHHFHg/JV9+wyByrus+rvgE4yZufj3Cds3G0azVewyQNsGPElLck/YIfI7AGrad+zhc9FQmXRwrFPieK6T1Ew==",
+        "shasum": "a81137c2c5b046495bf2bc794cd4c30b349e2edd",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.19.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.19.tgz_1497557084607_0.7241947553120553"
+      },
+      "directories": {
+      }
+    },
+    "1.6.20": {
+      "name": "@types/angular",
+      "version": "1.6.20",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "1e97eb596a9145b91096cafbecd66e764274073d9df83e904104ef1f6ac280ba",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.20",
+      "dist": {
+        "integrity": "sha512-xaqoQpA9iSYyWw2R8/UuKbSqGVmDgjgtkXkok027SpphcSCpyz3ib3tR2NJY8olzdmlo015urcpHsuAxCHvB5A==",
+        "shasum": "6d1556494cf06683f19e36ff25028af9ef1e2d31",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.20.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.20.tgz_1497991647308_0.46802598889917135"
+      },
+      "directories": {
+      }
+    },
+    "1.6.21": {
+      "name": "@types/angular",
+      "version": "1.6.21",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+        "@types/jquery": "*"
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "d0f44d5b792d14b40f20d1277a8d311aaf6271e2b17d2e1419fcbab63c0f4fd8",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.21",
+      "dist": {
+        "integrity": "sha512-E8mIqMhZqmfK9rKowCOCMOdfz34f9fYbN5Y4asWrLmIGFoV/N6ie3N3WCwAFfxuybPP6mSrO0roORHrDhqoU9A==",
+        "shasum": "010c15954cbfe875b144b095b88b93a7293e8f12",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.21.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.21.tgz_1498226599697_0.7028931137174368"
+      },
+      "directories": {
+      }
+    },
+    "1.6.22": {
+      "name": "@types/angular",
+      "version": "1.6.22",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "0c560ced4c6530336febe43ab87f4d037007dd6e10a5e5be0763cfd59497e65a",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.22",
+      "dist": {
+        "integrity": "sha512-r1uqkepIEuHac2/aEgPbpiy086x07lRmwx8qypiis9anXvoAi+Dc58uAghElXUggrdZl8HzYsw7Ce9a7Sn49LQ==",
+        "shasum": "9c080420d2c44030ffe6dfccf553f2ed878bfc5d",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.22.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.22.tgz_1498485702481_0.7160665541887283"
+      },
+      "directories": {
+      }
+    },
+    "1.6.23": {
+      "name": "@types/angular",
+      "version": "1.6.23",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "116d60bbe8ad0b1a4d2542e345a34b742752eca51e65b5b85d20debeec4e9002",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.23",
+      "dist": {
+        "integrity": "sha512-oRbkLomofNcDVxXqT0RsXJ8LOURVqzcbKLTser/Im6ZqqKIFLkTzwDnpF4HpQ/ZK2kHxk3mE+mSe07hKP/yljA==",
+        "shasum": "e313e23b2458a8c7e8fd29da421ca5d8ae1975c6",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.23.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.23.tgz_1498571488571_0.4624284519813955"
+      },
+      "directories": {
+      }
+    },
+    "1.6.24": {
+      "name": "@types/angular",
+      "version": "1.6.24",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "fac0577bcb93a2dc16e2b3ff4975368c2e075ccd82a1578281db352f51ced509",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.24",
+      "dist": {
+        "integrity": "sha512-ZIgHvXTO6sZTff0+FYjjXcvvlzCs1piMbH4PaRxHF+pd5ADTQ3/FxqM6gPMvjxMJCd8BpQOaGoIlQ7+e72IXnA==",
+        "shasum": "f19510cf4efa5816158fa01b1aa2df94eb7bcde8",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.24.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.24.tgz_1498664458084_0.9597582139540464"
+      },
+      "directories": {
+      }
+    },
+    "1.6.25": {
+      "name": "@types/angular",
+      "version": "1.6.25",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "0078510a872d947db411cf60c406d8944c4be921349f0d30bae6ec5a37cf64a6",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.25",
+      "dist": {
+        "integrity": "sha512-8L9VLUTwbLRzCo9OWk5YQmvDmGCkxhjDIulw7hWIVHa9AV4ojRsbtBdhF06VOgK1mV4U7vej3fw0ivjppZmgTg==",
+        "shasum": "d403e94b40e06af3d9b76da5031795a9b929d08a",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.25.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.25.tgz_1498747748091_0.008786147693172097"
+      },
+      "directories": {
+      }
+    },
+    "1.6.26": {
+      "name": "@types/angular",
+      "version": "1.6.26",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "267311295d17ceea5d05c850e368d172084a6482f6754587e2617722635595e9",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.26",
+      "dist": {
+        "integrity": "sha512-PdoZ2kKe2AytqVSReTdqYV1Wxqf70zREnys+kCeAh0wUMXOZboA1IFzqcKOxUMRGEL2npbfCCiv2FJBOaOCdNA==",
+        "shasum": "a96cccef648de0bf7435f3b9bad13f2430719305",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.26.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.26.tgz_1499894220674_0.7294296224135906"
+      },
+      "directories": {
+      }
+    },
+    "1.6.27": {
+      "name": "@types/angular",
+      "version": "1.6.27",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "bbfd625731796e46a615ac4e4eb98928f7b2b01ebeb394084bc70566283eeabe",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.27",
+      "dist": {
+        "integrity": "sha512-wepfn6wCUsYKBt6yUP6hpptUweu6i/MAyDrFHMDayXgiQ5J5Istl48aogoeH/Z7sG1GoLZ7mVg1togq9QG3t0g==",
+        "shasum": "d18feb611e23fc85c3c98b1b5f76a7cece56de0d",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.27.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.27.tgz_1500406020272_0.13510790467262268"
+      },
+      "directories": {
+      }
+    },
+    "1.6.28": {
+      "name": "@types/angular",
+      "version": "1.6.28",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "c7ff90a391813c5adc7ff02d7985e6ed7a6e40a1805a92f1e652429536b7f6b1",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.28",
+      "dist": {
+        "integrity": "sha512-nggmqD2AL83axal/j9zbefA0cN8T7mcYfuLBZ9EQColQr2U6GYY7EfBVwMCV401GQovxG6HDyOIfrYRAooLu2w==",
+        "shasum": "e85d62c72c5fbd408b463cd2c9d24f75cc6bec98",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.28.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.28.tgz_1501271361841_0.8092786017805338"
+      },
+      "directories": {
+      }
+    },
+    "1.6.29": {
+      "name": "@types/angular",
+      "version": "1.6.29",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "http://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "http://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "peerDependencies": {
+      },
+      "typesPublisherContentHash": "f3442f28e9980cd3cd4ccdec8f417db849acb64d6f9a554bf6c77cf3055345b6",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.29",
+      "dist": {
+        "integrity": "sha512-kp9bkw8L4qZPYNAWKGA052T4gvmrYec2iA+IM7bu/kDrmtVTSTH2Ju+NQByEZBsF63yjX0E/SMyHye1PFmUg1g==",
+        "shasum": "8d654495f05986a44841694bf1f721d9971055da",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.29.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.29.tgz_1502736251720_0.5482258568517864"
+      },
+      "directories": {
+      }
+    },
+    "1.6.30": {
+      "name": "@types/angular",
+      "version": "1.6.30",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "6a880238ed68962903b0478673ec842d96956a8d83ce23dab5a4857d784a2b92",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.30",
+      "dist": {
+        "integrity": "sha512-RFhY/lbRiB+XdsFaLhwADO5DZr8A4liXR/avPOJUViGz5szqDRM3qHDSXC35M+HMdVQ04MFM8J+unXhkXSGq1Q==",
+        "shasum": "929a00da226a48c54431aa33a41d0cae60ccc386",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.30.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.30.tgz_1503352049943_0.43892836826853454"
+      },
+      "directories": {
+      }
+    },
+    "1.6.31": {
+      "name": "@types/angular",
+      "version": "1.6.31",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "c571d8ad0be7d85264d69bb81d6d0b9359c438b66e0ae88276b593598722092d",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.31",
+      "dist": {
+        "integrity": "sha512-r8wey5k/XXwAwRQsSFCSPO362L+/9YQqOBMilXmMW4ArGiaWi0Bw8n620JeEEl20J87+ucJeQCFuvJWZy6rLcw==",
+        "shasum": "480b8ae62197d7a21046305add9f6dc25ac6e7e2",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.31.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.31.tgz_1503510842041_0.7598179313354194"
+      },
+      "directories": {
+      }
+    },
+    "1.6.32": {
+      "name": "@types/angular",
+      "version": "1.6.32",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "2d52b2a8a884e9614417201aa929c4ed06b03459ff6766db4de9ffdada837428",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.32",
+      "dist": {
+        "integrity": "sha512-xpx7oFBN2oQEwtD80m+aI8wpejzGvlgkgzYD+MpxFTyJtlbwUUUIaJEaEJOtgtF/9Fndt3q6W1qNGf7vO2AUjw==",
+        "shasum": "fc791aad038227d9413eb5e552993e1076f8a509",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.32.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.32.tgz_1504042316348_0.8995459601283073"
+      },
+      "directories": {
+      }
+    },
+    "1.6.33": {
+      "name": "@types/angular",
+      "version": "1.6.33",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "d7d660762a77db943a8d795a58b56982dca9e768aefa9f5d25d355b1d7f400a2",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.33",
+      "dist": {
+        "integrity": "sha512-ig1ooGUCgDh5xhCG5f1AbQuuyzU9Kz5aQdv2rdEdOZhSnkfwpk9l35RKRNFFJFJ7DiAeYMTCTM9cUTNvUnEh8Q==",
+        "shasum": "48236f6b26798598287c06dae7dcff182be00706",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.33.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.33.tgz_1508170251968_0.3011224726215005"
+      },
+      "directories": {
+      }
+    },
+    "1.6.34": {
+      "name": "@types/angular",
+      "version": "1.6.34",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "329d4fd611ec2e4d3e589653a79b3a40f997b53206065538968196d64a4ec8fb",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.34",
+      "dist": {
+        "integrity": "sha512-D8BCXg7glBaZA32uePDOewqkruWr07lZ4XWMdBi24uG74ywPnlDyP8z44LjPk/WMqZSHhEcRYvntn1GNR/rWnA==",
+        "shasum": "05014ffcb0288b36056058b4c9dda9edf580bf4c",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.34.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.34.tgz_1508171109046_0.11088486178778112"
+      },
+      "directories": {
+      }
+    },
+    "1.6.35": {
+      "name": "@types/angular",
+      "version": "1.6.35",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "a67aca98baa15b4969786649eaa8bdc2cb8bd8d1ce5eb6fb1a7aba1d15e92ad6",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.35",
+      "dist": {
+        "integrity": "sha512-6Cxq9ZQ1T6j/xEPJ/yvGVt6gBBvuixGIl42Mc+TyoC9AFsOiuTloxNAbU3JhiplrnlBU/lGp67EcCLq0hxg73g==",
+        "shasum": "895324e54da97c35c2722b8d7eda185e5363828f",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.35.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.35.tgz_1508890797211_0.6967588728293777"
+      },
+      "directories": {
+      }
+    },
+    "1.6.36": {
+      "name": "@types/angular",
+      "version": "1.6.36",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "4476f3bbf6576101d598579cf8aaad1baf7363836f2ddcf27fcc52203deaa662",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.36",
+      "dist": {
+        "integrity": "sha512-p8AFxZFpCsfbmrb0oMF03or1nbuBZ59ZhvRPrFyLXOHyFOw3K9r/aEFygGpF+HiapJyt9PHllo7JP1ay9yIV3g==",
+        "shasum": "15e73d632274b5655a391470844863548c7755f4",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.36.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.36.tgz_1509043999634_0.017565069952979684"
+      },
+      "directories": {
+      }
+    },
+    "1.6.37": {
+      "name": "@types/angular",
+      "version": "1.6.37",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "98d53050ff5a616678fd4fb6ec7545744a3ded465c86ca4bf3857c255b0ddc68",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.37",
+      "dist": {
+        "integrity": "sha512-6wU+/d1hyXpfl+ybGfB/PAmAgIZ0t9UlsW+d80agJM/vczi4vtBZTQwRa6GtgY9cXXPDz58FDGMluIVSceGM6g==",
+        "shasum": "43d1d12604aec9771544aff69566dbca7afa5568",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.37.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.37.tgz_1509771222643_0.5030792006291449"
+      },
+      "directories": {
+      }
+    },
+    "1.6.38": {
+      "name": "@types/angular",
+      "version": "1.6.38",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "17be53282f4f51e8ee6a15e798ae762ea50178703c2ac61923be9219c7860cb7",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.38",
+      "dist": {
+        "integrity": "sha512-1XR9ucdooguxXfBJT7D77Z9aZdwiVtqkO6bsoFGFVaFNzEKBmXuEPkO7rPhqDEjBr+x3SgA6idZgeVtQoTjO/w==",
+        "shasum": "78640577ad50b23e5aaa94a9f584c38cd3ac0ab5",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.38.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.38.tgz_1509784994989_0.16383836674503982"
+      },
+      "directories": {
+      }
+    },
+    "1.6.39": {
+      "name": "@types/angular",
+      "version": "1.6.39",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "4f81590ece6a43953b022a34bcc2386ad087ccaaf1cfa99a7da3fb712123ef07",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.39",
+      "dist": {
+        "integrity": "sha512-fRj26foAwYbjOwnGSpIaY05+jRxZevHWwzcSrQIsJgh5Xrosbu4fX99+obJH4YFFS8+EkYRwsSpf2vpVddSNVw==",
+        "shasum": "0c34938fc546f360c14817686f2e453ebf22312f",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.39.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.39.tgz_1510078341184_0.24639952089637518"
+      },
+      "directories": {
+      }
+    },
+    "1.6.40": {
+      "name": "@types/angular",
+      "version": "1.6.40",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "f5f15f2b925b0cda6c21fcc5afb7047b3ac3ee97c5924c5b37bda54981f85d4d",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.40",
+      "dist": {
+        "integrity": "sha512-svgm2RiWEVvoNkeX+gDWA412KluZ6MBPQNu8SRkEfGmHgVhAZ6r3A+k51/KzeoEoY/GY9ZBT/Qc3fAjpGwCyJg==",
+        "shasum": "f4e5a77573068c07ccab320e63e1616e1f097fc9",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.40.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.40.tgz_1514585730282_0.4655447870027274"
+      },
+      "directories": {
+      }
+    },
+    "1.6.41": {
+      "name": "@types/angular",
+      "version": "1.6.41",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "6008362b6c253f38f5639547d39d61751ee1869e4ef393f5fbf0143930d019b9",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.41",
+      "dist": {
+        "integrity": "sha512-vz/XXRb3XM7YCAFdgVba4eXr4yb6TjoLkMNNqtEF7Ket7vR6jP2dp4cmBHVvNMMjXHYydzzLP6AAEhZFOqMhCA==",
+        "shasum": "627fe0206461fd6fb1135dad780fa8257bbee627",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.41.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.41.tgz_1516757136430_0.2114852697122842"
+      },
+      "directories": {
+      }
+    },
+    "1.6.42": {
+      "name": "@types/angular",
+      "version": "1.6.42",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "82a480e1ef8699a76a3e4542bb9f9127bb13b68e2306dcde210ad1199ce748bf",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.42",
+      "dist": {
+        "integrity": "sha512-JKx/tYYWzVRGQs/FF9Jo55VsF9Vb4D2/CMS1M6fyWOI1dq0dLzt0obJfmxtbgBgjBVzcBJW0ikMJ8oz96Dx7Ow==",
+        "shasum": "8d587afeccff635900ffb04a10a0cae894704ef2",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.42.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular-1.6.42.tgz_1517260582238_0.5488651837222278"
+      },
+      "directories": {
+      }
+    },
+    "1.6.43": {
+      "name": "@types/angular",
+      "version": "1.6.43",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "090238e65c291317796000fe01d1320bfc98597407f8189aa95198653daeabf5",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.43",
+      "dist": {
+        "integrity": "sha512-3GrHCRZS62ruJjHMtOx3WYsS0I8i0FRcIqOwqIfWXnlR9g2FebEhUNdMk3LZIvfhZ08xe+S1x2iwP1t9vKCHag==",
+        "shasum": "6235ef416053a86302970717510a936d889cbb9a",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.43.tgz",
+        "fileCount": 5,
+        "unpackedSize": 149246
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.43_1518729949331_0.8312081522035459"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.44": {
+      "name": "@types/angular",
+      "version": "1.6.44",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "6f61e0d297fe42be0350ca9de8f75d4f5054333dc3e8a588bee21b685d4e0786",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.44",
+      "dist": {
+        "integrity": "sha512-O7N+j+lobjhK7svFLe7O3qSOfB3ckdVhGLYDVKtnBE8mSLqyegu+pHgRrfi5pQxuFVEaU/W465d8Hwu7sVt5mw==",
+        "shasum": "df33f057d5ac7c1a7e55c812af30a65099cbd5b1",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.44.tgz",
+        "fileCount": 5,
+        "unpackedSize": 152653,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJa603MCRA9TVsSAnZWagAAZqgQAIDmUkhC/oCGZoplJcu/\nbBBHRqCu8Rooety/e4yQkgLKabHOC4snPR/mZOfKU2SqTlJi4bGWB8dxKXmF\n3lhweF84xBlxrcDs4xhzysNGDGqkB1+8HrkTjYGTgU60BIiyY4dVWJ5m/Mmr\no4TLjTaDDoUYcE1v0sDI8pNHfKNsW6XJZ1NikQOT3mLBNfu6uS6eDMl/UrPx\nVXp9FGuX9bEOea6Y/z2SWcmx/0QgKrpr1kIN9YlUO2L6BMI2riI64lPbPVZr\nqUsQnR8UvXcYeZoKSccRTPkIfMFvtn36xLMKiuHp1IU95wavpgqhL5LogGhQ\nZDUjTy8VraJYhzGQW9D+MaSTq46erXEfCQ3H7esZpOM3UNRWoBWxl2Bk/Avk\nnQjM5xW0rQlB8Ak8wSUutJE5AZCbxQCGwN0VN8S28KANIrRWeLvyGCWXIe4g\n0Enx3lXVOqM0fWMo8MMBHxOqSx59KyBsSoD6qh4qW4jomHcAxpLJ1Px1cjzT\nT6iotsqEoswoORNBdKZfR/GkhYG9B9Tjgqu3C9TY19RN1qd9V67qwqUuiWLY\nRA2Mh2HPTJjzXRqOMhF5x3fTRL+gJ26g2bqj0tIKIMxp4RUU4YIZj0PdF0B9\n2vKI0+nn+8NKarQmS8Hg3xl1LKyB6eqp+oblVNHeKkRDErPicyCk8b3kXBs/\nx+5b\r\n=CSHJ\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.44_1525370315362_0.4208097186464519"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.45": {
+      "name": "@types/angular",
+      "version": "1.6.45",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "b3bf17faa615b254c5988348114d8d9644d03a1bb8b4d679ef0d68b7816f4219",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.45",
+      "dist": {
+        "integrity": "sha512-eXm3F/z2j8lVq7yBLL2G8QAygzYAboIJbJ46g26t71hgPtlxV9ibEJIBNj4KxCIZf7DcQo/KSnqaQ/0D9Rx2GA==",
+        "shasum": "5b0b91a51d717f6fc816d59e1234d5292f33f7b9",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.45.tgz",
+        "fileCount": 5,
+        "unpackedSize": 152660,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJa62YJCRA9TVsSAnZWagAAStYQAJz0H/MOGXjp6l5kzjx4\nPnvJW5qsDsvu4WaPhXPAJHjV3MTEfFBiMaFvrNSdW8QKmKl5Ge7pnwYwqXvz\n9xRjinkoX+3CozvY+QCyapkx9aBPe0EGM77DjrJtIppNfKruAOfHweFr3f0X\nRhNqhxvfFc3CFXupef2TLNyugpiC4K+EtxJciRzq/u9vipRvv2UT7BImctkr\nlV7iR18GFIuN/tciPL3yBOmXEQlGo/bDc3fwqLM13neq2UyJluCJeU1JpnmQ\n/4ShBGSrr1AkIzCGrPlq3DIby8fsWmqPdHzUHSYZejoqbBU8GxoGiKcH4w9M\nsrVG3aIcGjiTvPpqbCgSuf0Sh61db1thW+ymOrx4hExjw08a/I8EEzCajXAr\nqwisN4674NcJ6ctW3hHgwPfHtDMKdWn1Q8BSICeEGMtMWREFmnJUFgSBA0S7\n1v6pArotWi7LSzI1Jo+liwtzDzU7/wbqYGBhmPEKILN3cZy3IxZ4pCHe2wqY\nax4uGJrO3ls2Iq77pv5mzuoA9D0SOwjgX0zHQLDPEig3WnikGBVRU70r7eUN\nemrcCxa/pxaJ/LjazNEz6+1cKFp2sc5fP3HAYKUro/o0lT7QH+GTJFzceUXd\nv3hxC9HcA6nRKX/1KKw3ttl3RflPYTdg2iElnG4v6dFFlWA6ju+h1Iw/Wm0X\nK8lE\r\n=JaSC\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.45_1525376521325_0.6879985097605787"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.46": {
+      "name": "@types/angular",
+      "version": "1.6.46",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "0e765d5be3da63f978a9946cfae779a8a048d3f3d8cd98f23dad9b7e1ba613f9",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.46",
+      "dist": {
+        "integrity": "sha512-5eG9NNLi1OMXn7Xp0LCK4HYZEmRdbguZ1CCMFC8ZC1MQJvA5yUo8kv9JXYY5BohaM6IH6Xqv1UGX+3DXtNm2Xg==",
+        "shasum": "bebd357e91021636ad2a8aea85a3592db505656e",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.46.tgz",
+        "fileCount": 5,
+        "unpackedSize": 149440,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbHz/BCRA9TVsSAnZWagAArAEP/1Kht+1HaeTZuO1Y61af\njX1/cAGyPZuFotZuP3qvgFHYJlPXkeKGzdKbcDwiO+H4b0C0ZoNN+FIBWJAi\nQqBD6SAMYSA3YgvTLFvpfQ1UbolTNPhlJqvZnXVrGLEGB0NTwclzPrWp4b+l\n2J6rrydLkAfgXi6PaNO0c/h4VxN269mEqicvOJVToGa7RHS0IlN2TGz/y+uM\nI0HyxXseTDFORjPQScneK2++8iKZCARkziaUy+ctFA5uMvQuYpF+QH1hVVgf\nS17FtNzKXCfiwXmwRqgbBjAeFYFq+yU/BFbdVpDTnhB/PNVRriBRDpsj48q6\nPoBvVtVmIgiUuaL0zEd+yAKmRTPAS2L6+ySioQeOYOUklN+l3w7XA2cJw85V\n21gjdHcodmslIgJKXG0qeHHM6TBJaqpCtAEmhmwxyQTVuuHWBpKGd6sg9FXd\nGxzT3ucIJb1WOQ8jNRSAhmI8EMGRc3GNMQ4sy6JSV5Pz+3X4zkDprDM20Qsq\nVPLfLG+k71xDhNg4N2/6opqfXAhYK7nXjilwQTYOJQiM4siwEglPvYt64Th1\nXVeyFaOBbkNxl2lBKPlIKdvaNVDvjdB1rt7dZ0ZztHr0prBWp9+/c+V+w406\nnFLcO0P2/XdfwTvMfLuJQTB1ytV+QDUPHx3snchjP7VkZHghqN71pzhiMH0Y\nUv7L\r\n=5BNS\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.46_1528774593012_0.24995796079992716"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.47": {
+      "name": "@types/angular",
+      "version": "1.6.47",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "9d2f00ea84e32cb8235d49fb5f653fd1045f83da397e981145111d1d7ad7efbc",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.47",
+      "dist": {
+        "integrity": "sha512-nHmD3F1eDX77z6n4KBuRIRCtl+AYUDPasS6gpF3+W4gNZsW4krCsDNLrONR4kJBqRf5I2on/FffKwFrBJyX6LA==",
+        "shasum": "f7a31279a02c0892ed9aa76aae2da1b17791bacd",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.47.tgz",
+        "fileCount": 5,
+        "unpackedSize": 153548,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbIW2uCRA9TVsSAnZWagAAksUP/iya4sSYIBEXh7+cwQ56\n1BkAG2W22f8HUOha81/OzCeIh3LGtlfuvsYlxDtWCfhuYJw3CxMQbkxOQmw5\nBUjO8mSsNuN2+qqBNBZ1raHUHopazEaT9RtVoNs4WuLrzRNmNvH1wVy8mG2m\n4yIbOrYf302lAGIJafHllvA3IWcNKq/DvWtYozNLSEJ456smuttfiZDwT+cH\ngnaPjzPLudCGJyrwa3SmVzfj7dbHdUwoUfpziQTcp3fK+Ddwoov9ccBaL7dC\nIHtlvZHA2htEF/2Z6Qce3hnY4wQWJWuee1Io0aJsqxqOgUYX6ymKM+ZjAJjh\npmWJwtHC6vTghn508D7vsx7D2xMVEgihBRA+/ngz++widpk60ALDJVZn8Mhr\nWJN80P4edDWPN75GvHQpzLOxxsFvw5slOLDTNxpiXZV6ByKPqpLOKctNdf1G\n8CK45u7mr9cxJ8QzI1wQCdodOFbLS4PxW6r+ne6NQdJqCLbNXrgWOB023SBQ\n0Z+nW6zllQLLw236YJAF31L9hUi82VxXxEfsoXXL1SFlfOc76voySr08Y2N4\nHyO2TQzHFM/uQkAQmDkLfLJWn/dPbN7H5iFQV4J+LQtqUtn2HCVwNTm0+/mq\nJI4H6QGQZZllxmvY3WliqvpTKbNYtuqZ2Z21OwFc1vd28jiF7n3esZlK4edh\nJTPx\r\n=o1qq\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.47_1528917421107_0.6482948378955424"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.48": {
+      "name": "@types/angular",
+      "version": "1.6.48",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "b41767961698a23179440b7556d1f481ee8ad54ed15aba5728da8ad1470c59b5",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.48",
+      "dist": {
+        "integrity": "sha512-zF0WlsWOjTkZjWq93ESfvq/4s3E9P8EnbIjOFzlDbhepL2iOBk9SJf98eqnV2fvjstwrPF+uYZvcAggL7Xw1FA==",
+        "shasum": "e8f77bf41d00d3293421cbaaed2bafb4d5f399f9",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.48.tgz",
+        "fileCount": 5,
+        "unpackedSize": 154008,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbNaUkCRA9TVsSAnZWagAAt0AP/3YiQCwATksk7JYQwP5R\nXgLkdDQcSD6C6KcmE3eqpM18sMvdWGDpYwbhJ2fL++nfHNPws6Kit7JGZhyQ\nFhkmq3bxiS8IEjKJDcADXp6lQAi4NsyhxJ0SjR4y/ne7aPzqMPbNwCcH3tNU\niRKg13+DNRiKVpf74OmBruF7pUcojwwBTexBUVu/L2Hd37TkF1Ahw+QqEOIH\nJ5qQO/Dmr8tzEI8l3dTxc86JJQ51Cp2aQxpgibTGl7/ViGxAojeWbCIEjktM\nkCIjjRSOWfteYflclYqgEWUlO8DZcv00m03JkBmC3BMpGkj3XUlVeY8VSAIW\nt13GzcIHsHUhkOX0XcPFjIlmzbinTvAl0Pf+5ECZEncrZD0zbcZs7c6myANi\nPB1VM4+KboxSK1G1OhY5gOXjTpRx8G2Mj7NnM1tgHTU3FzrO7v1IxLKYRbal\ncyBw70dH5ffIcpgPYy5jcSzjkjOC57Fg9t59RiL5D3uUZgaf9mQ/uCL42G4z\n+DKRyoe37V2FR/KuU6mHY/9Ca/NWrs1lzuibvf1TdemPy54xoXcFjC2M3Lq5\nDbDji47t06liOvEzOt/J/mU4onidohbw3LL1KsSqHP89FPxnYd7QZbvDdWCK\nZbzkI/uJslr4ctSxwHe51Cb4BLNfSi7jO7DzZjPGhenMsz9x3PJNhc2DjopJ\n+CDm\r\n=EHkV\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.48_1530242340346_0.5742081914683697"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.49": {
+      "name": "@types/angular",
+      "version": "1.6.49",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "f438884cc602f7db50e06405c1649ff6616d81cd99008b60249ad0ee45359ef8",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.49",
+      "dist": {
+        "integrity": "sha512-XR9i6dygixVFqMRIQCJAMdPNAJJXExSBapFiAdzyPfiGhmalDaqh/yo1VFOgFicuqlcKa6PEkNxEnUjsrxjqLQ==",
+        "shasum": "8a5dd666100155d27cda9801f961360eb24b8d96",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.49.tgz",
+        "fileCount": 5,
+        "unpackedSize": 154600,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbUpUcCRA9TVsSAnZWagAArisP/0YCRWi1d/ypFsnyT+6P\nbt0QtUUy1NY3S9A6icxZiOgod8BzRxh+Jr2xE6yqIp5ESfalzjEczZDp7Mgt\nALZ+Mhj4BxoPX/ieLY8G3VJPA/bRcr23MU50P977W9pZaq6TnVJA2bsuvum8\n5Tj4I2o4kT8K0sYK2M2ZxNyORKCAd2Ni82PLjsCjXzoglS12guQRK+tQ6k81\nyyJwDVQbLlQeNMyN/9tgdgXS7tGhZ5hvSq5M95nl3ACY/gOycZm8a8WddJSP\nczVolbiWvXwvbVeANwjd2a+lYrU8VgnU53OQ2jbxswU0sCqUHE0/doRdvd/d\n0eWjDHEJrzJRxEJotbggYqLbBfOkoA1Psn5/yFczOduGIYri+2nL0r6Ph+Qp\nCtkHoOmmbe+K3yeaF2wMk5YR+tzFNr6rMQhFvW/RuP2GDdEoEYEotjFdHSJ3\n0R/NQbkHHP1OnTAiYqH4DL+xzl/pxTc+c6hdlfznGs5m4N3wfL+JdtY1zLUh\ny1gAFgEiZtgNEDuNIyVpxUiYIr0Up/KRhNU0MH0n5UkasMuqBg45J07VEBev\nA9NXfIRziAzPXE6Khl+ijscAtSL2Gtw8xk43Q4vvXAbPpVyX5bnFT1foZzXY\nzzBwCjmVsVeYWa9M+ujliq4I5nInB+HTGhXWtHgtkcua+oOLyu1aP7Ryr/jF\n+1Bq\r\n=B5tu\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.49_1532138780084_0.9168370098427328"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.50": {
+      "name": "@types/angular",
+      "version": "1.6.50",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "4b438b62f7f0f3d5fb8c1d04063cd6f63090b4c4e2ae43380d3b0ff190433a6a",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.50",
+      "dist": {
+        "integrity": "sha512-D3KB0PdaxdwtA44yOpK+NtptTscKWgUzXmf8fiLaaVxnX+b7QQ+dUMsyeVDweCQ6VX4PMwkd6x2hJ0X+ISIsoQ==",
+        "shasum": "8b6599088d80f68ef0cad7d3a2062248ebe72b3d",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.50.tgz",
+        "fileCount": 5,
+        "unpackedSize": 154630,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbcifECRA9TVsSAnZWagAA0GwQAIzjYqt5a0Whj/+ZOX8l\nJfcFmPPE7/DI2H6eJV+Y+0RTN+lRsovqUO9KTppke0iM+LPrPicMVJn7R95L\ntNW0oR2g84IMB8/JCQR2i0OMQNhW3FKROniHMJQmrlglKaLst8rPlAU4jKH8\nxFbOA/OnclUxCzEykShZkLpGp+28U6P6oOQMApL9t1kAMv5ZtpAA5rGhKDWl\nU5XrwQQw44fhhhfICscdATG2bAnnW1qKhaKB908gCBZ322XLBNnvRs+gljg8\n52Fs27Ms5lv5pJuloMLN2LWOVJXPCJf2ZPWXT1VDQQoaoPdGi1ltU/x4o+XF\npQxbnPTa7VStC30RcUeF95Lmt3HSycpbH6aahe1xyaErP2uFHdkgLtt04tPj\n6oH75TZj5GxdhKPVUta1OzU8+fXf2MhVOviNMB8Sl0fDqxBFmoD9ljpFgKHm\nWavnek1OBcoVWxAT7c8AYDaK2UVplMVyBSqtLoK6r/tL5wfhp9LlxK+CnA9C\nciMR5PcajctplTg1I925eoW2UDfmnskET1Uxk660p87Fi2Jy0lOjXg5QDATe\nG9rAZO9/RHCtfaBZdLrzKZeTCyXTcqfk+MPOTuQQBOEh+FPKkpNzJT9oq883\nbfWgsZDe9QFAIDsSef59VOfb1Wv1j3FLyeW1+4OFktX1IQciHPu1JSyeHElM\nlasG\r\n=cAn5\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.50_1534207939493_0.31087035113909667"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.51": {
+      "name": "@types/angular",
+      "version": "1.6.51",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "a14ed70599105c3c1a77fbcf96e22a093a4d16a60228aff9da77e67bc0467a0d",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.51",
+      "dist": {
+        "integrity": "sha512-wYU+/zlJWih7ZmonWVjGQ18tG7GboI9asMNjRBM5fpIFJWXSioQttCTw9qGL44cP82ghM8sCV9apEqm1zBDq2w==",
+        "shasum": "a67515b0ba6a2ff68894a39405c1343cbf9c36d4",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.51.tgz",
+        "fileCount": 5,
+        "unpackedSize": 157745,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJboZjnCRA9TVsSAnZWagAAOBQP/jWVu4HZP5+sNXYRVwhs\nNnKgzFF6g4zxPPVn9CUkbBXk2jbm12264MoHqBMLwifmAXVJyBXExqxi7LXT\neYcRp4awau35lOB2mEMW3IeccaxD8xi8bRBFbZLQIm8oEOBOUNHPpO0l0E8z\nbr3xNqK//A65hATN6Xpjb86sKWoWZT+ChT3KHnDF41QGRtnpkZdmgY/SvGCm\nDTKBnxP7V2p+vrRoV2NLkcKuNL51iSYzQ+DkBSUZdVwcJC0pmOFQytrqEk89\nKZ/CQnm/lUH4y+8CEAqwNYoCVYm6sJkf444rnxAZLPJ0HEepYyXX8ETa7eoo\nEhbAfTx4RJI+y9YUI8sr6W54mT6qXYEHLirZ8nBTdiycG3JjY7heY243L2Yv\nSqQrvLYZzZcx26XTQXPvnEHjPMMCxklOdM675iul1k2GEZ5ca/1aB3a2KI5F\nKvDhurZjrsBmp7iX5CvvFq9miYCyZKR8NwVXY1E3LdOAU/+9jjHa0izfM3aw\nsYSVMFKYHMerkEH/vs6jGXeoXws4VQZmTScI82jS++P89vudhUbz/92wYLmW\nP8UZsPH2wT+hoauq6jgqqo8MxeWZGcisSWQQmF5cR1v8UHEuP1njJoaAPW6I\n0oCRfIpKaOmpNvLY8QHCHHNF4PJCXaroeesvW/onKyggrMvUDL969F/bDqsV\n9Xz0\r\n=Tmiw\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.51_1537317094627_0.9630843246131169"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.52": {
+      "name": "@types/angular",
+      "version": "1.6.52",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "types": "index",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "36be883217ce4939243da5be0a26d583b8fbcf711741006ceabe6f25e5cc709a",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.52",
+      "dist": {
+        "integrity": "sha512-0Z9Sot6/vaEIHHaXpHLKX8g4hCOmC+0LNZw8nEXhYgtw/VNjsaf30hhe+WOXHuk+/+Qze/OBrogPU+lCEURrhQ==",
+        "shasum": "7bbb3a46139594b50936234a09e2e33f2f5402f7",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.52.tgz",
+        "fileCount": 5,
+        "unpackedSize": 156441,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcGkqcCRA9TVsSAnZWagAAAGsP/RYALvVlgZZ7+jeBR+DS\nnh67ECF8kaqgCS6212zJPKDI/6jx44RLDHxyDZbDVbvdGduM3YD3ZOp32sc1\nuENaNFRjSeROvzQWJUBJTe2G/XtXmoPqDKQmIOjK2OdMwQedhhGIfPaYTXTv\nVjqsqJ4qxs41UohO+OkxsXrU/46/JH2Uax8HR2j8xCxUp7PsT/mHe6dj9RJ7\nHa66dIPs7QpYSLyHaBK8AI3MSjxWnuEtwV/wesVTjPkvqkWH6rat1jYhm2Yw\nKKVob5rjngwRKBRWMoioVk3CueXbilybvwZ+PUJF0kAOkdgVdfJxQUMywmvk\nf5wn6nnkwTAn82cDseEgoF8RBHHbMWtnwBCuL4rJnu1g5lT3krzPnKjLYOOX\nMOxeeiG4uqOpTWk7THDBh9vkGsND0HFUJ0U8BQCqk/+bxGXcwsh25t2LTRkb\nWafzX7v5QfhW2Hac6kKduwdsQZwpqCDu/PQFXs0X1LxGOn7b05zJbo51uCCD\n8WIf4aCOfhs7SztiYPI00WqPfzPqOidU/dmRzXH4O5VhvkPmDdX6xZOLtEVc\nMKXkrgvdAkK9o9l6ECt+O0E9++N8aScI4FuTtudNb8Y7SIXSzQoGIhM3JOzo\n5xt1GPhOX3/60B+Xxysj3BlhHqOyGEhzJCya3hT8qHNXyp+5BIWqNQCvLkEs\n9n3g\r\n=Mdp/\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.52_1545226907744_0.3364679287629717"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.53": {
+      "name": "@types/angular",
+      "version": "1.6.53",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "types": "index",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "7e8029d673c5e4adc182324a12e7462edc5fc23dba6bb0f3464a00aa485e9e10",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.53",
+      "dist": {
+        "integrity": "sha512-46op53S8hnDl9o6VOmMAXBv3laK8i2OyXOfriDwe6VRfh8wVFilIniLaNsz2pPpAM4oUwsBYFt7ZThe+IMnIeA==",
+        "shasum": "0c73ce13ff245e0b9ad23bf0091f3de572d4de87",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.53.tgz",
+        "fileCount": 5,
+        "unpackedSize": 156596,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcIcVtCRA9TVsSAnZWagAAGbYP/3Es3rE061IbtpzcnS/7\nRwlnjuGtLxZTpBy9zySb2q0IqSR8+YSibZ5d3riSU/VEmYTBMFd6xOlAkofF\nvnTMYvOpvvk+hTOm5uLeJgkBWkeGSNh120KXSgPhHeJNtuEFlG4u9+vm7EdQ\ncnox2vUT4AZprwORO/ovli2Bwbt2A9XEsWxEjq6sEfaZ2/v6cafnJEJ6XcNT\nh9nWHbkbXTRj8QmSwyBRRKeDSjqZ+96etXIDFpgtBB4cxsKMK9qRsxK7jlJZ\n2RdVUG46ZIRWRq+Yvm75U7L4Btjp0xRBoLeUnySU/8ZPD31cpKDRVWVs0ah0\n4vKbjqvSKVW3dLzvzIP6n8XFzFrGnQlpdSz2uLtlJta8/ZSsh6XX2IKtiDP7\n8ggeMHXW2UunIwoLAAUpWc2/ET8TdpElNT7mvyM/OfcRAgK/dIrzmmpu3x5a\nZdftyPgEDKsaIauiS6Zu5ys/z/rxzO6NgJQqOIYkMqnBtsU6BK/x8Cu9lvcz\n76dOu7ULCwVbw2N/lF/kIsN6GQOMexkHgF3jS9TeV+QrDyhIiHMTYefXAB28\nfJgidLM19OruVcUevxfAxh9ykCFgaXgzSFdu6oa/m6adJlCkso2T7JrHTD5Y\nM0wKBYHkZDkhD9NjMNolitXcgA6jspDgShaIasU1CxnC2nEECtYYAWBWz7/u\n33bX\r\n=9Jeb\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.53_1545717101124_0.9385189726255645"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.54": {
+      "name": "@types/angular",
+      "version": "1.6.54",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "types": "index",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "0d6dd74d56b56b6a5d13d2e6c34e2ffd8a406fbe13fa7f38a2b85ccb1a82fdad",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.54",
+      "dist": {
+        "integrity": "sha512-xA1FuozWXeRQ7FClUbvk8ePL+dydBeDoCWRPFTHU5+8uvVtIIfLGiHA8CMkwsbddFCYnTDVbLxG85a/HBx7LtA==",
+        "shasum": "f9d5a03e4da7b021a6dabe5d63e899ed4567a5bd",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.54.tgz",
+        "fileCount": 5,
+        "unpackedSize": 157223,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcW03QCRA9TVsSAnZWagAAc7oP/iHu7wWxxbtMwG1YHHqe\ntwp0eg00Q5rZF4uyUOORCCejsUAI9yfZUPinn0IxwlVUa3+F/MnLAK2216DW\n8bp9aTs/Sn57JOvavbRJ6bjvhbkXMVyzJu221iPufObv82+KRlisfv7mj3gK\nxgbVswqufn/EP76K+3T2VSNO5GEbaO0Cb+DGg/4MAD9vF6ojH4gw5p0wRc03\nwY5pFRgJLDw1muSw1mOSVBGYvcivilicuk7i0hMABRfQCokMSnlk7BNmajO6\noByBHQxN+FVWRjJY9g/sQgxyuQDzVZji6+NhfU9zpenTu0WriTsWUmO3xn3s\njdd5qmFqvIrxNlQBYlGVMHvEZ7n7A+QcCaKycC+RPP0Zc5BfOYM9VxgBoaCq\nlWNRov/79tpeJF3ERYLJkepkG0Ic8FRsQAgLHtw878FN0eW9suTTwVc9yYZG\nxbAGZZTzvwFGYA2Q5VYnYJylpOW55sxkfjeMstfSyJKdDTNZwDXE/PTRP2F8\n8MU20PwtzKLcCjzSXJDUUcglkQeQRlcvwJxq0yk15RoV0fipf1TD6JEAvNL/\ngVCfsh+xMpVey2PfhDQ+EvkfD6J0cDVSFl7Ww6yGV/peazKGXZn0vE2Ps9RY\nUepP7UCdl0bz5T+zm54FAj6LbTY1YzaKmhiM5Awxcu9Nzbr3fEHPDSb1LCks\nO0BM\r\n=QGMx\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.54_1549487567954_0.7504469506196279"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.55": {
+      "name": "@types/angular",
+      "version": "1.6.55",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "types": "index",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/angular"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "7f873dfa952c6650a830cf1755e9ebcb05b23c97865ae1f886aa11b5b958e11c",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.55",
+      "dist": {
+        "integrity": "sha512-jpQ5K6t76thd9Ook5x4Xj9K462hMje6/Q84SFxglBmaW8HOLblVnALpvg6w6aV3Oe6o9jWXnYH8gHHKrfSRxNQ==",
+        "shasum": "1d745af6deadcb5c2c0f6f6e9d85bc18c25a520b",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.55.tgz",
+        "fileCount": 5,
+        "unpackedSize": 157545,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdJSRLCRA9TVsSAnZWagAADloP/0iCouod2b+J1PWNXPR3\nkNLc6QmntfAwpRL4VN1tZxDSg+96EWkuzYQu3UVsYmBugDedHtRzprzlDqTI\nX28hJI/55pgoiq4rv7trjgqlEglS2IWB1JvQwsFQALcDJbrVnq8PCHzehWmw\nrLjxz+PHLh6UNOnUSBfefkBdJrJMv/t0lQ3YTsNNTOV8ZdBCtYfzr5vASAqS\nB8ZVqpFdPGXzZroNLxJpWSIZ6zNTGeUDeNzsFaDTcwmdGLvJUJvmpLXuOE/B\ncWlKmYYNaY8GveZMlOglTq5OUCAf3RJsueh1vYKaSZeDWffGniS4RCg1evNt\nDprIyhCTuovllEICmlAuwZDJNbQl+ZZgeW39YUE0yUwqbualAOVvDjpb93R/\nlbN0hb7QehAeTEFUTNqJdvz0onTjXKkC0G+iUcsT/LrF0N3hRgwr2bE0hTUN\nJ/A+ax1iEdmW5BorioKZ0dznQ5PlDNgEVlOlQBsHCALz+B8xFAq8pkdD2vcW\nXS4XIJkV7idGt9QPa7KlE93s5adlfjOstJmVrMmdaFL8g6U3CSIL2ydfHLRc\notARk/XB9NpxJqG1OboSp2Xn48laVOena2h1sC3R20pmMi4ojLLNtjd9SK/3\n/1YIC1HMQbYJjxSan3g5iJwiE9wV7AmoeYJfisjUOCLaICkhQiGjPduMnwaU\nZ5jB\r\n=TqNi\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.55_1562715211033_0.7489738790153451"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.56": {
+      "name": "@types/angular",
+      "version": "1.6.56",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "types": "index",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/angular"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "698bdaf2919d9529107340a47887b38e661d5bee99c9f23fe4176cc488dad88a",
+      "typeScriptVersion": "2.3",
+      "_id": "@types/angular@1.6.56",
+      "dist": {
+        "integrity": "sha512-HxtqilvklZ7i6XOaiP7uIJIrFXEVEhfbSY45nfv2DeBRngncI58Y4ZOUMiUkcT8sqgLL1ablmbfylChUg7A3GA==",
+        "shasum": "20124077bd44061e018c7283c0bb83f4b00322dd",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.56.tgz",
+        "fileCount": 5,
+        "unpackedSize": 157554,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdUdyYCRA9TVsSAnZWagAARi8QAI4LdPKaR1hHGFEaFq6z\nWKpFnbVrudRt6db47m0T5l8yyXHDUvHmlilQvmRUxAMJj0kgBxAgnBLML2s6\n2rt227XHzalJEDMNuoVgrWHEvIWlwMYBgxWnsnjKQvf5JG8BBzedrhRRE7+0\n0xTYuSBbgpBlC9au1W/pCI5naSwzlKvsTR0oX0YbrZC5bap+idQ89a0LOtKe\nkc6/DfFBr0WGWrgXD3yfPSRfhwQ/sqquYkDRRZu+2/508N6sIXfGpvxsZBIL\npcez5uzOrZ92GknFLnDc4iNUGr79Tlx3XYLoTH9PFa70U+Lt+sCnuz7VGea/\n19+CJ0Fg3llq77g8P6HwiMP8eiUdg5n2ZvLFQC2n1zH3jp+PFNfZOtyM3OCB\nbh6zjFiiH6JCTxMCL5P/5Le/OSQ2f/kpzJ95CRwUzWKmOgRgle98zItO64Wb\nE/yfA/yia+MJeQmm/IpxxEZmv1RTQToWbj3HB5dgeJRGULvHzPikMltBxSpm\ndchoPnjjJXxlNN9SYu7DkCxX64+WJrSAtMlrzMCTAt2l4d3ZQRQLFK2RbFKz\nGAwBosxNdxbWotNOp4mEDOty6vi06Sx9toKg6rGwvloc7uL/PmGM9/e7zX2e\nFqDmgvNBP7Qq4OSyUdQ7SGkj6b1Yna0AQG8FjqIlM25SsW2ngtDKh9ylsIyV\nvccc\r\n=sCVA\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.56_1565645976351_0.8126671762138729"
+      },
+      "_hasShrinkwrap": false
+    },
+    "1.6.57": {
+      "name": "@types/angular",
+      "version": "1.6.57",
+      "description": "TypeScript definitions for Angular JS",
+      "license": "MIT",
+      "contributors": [
+        {
+          "name": "Diego Vilar",
+          "url": "https://github.com/diegovilar",
+          "githubUsername": "diegovilar"
+        },
+        {
+          "name": "Georgii Dolzhykov",
+          "url": "https://github.com/thorn0",
+          "githubUsername": "thorn0"
+        },
+        {
+          "name": "Caleb St-Denis",
+          "url": "https://github.com/calebstdenis",
+          "githubUsername": "calebstdenis"
+        },
+        {
+          "name": "Leonard Thieu",
+          "url": "https://github.com/leonard-thieu",
+          "githubUsername": "leonard-thieu"
+        },
+        {
+          "name": "Steffen Kowalski",
+          "url": "https://github.com/scipper",
+          "githubUsername": "scipper"
+        }
+      ],
+      "main": "",
+      "types": "index.d.ts",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/angular"
+      },
+      "scripts": {
+      },
+      "dependencies": {
+      },
+      "typesPublisherContentHash": "eb3c9bae3e8e381c98f35ea0b4be097f9c33ebb0e70625dcbd6e6d13caa986be",
+      "typeScriptVersion": "2.8",
+      "_id": "@types/angular@1.6.57",
+      "dist": {
+        "integrity": "sha512-Pbp8Clanwb/nurGuLUYhKp7eeaEjwyI3MHb3ggjPHYPxysypzEin6UFcrcDv5xhu433axlwQ5BYU9svmcICoAQ==",
+        "shasum": "d8beefa0ee1aeb1ef277fbaf63bf694321dd7f5d",
+        "tarball": "https://registry.npmjs.org/@types/angular/-/angular-1.6.57.tgz",
+        "fileCount": 6,
+        "unpackedSize": 175784,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJd3bOdCRA9TVsSAnZWagAAKvcP/RuMpQ2nxjK0CihvxSlU\nZofw7CNp6RAOyx0gCp4eiaCrMEdwTC+xqwozmqbcnMPrMl/trwm3WGuRcbKj\n7xx1Sg4dqajnQlD2rYPyXYoEWMnH1qEYou9MYHqmbN1DOvtnuXqWPlslCpy8\ngrYp5nATQVnzU/qI/0Xls3Eh5UdtcnF5PpMBnyTCtCR9f1UXBX1I02sDYsTx\nGU/H9ByyPKBjt1p8G1j1eXUq/imdyo7bIinFxOgd3BjQa/tGym2kQ5Pp1QuL\npStSfSnkK1PZfh0qenECqy2AKfNi/JWEdZpNfD4TmHtPzgDrfjos85FZdL/1\nczqmHxQuRn8M9KNT82vLRtGDNyXqCY8Si4surLaThDKD2rsetN8doWqyD5SX\ni3l5bU8RDVUjq5t+E5mKKikSPZ+69c4df2A6Hlj2wZfZp2tBgOF3fleZ4LXn\n0K5X8MiYAXIUI+J1Di86IZGmxJdUTDHChHhF1m0KtG8s9IQaRdK5VmIjqN05\nfk1QHj6ojJ+qfcDKtgCnTN6IYB4hfmP3O/ybXHxeEnSPhCXbZO1LNZFgOXhB\ncWb3xRp39Iu49Rh2/JMfV9KROz1UJAWAE5ttVxMrTSIsetyktmkTHC4hA5mp\nu3v73XeUwa9uh+PMuDYqPoXvX+ux49zU/4R771SjFGZGDVqU8VW39hUpVIkO\nbA/4\r\n=BLbO\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "maintainers": [
+        {
+          "name": "types",
+          "email": "ts-npm-types@microsoft.com"
+        }
+      ],
+      "_npmUser": {
+        "name": "types",
+        "email": "ts-npm-types@microsoft.com"
+      },
+      "directories": {
+      },
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/angular_1.6.57_1574810524895_0.7835632465208451"
+      },
+      "_hasShrinkwrap": false
+    }
+  },
+  "readme": "# Installation\r\n> `npm install --save @types/angular`\r\n\r\n# Summary\r\nThis package contains type definitions for Angular JS (http://angularjs.org).\r\n\r\n# Details\r\nFiles were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/angular.\r\n\r\n### Additional Details\r\n * Last updated: Tue, 26 Nov 2019 23:20:29 GMT\r\n * Dependencies: none\r\n * Global values: `angular`\r\n\r\n# Credits\r\nThese definitions were written by Diego Vilar (https://github.com/diegovilar), Georgii Dolzhykov (https://github.com/thorn0), Caleb St-Denis (https://github.com/calebstdenis), Leonard Thieu (https://github.com/leonard-thieu), and Steffen Kowalski (https://github.com/scipper).\r\n",
+  "maintainers": [
+    {
+      "name": "types",
+      "email": "ts-npm-types@microsoft.com"
+    }
+  ],
+  "time": {
+    "modified": "2019-11-26T23:22:14.411Z",
+    "created": "2016-07-01T22:08:15.277Z",
+    "1.5.1-alpha": "2016-07-01T22:08:15.277Z",
+    "1.5.2-alpha": "2016-07-02T01:53:31.226Z",
+    "1.5.3-alpha": "2016-07-03T23:44:26.950Z",
+    "1.5.4-alpha": "2016-07-08T19:32:27.302Z",
+    "1.5.5-alpha": "2016-07-11T22:27:38.026Z",
+    "1.5.6-alpha": "2016-07-13T19:06:48.884Z",
+    "1.5.7": "2016-07-14T13:58:40.254Z",
+    "1.5.8": "2016-07-19T13:09:06.176Z",
+    "1.5.9": "2016-08-02T15:44:27.701Z",
+    "1.5.10": "2016-08-08T20:34:45.408Z",
+    "1.5.11": "2016-08-18T13:53:17.554Z",
+    "1.5.12": "2016-08-19T15:19:39.499Z",
+    "1.5.13": "2016-08-25T18:33:05.172Z",
+    "1.5.14": "2016-09-17T00:32:13.906Z",
+    "1.5.15": "2016-09-21T20:26:28.176Z",
+    "1.5.16": "2016-09-23T17:59:13.485Z",
+    "1.5.17": "2016-10-26T19:24:06.864Z",
+    "1.5.18": "2016-11-01T12:57:53.906Z",
+    "1.5.19": "2016-11-01T13:02:00.010Z",
+    "1.5.20": "2016-11-14T19:35:37.183Z",
+    "1.5.21": "2016-12-12T22:50:49.796Z",
+    "1.5.22": "2016-12-20T14:37:36.745Z",
+    "1.5.23": "2017-01-05T17:45:47.851Z",
+    "1.6.0": "2017-01-11T17:17:55.910Z",
+    "1.6.1": "2017-01-14T16:11:52.076Z",
+    "1.6.2": "2017-01-17T16:59:37.976Z",
+    "1.6.3": "2017-01-30T06:23:58.325Z",
+    "1.6.4": "2017-02-04T02:28:59.591Z",
+    "1.6.5": "2017-02-07T20:53:43.039Z",
+    "1.6.6": "2017-02-17T21:50:15.247Z",
+    "1.6.7": "2017-02-23T15:23:00.465Z",
+    "1.6.8": "2017-03-10T06:42:49.903Z",
+    "1.6.9": "2017-03-10T07:10:08.946Z",
+    "1.6.10": "2017-03-21T20:19:24.967Z",
+    "1.6.11": "2017-03-29T22:38:00.085Z",
+    "1.6.12": "2017-03-30T19:38:55.653Z",
+    "1.6.13": "2017-03-30T22:55:48.166Z",
+    "1.6.14": "2017-03-30T23:07:16.111Z",
+    "1.6.15": "2017-04-19T21:19:19.092Z",
+    "1.6.16": "2017-04-26T19:08:25.280Z",
+    "1.6.17": "2017-05-03T19:11:41.541Z",
+    "1.6.18": "2017-06-02T15:08:46.901Z",
+    "1.6.19": "2017-06-15T20:04:44.732Z",
+    "1.6.20": "2017-06-20T20:47:27.437Z",
+    "1.6.21": "2017-06-23T14:03:19.817Z",
+    "1.6.22": "2017-06-26T14:01:43.503Z",
+    "1.6.23": "2017-06-27T13:51:29.552Z",
+    "1.6.24": "2017-06-28T15:40:59.068Z",
+    "1.6.25": "2017-06-29T14:49:08.248Z",
+    "1.6.26": "2017-07-12T21:17:02.859Z",
+    "1.6.27": "2017-07-18T19:27:00.407Z",
+    "1.6.28": "2017-07-28T19:49:24.757Z",
+    "1.6.29": "2017-08-14T18:44:11.790Z",
+    "1.6.30": "2017-08-21T21:47:30.065Z",
+    "1.6.31": "2017-08-23T17:54:02.164Z",
+    "1.6.32": "2017-08-29T21:31:56.426Z",
+    "1.6.33": "2017-10-16T16:10:52.062Z",
+    "1.6.34": "2017-10-16T16:25:09.126Z",
+    "1.6.35": "2017-10-25T00:19:57.309Z",
+    "1.6.36": "2017-10-26T18:53:19.702Z",
+    "1.6.37": "2017-11-04T04:53:42.863Z",
+    "1.6.38": "2017-11-04T08:43:15.177Z",
+    "1.6.39": "2017-11-07T18:12:21.301Z",
+    "1.6.40": "2017-12-29T22:15:30.412Z",
+    "1.6.41": "2018-01-24T01:25:36.528Z",
+    "1.6.42": "2018-01-29T21:16:22.346Z",
+    "1.6.43": "2018-02-15T21:25:49.411Z",
+    "1.6.44": "2018-05-03T17:58:35.714Z",
+    "1.6.45": "2018-05-03T19:42:01.465Z",
+    "1.6.46": "2018-06-12T03:36:33.088Z",
+    "1.6.47": "2018-06-13T19:17:01.178Z",
+    "1.6.48": "2018-06-29T03:19:00.467Z",
+    "1.6.49": "2018-07-21T02:06:20.166Z",
+    "1.6.50": "2018-08-14T00:52:19.635Z",
+    "1.6.51": "2018-09-19T00:31:34.801Z",
+    "1.6.52": "2018-12-19T13:41:47.921Z",
+    "1.6.53": "2018-12-25T05:51:41.270Z",
+    "1.6.54": "2019-02-06T21:12:48.090Z",
+    "1.6.55": "2019-07-09T23:33:31.227Z",
+    "1.6.56": "2019-08-12T21:39:36.491Z",
+    "1.6.57": "2019-11-26T23:22:05.040Z"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "directory": "types/angular"
+  },
+  "license": "MIT",
+  "readmeFilename": "",
+  "contributors": [
+    {
+      "name": "Diego Vilar",
+      "url": "https://github.com/diegovilar",
+      "githubUsername": "diegovilar"
+    },
+    {
+      "name": "Georgii Dolzhykov",
+      "url": "https://github.com/thorn0",
+      "githubUsername": "thorn0"
+    },
+    {
+      "name": "Caleb St-Denis",
+      "url": "https://github.com/calebstdenis",
+      "githubUsername": "calebstdenis"
+    },
+    {
+      "name": "Leonard Thieu",
+      "url": "https://github.com/leonard-thieu",
+      "githubUsername": "leonard-thieu"
+    },
+    {
+      "name": "Steffen Kowalski",
+      "url": "https://github.com/scipper",
+      "githubUsername": "scipper"
+    }
+  ],
+  "users": {
+    "thewhiterabbit": true,
+    "gabrielschlomo": true
+  }
+}

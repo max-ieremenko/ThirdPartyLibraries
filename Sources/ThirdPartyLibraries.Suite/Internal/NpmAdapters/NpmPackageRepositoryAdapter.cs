@@ -4,39 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ThirdPartyLibraries.NuGet;
+using ThirdPartyLibraries.Npm;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
+using ThirdPartyLibraries.Suite.Internal.NuGetAdapters;
 using Unity;
 
-namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
+namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 {
-    internal sealed class NuGetPackageRepositoryAdapter : IPackageRepositoryAdapter
+    internal sealed class NpmPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
         [Dependency]
-        public NuGetConfiguration Configuration { get; set; }
-
-        [Dependency]
-        public INuGetApi Api { get; set; }
+        public NpmConfiguration Configuration { get; set; }
 
         [Dependency]
         public IStorage Storage { get; set; }
 
+        [Dependency]
+        public INpmApi Api { get; set; }
+
         public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
         {
-            var (spec, index) = await RepositoryReadAsync(id, token);
-            if (spec == null)
+            var (json, index) = await RepositoryReadAsync(id, token);
+            if (json == null)
             {
                 return null;
             }
 
-            var result = NuGetConstants.CreatePackage(spec, index.License.Code, index.License.Status);
-            result.UsedBy = index.UsedBy.Select(i => i.Name).ToArray();
+            var package = NpmConstants.CreatePackage(json, index.License.Code, index.License.Status);
 
             foreach (var license in index.Licenses)
             {
-                result.Licenses.Add(new PackageLicense
+                package.Licenses.Add(new PackageLicense
                 {
                     Code = license.Code,
                     HRef = license.HRef,
@@ -45,7 +45,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 });
             }
 
-            return result;
+            return package;
         }
 
         public async Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token)
@@ -54,11 +54,11 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             package.AssertNotNull(nameof(package));
             appName.AssertNotNull(nameof(appName));
 
-            var model = await Storage.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(reference.Id, token);
-            
+            var model = await Storage.ReadLibraryIndexJsonAsync<NpmLibraryIndexJson>(reference.Id, token);
+
             if (model == null)
             {
-                model = new NuGetLibraryIndexJson();
+                model = new NpmLibraryIndexJson();
             }
 
             model.License.Code = package.LicenseCode;
@@ -73,32 +73,26 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             var app = model.UsedBy.FirstOrDefault(i => appName.EqualsIgnoreCase(i.Name));
             if (app == null)
             {
-                app = new Application { Name = appName };
+                app = new NpmApplication { Name = appName };
                 model.UsedBy.Add(app);
             }
 
             app.InternalOnly = reference.IsInternal;
-            app.TargetFrameworks = reference.TargetFrameworks;
-            app.Dependencies.Clear();
-            foreach (var dependency in reference.Dependencies)
-            {
-                app.Dependencies.Add(new LibraryDependency { Name = dependency.Name, Version = dependency.Version });
-            }
 
             foreach (var attachment in package.Attachments)
             {
                 await Storage.WriteLibraryFileAsync(reference.Id, attachment.Name, attachment.Content, token);
             }
 
-            if (Configuration.DownloadPackageIntoRepository && !await Storage.LibraryFileExistsAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, token))
+            if (Configuration.DownloadPackageIntoRepository && !await Storage.LibraryFileExistsAsync(reference.Id, NpmConstants.RepositoryPackageFileName, token))
             {
-                var content = await Api.LoadPackageAsync(new NuGetPackageId(reference.Id.Name, reference.Id.Version), Configuration.AllowToUseLocalCache, token);
+                var content = await Api.DownloadPackageAsync(new NpmPackageId(reference.Id.Name, reference.Id.Version), token);
                 if (content == null)
                 {
                     throw new InvalidOperationException("Package not found on www.nuget.org.");
                 }
 
-                await Storage.WriteLibraryFileAsync(reference.Id, NuGetConstants.RepositoryPackageFileName, content, token);
+                await Storage.WriteLibraryFileAsync(reference.Id, NpmConstants.RepositoryPackageFileName, content.Value.Content, token);
             }
 
             await Storage.WriteLibraryIndexJsonAsync(reference.Id, model, token);
@@ -106,9 +100,9 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
         public async Task<PackageReadMe> UpdatePackageReadMeAsync(LibraryId id, CancellationToken token)
         {
-            var (spec, index) = await RepositoryReadAsync(id, token);
+            var (json, index) = await RepositoryReadAsync(id, token);
 
-            var context = CreateReadMeContext(spec, index);
+            var context = CreateReadMeContext(json, index);
             context.ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, true, token);
 
             using (var stream = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositoryRemarksFileName, CancellationToken.None))
@@ -123,7 +117,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                     using (var reader = new StreamReader(stream))
                     {
                         context.Remarks = reader.ReadToEnd();
-                    }   
+                    }
                 }
             }
 
@@ -150,16 +144,15 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
         public async Task<PackageNotices> LoadPackageNoticesAsync(LibraryId id, CancellationToken token)
         {
-            var (spec, index) = await RepositoryReadAsync(id, token);
+            var (json, index) = await RepositoryReadAsync(id, token);
 
             return new PackageNotices
             {
-                Name = spec.Id,
-                Version = spec.Version,
+                Name = json.Name,
+                Version = json.Version,
                 LicenseCode = index.License.Code,
-                HRef = spec.PackageHRef,
-                Author = spec.Authors,
-                Copyright = spec.Copyright,
+                HRef = json.PackageHRef,
+                Author = json.Authors,
                 UsedBy = index.UsedBy.Select(i => new PackageNoticesApplication(i.Name, i.InternalOnly)).ToArray(),
                 ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, false, token)
             };
@@ -169,7 +162,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
         {
             appName.AssertNotNull(nameof(appName));
 
-            var model = await Storage.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(id, token);
+            var model = await Storage.ReadLibraryIndexJsonAsync<NpmLibraryIndexJson>(id, token);
             var result = PackageRemoveResult.None;
 
             var index = model.UsedBy.IndexOf(i => i.Name.EqualsIgnoreCase(appName));
@@ -184,41 +177,40 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             return result;
         }
 
-        private async Task<(NuGetSpec Spec, NuGetLibraryIndexJson Index)> RepositoryReadAsync(LibraryId id, CancellationToken token)
+        private async Task<(PackageJson Json, NpmLibraryIndexJson Index)> RepositoryReadAsync(LibraryId id, CancellationToken token)
         {
-            var indexTask = Storage.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(id, CancellationToken.None);
+            var indexTask = Storage.ReadLibraryIndexJsonAsync<NpmLibraryIndexJson>(id, CancellationToken.None);
 
-            NuGetSpec spec = null;
-            using (var specContent = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositorySpecFileName, token))
+            PackageJson json = null;
+            using (var jsonContent = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryPackageJsonFileName, token))
             {
-                if (specContent != null)
+                if (jsonContent != null)
                 {
-                    spec = Api.ParseSpec(specContent);
+                    json = Api.ParsePackageJson(jsonContent);
                 }
             }
 
             var index = await indexTask;
 
-            return (spec, index);
+            return (json, index);
         }
 
-        private NuGetReadMeContext CreateReadMeContext(NuGetSpec spec, NuGetLibraryIndexJson index)
+        private NpmReadMeContext CreateReadMeContext(PackageJson json, NpmLibraryIndexJson index)
         {
-            var context = new NuGetReadMeContext
+            var context = new NpmReadMeContext
             {
-                Name = spec.Id,
-                Version = spec.Version,
-                HRef = spec.PackageHRef,
+                Name = json.Name,
+                Version = json.Version,
+                HRef = json.PackageHRef,
                 LicenseCode = index.License.Code,
-                UsedBy = PackageReadMe.BuildUsedBy(index.UsedBy),
-                TargetFrameworks = string.Join(", ", index.UsedBy.SelectMany(i => i.TargetFrameworks).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(i => i)),
-                Description = spec.Description
+                UsedBy = PackageReadMe.BuildUsedBy(index.UsedBy.Select(i => (i.Name, i.InternalOnly))),
+                Description = json.Description
             };
 
             if (!context.LicenseCode.IsNullOrEmpty())
             {
                 var codes = LicenseExpression.GetCodes(context.LicenseCode);
-                
+
                 context.LicenseLocalHRef = Storage.GetLicenseLocalHRef(codes.First(), RelativeTo.Library);
                 context.LicenseMarkdownExpression = LicenseExpression.ReplaceCodes(
                     context.LicenseCode,
@@ -240,21 +232,6 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 context.Licenses.Add(license);
             }
 
-            var dependencies = index
-                .UsedBy
-                .SelectMany(i => i.Dependencies)
-                .Select(i => new LibraryId(PackageSources.NuGet, i.Name, i.Version))
-                .Distinct();
-            foreach (var dependency in dependencies)
-            {
-                context.Dependencies.Add(new NuGetReadMeDependencyContext
-                {
-                    Name = dependency.Name,
-                    Version = dependency.Version,
-                    LocalHRef = Storage.GetPackageLocalHRef(dependency, RelativeTo.Library)
-                });
-            }
-
             return context;
         }
 
@@ -262,11 +239,11 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
         {
             string result = null;
 
-            using (var stream = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositoryThirdPartyNoticesFileName, token))
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryThirdPartyNoticesFileName, token))
             {
                 if (stream == null && createEmpty)
                 {
-                    await Storage.WriteLibraryFileAsync(id, NuGetConstants.RepositoryThirdPartyNoticesFileName, Array.Empty<byte>(), token);
+                    await Storage.WriteLibraryFileAsync(id, NpmConstants.RepositoryThirdPartyNoticesFileName, Array.Empty<byte>(), token);
                 }
 
                 if (stream != null)

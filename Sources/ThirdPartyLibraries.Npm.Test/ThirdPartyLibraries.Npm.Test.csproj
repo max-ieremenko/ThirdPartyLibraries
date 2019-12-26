@@ -9,16 +9,16 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <RootNamespace>ThirdPartyLibraries.Repository</RootNamespace>
+    <RootNamespace>ThirdPartyLibraries.Npm</RootNamespace>
+    <NoWarn>1701;1702;8002</NoWarn>
     <OutputPath>..\bin\test</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Storage\licenses.mit.index.json" />
-    <None Remove="Storage\npmjs.angular.index.json" />
-    <None Remove="Storage\npmjs.types.angular.index.json" />
-    <None Remove="Storage\nuget.newtonsoft.json.index.json" />
-    <None Remove="Storage\nuget.newtonsoft.json.package.nuspec" />
+    <None Remove="NpmApiTest.TypesAngular.1.6.56.tgz" />
+    <None Remove="NpmApiTest.TypesAngular.get.json" />
+    <None Remove="NpmApiTest.TypesAngular.package.json" />
+    <None Remove="PackageJsonParserTest.TypesAngular.package.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,11 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Storage\licenses.mit.index.json" />
-    <EmbeddedResource Include="Storage\npmjs.types.angular.index.json" />
-    <EmbeddedResource Include="Storage\npmjs.angular.index.json" />
-    <EmbeddedResource Include="Storage\nuget.newtonsoft.json.index.json" />
-    <EmbeddedResource Include="Storage\nuget.newtonsoft.json.package.nuspec" />
+    <EmbeddedResource Include="NpmApiTest.TypesAngular.1.6.56.tgz" />
+    <EmbeddedResource Include="NpmApiTest.TypesAngular.get.json" />
+    <EmbeddedResource Include="NpmApiTest.TypesAngular.package.json" />
+    <EmbeddedResource Include="PackageJsonParserTest.TypesAngular.package.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,16 +37,16 @@
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="RichardSzalay.MockHttp" Version="5.0.0" />
     <PackageReference Include="Shouldly" Version="3.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThirdPartyLibraries.Repository\ThirdPartyLibraries.Repository.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Npm\ThirdPartyLibraries.Npm.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
   </ItemGroup>
 

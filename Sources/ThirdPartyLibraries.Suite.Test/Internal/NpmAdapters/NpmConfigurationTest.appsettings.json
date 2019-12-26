@@ -1,0 +1,9 @@
+{
+  "npmjs.com": {
+    "downloadPackageIntoRepository": true,
+    "ignorePackages": {
+      "byName": [ "Abc.*" ],
+      "byFolderName": [ "\\.Demo$" ]
+    }
+  }
+}

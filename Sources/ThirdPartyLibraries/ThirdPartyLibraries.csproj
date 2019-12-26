@@ -49,6 +49,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\ThirdPartyLibraries.Generic\ThirdPartyLibraries.Generic.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Npm\ThirdPartyLibraries.Npm.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.NuGet\ThirdPartyLibraries.NuGet.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Suite\ThirdPartyLibraries.Suite.csproj" />

@@ -4,6 +4,7 @@ using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 using ThirdPartyLibraries.Suite.Internal.CustomAdapters;
 using ThirdPartyLibraries.Suite.Internal.GitHubAdapters;
+using ThirdPartyLibraries.Suite.Internal.NpmAdapters;
 using ThirdPartyLibraries.Suite.Internal.NuGetAdapters;
 using Unity;
 using Unity.Lifetime;
@@ -28,6 +29,12 @@ namespace ThirdPartyLibraries.Suite
             container.RegisterType<ILicenseSourceByUrl, NuGetLicenseSource>(KnownHosts.NuGetLicense, new TransientLifetimeManager());
             container.RegisterType<IPackageRepositoryAdapter, NuGetPackageRepositoryAdapter>(PackageSources.NuGet, new TransientLifetimeManager());
 
+            // npm
+            container.RegisterFactory<NpmConfiguration>(ResolveNpmConfiguration, new ContainerControlledLifetimeManager());
+            container.RegisterType<ISourceCodeReferenceProvider, NpmSourceCodeReferenceProvider>(PackageSources.Npm, new TransientLifetimeManager());
+            container.RegisterType<IPackageRepositoryAdapter, NpmPackageRepositoryAdapter>(PackageSources.Npm, new TransientLifetimeManager());
+            container.RegisterType<IPackageResolver, NpmPackageResolver>(PackageSources.Npm, new TransientLifetimeManager());
+
             // github
             container.RegisterFactory<GitHubConfiguration>(ResolveGitHubConfiguration, new ContainerControlledLifetimeManager());
             container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHub, new TransientLifetimeManager());
@@ -50,6 +57,13 @@ namespace ThirdPartyLibraries.Suite
             return container
                 .Resolve<IConfigurationManager>()
                 .GetSection<NuGetConfiguration>(PackageSources.NuGet);
+        }
+
+        private static NpmConfiguration ResolveNpmConfiguration(IUnityContainer container)
+        {
+            return container
+                .Resolve<IConfigurationManager>()
+                .GetSection<NpmConfiguration>(PackageSources.Npm);
         }
 
         private static GitHubConfiguration ResolveGitHubConfiguration(IUnityContainer container)

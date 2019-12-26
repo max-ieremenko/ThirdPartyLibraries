@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
+using ThirdPartyLibraries.Shared;
 using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal

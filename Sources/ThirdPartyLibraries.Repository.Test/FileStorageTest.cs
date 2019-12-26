@@ -21,19 +21,13 @@ namespace ThirdPartyLibraries.Repository
             _location = new TempFolder();
             _sut = new FileStorage(_location.Location);
 
-            foreach (var resourceName in GetType().Assembly.GetManifestResourceNames())
-            {
-                if (TryParseNuGetFileName(resourceName, out var fileName)
-                || TryParseLicenseFileName(resourceName, out fileName))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
-                    using (var dest = new FileStream(fileName, FileMode.CreateNew, FileAccess.ReadWrite))
-                    using (var source = GetType().Assembly.GetManifestResourceStream(resourceName))
-                    {
-                        source.CopyTo(dest);
-                    }
-                }
-            }
+            CopyFile(@"licenses\mit\index.json", "licenses.mit.index.json");
+
+            CopyFile(@"packages\nuget.org\newtonsoft.json\12.0.2\index.json", "nuget.newtonsoft.json.index.json");
+            CopyFile(@"packages\nuget.org\newtonsoft.json\12.0.2\package.nuspec", "nuget.newtonsoft.json.package.nuspec");
+            
+            CopyFile(@"packages\npmjs.com\@types\angular\1.6.51\index.json", "npmjs.types.angular.index.json");
+            CopyFile(@"packages\npmjs.com\angular\1.7.5\index.json", "npmjs.angular.index.json");
         }
 
         [TearDown]
@@ -69,12 +63,16 @@ namespace ThirdPartyLibraries.Repository
         [Test]
         public async Task GetAllLibraries()
         {
-            var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
-
             var actual = await _sut.GetAllLibrariesAsync(CancellationToken.None);
 
-            actual.Count.ShouldBe(1);
-            actual[0].ShouldBe(id);
+            actual.ShouldBe(
+                new[]
+                {
+                    new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2"),
+                    new LibraryId("npmjs.com", "@types/angular", "1.6.51"),
+                    new LibraryId("npmjs.com", "angular", "1.7.5")
+                },
+                ignoreOrder: true);
         }
 
         [Test]
@@ -193,50 +191,18 @@ namespace ThirdPartyLibraries.Repository
             await _sut.RemoveLibraryAsync(id, CancellationToken.None);
         }
 
-        private bool TryParseNuGetFileName(string resourceName, out string fileName)
+        private void CopyFile(string targetName, string resourceName)
         {
-            fileName = default;
+            var fileName = Path.Combine(_location.Location, targetName);
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
-            var anchor = GetType().Namespace + ".Storage.packages.nuget.org.";
-            if (!resourceName.StartsWithIgnoreCase(anchor))
+            resourceName = GetType().Namespace + ".Storage." + resourceName;
+
+            using (var dest = new FileStream(fileName, FileMode.CreateNew, FileAccess.ReadWrite))
+            using (var source = GetType().Assembly.GetManifestResourceStream(resourceName))
             {
-                return false;
+                source.CopyTo(dest);
             }
-
-            var name = resourceName.AsSpan().Slice(anchor.Length);
-
-            var versionIndex = name.FindIndex(char.IsDigit);
-            var packageName = name.Slice(0, versionIndex - 2).ToString();
-            name = name.Slice(versionIndex);
-
-            versionIndex = name.FindLastIndex(char.IsDigit);
-            var version = name.Slice(0, versionIndex + 1).ToString().Replace("_", string.Empty);
-
-            fileName = name.Slice(versionIndex + 2).ToString();
-
-            fileName = Path.Combine(_location.Location, @"packages\nuget.org", packageName, version, fileName);
-            return true;
-        }
-
-        private bool TryParseLicenseFileName(string resourceName, out string fileName)
-        {
-            fileName = default;
-
-            var anchor = GetType().Namespace + ".Storage.licenses.";
-            if (!resourceName.StartsWithIgnoreCase(anchor))
-            {
-                return false;
-            }
-
-            var name = resourceName.AsSpan().Slice(anchor.Length);
-
-            var index = name.IndexOf("index.json");
-            
-            var code = name.Slice(0, index - 1).ToString();
-            fileName = name.Slice(index).ToString();
-
-            fileName = Path.Combine(_location.Location, "licenses", code, fileName);
-            return true;
         }
     }
 }

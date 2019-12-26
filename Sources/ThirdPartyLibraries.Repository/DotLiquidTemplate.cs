@@ -18,7 +18,7 @@ namespace ThirdPartyLibraries.Repository
             DotLiquid.Template.RegisterSafeType(typeof(RootReadMePackageContext), new[] { "*" });
 
             DotLiquid.Template.RegisterSafeType(typeof(NuGetReadMeContext), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(NuGetLibraryLicense), new[] { "*" });
+            DotLiquid.Template.RegisterSafeType(typeof(LibraryLicense), new[] { "*" });
             DotLiquid.Template.RegisterSafeType(typeof(NuGetReadMeDependencyContext), new[] { "*" });
 
             DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesContext), new[] { "*" });

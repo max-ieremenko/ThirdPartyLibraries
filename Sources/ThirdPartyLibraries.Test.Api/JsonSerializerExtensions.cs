@@ -5,11 +5,6 @@ namespace ThirdPartyLibraries
 {
     public static class JsonSerializerExtensions
     {
-        public static T JsonDeserialize<T>(this byte[] content)
-        {
-            return new JsonSerializer().Deserialize<T>(new JsonTextReader(new StreamReader(new MemoryStream(content))));
-        }
-
         public static Stream JsonSerialize(this object content)
         {
             var result = new MemoryStream();

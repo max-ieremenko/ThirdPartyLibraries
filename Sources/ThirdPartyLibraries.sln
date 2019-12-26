@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Repository.Test", "ThirdPartyLibraries.Repository.Test\ThirdPartyLibraries.Repository.Test.csproj", "{6D5685B6-7C73-45AA-ACA1-45B384121E51}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Npm", "ThirdPartyLibraries.Npm\ThirdPartyLibraries.Npm.csproj", "{A9A7EBAF-066D-4C5F-A376-514809DAB998}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Npm.Test", "ThirdPartyLibraries.Npm.Test\ThirdPartyLibraries.Npm.Test.csproj", "{352FC256-EE84-4A1B-92D8-E8A3F8993B69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +99,14 @@ Global
 		{6D5685B6-7C73-45AA-ACA1-45B384121E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D5685B6-7C73-45AA-ACA1-45B384121E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D5685B6-7C73-45AA-ACA1-45B384121E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A7EBAF-066D-4C5F-A376-514809DAB998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A7EBAF-066D-4C5F-A376-514809DAB998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A7EBAF-066D-4C5F-A376-514809DAB998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A7EBAF-066D-4C5F-A376-514809DAB998}.Release|Any CPU.Build.0 = Release|Any CPU
+		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +119,7 @@ Global
 		{8E8ECEA3-45E1-4E52-B8AF-1AB49B11B367} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{264B826E-546E-40BD-BFA5-2993FFA8EB29} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{6D5685B6-7C73-45AA-ACA1-45B384121E51} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
+		{352FC256-EE84-4A1B-92D8-E8A3F8993B69} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {373FE374-9ABB-4005-8104-E0EF52D12B1E}

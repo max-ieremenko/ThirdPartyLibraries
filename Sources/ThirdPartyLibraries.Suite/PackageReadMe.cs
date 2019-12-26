@@ -30,6 +30,13 @@ namespace ThirdPartyLibraries.Suite
         {
             applications.AssertNotNull(nameof(applications));
 
+            return BuildUsedBy(applications.Select(i => (i.Name, i.InternalOnly)));
+        }
+        
+        internal static string BuildUsedBy(IEnumerable<(string Name, bool InternalOnly)> applications)
+        {
+            applications.AssertNotNull(nameof(applications));
+
             return string.Join(", ", applications.Select(i => i.InternalOnly ? i.Name + " internal" : i.Name).OrderBy(i => i));
         }
     }

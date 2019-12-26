@@ -4,6 +4,7 @@ using System.Linq;
 using ThirdPartyLibraries.NuGet;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
+using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
@@ -41,12 +42,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
             var targetFrameworks = parser.GetTargetFrameworks();
 
-            var internalFilter = new NuGetIgnoreFilter(Configuration.InternalPackages);
-            var isInternalByProject = internalFilter.FilterByProjectName(parser.GetProjectName());
+            var internalFilterByName = new IgnoreFilter(Configuration.InternalPackages.ByName);
+            var isInternalByProject = new IgnoreFilter(Configuration.InternalPackages.ByProjectName).Filter(parser.GetProjectName());
 
             foreach (var entry in GetFilteredReferences(parser, targetFrameworks))
             {
-                var isInternal = isInternalByProject || internalFilter.FilterByName(entry.Package.Name);
+                var isInternal = isInternalByProject || internalFilterByName.Filter(entry.Package.Name);
                 yield return new LibraryReference(
                     new LibraryId(PackageSources.NuGet, entry.Package.Name, entry.Package.Version), 
                     targetFrameworks,
@@ -57,17 +58,17 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
         private IEnumerable<(NuGetPackageId Package, IList<LibraryId> Dependencies)> GetFilteredReferences(ProjectAssetsParser parser, string[] targetFrameworks)
         {
-            var ignoreFilter = new NuGetIgnoreFilter(Configuration.IgnorePackages);
-            if (ignoreFilter.FilterByProjectName(parser.GetProjectName()))
+            if (new IgnoreFilter(Configuration.IgnorePackages.ByProjectName).Filter(parser.GetProjectName()))
             {
                yield break;
             }
 
+            var ignoreFilterByName = new IgnoreFilter(Configuration.IgnorePackages.ByName);
             foreach (var targetFramework in targetFrameworks)
             {
                 foreach (var entry in parser.GetReferences(targetFramework))
                 {
-                    if (ignoreFilter.FilterByName(entry.Package.Name))
+                    if (ignoreFilterByName.Filter(entry.Package.Name))
                     {
                         continue;
                     }
@@ -75,7 +76,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                     var dependencies = new List<LibraryId>(entry.Dependencies.Count);
                     foreach (var d in entry.Dependencies)
                     {
-                        if (!ignoreFilter.FilterByName(d.Name))
+                        if (!ignoreFilterByName.Filter(d.Name))
                         {
                             dependencies.Add(new LibraryId(PackageSources.NuGet, d.Name, d.Version));
                         }

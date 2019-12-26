@@ -6,6 +6,6 @@
 
         public const string NuGet = "nuget.org";
 
-        public const string Npm = "npm";
+        public const string Npm = "npmjs.com";
     }
 }

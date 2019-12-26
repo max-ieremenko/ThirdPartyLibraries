@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,14 +42,17 @@ namespace ThirdPartyLibraries.Repository
             IList<LibraryId> result = new List<LibraryId>(indexes.Length);
             foreach (var fileName in indexes)
             {
-                var path = Path.GetDirectoryName(fileName);
-                var version = Path.GetFileName(path);
+                var fullName = fileName.AsSpan().Slice(root.Length + 1);
+                fullName = fullName.Slice(0, fullName.Length - StorageExtensions.IndexFileName.Length - 1);
 
-                path = Path.GetDirectoryName(path);
-                var name = Path.GetFileName(path);
+                var index = fullName.IndexOf(Path.DirectorySeparatorChar);
+                var source = fullName.Slice(0, index).ToString();
 
-                path = Path.GetDirectoryName(path);
-                var source = Path.GetFileName(path);
+                fullName = fullName.Slice(index + 1);
+                index = fullName.LastIndexOf(Path.DirectorySeparatorChar);
+                var version = fullName.Slice(index + 1).ToString();
+
+                var name = fullName.Slice(0, index).ToString().Replace('\\', '/');
 
                 result.Add(new LibraryId(source, name, version));
             }

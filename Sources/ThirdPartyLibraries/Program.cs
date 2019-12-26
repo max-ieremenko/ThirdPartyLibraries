@@ -71,6 +71,7 @@ namespace ThirdPartyLibraries
 
             Suite.AppModule.ConfigureContainer(container);
             NuGet.AppModule.ConfigureContainer(container);
+            Npm.AppModule.ConfigureContainer(container);
             GitHub.AppModule.ConfigureContainer(container);
             Generic.AppModule.ConfigureContainer(container);
         }
