@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Shared;
@@ -60,36 +61,28 @@ namespace ThirdPartyLibraries.Repository
             return Task.FromResult(result);
         }
 
-        public string GetPackageLocalHRef(LibraryId id, RelativeTo relativeTo)
+        public string GetPackageLocalHRef(LibraryId id, LibraryId? relativeTo = null)
         {
-            string connectionString;
-            switch (relativeTo)
+            var connectionString = string.Empty;
+            if (relativeTo != null)
             {
-                case RelativeTo.Library:
-                    connectionString = @"..\..\..\..\";
-                    break;
-
-                default:
-                    connectionString = string.Empty;
-                    break;
+                var depth = relativeTo.Value.Name.Count(i => i == '/');
+                connectionString = string.Join(string.Empty, Enumerable.Repeat(@"..\", depth + 4));
             }
 
             var href = GetPackageLocation(connectionString, id);
             return href.Replace('\\', '/');
         }
 
-        public string GetLicenseLocalHRef(string licenseCode, RelativeTo relativeTo)
+        public string GetLicenseLocalHRef(string licenseCode, LibraryId? relativeTo = null)
         {
-            string connectionString;
-            switch (relativeTo)
-            {
-                case RelativeTo.Library:
-                    connectionString = @"..\..\..\..\";
-                    break;
+            licenseCode.AssertNotNull(nameof(licenseCode));
 
-                default:
-                    connectionString = string.Empty;
-                    break;
+            var connectionString = string.Empty;
+            if (relativeTo != null)
+            {
+                var depth = relativeTo.Value.Name.Count(i => i == '/');
+                connectionString = string.Join(string.Empty, Enumerable.Repeat(@"..\", depth + 4));
             }
 
             var href = GetLicenseLocation(connectionString, licenseCode);

@@ -47,7 +47,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     IsApproved = metadata.ApprovalStatus == PackageApprovalStatus.Approved || metadata.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved,
                     UsedBy = metadata.UsedBy,
                     SourceHRef = metadata.HRef,
-                    LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version), RelativeTo.Root),
+                    LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version)),
                     LicenseLocalHRef = licenses.FirstOrDefault()?.LocalHRef,
                     LicenseMarkdownExpression = markdownExpression
                 };

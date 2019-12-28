@@ -37,27 +37,57 @@ namespace ThirdPartyLibraries.Repository
         }
 
         [Test]
-        [TestCase(PackageSources.NuGet, "Castle.Core", "4.4.0", RelativeTo.Root, "packages/nuget.org/castle.core/4.4.0")]
-        [TestCase(PackageSources.NuGet, "Castle.Core", "4.4.0", RelativeTo.Library, "../../../../packages/nuget.org/castle.core/4.4.0")]
-        public void GetPackageLocalHRef(string sourceCode, string name, string version, RelativeTo relativeTo, string expected)
+        [TestCase(PackageSources.NuGet, "newtonsoft.json", "12.0.2", null, null, null)]
+        [TestCase(PackageSources.Npm, "@types/angular", "1.6.51", null, null, null)]
+        [TestCase(PackageSources.Npm, "angular", "1.7.5", PackageSources.Npm, "@types/angular", "1.6.51")]
+        [TestCase(PackageSources.Npm, "@types/angular", "1.6.51", PackageSources.Npm, "angular", "1.7.5")]
+        public void GetPackageLocalHRef(string librarySourceCode, string libraryName, string libraryVersion, string relativeSourceCode, string relativeName, string relativeVersion)
         {
-            var id = new LibraryId(sourceCode, name, version);
+            var currentLocation = _location.Location;
+            LibraryId? relativeTo = null;
+            if (relativeSourceCode != null)
+            {
+                relativeTo = new LibraryId(relativeSourceCode, relativeName, relativeVersion);
+                currentLocation = Path.Combine(currentLocation, "packages", relativeSourceCode, relativeName, relativeVersion);
+            }
 
-            var actual = _sut.GetPackageLocalHRef(id, relativeTo);
+            DirectoryAssert.Exists(currentLocation);
 
+            var actual = _sut.GetPackageLocalHRef(new LibraryId(librarySourceCode, libraryName, libraryVersion), relativeTo);
             Console.WriteLine(actual);
-            actual.ShouldBe(expected);
+
+            actual.ShouldBe(actual.ToLowerInvariant());
+
+            var packageLocation = Path.Combine(currentLocation, actual);
+            DirectoryAssert.Exists(packageLocation);
+            FileAssert.Exists(Path.Combine(packageLocation, "index.json"));
         }
 
         [Test]
-        [TestCase("MICROSOFT .NET LIBRARY", RelativeTo.Root, "licenses/microsoft .net library")]
-        [TestCase("MICROSOFT .NET LIBRARY", RelativeTo.Library, "../../../../licenses/microsoft .net library")]
-        public void GetLicenseLocalHRef(string code, RelativeTo relativeTo, string expected)
+        [TestCase("MIT", null, null, null)]
+        [TestCase("MIT", PackageSources.NuGet, "newtonsoft.json", "12.0.2")]
+        [TestCase("MIT", PackageSources.Npm, "@types/angular", "1.6.51")]
+        [TestCase("MIT", PackageSources.Npm, "angular", "1.7.5")]
+        public void GetLicenseLocalHRef(string licenseCode, string librarySourceCode, string libraryName, string libraryVersion)
         {
-            var actual = _sut.GetLicenseLocalHRef(code, relativeTo);
+            var currentLocation = _location.Location;
+            LibraryId? relativeTo = null;
+            if (librarySourceCode != null)
+            {
+                relativeTo = new LibraryId(librarySourceCode, libraryName, libraryVersion);
+                currentLocation = Path.Combine(currentLocation, "packages", librarySourceCode, libraryName, libraryVersion);
+            }
 
+            DirectoryAssert.Exists(currentLocation);
+
+            var actual = _sut.GetLicenseLocalHRef(licenseCode, relativeTo);
             Console.WriteLine(actual);
-            actual.ShouldBe(expected);
+
+            actual.ShouldBe(actual.ToLowerInvariant());
+
+            var licenseLocation = Path.Combine(currentLocation, actual);
+            DirectoryAssert.Exists(licenseLocation);
+            FileAssert.Exists(Path.Combine(licenseLocation, "index.json"));
         }
 
         [Test]

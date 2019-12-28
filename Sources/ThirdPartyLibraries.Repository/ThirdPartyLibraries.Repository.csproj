@@ -16,6 +16,7 @@
     <None Remove="nuget.org.ReadMeTemplate.txt" />
     <None Remove="Root.ReadMeTemplate.txt" />
     <None Remove="Template\appsettings.json" />
+    <None Remove="Template\npmjs.com.ReadMeTemplate.txt" />
     <None Remove="ThirdPartyNotices.Template.txt" />
   </ItemGroup>
 
@@ -27,6 +28,7 @@
     <EmbeddedResource Include="Template\appsettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Template\npmjs.com.ReadMeTemplate.txt" />
     <EmbeddedResource Include="Template\nuget.org.ReadMeTemplate.txt" />
     <EmbeddedResource Include="Template\ThirdPartyNotices.Template.txt" />
     <EmbeddedResource Include="Template\Root.ReadMeTemplate.txt" />

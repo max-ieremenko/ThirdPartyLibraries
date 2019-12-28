@@ -218,11 +218,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             if (!context.LicenseCode.IsNullOrEmpty())
             {
                 var codes = LicenseExpression.GetCodes(context.LicenseCode);
-                
-                context.LicenseLocalHRef = Storage.GetLicenseLocalHRef(codes.First(), RelativeTo.Library);
+                var relativeTo = new LibraryId(PackageSources.NuGet, spec.Id, spec.Version);
+
+                context.LicenseLocalHRef = Storage.GetLicenseLocalHRef(codes.First(), relativeTo);
                 context.LicenseMarkdownExpression = LicenseExpression.ReplaceCodes(
                     context.LicenseCode,
-                    i => "[{0}]({1})".FormatWith(i, Storage.GetLicenseLocalHRef(i, RelativeTo.Library)));
+                    i => "[{0}]({1})".FormatWith(i, Storage.GetLicenseLocalHRef(i, relativeTo)));
 
                 if (Enum.Parse<PackageApprovalStatus>(index.License.Status) == PackageApprovalStatus.HasToBeApproved)
                 {
@@ -251,7 +252,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 {
                     Name = dependency.Name,
                     Version = dependency.Version,
-                    LocalHRef = Storage.GetPackageLocalHRef(dependency, RelativeTo.Library)
+                    LocalHRef = Storage.GetPackageLocalHRef(dependency, new LibraryId(PackageSources.NuGet, spec.Id, spec.Version))
                 });
             }
 

@@ -11,9 +11,9 @@ namespace ThirdPartyLibraries.Repository
 
         Task<IList<LibraryId>> GetAllLibrariesAsync(CancellationToken token);
 
-        string GetPackageLocalHRef(LibraryId id, RelativeTo relativeTo);
+        string GetPackageLocalHRef(LibraryId id, LibraryId? relativeTo = null);
 
-        string GetLicenseLocalHRef(string licenseCode, RelativeTo relativeTo);
+        string GetLicenseLocalHRef(string licenseCode, LibraryId? relativeTo = null);
 
         Task<Stream> OpenRootFileReadAsync(string fileName, CancellationToken token);
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
@@ -45,7 +44,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                         Code = repositoryLicense.Code,
                         RequiresApproval = repositoryLicense.RequiresApproval,
                         RequiresThirdPartyNotices = repositoryLicense.RequiresThirdPartyNotices,
-                        LocalHRef = Repository.Storage.GetLicenseLocalHRef(repositoryLicense.Code, RelativeTo.Root)
+                        LocalHRef = Repository.Storage.GetLicenseLocalHRef(repositoryLicense.Code)
                     };
 
                     _licenseByCode.Add(code, license);

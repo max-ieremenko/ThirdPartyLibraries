@@ -8,7 +8,6 @@ using ThirdPartyLibraries.Npm;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
-using ThirdPartyLibraries.Suite.Internal.NuGetAdapters;
 using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
@@ -105,12 +104,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             var context = CreateReadMeContext(json, index);
             context.ThirdPartyNotices = await LoadThirdPartyNoticesAsync(id, true, token);
 
-            using (var stream = await Storage.OpenLibraryFileReadAsync(id, NuGetConstants.RepositoryRemarksFileName, CancellationToken.None))
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryRemarksFileName, CancellationToken.None))
             {
                 if (stream == null)
                 {
                     context.Remarks = "no remarks";
-                    await Storage.WriteLibraryFileAsync(id, NuGetConstants.RepositoryRemarksFileName, Encoding.UTF8.GetBytes(context.Remarks), token);
+                    await Storage.WriteLibraryFileAsync(id, NpmConstants.RepositoryRemarksFileName, Encoding.UTF8.GetBytes(context.Remarks), token);
                 }
                 else
                 {
@@ -123,7 +122,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 
             var metadata = new PackageReadMe
             {
-                SourceCode = PackageSources.NuGet,
+                SourceCode = PackageSources.Npm,
                 Name = context.Name,
                 Version = context.Version,
                 HRef = context.HRef,
@@ -210,11 +209,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             if (!context.LicenseCode.IsNullOrEmpty())
             {
                 var codes = LicenseExpression.GetCodes(context.LicenseCode);
+                var relativeTo = new LibraryId(PackageSources.NuGet, json.Name, json.Version);
 
-                context.LicenseLocalHRef = Storage.GetLicenseLocalHRef(codes.First(), RelativeTo.Library);
+                context.LicenseLocalHRef = Storage.GetLicenseLocalHRef(codes.First(), relativeTo);
                 context.LicenseMarkdownExpression = LicenseExpression.ReplaceCodes(
                     context.LicenseCode,
-                    i => "[{0}]({1})".FormatWith(i, Storage.GetLicenseLocalHRef(i, RelativeTo.Library)));
+                    i => "[{0}]({1})".FormatWith(i, Storage.GetLicenseLocalHRef(i, relativeTo)));
 
                 if (Enum.Parse<PackageApprovalStatus>(index.License.Status) == PackageApprovalStatus.HasToBeApproved)
                 {
