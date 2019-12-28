@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using DotLiquid;
 using DotLiquid.NamingConventions;
@@ -66,10 +67,17 @@ namespace ThirdPartyLibraries.Repository
             var anchor = typeof(RootReadMeContext);
 
             using (var source = anchor.Assembly.GetManifestResourceStream(anchor, fileName))
-            using (var dest = new MemoryStream())
             {
-                source.CopyTo(dest);
-                return dest.ToArray();
+                if (source == null)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(fileName), "Template [{0}] not found.".FormatWith(fileName));
+                }
+
+                using (var dest = new MemoryStream())
+                {
+                    source.CopyTo(dest);
+                    return dest.ToArray();
+                }
             }
         }
     }
