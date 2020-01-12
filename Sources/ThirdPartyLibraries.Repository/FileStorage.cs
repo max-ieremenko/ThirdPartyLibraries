@@ -67,7 +67,7 @@ namespace ThirdPartyLibraries.Repository
             if (relativeTo != null)
             {
                 var depth = relativeTo.Value.Name.Count(i => i == '/');
-                connectionString = string.Join(string.Empty, Enumerable.Repeat(@"..\", depth + 4));
+                connectionString = string.Join(string.Empty, Enumerable.Repeat(@".." + Path.DirectorySeparatorChar, depth + 4));
             }
 
             var href = GetPackageLocation(connectionString, id);
@@ -82,7 +82,7 @@ namespace ThirdPartyLibraries.Repository
             if (relativeTo != null)
             {
                 var depth = relativeTo.Value.Name.Count(i => i == '/');
-                connectionString = string.Join(string.Empty, Enumerable.Repeat(@"..\", depth + 4));
+                connectionString = string.Join(string.Empty, Enumerable.Repeat(@".." + Path.DirectorySeparatorChar, depth + 4));
             }
 
             var href = GetLicenseLocation(connectionString, licenseCode);
