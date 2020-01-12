@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Threading;
@@ -89,6 +90,16 @@ namespace ThirdPartyLibraries.Npm
             }
 
             fileContent.ShouldContain("Copyright (c) Microsoft Corporation");
+        }
+
+        [Test]
+        public void ResolveNpmRoot()
+        {
+            var actual = _sut.ResolveNpmRoot();
+
+            Console.WriteLine(actual);
+            actual.ShouldNotBeNull();
+            DirectoryAssert.Exists(actual);
         }
     }
 }

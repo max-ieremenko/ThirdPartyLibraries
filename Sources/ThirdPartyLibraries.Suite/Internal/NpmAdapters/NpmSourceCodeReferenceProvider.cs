@@ -12,8 +12,16 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 {
     internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvider
     {
+        private string _npmRoot;
+
+        [Dependency]
+        public INpmApi Api { get; set; }
+
         [Dependency]
         public NpmConfiguration Configuration { get; set; }
+
+        [Dependency]
+        public ILogger Logger { get; set; }
 
         public IEnumerable<LibraryReference> GetReferencesFrom(string path)
         {
@@ -49,7 +57,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             return Directory.GetDirectories(path).SelectMany(FindAllPackageJson);
         }
 
-        private static LibraryReference ReadFromNodeModules(
+        private LibraryReference ReadFromNodeModules(
             NpmPackageId dependency,
             string nodeModulesDirectoryName,
             bool isInternal)
@@ -57,9 +65,13 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             var fileName = Path.Combine(nodeModulesDirectoryName, dependency.Name, PackageJsonParser.FileName);
             if (!File.Exists(fileName))
             {
-                // TODO: npm root -g
-                // throw new FileNotFoundException("File {0} not found.".FormatWith(fileName));
-                return null;
+                fileName = Path.Combine(GetNpmRoot(), dependency.Name, PackageJsonParser.FileName);
+                if (!File.Exists(fileName))
+                {
+                    // throw new FileNotFoundException("File {0} not found.".FormatWith(fileName));
+                    Logger.Error("Npm package {0}/{1} not found.".FormatWith(dependency.Name, dependency.Version));
+                    return null;
+                }
             }
 
             var parser = PackageJsonParser.FromFile(fileName);
@@ -103,6 +115,16 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
                     yield return ReadFromNodeModules(dependency, nodeModulesDirectoryName, true);
                 }
             }
+        }
+
+        private string GetNpmRoot()
+        {
+            if (_npmRoot == null)
+            {
+                _npmRoot = Api.ResolveNpmRoot();
+            }
+
+            return _npmRoot;
         }
     }
 }
