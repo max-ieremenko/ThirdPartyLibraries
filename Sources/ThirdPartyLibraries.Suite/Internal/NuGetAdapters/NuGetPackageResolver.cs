@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.NuGet;
 using ThirdPartyLibraries.Repository;
@@ -31,7 +30,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
             var spec = Api.ParseSpec(specContent);
 
-            var specLicenseUrl = IsDeprecateLicenseUrl(spec.LicenseUrl) ? null : spec.LicenseUrl;
+            var specLicenseUrl = NuGetConstants.IsDeprecateLicenseUrl(spec.LicenseUrl) ? null : spec.LicenseUrl;
             index.Licenses.Add(await ResolvePackageLicenseAsync(id, spec.License?.Type, spec.License?.Value, specLicenseUrl, token));
 
             if (spec.Repository?.Url != null)
@@ -54,17 +53,6 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
         {
             var package = await GetPackageContentAsync(id, token);
             return await Api.LoadFileContentAsync(package, fileName, token);
-        }
-
-        private static bool IsDeprecateLicenseUrl(string value)
-        {
-            // https://aka.ms/deprecateLicenseUrl
-            if (value.IsNullOrEmpty() || !Uri.TryCreate(value, UriKind.Absolute, out var url))
-            {
-                return false;
-            }
-
-            return url.Host.EqualsIgnoreCase("aka.ms") && url.LocalPath.StartsWithIgnoreCase("deprecateLicenseUrl");
         }
     }
 }
