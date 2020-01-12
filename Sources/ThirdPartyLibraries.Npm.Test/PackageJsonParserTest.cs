@@ -58,7 +58,9 @@ namespace ThirdPartyLibraries.Npm
         [TestCase("{license: '(ISC OR GPL-3.0)'}", "expression", "(ISC OR GPL-3.0)")]
         [TestCase("{license: 'SEE LICENSE IN license.txt'}", "file", "license.txt")]
         [TestCase("{license: 'UNLICENSED'}", "expression", null)]
-        [TestCase("{license: { type: 'ISC' }}", "expression", null)]
+        [TestCase("{license: { type: 'ISC' }}", "expression", "ISC")]
+        [TestCase("{licenses: [{ type: 'MIT' }]}", "expression", "MIT")]
+        [TestCase("{licenses: [{ type: 'MIT' }, { type: 'Apache-2.0' }]}", "expression", "(MIT OR Apache-2.0)")]
         public void GetLicense(string json, string expectedType, string expectedValue)
         {
             _sut = new PackageJsonParser(Encoding.UTF8.GetBytes(json).JsonDeserialize<JObject>());

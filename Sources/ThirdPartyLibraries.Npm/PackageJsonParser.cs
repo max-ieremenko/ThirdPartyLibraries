@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -98,19 +99,41 @@ namespace ThirdPartyLibraries.Npm
                 Type = "expression"
             };
 
-            var value = (Content.GetValue("license") as JValue)?.Value as string;
-            if (value.IsNullOrEmpty() || Unlicensed.EqualsIgnoreCase(value))
+            var node = Content.GetValue("license");
+            if (node != null)
             {
+                if (node is JObject obj)
+                {
+                    node = obj.GetValue("type");
+                }
+
+                if (node is JValue value)
+                {
+                    ParseLicenseAsExpression(value.Value as string, result);
+                }
+
                 return result;
             }
-
-            if (value.StartsWithIgnoreCase(FileLicense))
+            
+            if (Content.GetValue("licenses") is JArray nodes)
             {
-                value = value.Substring(FileLicense.Length).Trim();
-                result.Type = "file";
+                var codes = nodes
+                    .OfType<JObject>()
+                    .Select(i => (i.GetValue("type") as JValue)?.Value as string)
+                    .Where(i => !i.IsNullOrEmpty())
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                if (codes.Count == 1)
+                {
+                    result.Value = codes[0];
+                }
+                else if (codes.Count > 1)
+                {
+                    result.Value = "(" + string.Join(" OR ", codes) + ")";
+                }
             }
 
-            result.Value = value;
             return result;
         }
 
@@ -220,6 +243,22 @@ namespace ThirdPartyLibraries.Npm
             }
 
             return null;
+        }
+
+        private static void ParseLicenseAsExpression(string value, PackageJsonLicense result)
+        {
+            if (value.IsNullOrEmpty() || Unlicensed.EqualsIgnoreCase(value))
+            {
+                return;
+            }
+
+            if (value.StartsWithIgnoreCase(FileLicense))
+            {
+                value = value.Substring(FileLicense.Length).Trim();
+                result.Type = "file";
+            }
+
+            result.Value = value;
         }
     }
 }
