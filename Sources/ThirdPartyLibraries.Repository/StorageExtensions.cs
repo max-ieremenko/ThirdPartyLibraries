@@ -175,6 +175,8 @@ namespace ThirdPartyLibraries.Repository
                 using (var writer = new StreamWriter(stream, leaveOpen: true))
                 using (var jsonWriter = new JsonTextWriter(writer))
                 {
+                    writer.NewLine = "\r\n";
+
                     jsonWriter.Formatting = Formatting.Indented;
                     new JsonSerializer().Serialize(jsonWriter, content);
                 }
