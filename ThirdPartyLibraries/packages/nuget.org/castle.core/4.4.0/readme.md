@@ -3,7 +3,7 @@ Castle.Core [4.4.0](https://www.nuget.org/packages/Castle.Core/4.4.0)
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 

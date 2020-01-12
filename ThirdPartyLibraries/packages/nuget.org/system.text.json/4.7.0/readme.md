@@ -3,7 +3,7 @@ System.Text.Json [4.7.0](https://www.nuget.org/packages/System.Text.Json/4.7.0)
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

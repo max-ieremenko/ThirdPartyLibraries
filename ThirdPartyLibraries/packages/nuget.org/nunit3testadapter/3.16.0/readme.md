@@ -3,7 +3,7 @@ NUnit3TestAdapter [3.16.0](https://www.nuget.org/packages/NUnit3TestAdapter/3.16
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

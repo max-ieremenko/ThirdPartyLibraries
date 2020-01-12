@@ -3,7 +3,7 @@ JetBrains.Annotations [2019.1.3](https://www.nuget.org/packages/JetBrains.Annota
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

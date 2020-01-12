@@ -3,7 +3,7 @@ DotLiquid [2.0.314](https://www.nuget.org/packages/DotLiquid/2.0.314)
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 

@@ -3,7 +3,7 @@ NUnit [3.12.0](https://www.nuget.org/packages/NUnit/3.12.0)
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

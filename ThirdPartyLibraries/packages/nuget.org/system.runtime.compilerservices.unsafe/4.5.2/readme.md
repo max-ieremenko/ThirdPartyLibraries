@@ -3,7 +3,7 @@ System.Runtime.CompilerServices.Unsafe [4.5.2](https://www.nuget.org/packages/Sy
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

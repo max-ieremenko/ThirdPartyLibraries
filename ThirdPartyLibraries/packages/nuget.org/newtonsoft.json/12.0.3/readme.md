@@ -3,7 +3,7 @@ Newtonsoft.Json [12.0.3](https://www.nuget.org/packages/Newtonsoft.Json/12.0.3)
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

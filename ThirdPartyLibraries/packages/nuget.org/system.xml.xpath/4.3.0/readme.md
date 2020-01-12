@@ -3,7 +3,7 @@ System.Xml.XPath [4.3.0](https://www.nuget.org/packages/System.Xml.XPath/4.3.0)
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 

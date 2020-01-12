@@ -3,7 +3,7 @@ Microsoft.Extensions.Configuration.EnvironmentVariables [3.1.0](https://www.nuge
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: netcoreapp3.0
+Target frameworks: netcoreapp3.0, netcoreapp3.1
 
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
