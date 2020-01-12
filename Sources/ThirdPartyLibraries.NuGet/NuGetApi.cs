@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -135,11 +136,22 @@ namespace ThirdPartyLibraries.NuGet
 
         private static string GetLocalCachePath(NuGetPackageId package)
         {
-            var path = Path.Combine(
-                Environment.GetEnvironmentVariable("USERPROFILE"),
-                @".nuget\packages",
-                package.Name,
-                package.Version);
+            string path;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                path = Path.Combine(
+                    Environment.GetEnvironmentVariable("USERPROFILE"),
+                    @".nuget\packages",
+                    package.Name,
+                    package.Version);
+            }
+            else
+            {
+                path = Path.Combine(
+                    @"~/.nuget/packages",
+                    package.Name,
+                    package.Version);
+            }
 
             return Directory.Exists(path) ? path : null;
         }
