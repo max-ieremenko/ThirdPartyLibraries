@@ -99,7 +99,7 @@ Refresh or update .md files in a libraries repository <a name="refresh"></a>
 -------------------------------------------------
 
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
-- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json/12.0.2](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.2/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
+- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
 
 You can change templates and test your changes by runing the the tool
 
@@ -263,7 +263,7 @@ Manage NuGet packages <a name="nuget.org"></a>
 ---------------------------------------------
 
 Each package from [nuget.org](https://www.nuget.org/) is located in the sub-folder *packages/nuget.org/[id]/[version]* where [id] is a package id and [version] is a package version in lowercase.
-For instance [newtonsoft.json/12.0.2](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.2).
+For instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3).
 
 File *index.json* contains a metadata for the tool:
 
