@@ -1,6 +1,6 @@
 ﻿namespace ThirdPartyLibraries.Repository.Template
 {
-    public sealed class NuGetReadMeDependencyContext
+    public sealed class LibraryReadMeDependencyContext
     {
         public string Name { get; set; }
 

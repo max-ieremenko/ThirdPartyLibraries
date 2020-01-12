@@ -1,8 +1,8 @@
 ﻿namespace ThirdPartyLibraries.Suite
 {
-    public readonly struct PackageNoticesApplication
+    public readonly struct PackageApplication
     {
-        public PackageNoticesApplication(string name, bool internalOnly)
+        public PackageApplication(string name, bool internalOnly)
         {
             Name = name;
             InternalOnly = internalOnly;

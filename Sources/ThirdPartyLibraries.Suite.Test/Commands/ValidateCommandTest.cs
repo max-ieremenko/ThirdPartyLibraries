@@ -76,14 +76,11 @@ namespace ThirdPartyLibraries.Suite.Commands
                     return Task.FromResult(package.Package);
                 });
             _packageRepository
-                .Setup(r => r.LoadPackagesNoticesAsync(It.IsAny<LibraryId>(), CancellationToken.None))
+                .Setup(r => r.LoadPackageAsync(It.IsAny<LibraryId>(), CancellationToken.None))
                 .Returns<LibraryId, CancellationToken>((id, _) =>
                 {
                     var package = _storagePackages.Single(i => i.Package.Name == id.Name && i.Package.SourceCode == id.SourceCode && i.Package.Version == id.Version);
-                    return Task.FromResult(new PackageNotices
-                    {
-                        ThirdPartyNotices = package.ThirdPartyNotices
-                    });
+                    return Task.FromResult(package.Package);
                 });
             container.RegisterInstance(_packageRepository.Object);
 
@@ -116,7 +113,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = "12.0.2",
                     ApprovalStatus = PackageApprovalStatus.Approved,
                     LicenseCode = _mitLicense.Code,
-                    UsedBy = new[] { AppName }
+                    UsedBy = new[] { new PackageApplication(AppName, false) }
                 }
             };
             _storagePackages.Add(package);
@@ -187,7 +184,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Name = "package-name",
                     Version = "package-version",
                     ApprovalStatus = PackageApprovalStatus.Approved,
-                    UsedBy = new[] { AppName }
+                    UsedBy = new[] { new PackageApplication(AppName, false) }
                 }
             };
             _storagePackages.Add(package);
@@ -216,7 +213,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = "package-version",
                     LicenseCode = _mitLicense.Code,
                     ApprovalStatus = PackageApprovalStatus.HasToBeApproved,
-                    UsedBy = new[] { AppName }
+                    UsedBy = new[] { new PackageApplication(AppName, false) }
                 }
             };
             _storagePackages.Add(package);
@@ -245,7 +242,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = "package-version",
                     LicenseCode = _mitLicense.Code,
                     ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
-                    UsedBy = new[] { AppName }
+                    UsedBy = new[] { new PackageApplication(AppName, false) }
                 }
             };
             _storagePackages.Add(package);
@@ -268,7 +265,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = "package-version",
                     LicenseCode = _mitLicense.Code,
                     ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
-                    UsedBy = new[] { AppName }
+                    UsedBy = new[] { new PackageApplication(AppName, false) }
                 }
             };
             _storagePackages.Add(package);
@@ -299,7 +296,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = "package-version",
                     LicenseCode = _mitLicense.Code,
                     ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved,
-                    UsedBy = new[] { AppName }
+                    UsedBy = new[] { new PackageApplication(AppName, false) }
                 }
             };
             _storagePackages.Add(package);
@@ -323,8 +320,6 @@ namespace ThirdPartyLibraries.Suite.Commands
             public LibraryId Id => new LibraryId(Package.SourceCode, Package.Name, Package.Version);
 
             public Package Package { get; set; }
-
-            public string ThirdPartyNotices { get; set; }
         }
     }
 }

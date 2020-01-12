@@ -25,15 +25,10 @@ namespace ThirdPartyLibraries.Suite.Internal
         public IUnityContainer Container { get; }
 
         public IStorage Storage { get; }
-        
+
         public Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
         {
             return ResolveAdapter(id.SourceCode).LoadPackageAsync(id, token);
-        }
-
-        public Task<PackageNotices> LoadPackagesNoticesAsync(LibraryId id, CancellationToken token)
-        {
-            return ResolveAdapter(id.SourceCode).LoadPackageNoticesAsync(id, token);
         }
 
         public Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token)
@@ -79,10 +74,10 @@ namespace ThirdPartyLibraries.Suite.Internal
             return new RepositoryLicense(index.Code, index.RequiresApproval, index.RequiresThirdPartyNotices, index.Dependencies);
         }
 
-        public async Task<IList<PackageReadMe>> UpdateAllPackagesReadMeAsync(CancellationToken token)
+        public async Task<IList<Package>> UpdateAllPackagesReadMeAsync(CancellationToken token)
         {
             var libraries = await Storage.GetAllLibrariesAsync(token);
-            var result = new List<PackageReadMe>(libraries.Count);
+            var result = new List<Package>(libraries.Count);
 
             var librariesBySourceCode = libraries.GroupBy(i => i.SourceCode, StringComparer.OrdinalIgnoreCase);
             foreach (var entry in librariesBySourceCode)
@@ -90,7 +85,9 @@ namespace ThirdPartyLibraries.Suite.Internal
                 var adapter = ResolveAdapter(entry.Key);
                 foreach (var id in entry)
                 {
-                    result.Add(await adapter.UpdatePackageReadMeAsync(id, token));
+                    var package = await adapter.LoadPackageAsync(id, token);
+                    await adapter.UpdatePackageReadMeAsync(package, token);
+                    result.Add(package);
                 }
             }
 

@@ -146,7 +146,7 @@ namespace ThirdPartyLibraries.Suite.Internal
         public async Task UpdateAllPackagesReadMe()
         {
             var libraryId = new LibraryId("source", "name", "version");
-            var metadata = new PackageReadMe();
+            var metadata = new Package();
 
             _storage
                 .Setup(r => r.GetAllLibrariesAsync(CancellationToken.None))
@@ -156,8 +156,12 @@ namespace ThirdPartyLibraries.Suite.Internal
             _container.RegisterInstance("source", adapter.Object);
 
             adapter
-                .Setup(a => a.UpdatePackageReadMeAsync(libraryId, CancellationToken.None))
+                .Setup(a => a.LoadPackageAsync(libraryId, CancellationToken.None))
                 .ReturnsAsync(metadata);
+
+            adapter
+                .Setup(a => a.UpdatePackageReadMeAsync(metadata, CancellationToken.None))
+                .Returns(Task.CompletedTask);
 
             var actual = await _sut.UpdateAllPackagesReadMeAsync(CancellationToken.None);
 
@@ -216,9 +220,7 @@ namespace ThirdPartyLibraries.Suite.Internal
 
             public Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token) => throw new NotImplementedException();
 
-            public Task<PackageReadMe> UpdatePackageReadMeAsync(LibraryId id, CancellationToken none) => throw new NotImplementedException();
-
-            public Task<PackageNotices> LoadPackageNoticesAsync(LibraryId id, CancellationToken token) => throw new NotImplementedException();
+            public Task UpdatePackageReadMeAsync(Package package, CancellationToken token) => throw new NotImplementedException();
 
             public ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token) => throw new NotImplementedException();
         }

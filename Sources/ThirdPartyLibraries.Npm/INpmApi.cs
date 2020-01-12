@@ -13,7 +13,5 @@ namespace ThirdPartyLibraries.Npm
         Task<byte[]> ExtractPackageJsonAsync(byte[] packageContent, CancellationToken token);
         
         Task<byte[]> LoadFileContentAsync(byte[] packageContent, string fileName, CancellationToken token);
-        
-        Task<NpmPackageFile?> TryFindLicenseFileAsync(byte[] packageContent, CancellationToken token);
     }
 }

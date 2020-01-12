@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using Shouldly;
+using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet
 {
@@ -25,18 +26,44 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
-        public async Task LoadSpecNewtonsoftJson()
+        public async Task ExtractSpecStyleCopAnalyzers()
         {
-            var package = new NuGetPackageId("Newtonsoft.Json", "12.0.2");
+            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
 
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/Newtonsoft.Json/12.0.2/Newtonsoft.Json.nuspec")
-                .Respond(
-                    MediaTypeNames.Application.Xml,
-                    TempFile.OpenResource(GetType(), "NuGetApiTest.Newtonsoft.Json.12.0.2.nuspec.xml"));
+            byte[] specContent;
+            using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"))
+            {
+                specContent = await _sut.ExtractSpecAsync(package, await content.ToArrayAsync(CancellationToken.None), CancellationToken.None);
+            }
 
-            var specContent = await _sut.LoadSpecAsync(package, false, CancellationToken.None);
             var spec = _sut.ParseSpec(new MemoryStream(specContent));
+
+            spec.ShouldNotBeNull();
+            spec.Id.ShouldBe("StyleCop.Analyzers");
+            spec.Version.ShouldBe("1.1.118");
+            spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/StyleCop.Analyzers/1.1.118");
+            spec.Description.ShouldBe("An implementation of StyleCop's rules using Roslyn analyzers and code fixes");
+            spec.Authors.ShouldBe("Sam Harwell et. al.");
+            spec.Copyright.ShouldBe("Copyright 2015 Tunnel Vision Laboratories, LLC");
+
+            spec.License.ShouldNotBeNull();
+            spec.License.Type.ShouldBe("expression");
+            spec.License.Value.ShouldBe("Apache-2.0");
+            spec.LicenseUrl.ShouldBe("https://licenses.nuget.org/Apache-2.0");
+
+            spec.Repository.ShouldBeNull();
+
+            spec.ProjectUrl.ShouldBe("https://github.com/DotNetAnalyzers/StyleCopAnalyzers");
+        }
+
+        [Test]
+        public void ParseSpecNewtonsoftJson()
+        {
+            NuGetSpec spec;
+            using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.Newtonsoft.Json.12.0.2.nuspec.xml"))
+            {
+                spec = _sut.ParseSpec(content);
+            }
 
             spec.ShouldNotBeNull();
             spec.Id.ShouldBe("Newtonsoft.Json");
@@ -58,52 +85,15 @@ namespace ThirdPartyLibraries.NuGet
             spec.Repository.Url.ShouldBe("https://github.com/JamesNK/Newtonsoft.Json");
         }
 
-        [Test]
-        public async Task LoadSpecStyleCopAnalyzers()
-        {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
-
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/StyleCop.Analyzers/1.1.118/StyleCop.Analyzers.nuspec")
-                .Respond(
-                    MediaTypeNames.Application.Xml,
-                    TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nuspec.xml"));
-
-            var specContent = await _sut.LoadSpecAsync(package, false, CancellationToken.None);
-            var spec = _sut.ParseSpec(new MemoryStream(specContent));
-
-            spec.ShouldNotBeNull();
-            spec.Id.ShouldBe("StyleCop.Analyzers");
-            spec.Version.ShouldBe("1.1.118");
-            spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/StyleCop.Analyzers/1.1.118");
-            spec.Description.ShouldBe("An implementation of StyleCop's rules using Roslyn analyzers and code fixes");
-            spec.Authors.ShouldBe("Sam Harwell et. al.");
-            spec.Copyright.ShouldBe("Copyright 2015 Tunnel Vision Laboratories, LLC");
-
-            spec.License.ShouldNotBeNull();
-            spec.License.Type.ShouldBe("expression");
-            spec.License.Value.ShouldBe("Apache-2.0");
-            spec.LicenseUrl.ShouldBe("https://licenses.nuget.org/Apache-2.0");
-
-            spec.Repository.ShouldBeNull();
-
-            spec.ProjectUrl.ShouldBe("https://github.com/DotNetAnalyzers/StyleCopAnalyzers");
-        }
-
         // version in the spec 1.0 must converted to 1.0.0
         [Test]
-        public async Task LoadSpecOwin()
+        public void ParseSpecOwin()
         {
-            var package = new NuGetPackageId("Owin", "1.0.0");
-
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/Owin/1.0.0/Owin.nuspec")
-                .Respond(
-                    MediaTypeNames.Application.Xml,
-                    TempFile.OpenResource(GetType(), "NuGetApiTest.Owin.1.0.nuspec.xml"));
-
-            var specContent = await _sut.LoadSpecAsync(package, false, CancellationToken.None);
-            var spec = _sut.ParseSpec(new MemoryStream(specContent));
+            NuGetSpec spec;
+            using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.Owin.1.0.nuspec.xml"))
+            {
+                spec = _sut.ParseSpec(content);
+            }
 
             spec.ShouldNotBeNull();
             spec.Id.ShouldBe("Owin");
@@ -119,18 +109,13 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
-        public async Task Load2010SpecCommonLogging()
+        public void Parse2010SpecCommonLogging()
         {
-            var package = new NuGetPackageId("Common.Logging", "2.0.0");
-
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/Common.Logging/2.0.0/Common.Logging.nuspec")
-                .Respond(
-                    MediaTypeNames.Application.Xml,
-                    TempFile.OpenResource(GetType(), "NuGetApiTest.Common.Logging.2.0.0.nuspec.xml"));
-
-            var specContent = await _sut.LoadSpecAsync(package, false, CancellationToken.None);
-            var spec = _sut.ParseSpec(new MemoryStream(specContent));
+            NuGetSpec spec;
+            using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.Common.Logging.2.0.0.nuspec.xml"))
+            {
+                spec = _sut.ParseSpec(content);
+            }
 
             spec.ShouldNotBeNull();
             spec.Id.ShouldBe("Common.Logging");
@@ -144,52 +129,6 @@ namespace ThirdPartyLibraries.NuGet
             spec.LicenseUrl.ShouldBeNull();
             spec.ProjectUrl.ShouldBe("http://netcommon.sourceforge.net/");
             spec.Repository.ShouldBeNull();
-        }
-
-        [Test]
-        public async Task LoadSpecStyleCopAnalyzersFromLocalCache()
-        {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
-            var specContent = await _sut.LoadSpecAsync(package, true, CancellationToken.None);
-            var spec = _sut.ParseSpec(new MemoryStream(specContent));
-
-            spec.ShouldNotBeNull();
-            spec.Id.ShouldBe("StyleCop.Analyzers");
-            spec.Version.ShouldBe("1.1.118");
-            spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/StyleCop.Analyzers/1.1.118");
-        }
-
-        [Test]
-        public async Task LoadStyleCopAnalyzersLicenseContentFromLocalCache()
-        {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
-            var content = await _sut.LoadFileContentAsync(package, "LICENSE", true, CancellationToken.None);
-            
-            content.AsText().ShouldContain("Copyright (c) Tunnel Vision Laboratories");
-        }
-
-        [Test]
-        public async Task FindLicenseFileStyleCopAnalyzersInLocalCache()
-        {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
-            var file = await _sut.TryFindLicenseFileAsync(package, true, CancellationToken.None);
-
-            file?.Name.ShouldBe("LICENSE");
-            file?.Content.AsText().ShouldContain("Copyright (c) Tunnel Vision Laboratories");
-        }
-
-        [Test]
-        public async Task LoadSpecNotFound()
-        {
-            var package = new NuGetPackageId("Newtonsoft.Json", "12.0.2");
-
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/Newtonsoft.Json/12.0.2/Newtonsoft.Json.nuspec")
-                .Respond(HttpStatusCode.NotFound);
-
-            var spec = await _sut.LoadSpecAsync(package, false, CancellationToken.None);
-
-            spec.ShouldBeNull();
         }
 
         [Test]
@@ -240,50 +179,30 @@ namespace ThirdPartyLibraries.NuGet
 
         [Test]
         [TestCase("LICENSE", "Copyright (c) Tunnel Vision Laboratories")]
+        [TestCase("license", "Copyright (c) Tunnel Vision Laboratories")]
         [TestCase("LICENSE.txt", null)]
         [TestCase("tools/install.ps1", "param($installPath, $toolsPath, $package, $project)")]
         [TestCase("tools\\install.ps1", "param($installPath, $toolsPath, $package, $project)")]
         public async Task LoadFileContentStyleCopAnalyzers(string fileName, string expected)
         {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
-
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/stylecop.analyzers/1.1.118/stylecop.analyzers.1.1.118.nupkg")
-                .Respond(
-                    MediaTypeNames.Application.Octet,
-                    TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"));
-
-            var content = await _sut.LoadFileContentAsync(package, fileName, false, CancellationToken.None);
-
-            if (expected == null)
+            using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"))
             {
-                content.ShouldBeNull();
-            }
-            else
-            {
-                content.AsText().ShouldContain(expected);
+                var file = await _sut.LoadFileContentAsync(await content.ToArrayAsync(CancellationToken.None), fileName, CancellationToken.None);
+
+                if (expected == null)
+                {
+                    file.ShouldBeNull();
+                }
+                else
+                {
+                    file.ShouldNotBeNull();
+                    file.AsText().ShouldContain(expected);
+                }
             }
         }
 
         [Test]
-        public async Task FindLicenseFileStyleCopAnalyzers()
-        {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
-
-            _mockHttp
-                .When(HttpMethod.Get, NuGetApi.Host + "/v3-flatcontainer/StyleCop.Analyzers/1.1.118/StyleCop.Analyzers.nupkg")
-                .Respond(
-                    MediaTypeNames.Application.Octet,
-                    TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"));
-
-            var file = await _sut.TryFindLicenseFileAsync(package, false, CancellationToken.None);
-
-            file?.Name.ShouldBe("LICENSE");
-            file?.Content.AsText().ShouldContain("Copyright (c) Tunnel Vision Laboratories");
-        }
-
-        [Test]
-        public async Task LoadPackageStyleCopAnalyzersFromWeb()
+        public async Task DownloadPackageStyleCopAnalyzersFromWeb()
         {
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
 
@@ -293,17 +212,17 @@ namespace ThirdPartyLibraries.NuGet
                     MediaTypeNames.Application.Octet,
                     TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"));
 
-            var file = await _sut.LoadPackageAsync(package, false, CancellationToken.None);
+            var file = await _sut.DownloadPackageAsync(package, false, CancellationToken.None);
 
             file.ShouldNotBeNull();
         }
 
         [Test]
-        public async Task LoadPackageStyleCopAnalyzersFromLocalCache()
+        public async Task DownloadPackageStyleCopAnalyzersFromLocalCache()
         {
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
 
-            var file = await _sut.LoadPackageAsync(package, true, CancellationToken.None);
+            var file = await _sut.DownloadPackageAsync(package, true, CancellationToken.None);
 
             file.ShouldNotBeNull();
         }

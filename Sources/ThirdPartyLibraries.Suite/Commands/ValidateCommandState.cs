@@ -37,12 +37,11 @@ namespace ThirdPartyLibraries.Suite.Commands
             foreach (var id in libraries)
             {
                 var package = await Repository.LoadPackageAsync(id, token);
-                var notices = await Repository.LoadPackagesNoticesAsync(id, token);
                 await LoadLicenseAsync(package.LicenseCode, token);
 
-                _infoById.Add(id, (package.LicenseCode, package.ApprovalStatus, !notices.ThirdPartyNotices.IsNullOrEmpty()));
+                _infoById.Add(id, (package.LicenseCode, package.ApprovalStatus, !package.ThirdPartyNotices.IsNullOrEmpty()));
 
-                if (!package.SourceCode.Equals(PackageSources.Custom) && package.UsedBy.Any(i => i.EqualsIgnoreCase(AppName)))
+                if (!package.SourceCode.Equals(PackageSources.Custom) && package.UsedBy.Any(i => i.Name.EqualsIgnoreCase(AppName)))
                 {
                     _appPackages.Add(id);
                 }

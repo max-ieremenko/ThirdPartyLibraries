@@ -6,8 +6,6 @@ namespace ThirdPartyLibraries.Suite.Internal
 {
     internal interface IPackageResolver
     {
-        Task<Package> DownloadAsync(LibraryId id, CancellationToken token);
-
-        Task TryUpdateLicenseAsync(Package package, CancellationToken token);
+        ValueTask<bool> DownloadAsync(LibraryId id, CancellationToken token);
     }
 }

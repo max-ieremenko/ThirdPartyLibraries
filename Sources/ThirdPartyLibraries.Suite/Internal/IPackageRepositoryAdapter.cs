@@ -12,9 +12,7 @@ namespace ThirdPartyLibraries.Suite.Internal
 
         Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token);
 
-        Task<PackageReadMe> UpdatePackageReadMeAsync(LibraryId id, CancellationToken token);
-
-        Task<PackageNotices> LoadPackageNoticesAsync(LibraryId id, CancellationToken token);
+        Task UpdatePackageReadMeAsync(Package package, CancellationToken token);
 
         ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token);
     }

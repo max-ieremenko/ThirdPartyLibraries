@@ -103,22 +103,6 @@ namespace ThirdPartyLibraries.Npm
             return ExtractPackageFileAsync(packageContent, fileName);
         }
 
-        public async Task<NpmPackageFile?> TryFindLicenseFileAsync(byte[] packageContent, CancellationToken token)
-        {
-            packageContent.AssertNotNull(nameof(packageContent));
-
-            foreach (var fileName in GetLicenseFileNames())
-            {
-                var content = await LoadFileContentAsync(packageContent, fileName, token);
-                if (content != null)
-                {
-                    return new NpmPackageFile(fileName, content);
-                }
-            }
-
-            return null;
-        }
-
         private static async Task<byte[]> ExtractPackageFileAsync(byte[] packageContent, string fileName)
         {
             await using (var zip = new TarGZip(packageContent))
@@ -131,7 +115,5 @@ namespace ThirdPartyLibraries.Npm
                 return zip.GetCurrentEntryContent();
             }
         }
-
-        private static string[] GetLicenseFileNames() => new[] { "LICENSE.md", "LICENSE.txt", "LICENSE", "LICENSE.rtf" };
     }
 }

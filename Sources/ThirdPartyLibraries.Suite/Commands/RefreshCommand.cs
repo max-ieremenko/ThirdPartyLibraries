@@ -5,6 +5,7 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
+using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
@@ -45,7 +46,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                     Version = metadata.Version,
                     License = metadata.LicenseCode,
                     IsApproved = metadata.ApprovalStatus == PackageApprovalStatus.Approved || metadata.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved,
-                    UsedBy = metadata.UsedBy,
+                    UsedBy = PackageRepositoryTools.BuildUsedBy(metadata.UsedBy),
                     SourceHRef = metadata.HRef,
                     LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version)),
                     LicenseLocalHRef = licenses.FirstOrDefault()?.LocalHRef,

@@ -70,10 +70,10 @@ namespace ThirdPartyLibraries.Suite.Commands
             return true;
         }
 
-        private async Task<IList<PackageNotices>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
+        private async Task<IList<Package>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
         {
            var libraries = await repository.Storage.GetAllLibrariesAsync(token);
-           var result = new List<PackageNotices>(libraries.Count);
+           var result = new List<Package>(libraries.Count);
 
            var sorted = libraries
                .OrderBy(i => i.Name)
@@ -82,7 +82,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
            foreach (var id in sorted)
            {
-               var package = await repository.LoadPackagesNoticesAsync(id, token);
+               var package = await repository.LoadPackageAsync(id, token);
                if (UsePackage(package))
                {
                    result.Add(package);
@@ -92,7 +92,7 @@ namespace ThirdPartyLibraries.Suite.Commands
            return result;
         }
 
-        private bool UsePackage(PackageNotices package)
+        private bool UsePackage(Package package)
         {
             if (package.LicenseCode.IsNullOrEmpty())
             {

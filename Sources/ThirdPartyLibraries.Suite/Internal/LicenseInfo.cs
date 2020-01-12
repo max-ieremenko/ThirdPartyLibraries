@@ -8,8 +8,6 @@
 
         public string CodeHRef { get; set; }
 
-        public string CodeDescription { get; set; }
-
         public string FileHRef { get; set; }
 
         public string FileName { get; set; }

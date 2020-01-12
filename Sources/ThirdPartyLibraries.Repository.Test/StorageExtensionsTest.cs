@@ -92,7 +92,7 @@ namespace ThirdPartyLibraries.Repository
         public async Task WriteReadLibraryIndexJson()
         {
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
-            var model = new NuGetLibraryIndexJson
+            var model = new LibraryIndexJson
             {
                 License =
                 {
@@ -102,7 +102,7 @@ namespace ThirdPartyLibraries.Repository
             };
 
             await _storage.Object.WriteLibraryIndexJsonAsync(id, model, CancellationToken.None);
-            var actual = await _storage.Object.ReadLibraryIndexJsonAsync<NuGetLibraryIndexJson>(id, CancellationToken.None);
+            var actual = await _storage.Object.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, CancellationToken.None);
 
             using (var stream = await _storage.Object.OpenLibraryFileReadAsync(id, StorageExtensions.IndexFileName, CancellationToken.None))
             {

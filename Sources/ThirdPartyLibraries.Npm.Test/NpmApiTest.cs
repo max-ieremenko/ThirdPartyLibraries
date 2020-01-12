@@ -90,27 +90,5 @@ namespace ThirdPartyLibraries.Npm
 
             fileContent.ShouldContain("Copyright (c) Microsoft Corporation");
         }
-
-        [Test]
-        public async Task TryFindLicenseFile()
-        {
-            NpmPackageFile? file;
-            using (var package = TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.1.6.56.tgz"))
-            {
-                file = await _sut.TryFindLicenseFileAsync(await package.ToArrayAsync(CancellationToken.None), CancellationToken.None);
-            }
-
-            file.ShouldNotBeNull();
-
-            file.Value.Name.ShouldBe("LICENSE");
-
-            string fileContent;
-            using (var reader = new StreamReader(new MemoryStream(file.Value.Content)))
-            {
-                fileContent = await reader.ReadToEndAsync();
-            }
-
-            fileContent.ShouldContain("Copyright (c) Microsoft Corporation");
-        }
     }
 }

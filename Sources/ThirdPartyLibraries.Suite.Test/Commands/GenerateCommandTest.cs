@@ -24,7 +24,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         private TempFolder _to;
         private Mock<IPackageRepository> _packageRepository;
         private Mock<IStorage> _storage;
-        private IList<PackageNotices> _noticeses;
+        private IList<Package> _packages;
 
         [SetUp]
         public void BeforeEachTest()
@@ -35,7 +35,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             Directory.CreateDirectory(Path.Combine(_to.Location, "configuration"));
 
             var container = new UnityContainer();
-            _noticeses = new List<PackageNotices>();
+            _packages = new List<Package>();
 
             _storage = new Mock<IStorage>(MockBehavior.Strict);
             _storage
@@ -56,17 +56,17 @@ namespace ThirdPartyLibraries.Suite.Commands
                 });
             _storage
                 .Setup(s => s.GetAllLibrariesAsync(CancellationToken.None))
-                .ReturnsAsync(() => _noticeses.Select(i => new LibraryId(PackageSources.NuGet, i.Name, i.Version)).ToArray());
+                .ReturnsAsync(() => _packages.Select(i => new LibraryId(PackageSources.NuGet, i.Name, i.Version)).ToArray());
 
             _packageRepository = new Mock<IPackageRepository>(MockBehavior.Strict);
             _packageRepository
                 .SetupGet(r => r.Storage)
                 .Returns(_storage.Object);
             _packageRepository
-                .Setup(r => r.LoadPackagesNoticesAsync(It.IsAny<LibraryId>(), CancellationToken.None))
+                .Setup(r => r.LoadPackageAsync(It.IsAny<LibraryId>(), CancellationToken.None))
                 .Returns<LibraryId, CancellationToken>((id, _) =>
                 {
-                    var package = _noticeses.Single(i => i.Name == id.Name && i.Version == id.Version);
+                    var package = _packages.Single(i => i.Name == id.Name && i.Version == id.Version);
                     return Task.FromResult(package);
                 });
             container.RegisterInstance(_packageRepository.Object);
@@ -87,7 +87,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         [Test]
         public async Task GenerateThirdPartyNotices()
         {
-            var notice = new PackageNotices
+            var package = new Package
             {
                 Name = "Newtonsoft.Json",
                 Version = "12.0.2",
@@ -95,10 +95,10 @@ namespace ThirdPartyLibraries.Suite.Commands
                 HRef = "https://www.nuget.org/packages/Newtonsoft.Json/12.0.2",
                 Author = "James Newton-King",
                 Copyright = "Copyright © James Newton-King 2008",
-                UsedBy = new[] { new PackageNoticesApplication(AppName, false) },
+                UsedBy = new[] { new PackageApplication(AppName, false) },
                 ThirdPartyNotices = "some extra notices"
             };
-            _noticeses.Add(notice);
+            _packages.Add(package);
 
             var license = new LicenseIndexJson
             {
@@ -122,12 +122,12 @@ namespace ThirdPartyLibraries.Suite.Commands
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
 
             var output = File.ReadAllText(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
-            output.ShouldContain(notice.Name);
-            output.ShouldContain(notice.Version);
-            output.ShouldContain(notice.HRef);
-            output.ShouldContain(notice.Author);
-            output.ShouldContain(notice.Copyright);
-            output.ShouldContain(notice.ThirdPartyNotices);
+            output.ShouldContain(package.Name);
+            output.ShouldContain(package.Version);
+            output.ShouldContain(package.HRef);
+            output.ShouldContain(package.Author);
+            output.ShouldContain(package.Copyright);
+            output.ShouldContain(package.ThirdPartyNotices);
 
             output.ShouldContain(license.HRef);
             output.ShouldContain(license.FileName);
@@ -140,42 +140,42 @@ namespace ThirdPartyLibraries.Suite.Commands
         [Test]
         public async Task SkipPackage()
         {
-            var notice1 = new PackageNotices
+            var package1 = new Package
             {
                 Name = "internal package",
                 Version = "1",
-                UsedBy = new[] { new PackageNoticesApplication(AppName, true) }
+                UsedBy = new[] { new PackageApplication(AppName, true) }
             };
-            _noticeses.Add(notice1);
+            _packages.Add(package1);
 
-            var notice2 = new PackageNotices
+            var package2 = new Package
             {
                 Name = "other application",
                 Version = "1",
-                UsedBy = new[] { new PackageNoticesApplication(AppName + "2", false) }
+                UsedBy = new[] { new PackageApplication(AppName + "2", false) }
             };
-            _noticeses.Add(notice2);
+            _packages.Add(package2);
 
             await _sut.ExecuteAsync(CancellationToken.None);
 
             FileAssert.Exists(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
 
             var output = File.ReadAllText(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
-            output.ShouldNotContain(notice1.Name);
-            output.ShouldNotContain(notice2.Name);
+            output.ShouldNotContain(package1.Name);
+            output.ShouldNotContain(package2.Name);
         }
 
         [Test]
         public async Task CopyDependentLicense()
         {
-            var notice = new PackageNotices
+            var package = new Package
             {
                 Name = "name",
                 Version = "version",
                 LicenseCode = "LGPL-3.0",
-                UsedBy = new[] { new PackageNoticesApplication(AppName, false) }
+                UsedBy = new[] { new PackageApplication(AppName, false) }
             };
-            _noticeses.Add(notice);
+            _packages.Add(package);
 
             var lgplLicense = new LicenseIndexJson
             {

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 using Unity;
@@ -85,107 +84,67 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             foreach (var reference in references)
             {
-                var package = await state.LoadPackageAsync(reference.Id, token);
-                if (package == null)
+                Logger.Info("Validate reference {0} {1} from {2}".FormatWith(reference.Id.Name, reference.Id.Version, reference.Id.SourceCode));
+                using (Logger.Indent())
                 {
-                    newCount++;
-                    package = await ResolveNewPackageAsync(state, reference.Id, token);
-                }
-                else
-                {
-                    updatedCount++;
-                    await ValidateExistingPackageAsync(state, package, token);
-                }
+                    var isNew = await Container.Resolve<IPackageResolver>(reference.Id.SourceCode).DownloadAsync(reference.Id, token);
+                    var package = await state.LoadPackageAsync(reference.Id, token);
 
-                await state.UpdatePackageAsync(reference, package, AppName, token);
+                    if (isNew)
+                    {
+                        newCount++;
+                    }
+                    else
+                    {
+                        updatedCount++;
+                    }
+
+                    await ValidatePackageAsync(state, package, token);
+                    await state.UpdatePackageAsync(reference, package, AppName, token);
+                }
             }
 
             return (newCount, updatedCount);
         }
 
-        private async Task<Package> ResolveNewPackageAsync(UpdateCommandState state, LibraryId id, CancellationToken token)
+        private async Task ValidatePackageAsync(UpdateCommandState state, Package package, CancellationToken token)
         {
-            Logger.Info("Resolve new reference {0} {1} from {2}".FormatWith(id.Name, id.Version, id.SourceCode));
-
-            var resolver = Container.Resolve<IPackageResolver>(id.SourceCode);
-            var package = await resolver.DownloadAsync(id, token);
-
-            using (Logger.Indent())
+            foreach (var license in package.Licenses)
             {
-                if (package.LicenseCode.IsNullOrEmpty())
+                if (license.Code.IsNullOrEmpty())
+                {
+                    Logger.Info("{0} license cannot be resolved automatically: {1}".FormatWith(license.Subject, license.CodeDescription));
+                }
+                else
+                {
+                    await state.LicenseRequiresApprovalAsync(license.Code, token);
+                    Logger.Info("{0} license: {1}".FormatWith(license.Subject, license.Code));
+                }
+            }
+
+            if (package.LicenseCode.IsNullOrEmpty())
+            {
+                if (package.ApprovalStatus != PackageApprovalStatus.HasToBeApproved)
                 {
                     Logger.Info("License cannot be resolved automatically.");
                     package.ApprovalStatus = PackageApprovalStatus.HasToBeApproved;
                 }
-                else
+            }
+            else
+            {
+                var licenseRequiresApproval = await state.LicenseRequiresApprovalAsync(package.LicenseCode, token);
+                if (licenseRequiresApproval)
                 {
-                    var licenseRequiresApproval = await state.LicenseRequiresApprovalAsync(package.LicenseCode, token);
-                    if (licenseRequiresApproval)
+                    if (package.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved)
                     {
                         Logger.Info("License {0} (has to be approved)".FormatWith(package.LicenseCode));
                         package.ApprovalStatus = PackageApprovalStatus.HasToBeApproved;
                     }
-                    else
-                    {
-                        Logger.Info("License {0} (auto-approve)".FormatWith(package.LicenseCode));
-                        package.ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved;
-                    }
                 }
-
-                foreach (var row in package.Licenses)
+                else if (package.ApprovalStatus == PackageApprovalStatus.HasToBeApproved)
                 {
-                    if (row.Code.IsNullOrEmpty())
-                    {
-                        Logger.Info("{0} license cannot be resolved automatically: {1}".FormatWith(row.Subject, row.CodeDescription));
-                    }
-                    else
-                    {
-                        await state.LicenseRequiresApprovalAsync(row.Code, token);
-                        Logger.Info("{0} license: {1}".FormatWith(row.Subject, row.Code));
-                    }
-                }
-            }
-
-            return package;
-        }
-
-        private async Task ValidateExistingPackageAsync(UpdateCommandState state, Package package, CancellationToken token)
-        {
-            Logger.Info("Validate existing reference {0} {1} from {2}".FormatWith(package.Name, package.Version, package.SourceCode));
-
-            using (Logger.Indent())
-            {
-                if (package.LicenseCode.IsNullOrEmpty())
-                {
-                    Logger.Info("Update license.");
-                    var resolver = Container.Resolve<IPackageResolver>(package.SourceCode);
-                    await resolver.TryUpdateLicenseAsync(package, token);
-                }
-
-                if (package.LicenseCode.IsNullOrEmpty())
-                {
-                    if (package.ApprovalStatus != PackageApprovalStatus.HasToBeApproved)
-                    {
-                        Logger.Info("License cannot be resolved automatically.");
-                        package.ApprovalStatus = PackageApprovalStatus.HasToBeApproved;
-                    }
-                }
-                else
-                {
-                    var licenseRequiresApproval = await state.LicenseRequiresApprovalAsync(package.LicenseCode, token);
-                    if (licenseRequiresApproval)
-                    {
-                        if (package.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved)
-                        {
-                            Logger.Info("License {0} (has to be approved)".FormatWith(package.LicenseCode));
-                            package.ApprovalStatus = PackageApprovalStatus.HasToBeApproved;
-                        }
-                    }
-                    else if (package.ApprovalStatus == PackageApprovalStatus.HasToBeApproved)
-                    {
-                        Logger.Info("License: {0} (auto-approve)".FormatWith(package.LicenseCode));
-                        package.ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved;
-                    }
+                    Logger.Info("License: {0} (auto-approve)".FormatWith(package.LicenseCode));
+                    package.ApprovalStatus = PackageApprovalStatus.AutomaticallyApproved;
                 }
             }
         }

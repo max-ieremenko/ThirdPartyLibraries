@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -23,34 +24,19 @@ namespace ThirdPartyLibraries.NuGet
 
         public Func<HttpClient> HttpClientFactory { get; }
 
-        public async Task<byte[]> LoadSpecAsync(NuGetPackageId package, bool allowToUseLocalCache, CancellationToken token)
+        public async Task<byte[]> ExtractSpecAsync(NuGetPackageId package, byte[] packageContent, CancellationToken token)
         {
-            if (allowToUseLocalCache)
+            packageContent.AssertNotNull(nameof(packageContent));
+
+            var fileName = "{0}.nuspec".FormatWith(package.Name);
+            var result = await LoadFileContentAsync(packageContent, fileName, token);
+
+            if (result == null)
             {
-                var path = GetLocalCachePath(package);
-                if (path != null)
-                {
-                    return LoadSpecFromLocalCache(path, package.Name);
-                }
+                throw new InvalidOperationException(fileName + " not found in the package.");
             }
 
-            var url = new Uri(new Uri(Host), "v3-flatcontainer/{0}/{1}/{0}.nuspec".FormatWith(package.Name, package.Version));
-
-            using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token))
-            {
-                if (response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
-
-                await response.AssertStatusCodeOk();
-
-                using (var stream = await response.Content.ReadAsStreamAsync())
-                {
-                    return await stream.ToArrayAsync(token);
-                }
-            }
+            return result;
         }
 
         public NuGetSpec ParseSpec(Stream content)
@@ -85,7 +71,7 @@ namespace ThirdPartyLibraries.NuGet
             return code;
         }
 
-        public async Task<byte[]> LoadPackageAsync(NuGetPackageId package, bool allowToUseLocalCache, CancellationToken token)
+        public async Task<byte[]> DownloadPackageAsync(NuGetPackageId package, bool allowToUseLocalCache, CancellationToken token)
         {
             if (allowToUseLocalCache)
             {
@@ -115,21 +101,14 @@ namespace ThirdPartyLibraries.NuGet
             }
         }
 
-        public async Task<byte[]> LoadFileContentAsync(NuGetPackageId package, string fileName, bool allowToUseLocalCache, CancellationToken token)
+        public async Task<byte[]> LoadFileContentAsync(byte[] packageContent, string fileName, CancellationToken token)
         {
-            if (allowToUseLocalCache)
-            {
-                var path = GetLocalCachePath(package);
-                if (path != null)
-                {
-                    return LoadFileContentFromLocalCache(path, fileName);
-                }
-            }
+            packageContent.AssertNotNull(nameof(packageContent));
 
-            Func<ZipArchive, Task<byte[]>> callback = async zip =>
+            using (var zip = new ZipArchive(new MemoryStream(packageContent), ZipArchiveMode.Read, false))
             {
                 var entryName = fileName.Replace("\\", "/");
-                var entry = zip.GetEntry(entryName);
+                var entry = zip.Entries.FirstOrDefault(i => i.FullName.EqualsIgnoreCase(entryName));
                 if (entry == null)
                 {
                     return null;
@@ -139,44 +118,7 @@ namespace ThirdPartyLibraries.NuGet
                 {
                     return await content.ToArrayAsync(token);
                 }
-            };
-
-            return await AnalyzePackageContentAsync(package, callback, token);
-        }
-
-        public async Task<NuGetPackageLicenseFile?> TryFindLicenseFileAsync(NuGetPackageId package, bool allowToUseLocalCache, CancellationToken token)
-        {
-            if (allowToUseLocalCache)
-            {
-                var path = GetLocalCachePath(package);
-                if (path != null)
-                {
-                    return FindLicenseFileInLocalCache(path);
-                }
             }
-
-            Func<ZipArchive, Task<NuGetPackageLicenseFile?>> callback = async zip =>
-            {
-                foreach (var name in GetLicenseFileNames())
-                {
-                    var entry = zip.GetEntry(name);
-                    if (entry != null)
-                    {
-                        using (var content = entry.Open())
-                        {
-                            return new NuGetPackageLicenseFile
-                            {
-                                Name = name,
-                                Content = await content.ToArrayAsync(token)
-                            };
-                        }
-                    }
-                }
-
-                return null;
-            };
-
-            return await AnalyzePackageContentAsync(package, callback, token);
         }
 
         internal static string ExtractLicenseCode(string licenseUrl)
@@ -202,18 +144,6 @@ namespace ThirdPartyLibraries.NuGet
             return Directory.Exists(path) ? path : null;
         }
 
-        private static byte[] LoadSpecFromLocalCache(string path, string packageName)
-        {
-            var fileName = Path.Combine(path, "{0}.nuspec".FormatWith(packageName));
-
-            if (!File.Exists(fileName))
-            {
-                return null;
-            }
-
-            return File.ReadAllBytes(fileName);
-        }
-
         private static byte[] LoadPackageFromLocalCache(string path, string packageName, string version)
         {
             var fileName = Path.Combine(path, "{0}.{1}.nupkg".FormatWith(packageName, version));
@@ -225,63 +155,9 @@ namespace ThirdPartyLibraries.NuGet
 
             return File.ReadAllBytes(fileName);
         }
-
-        private static byte[] LoadFileContentFromLocalCache(string path, string fileName)
-        {
-            fileName = Path.Combine(path, fileName);
-
-            if (!File.Exists(fileName))
-            {
-                return null;
-            }
-
-            return File.ReadAllBytes(fileName);
-        }
-
-        private static NuGetPackageLicenseFile? FindLicenseFileInLocalCache(string path)
-        {
-            foreach (var name in GetLicenseFileNames())
-            {
-                var content = LoadFileContentFromLocalCache(path, name);
-                if (content != null)
-                {
-                    return new NuGetPackageLicenseFile
-                    {
-                        Name = name,
-                        Content = content
-                    };
-                }
-            }
-
-            return null;
-        }
-
-        private static string[] GetLicenseFileNames() => new[] { "LICENSE.md", "LICENSE.txt", "LICENSE", "LICENSE.rtf" };
-
+        
         private static Uri GetPackageUri(NuGetPackageId package) => new Uri(
             new Uri(Host), 
             "v3-flatcontainer/{0}/{1}/{0}.{1}.nupkg".FormatWith(package.Name.ToLowerInvariant(), package.Version.ToLowerInvariant()));
-
-        private async Task<TResult> AnalyzePackageContentAsync<TResult>(NuGetPackageId package, Func<ZipArchive, Task<TResult>> callback, CancellationToken token)
-        {
-            var url = GetPackageUri(package);
-
-            using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token))
-            {
-                if (response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return default;
-                }
-
-                await response.AssertStatusCodeOk();
-
-                using (var stream = await response.Content.ReadAsStreamAsync())
-                using (var zip = new ZipArchive(stream))
-                {
-                    return await callback(zip);
-                }
-            }
-        }
     }
 }

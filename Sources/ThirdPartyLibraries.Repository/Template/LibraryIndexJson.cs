@@ -2,11 +2,11 @@
 
 namespace ThirdPartyLibraries.Repository.Template
 {
-    public sealed class NpmLibraryIndexJson
+    public sealed class LibraryIndexJson
     {
         public LicenseConclusion License { get; } = new LicenseConclusion();
 
-        public IList<NpmApplication> UsedBy { get; } = new List<NpmApplication>();
+        public IList<Application> UsedBy { get; } = new List<Application>();
 
         public IList<LibraryLicense> Licenses { get; } = new List<LibraryLicense>();
     }
