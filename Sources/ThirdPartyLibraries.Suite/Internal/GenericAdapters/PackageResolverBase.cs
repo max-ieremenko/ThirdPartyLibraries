@@ -51,16 +51,16 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
             {
                 foreach (var license in index.Licenses)
                 {
+                    await RefreshLicenseAsync(id, license, token);
+                 
                     if (license.Subject.EqualsIgnoreCase(PackageLicense.SubjectPackage))
                     {
                         await CheckPackageLicenseCodeMatchUrlAsync(id, license, token);
-                        if (!license.Description.IsNullOrEmpty())
+                        if (license.Description.IsNullOrEmpty())
                         {
                             index.License.Code = license.Code;
                         }
                     }
-
-                    await RefreshLicenseAsync(id, license, token);
                 }
             }
 
@@ -224,7 +224,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
             public bool HasChanges(LibraryIndexJson index)
             {
-                if (!_licenseCode.Equals(index.License.Code, StringComparison.Ordinal))
+                if (!string.Equals(_licenseCode, index.License.Code, StringComparison.Ordinal))
                 {
                     return true;
                 }

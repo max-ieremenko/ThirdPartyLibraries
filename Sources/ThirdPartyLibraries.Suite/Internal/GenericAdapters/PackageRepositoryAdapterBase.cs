@@ -97,6 +97,8 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 LicenseCode = package.LicenseCode,
                 UsedBy = PackageRepositoryTools.BuildUsedBy(package.UsedBy),
                 TargetFrameworks = string.Join(", ", index.UsedBy.SelectMany(i => i.TargetFrameworks).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(i => i)),
+                Remarks = package.Remarks,
+                ThirdPartyNotices = package.ThirdPartyNotices
             };
 
             if (context.LicenseCode.IsNullOrEmpty())
