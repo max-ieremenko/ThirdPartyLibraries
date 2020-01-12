@@ -122,6 +122,11 @@ namespace ThirdPartyLibraries.Suite.Commands
                 }
             }
 
+            if (package.ApprovalStatus == PackageApprovalStatus.None)
+            {
+                package.ApprovalStatus = PackageApprovalStatus.HasToBeApproved;
+            }
+
             if (package.LicenseCode.IsNullOrEmpty())
             {
                 if (package.ApprovalStatus != PackageApprovalStatus.HasToBeApproved)
