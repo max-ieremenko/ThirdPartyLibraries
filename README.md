@@ -24,7 +24,8 @@ Table of Contents
 - [Configuration](#configuration)
 - [GitHub personal access token](#personalAccessToken)
 - [Manage licenses](#licenses)
-- [Manage NuGet packages](#nuget.org")
+- [Manage NuGet packages](#nuget.org)
+- [Manage npm packages](#npmjs.com)
 - [Manage custom packages](#custom)
 - [License](#license)
 
@@ -35,8 +36,8 @@ Requirements <a name="requirements"></a>
 
 - to run the tool .NET Core 3.0
 - supported project format: [SDK-style](https://docs.microsoft.com/en-us/nuget/resources/check-project-format)
-- supported project references: NuGet packages
-- non-nuget references can me managed via [custom packages](#custom)
+- supported project references: [NuGet](https://www.nuget.org/) and [npm](https://www.npmjs.com) packages
+- non-supported references can me managed via [custom packages](#custom)
 
 
 [Back to ToC](#table-of-contents)
@@ -98,7 +99,7 @@ Refresh or update .md files in a libraries repository <a name="refresh"></a>
 -------------------------------------------------
 
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
-- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json/12.0.2](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/readme.md), context is [NuGetReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/NuGetReadMeContext.cs)
+- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json/12.0.2](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.2/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
 
 You can change templates and test your changes by runing the the tool
 
@@ -152,11 +153,18 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
     "downloadPackageIntoRepository": false,
     "ignorePackages": {
       "byName": [],
-      "byProjectName":  [] 
+      "byProjectName": [] 
     },
     "internalPackages": {
       "byName": [ "StyleCop\\.Analyzers" ],
       "byProjectName": [ "\\.Test$" ]
+    }
+  },
+  "npmjs.com": {
+    "downloadPackageIntoRepository": false,
+    "ignorePackages": {
+      "byName": [],
+      "byFolderName": []
     }
   },
   "github.com": {
@@ -169,10 +177,13 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
 |:--|:----------|
 |nuget.org/allowToUseLocalCache|*true* or *false* (default) flag to allow get package metadata from NuGet local [disk cache](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)|
 |nuget.org/downloadPackageIntoRepository|*true* or *false* (default) flag to download package into a repository|
-|nuget.org/ignorePackages/byName|regex expressions array. Ignore all packages from source code by name|
-|nuget.org/ignorePackages/byProjectName|regex expressions array. Ignore all packages from source code by project name|
-|nuget.org/internalPackages/byName|regex expressions array. Mark all packages from source code by name as InternalOnly=true|
-|nuget.org/internalPackages/byProjectName|regex expressions array. Mark all packages from source code by project name as InternalOnly=true|
+|nuget.org/ignorePackages/byName|regex expressions array. Ignore all packages by name|
+|nuget.org/ignorePackages/byProjectName|regex expressions array. Ignore all packages by project name|
+|nuget.org/internalPackages/byName|regex expressions array. Mark all packages by name as InternalOnly=true|
+|nuget.org/internalPackages/byProjectName|regex expressions array. Mark all packages by project name as InternalOnly=true|
+|npmjs.com/downloadPackageIntoRepository|*true* or *false* (default) flag to download package into a repository|
+|npmjs.com/ignorePackages/byName|regex expressions array. Ignore all packages by name|
+|npmjs.com/ignorePackages/byFolderName|regex expressions array. Ignore all packages by folder name|
 |github.com/personalAccessToken|see [GitHub personal access token](#personalAccessToken) for more details|
 
 [Back to ToC](#table-of-contents)
@@ -285,6 +296,48 @@ File *index.json* contains a metadata for the tool:
 
 - file *package.nuspec* is a NuGet package specification. Once created, is read-only for the tool.
 - file *package.nupkg* is a NuGet package, see [*configuration nuget.org/downloadPackageIntoRepository*](#configuration). Once created, is read-only for the tool.
+- file *readme.md* is always generated by the tool.
+- file *remarks.md* is read-only for the tool and contains a content of *Remarks* section for *readme.md*.
+- file *third-party-notices.txt* is read-only for the tool and contains a extra text for third party notices.
+
+[Back to ToC](#table-of-contents)
+
+Manage npm packages <a name="npmjs.com"></a>
+---------------------------------------------
+
+Each package from [npmjs.com](https://www.npmjs.com/) is located in the sub-folder *packages/npmjs.com/[name]/[version]* where [name] is a package name and [version] is a package version in lowercase.
+
+File *index.json* contains a metadata for the tool:
+
+```json
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "HasToBeApproved | Approved | AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": false,
+      // ...
+    }
+  ],
+  "Licenses": [
+      // ...
+  ]
+}
+```
+
+|Attribute|Description|Is read-only for the tool|
+|:--|:----------|:--|
+|License/Code|license code is one of the licenses from folder *license* or *null* if license cannot be resolved|yes if value is not *null*|
+|License/Status|*acceptance status* of this package. HasToBeApproved (TODO), Approved (can be set only manually), AutomaticallyApproved (assigned by the tool according to the license code and license/RequiresApproval)|if value is Approved|
+|UsedBy/Name|a name of application references this package, see [*$ ThirdPartyLibraries update -appName ThirdPartyLibraries*](#update)|no, is always updated according to a configuration|
+|UsedBy/InternalOnly|*true* or *false* (default) flag to indicate is this package is a part of third party notices, see [*$ ThirdPartyLibraries generate -appName ThirdPartyLibraries*](#generate)|no, is always updated according to a configuration|
+|Licenses/...|section with a list of license from package.json|yes if License/Code is not *null*|
+
+- file *package.json* is a npm package specification. Once created, is read-only for the tool.
+- file *package.tgz* is a npm package, see [*configuration npmjs.com/downloadPackageIntoRepository*](#configuration). Once created, is read-only for the tool.
 - file *readme.md* is always generated by the tool.
 - file *remarks.md* is read-only for the tool and contains a content of *Remarks* section for *readme.md*.
 - file *third-party-notices.txt* is read-only for the tool and contains a extra text for third party notices.
