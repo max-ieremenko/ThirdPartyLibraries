@@ -8,19 +8,19 @@ Licenses
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
 |[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
-|[MIT](licenses/mit)|no|no|6|
+|[MIT](licenses/mit)|no|no|7|
 |[ms-net-library](licenses/ms-net-library)|no|no|30|
 
 
 
-Packages 55
+Packages 56
 --------
 
 |Name|Version|Source|License|Used by|
 |----------|:----|:----|:----|:----|
 |[Castle.Core](packages/nuget.org/castle.core/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/Castle.Core/4.4.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[DotLiquid](packages/nuget.org/dotliquid/2.0.314)|2.0.314|[nuget.org](https://www.nuget.org/packages/DotLiquid/2.0.314)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
-|[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](packages/custom/famfamfam/1.3)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
+|[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](http://www.famfamfam.com/)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
 |[JetBrains.Annotations](packages/nuget.org/jetbrains.annotations/2019.1.3)|2019.1.3|[nuget.org](https://www.nuget.org/packages/JetBrains.Annotations/2019.1.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/16.3.0)|16.3.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/16.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
 |[Microsoft.CSharp](packages/nuget.org/microsoft.csharp/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CSharp/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries|
@@ -45,6 +45,7 @@ Packages 55
 |[NUnit](packages/nuget.org/nunit/3.12.0)|3.12.0|[nuget.org](https://www.nuget.org/packages/NUnit/3.12.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[NUnit3TestAdapter](packages/nuget.org/nunit3testadapter/3.15.1)|3.15.1|[nuget.org](https://www.nuget.org/packages/NUnit3TestAdapter/3.15.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[RichardSzalay.MockHttp](packages/nuget.org/richardszalay.mockhttp/5.0.0)|5.0.0|[nuget.org](https://www.nuget.org/packages/RichardSzalay.MockHttp/5.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[SharpZipLib](packages/nuget.org/sharpziplib/1.2.0)|1.2.0|[nuget.org](https://www.nuget.org/packages/SharpZipLib/1.2.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Shouldly](packages/nuget.org/shouldly/3.0.2)|3.0.2|[nuget.org](https://www.nuget.org/packages/Shouldly/3.0.2)|[BSD-2-Clause](licenses/bsd-2-clause)|ThirdPartyLibraries|
 |[StyleCop.Analyzers](packages/nuget.org/stylecop.analyzers/1.1.118)|1.1.118|[nuget.org](https://www.nuget.org/packages/StyleCop.Analyzers/1.1.118)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[System.AppContext](packages/nuget.org/system.appcontext/4.1.0)|4.1.0|[nuget.org](https://www.nuget.org/packages/System.AppContext/4.1.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|

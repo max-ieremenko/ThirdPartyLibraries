@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [MIT](../../../../licenses/mit) 
 
 - package license: [Unknown]() 
-- repository license: [MIT](https://raw.githubusercontent.com/nunit/nunit/master/LICENSE.txt) 
+- repository license: [MIT](https://github.com/nunit/nunit) 
 - project license: [Unknown](https://nunit.org/) , License should be verified on https://nunit.org/
 
 Description
@@ -24,7 +24,7 @@ Supported platforms:
 
 Remarks
 -----------
-Git repository is under MIT license.
+no remarks
 
 
 Dependencies 0

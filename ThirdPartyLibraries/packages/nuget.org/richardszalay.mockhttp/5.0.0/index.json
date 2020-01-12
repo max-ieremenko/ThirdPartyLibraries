@@ -9,8 +9,7 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netcoreapp3.0"
-      ],
-      "Dependencies": []
+      ]
     }
   ],
   "Licenses": [
@@ -23,7 +22,7 @@
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://raw.githubusercontent.com/richardszalay/mockhttp/master/LICENSE",
+      "HRef": "https://github.com/richardszalay/mockhttp",
       "Description": null
     }
   ]

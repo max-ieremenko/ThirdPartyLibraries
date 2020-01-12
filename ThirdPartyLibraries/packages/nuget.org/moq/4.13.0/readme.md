@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [BSD-3-Clause](../../../../licenses/bsd-3-clause) 
 
 - package license: [BSD-3-Clause](https://raw.githubusercontent.com/moq/moq4/master/License.txt) 
-- repository license: [BSD-3-Clause](https://raw.githubusercontent.com/moq/moq4/master/License.txt) 
+- repository license: [BSD-3-Clause](https://github.com/moq/moq4) 
 
 Description
 -----------

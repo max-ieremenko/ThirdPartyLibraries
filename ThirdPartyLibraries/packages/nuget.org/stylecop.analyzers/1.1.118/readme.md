@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
 - package license: [Apache-2.0](https://licenses.nuget.org/Apache-2.0) 
-- project license: [Unknown](https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/LICENSE) , License should be verified on https://github.com/DotNetAnalyzers/StyleCopAnalyzers
+- project license: [Unknown](https://github.com/DotNetAnalyzers/StyleCopAnalyzers) , License should be verified on https://github.com/DotNetAnalyzers/StyleCopAnalyzers
 
 Description
 -----------

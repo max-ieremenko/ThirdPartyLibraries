@@ -9,8 +9,7 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netcoreapp3.0"
-      ],
-      "Dependencies": []
+      ]
     }
   ],
   "Licenses": [
@@ -23,7 +22,7 @@
     {
       "Subject": "project",
       "Code": null,
-      "HRef": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/LICENSE",
+      "HRef": "https://github.com/DotNetAnalyzers/StyleCopAnalyzers",
       "Description": "License should be verified on https://github.com/DotNetAnalyzers/StyleCopAnalyzers"
     }
   ]

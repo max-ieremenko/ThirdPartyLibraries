@@ -36,8 +36,8 @@
     {
       "Subject": "repository",
       "Code": null,
-      "HRef": "https://raw.githubusercontent.com/shouldly/shouldly/master/LICENSE.txt",
-      "Description": "License should be verified on https://raw.githubusercontent.com/shouldly/shouldly/master/LICENSE.txt"
+      "HRef": "https://github.com/shouldly/shouldly.git",
+      "Description": "License should be verified on https://github.com/shouldly/shouldly.git"
     },
     {
       "Subject": "project",

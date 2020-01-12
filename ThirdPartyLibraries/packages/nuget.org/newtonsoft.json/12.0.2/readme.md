@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [MIT](../../../../licenses/mit) 
 
 - package license: [MIT](https://licenses.nuget.org/MIT) 
-- repository license: [MIT](https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md) 
+- repository license: [MIT](https://github.com/JamesNK/Newtonsoft.Json) 
 - project license: [Unknown](https://www.newtonsoft.com/json) , License should be verified on https://www.newtonsoft.com/json
 
 Description

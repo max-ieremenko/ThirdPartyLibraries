@@ -9,8 +9,7 @@
       "InternalOnly": false,
       "TargetFrameworks": [
         "netcoreapp3.0"
-      ],
-      "Dependencies": []
+      ]
     }
   ],
   "Licenses": [
@@ -23,7 +22,7 @@
     {
       "Subject": "repository",
       "Code": "Apache-2.0",
-      "HRef": "https://raw.githubusercontent.com/aspnet/Extensions/master/LICENSE.txt",
+      "HRef": "https://github.com/aspnet/Extensions",
       "Description": null
     },
     {

@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [MIT](../../../../licenses/mit) 
 
 - package license: [MIT](https://github.com/richardszalay/mockhttp/blob/master/LICENSE) 
-- project license: [MIT](https://raw.githubusercontent.com/richardszalay/mockhttp/master/LICENSE) 
+- project license: [MIT](https://github.com/richardszalay/mockhttp) 
 
 Description
 -----------

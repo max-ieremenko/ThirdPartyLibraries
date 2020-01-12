@@ -1,1 +1,0 @@
-There are no any links in the package either to license or project.

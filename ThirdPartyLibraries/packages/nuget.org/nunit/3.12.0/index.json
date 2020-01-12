@@ -9,8 +9,7 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netcoreapp3.0"
-      ],
-      "Dependencies": []
+      ]
     }
   ],
   "Licenses": [
@@ -23,7 +22,7 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://raw.githubusercontent.com/nunit/nunit/master/LICENSE.txt",
+      "HRef": "https://github.com/nunit/nunit",
       "Description": null
     },
     {

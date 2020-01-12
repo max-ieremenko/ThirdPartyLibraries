@@ -1,1 +1,0 @@
-Git repository is under MIT license.

@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
 - package license: [Apache-2.0](https://github.com/unitycontainer/unity/blob/v5.x/LICENSE) 
-- project license: [Apache-2.0](https://raw.githubusercontent.com/unitycontainer/unity/master/LICENSE) 
+- project license: [Apache-2.0](https://github.com/unitycontainer/unity) 
 
 Description
 -----------

@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
 - package license: [Apache-2.0](https://licenses.nuget.org/Apache-2.0) 
-- repository license: [Unknown](https://raw.githubusercontent.com/NuGet/NuGet.Client/dev/LICENSE.txt) , License should be verified on https://github.com/NuGet/NuGet.Client
+- repository license: [Unknown](https://github.com/NuGet/NuGet.Client) , License should be verified on https://github.com/NuGet/NuGet.Client
 - project license: [Unknown](https://aka.ms/nugetprj) , License should be verified on https://aka.ms/nugetprj
 
 Description

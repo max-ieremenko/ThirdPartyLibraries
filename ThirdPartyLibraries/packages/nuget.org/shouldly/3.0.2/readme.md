@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [BSD-2-Clause](../../../../licenses/bsd-2-clause) 
 
 - package license: [Unknown](https://github.com/shouldly/shouldly/blob/master/LICENSE.txt) , License should be verified on https://github.com/shouldly/shouldly/blob/master/LICENSE.txt
-- repository license: [Unknown](https://raw.githubusercontent.com/shouldly/shouldly/master/LICENSE.txt) , License should be verified on https://raw.githubusercontent.com/shouldly/shouldly/master/LICENSE.txt
+- repository license: [Unknown](https://github.com/shouldly/shouldly.git) , License should be verified on https://github.com/shouldly/shouldly.git
 - project license: [Unknown](http://shouldly.github.com/) , License should be verified on http://shouldly.github.com/
 
 Description
@@ -17,7 +17,7 @@ Shouldly - Assertion framework for .NET. The way asserting *Should* be
 
 Remarks
 -----------
-Git repository is under the BSD-2-Clause license.
+no remarks
 
 
 Dependencies 3

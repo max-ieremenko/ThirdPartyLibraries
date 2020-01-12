@@ -1,5 +1,5 @@
-﻿Third party libraries
-*********************
+﻿﻿Third party libraries
+************
 
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 

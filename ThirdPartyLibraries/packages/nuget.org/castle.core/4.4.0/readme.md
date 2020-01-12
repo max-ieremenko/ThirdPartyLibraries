@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
 - package license: [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) 
-- repository license: [Unknown](https://raw.githubusercontent.com/castleproject/Core/master/LICENSE) , License should be verified on https://github.com/castleproject/Core
+- repository license: [Unknown](https://github.com/castleproject/Core) , License should be verified on https://github.com/castleproject/Core
 - project license: [Unknown](http://www.castleproject.org/) , License should be verified on http://www.castleproject.org/
 
 Description

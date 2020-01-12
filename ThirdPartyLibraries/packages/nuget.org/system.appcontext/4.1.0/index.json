@@ -9,8 +9,7 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netcoreapp3.0"
-      ],
-      "Dependencies": []
+      ]
     }
   ],
   "Licenses": [

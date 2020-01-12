@@ -2,6 +2,8 @@
   "Code": "BSD-2-Clause",
   "FullName": "BSD 2-Clause \"Simplified\" License",
   "RequiresApproval": false,
+  "RequiresThirdPartyNotices": false,
   "HRef": "https://spdx.org/licenses/BSD-2-Clause",
-  "FileName": "license.txt"
+  "FileName": "license.txt",
+  "Dependencies": []
 }

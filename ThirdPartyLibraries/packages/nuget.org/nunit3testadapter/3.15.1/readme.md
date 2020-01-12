@@ -7,8 +7,8 @@ Target frameworks: netcoreapp3.0
 
 License: [MIT](../../../../licenses/mit) 
 
-- package license: [Unknown]() 
-- repository license: [MIT](https://raw.githubusercontent.com/nunit/nunit3-vs-adapter/master/LICENSE.txt) 
+- package license: [Unknown](https://aka.ms/deprecateLicenseUrl) , License should be verified on https://aka.ms/deprecateLicenseUrl
+- repository license: [MIT](https://github.com/nunit/nunit3-vs-adapter) 
 - project license: [Unknown](https://github.com/nunit/docs/wiki/Visual-Studio-Test-Adapter) , License should be verified on https://github.com/nunit/docs/wiki/Visual-Studio-Test-Adapter
 
 Description
@@ -22,7 +22,7 @@ A package including the NUnit 3 TestAdapter for Visual Studio 2012 onwards.  Wit
 
 Remarks
 -----------
-Git repository is under MIT license.
+no remarks
 
 
 Dependencies 7

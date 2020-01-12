@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 
 - package license: [ms-net-library](http://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm) 
-- project license: [Unknown](https://raw.githubusercontent.com/microsoft/vstest/master/LICENSE) , License should be verified on https://github.com/microsoft/vstest/
+- project license: [Unknown](https://github.com/microsoft/vstest/) , License should be verified on https://github.com/microsoft/vstest/
 
 Description
 -----------

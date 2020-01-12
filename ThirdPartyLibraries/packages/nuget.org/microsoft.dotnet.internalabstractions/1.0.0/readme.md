@@ -15,7 +15,7 @@ Abstractions for making code that uses file system and environment testable.
 
 Remarks
 -----------
-There are no any links in the package either to license or project.
+no remarks
 
 
 Dependencies 3

@@ -8,7 +8,7 @@ Target frameworks: netcoreapp3.0
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
 - package license: [Apache-2.0](https://licenses.nuget.org/Apache-2.0) 
-- repository license: [Apache-2.0](https://raw.githubusercontent.com/aspnet/Extensions/master/LICENSE.txt) 
+- repository license: [Apache-2.0](https://github.com/aspnet/Extensions) 
 - project license: [Unknown](https://asp.net/) , License should be verified on https://asp.net/
 
 Description

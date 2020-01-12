@@ -9,8 +9,7 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netcoreapp3.0"
-      ],
-      "Dependencies": []
+      ]
     }
   ],
   "Licenses": [
@@ -23,7 +22,7 @@
     {
       "Subject": "repository",
       "Code": null,
-      "HRef": "https://raw.githubusercontent.com/NuGet/NuGet.Client/dev/LICENSE.txt",
+      "HRef": "https://github.com/NuGet/NuGet.Client",
       "Description": "License should be verified on https://github.com/NuGet/NuGet.Client"
     },
     {
