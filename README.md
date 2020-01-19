@@ -73,6 +73,14 @@ $ git clone https://github.com/max-ieremenko/ThirdPartyLibraries.git c:\ThirdPar
 $ dotnet restore c:\ThirdPartyLibraries\Sources
 ```
 
+> **Important:**
+> restore npm packages. It is a precondition.
+
+```bash
+$ cd c:\ThirdPartyLibraries\Sources\ThirdPartyLibraries.Npm.Demo
+$ npm install
+```
+
 Run the the tool
 
 ```bash
@@ -306,6 +314,8 @@ Manage npm packages <a name="npmjs.com"></a>
 ---------------------------------------------
 
 Each package from [npmjs.com](https://www.npmjs.com/) is located in the sub-folder *packages/npmjs.com/[name]/[version]* where [name] is a package name and [version] is a package version in lowercase.
+For instance [bootstrap/4.4.1](ThirdPartyLibraries/packages/npmjs.com/bootstrap/4.4.1).
+
 
 File *index.json* contains a metadata for the tool:
 

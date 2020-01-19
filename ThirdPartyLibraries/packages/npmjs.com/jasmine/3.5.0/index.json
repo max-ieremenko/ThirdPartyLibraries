@@ -1,0 +1,32 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "MIT",
+      "HRef": null,
+      "Description": null
+    },
+    {
+      "Subject": "repository",
+      "Code": null,
+      "HRef": "https://github.com/jasmine/jasmine-npm",
+      "Description": "License should be verified on https://github.com/jasmine/jasmine-npm"
+    },
+    {
+      "Subject": "homepage",
+      "Code": null,
+      "HRef": "http://jasmine.github.io/",
+      "Description": "License should be verified on http://jasmine.github.io/"
+    }
+  ]
+}

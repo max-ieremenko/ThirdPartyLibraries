@@ -8,4 +8,6 @@ launchSettings.json
 *.sln.DotSettings.user
 *.csproj.user
 
+package-lock.json
+
 todo.txt

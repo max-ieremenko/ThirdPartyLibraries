@@ -8,19 +8,21 @@ Licenses
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
 |[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
-|[MIT](licenses/mit)|no|no|10|
+|[MIT](licenses/mit)|no|no|12|
 |[ms-net-library](licenses/ms-net-library)|no|no|30|
 
 
 
-Packages 59
+Packages 61
 --------
 
 |Name|Version|Source|License|Used by|
 |----------|:----|:----|:----|:----|
+|[bootstrap](packages/npmjs.com/bootstrap/4.4.1)|4.4.1|[npmjs.com](https://www.npmjs.com/package/bootstrap/v/4.4.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Castle.Core](packages/nuget.org/castle.core/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/Castle.Core/4.4.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[DotLiquid](packages/nuget.org/dotliquid/2.0.314)|2.0.314|[nuget.org](https://www.nuget.org/packages/DotLiquid/2.0.314)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](http://www.famfamfam.com/)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
+|[jasmine](packages/npmjs.com/jasmine/3.5.0)|3.5.0|[npmjs.com](https://www.npmjs.com/package/jasmine/v/3.5.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[JetBrains.Annotations](packages/nuget.org/jetbrains.annotations/2019.1.3)|2019.1.3|[nuget.org](https://www.nuget.org/packages/JetBrains.Annotations/2019.1.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/16.4.0)|16.4.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/16.4.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
 |[Microsoft.CSharp](packages/nuget.org/microsoft.csharp/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CSharp/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries|

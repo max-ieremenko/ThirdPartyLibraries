@@ -1,0 +1,15 @@
+{
+  "name": "thirdpartylibraries.npm.demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Max Ieremenko",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.4.1"
+  },
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
+}

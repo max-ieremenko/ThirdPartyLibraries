@@ -1,0 +1,32 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": false
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "MIT",
+      "HRef": null,
+      "Description": null
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/twbs/bootstrap.git",
+      "Description": null
+    },
+    {
+      "Subject": "homepage",
+      "Code": null,
+      "HRef": "https://getbootstrap.com/",
+      "Description": "License should be verified on https://getbootstrap.com/"
+    }
+  ]
+}
