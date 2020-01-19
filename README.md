@@ -75,6 +75,7 @@ $ dotnet restore c:\ThirdPartyLibraries\Sources
 
 > **Important:**
 > restore npm packages. It is a precondition.
+> If you do not have npm installed, just remove the folder Sources\ThirdPartyLibraries.Npm.Demo.
 
 ```bash
 $ cd c:\ThirdPartyLibraries\Sources\ThirdPartyLibraries.Npm.Demo
