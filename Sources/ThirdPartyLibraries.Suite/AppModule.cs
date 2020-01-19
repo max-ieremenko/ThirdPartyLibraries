@@ -19,6 +19,7 @@ namespace ThirdPartyLibraries.Suite
 
             container.RegisterFactory<StaticLicenseConfiguration>(ResolveStaticLicenseConfiguration, new TransientLifetimeManager());
             container.RegisterType<ISourceCodeParser, SourceCodeParser>(new TransientLifetimeManager());
+            container.RegisterType<ILicenseCache, LicenseCache>(new ContainerControlledLifetimeManager());
             container.RegisterType<ILicenseResolver, LicenseResolver>(new TransientLifetimeManager());
             container.RegisterType<IPackageRepository, PackageRepository>(new TransientLifetimeManager());
 
