@@ -8,8 +8,8 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netcoreapp3.0",
-        "netcoreapp3.1"
+        "netcoreapp3.1",
+        "net5.0"
       ],
       "Dependencies": [
         {

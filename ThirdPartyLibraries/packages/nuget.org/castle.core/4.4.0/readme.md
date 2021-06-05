@@ -3,7 +3,7 @@ Castle.Core [4.4.0](https://www.nuget.org/packages/Castle.Core/4.4.0)
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0, netcoreapp3.1
+Target frameworks: net5.0, netcoreapp3.1
 
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
@@ -20,7 +20,7 @@ Remarks
 no remarks
 
 
-Dependencies 7
+Dependencies 6
 -----------
 
 |Name|Version|
@@ -29,7 +29,6 @@ Dependencies 7
 |[System.ComponentModel](../../../../packages/nuget.org/system.componentmodel/4.3.0)|4.3.0|
 |[System.ComponentModel.TypeConverter](../../../../packages/nuget.org/system.componentmodel.typeconverter/4.3.0)|4.3.0|
 |[System.Dynamic.Runtime](../../../../packages/nuget.org/system.dynamic.runtime/4.3.0)|4.3.0|
-|[System.Reflection.Emit](../../../../packages/nuget.org/system.reflection.emit/4.3.0)|4.3.0|
 |[System.Reflection.TypeExtensions](../../../../packages/nuget.org/system.reflection.typeextensions/4.3.0)|4.3.0|
 |[System.Xml.XmlDocument](../../../../packages/nuget.org/system.xml.xmldocument/4.3.0)|4.3.0|
 
