@@ -3,7 +3,7 @@ Microsoft.DotNet.InternalAbstractions [1.0.0](https://www.nuget.org/packages/Mic
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0, netcoreapp3.1
+Target frameworks: net5.0, netcoreapp3.1
 
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 

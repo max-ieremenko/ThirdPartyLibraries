@@ -1,9 +1,9 @@
 System.Dynamic.Runtime [4.3.0](https://www.nuget.org/packages/System.Dynamic.Runtime/4.3.0)
 --------------------
 
-Used by: ThirdPartyLibraries
+Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0, netcoreapp3.1
+Target frameworks: net5.0, netcoreapp3.1
 
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 
@@ -33,7 +33,7 @@ Remarks
 no remarks
 
 
-Dependencies 7
+Dependencies 5
 -----------
 
 |Name|Version|
@@ -41,8 +41,6 @@ Dependencies 7
 |[System.Linq](../../../../packages/nuget.org/system.linq/4.3.0)|4.3.0|
 |[System.Linq.Expressions](../../../../packages/nuget.org/system.linq.expressions/4.3.0)|4.3.0|
 |[System.ObjectModel](../../../../packages/nuget.org/system.objectmodel/4.3.0)|4.3.0|
-|[System.Reflection.Emit](../../../../packages/nuget.org/system.reflection.emit/4.3.0)|4.3.0|
-|[System.Reflection.Emit.ILGeneration](../../../../packages/nuget.org/system.reflection.emit.ilgeneration/4.3.0)|4.3.0|
 |[System.Reflection.TypeExtensions](../../../../packages/nuget.org/system.reflection.typeextensions/4.3.0)|4.3.0|
 |[System.Threading](../../../../packages/nuget.org/system.threading/4.3.0)|4.3.0|
 

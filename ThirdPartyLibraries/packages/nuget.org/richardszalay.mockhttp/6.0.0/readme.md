@@ -3,7 +3,7 @@ RichardSzalay.MockHttp [6.0.0](https://www.nuget.org/packages/RichardSzalay.Mock
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: netcoreapp3.0, netcoreapp3.1
+Target frameworks: net5.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 
