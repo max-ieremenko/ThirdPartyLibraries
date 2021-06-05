@@ -33,7 +33,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             var specLicenseUrl = NuGetConstants.IsDeprecateLicenseUrl(spec.LicenseUrl) ? null : spec.LicenseUrl;
             index.Licenses.Add(await ResolvePackageLicenseAsync(id, spec.License?.Type, spec.License?.Value, specLicenseUrl, token));
 
-            if (spec.Repository?.Url != null)
+            if (!string.IsNullOrEmpty(spec.Repository?.Url))
             {
                 index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.Repository.Url, PackageLicense.SubjectRepository, token));
             }
