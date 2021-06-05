@@ -19,7 +19,7 @@ namespace ThirdPartyLibraries.Npm
         public TarGZip(Stream content)
         {
             _level1 = new GZipStream(content, CompressionMode.Decompress, leaveOpen: false);
-            _tar = new TarInputStream(_level1);
+            _tar = new TarInputStream(_level1, null);
         }
 
         public bool SeekToEntry(string name)
