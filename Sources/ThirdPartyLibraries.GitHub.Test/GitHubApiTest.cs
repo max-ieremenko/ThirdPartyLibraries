@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -100,6 +102,35 @@ namespace ThirdPartyLibraries.GitHub
         public void GetLicenseUrl(string url, string expected)
         {
             GitHubApi.GetLicenseUrl(new Uri(url)).ShouldBe(expected);
+        }
+
+        [Test]
+        public void ApiRateLimitExceeded()
+        {
+            var headers = new Dictionary<string, string>
+            {
+                { "X-RateLimit-Limit", "60" },
+                { "X-RateLimit-Remaining", "0" },
+                { "X-RateLimit-Reset", "1372700873" }
+            };
+            var content = new StringContent(
+                "{ \"message\": \"some text\", \"documentation_url\": \"some url\" }",
+                Encoding.UTF8,
+                MediaTypeNames.Application.Json);
+
+            _mockHttp
+                .When(HttpMethod.Get, "https://api.github.com/repos/JamesNK/Newtonsoft.Json/license")
+                .Respond(HttpStatusCode.Forbidden, headers, content);
+
+            var actual = Assert.ThrowsAsync<ApiRateLimitExceededException>(() => _sut.LoadLicenseAsync("https://github.com/JamesNK/Newtonsoft.Json", null, CancellationToken.None));
+
+            Console.WriteLine(actual);
+
+            actual.Limit.ShouldBe(60);
+            actual.Remaining.ShouldBe(0);
+            actual.Reset.Date.ShouldBe(new DateTime(2013, 07, 01));
+            actual.Message.ShouldContain("some text");
+            actual.Message.ShouldContain("some url");
         }
     }
 }
