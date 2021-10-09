@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -69,7 +70,10 @@ namespace ThirdPartyLibraries
         {
             _line.Command = CommandFactory.CommandUpdate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, @"c:\folder1"));
+
+            var source = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
+            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, source));
+
             _line.Options.Add(new CommandOption(CommandFactory.OptionSource, "folder2"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionGitHubToken, "token-value"));
@@ -82,7 +86,7 @@ namespace ThirdPartyLibraries
             command.AppName.ShouldBe("app name");
             
             command.Sources.Count.ShouldBe(2);
-            command.Sources[0].ShouldBe(@"c:\folder1");
+            command.Sources[0].ShouldBe(source);
             Path.IsPathRooted(command.Sources[1]).ShouldBeTrue();
             command.Sources[1].ShouldEndWith("folder2");
 
@@ -109,16 +113,19 @@ namespace ThirdPartyLibraries
         {
             _line.Command = CommandFactory.CommandValidate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, @"c:\folder1"));
+
+            var source = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
+            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, source));
+
             _line.Options.Add(new CommandOption(CommandFactory.OptionSource, "folder2"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
 
             var command = (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<ValidateCommand>();
-            
+
             command.AppName.ShouldBe("app name");
 
             command.Sources.Count.ShouldBe(2);
-            command.Sources[0].ShouldBe(@"c:\folder1");
+            command.Sources[0].ShouldBe(source);
             Path.IsPathRooted(command.Sources[1]).ShouldBeTrue();
             command.Sources[1].ShouldEndWith("folder2");
 
@@ -132,12 +139,14 @@ namespace ThirdPartyLibraries
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name 1"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name 2"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionTo, @"c:\folder1"));
+
+            var to = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
+            _line.Options.Add(new CommandOption(CommandFactory.OptionTo, to));
 
             var command = (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<GenerateCommand>();
 
             command.AppNames.ShouldBe(new[] { "app name 1", "app name 2" });
-            command.To.ShouldBe(@"c:\folder1");
+            command.To.ShouldBe(to);
 
             ValidateStorage(@"\repository");
         }
@@ -149,7 +158,7 @@ namespace ThirdPartyLibraries
             var storage = _container.Resolve<IStorage>();
 
             Path.IsPathRooted(storage.ConnectionString).ShouldBeTrue();
-            storage.ConnectionString.ShouldEndWith(path);
+            storage.ConnectionString.ShouldEndWith(path.Replace('\\', Path.DirectorySeparatorChar));
         }
     }
 }

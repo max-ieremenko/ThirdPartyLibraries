@@ -148,9 +148,10 @@ namespace ThirdPartyLibraries.NuGet
             else
             {
                 path = Path.Combine(
-                    @"~/.nuget/packages",
-                    package.Name,
-                    package.Version);
+                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    @".nuget/packages",
+                    package.Name.ToLowerInvariant(),
+                    package.Version.ToLowerInvariant());
             }
 
             return Directory.Exists(path) ? path : null;
@@ -158,7 +159,7 @@ namespace ThirdPartyLibraries.NuGet
 
         private static byte[] LoadPackageFromLocalCache(string path, string packageName, string version)
         {
-            var fileName = Path.Combine(path, "{0}.{1}.nupkg".FormatWith(packageName, version));
+            var fileName = Path.Combine(path, "{0}.{1}.nupkg".FormatWith(packageName, version).ToLowerInvariant());
 
             if (!File.Exists(fileName))
             {
