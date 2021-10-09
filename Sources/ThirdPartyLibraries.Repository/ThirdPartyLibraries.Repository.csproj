@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotLiquid" Version="2.1.436" />
+    <PackageReference Include="DotLiquid" Version="2.2.548" />
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
     <PackageReference Include="Unity" Version="$(UnityVersion)" />
   </ItemGroup>
