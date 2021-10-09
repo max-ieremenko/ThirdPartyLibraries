@@ -3,7 +3,7 @@ EmptyFiles [2.3.3](https://www.nuget.org/packages/EmptyFiles/2.3.3)
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net5.0, netcoreapp3.1
+Target frameworks: net5.0, net6.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

@@ -1,6 +1,7 @@
-task LocalBuild Initialize, Clean, Build, ThirdPartyNotices, UnitTest, Pack
+task LocalBuild Initialize, Clean, CiBuild
 task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
-task UnitTest UnitTestCore31, UnitTest50
+
+task UnitTest UnitTestCore31, UnitTest50, UnitTest60
 task Pack PackGlobalTool, PackManualDownload, PackTest
 
 task Initialize {
@@ -37,6 +38,10 @@ task UnitTestCore31 {
 
 task UnitTest50 {
     Exec { .\step-unit-test.ps1 "net5.0" }
+}
+
+task UnitTest60 {
+    Exec { .\step-unit-test.ps1 "net6.0" }
 }
 
 task PackGlobalTool {

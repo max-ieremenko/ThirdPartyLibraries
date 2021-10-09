@@ -14,6 +14,12 @@ To run CI build locally
 
 - install [Node.js](https://nodejs.org/en/download/)
 
+- install net6.0 sdk: manual [download](https://dotnet.microsoft.com/download/dotnet/6.0) or
+
+    ``` powershell
+    PS> .\Build\step-install-dotnet.ps1
+    ```
+
 - run build
 
     ``` powershell
