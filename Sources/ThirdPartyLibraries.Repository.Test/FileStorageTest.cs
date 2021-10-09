@@ -223,6 +223,8 @@ namespace ThirdPartyLibraries.Repository
 
         private void CopyFile(string targetName, string resourceName)
         {
+            targetName = targetName.Replace('\\', Path.DirectorySeparatorChar);
+
             var fileName = Path.Combine(_location.Location, targetName);
             Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 

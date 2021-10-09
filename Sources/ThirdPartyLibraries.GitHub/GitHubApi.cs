@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -89,6 +91,34 @@ namespace ThirdPartyLibraries.GitHub
             return Host + "/repos/{0}/{1}/license".FormatWith(owner, repository);
         }
 
+        private static async Task<ApiRateLimitExceededException> TryGetLimitInfoAsync(HttpResponseMessage response)
+        {
+            if (!response.Headers.TryGetInt64Value("X-RateLimit-Limit", out var limit)
+                || !response.Headers.TryGetInt64Value("X-RateLimit-Remaining", out var remaining)
+                || !response.Headers.TryGetInt64Value("X-RateLimit-Reset", out var reset))
+            {
+                return null;
+            }
+
+            var window = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                .AddMilliseconds(reset * 1000);
+            var message = new StringBuilder()
+                .Append(response.StatusCode)
+                .Append(": ")
+                .Append(response.ReasonPhrase)
+                .Append(". ")
+                .Append(remaining)
+                .Append(" of ")
+                .Append(limit)
+                .Append(" requests remaining in the current rate limit window ")
+                .Append(window.ToString("dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture))
+                .AppendLine()
+                .AppendLine("----------------")
+                .Append(await response.Content.ReadAsStringAsync());
+
+            return new ApiRateLimitExceededException(message.ToString(), limit, remaining, window);
+        }
+
         private async Task<JObject> RequestLicenseContentAsync(string url, string authorizationToken, CancellationToken token)
         {
             var client = HttpClientFactory();
@@ -105,6 +135,15 @@ namespace ThirdPartyLibraries.GitHub
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return null;
+                }
+
+                if (response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    var ex = await TryGetLimitInfoAsync(response);
+                    if (ex != null)
+                    {
+                        throw ex;
+                    }
                 }
 
                 if (response.StatusCode != HttpStatusCode.Unauthorized)

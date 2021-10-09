@@ -1,9 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using Shouldly;
@@ -218,11 +221,22 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
-        public async Task DownloadPackageStyleCopAnalyzersFromLocalCache()
+        public async Task DownloadPackageNewtonsoftJsonFromLocalCache()
         {
-            var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
+            var fileVersion = FileVersionInfo.GetVersionInfo(typeof(JsonSerializer).Assembly.Location);
+            var packageId = new NuGetPackageId("Newtonsoft.Json", "{0}.{1}.{2}".FormatWith(fileVersion.FileMajorPart, fileVersion.FileMinorPart, fileVersion.FileBuildPart));
 
-            var file = await _sut.DownloadPackageAsync(package, true, CancellationToken.None);
+            var path = Path
+                .Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    @".nuget/packages",
+                    packageId.Name,
+                    packageId.Version)
+                .ToLowerInvariant();
+            Console.WriteLine(path);
+            DirectoryAssert.Exists(path);
+
+            var file = await _sut.DownloadPackageAsync(packageId, true, CancellationToken.None);
 
             file.ShouldNotBeNull();
         }

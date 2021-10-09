@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - 'release/**'
+    paths-ignore:
+      - 'docs/**'
+      - 'Examples/**'
+      - '**.md'
+  pull_request:
+    branches:
+      - master
+      - 'release/**'
+    paths-ignore:
+      - 'docs/**'
+      - 'Examples/**'
+      - '**.md'
+
+jobs:
+  ubuntu-build:
+    name: Ubuntu build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dotnet sdk
+      shell: pwsh
+      run: .\Build\step-install-dotnet.ps1
+
+    - name: Dotnet info
+      shell: pwsh
+      run: dotnet --info
+
+    - name: Install InvokeBuild
+      shell: pwsh
+      run: Install-Module -Name InvokeBuild -Force
+
+    - name: Build
+      shell: pwsh
+      run: .\Build\build-ci.ps1
+
+    - name: Artifact packages
+      uses: actions/upload-artifact@v2
+      with:
+        name: packages
+        path: |
+          ./build-out/*.nupkg
+          ./build-out/*.zip
+        if-no-files-found: error
+
+  win-build:
+    name: Windows build
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dotnet sdk
+      shell: pwsh
+      run: .\Build\step-install-dotnet.ps1
+
+    - name: Dotnet info
+      shell: pwsh
+      run: dotnet --info
+
+    - name: Install InvokeBuild
+      shell: pwsh
+      run: Install-Module -Name InvokeBuild -Force
+
+    - name: Build
+      shell: pwsh
+      run: .\Build\build-ci.ps1

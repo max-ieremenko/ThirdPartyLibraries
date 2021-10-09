@@ -3,7 +3,7 @@ Microsoft.Extensions.FileProviders.Abstractions [5.0.0](https://www.nuget.org/pa
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net5.0, netcoreapp3.1
+Target frameworks: net5.0, net6.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

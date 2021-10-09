@@ -34,7 +34,7 @@ Table of Contents
 Requirements <a name="requirements"></a>
 ----------------------------------------
 
-- to run the tool .NET Core 3.0 or 3.1
+- tool can be installed on SDKs .NET 5.0, .NET 6.0, .NET Core 3.1
 - supported project format: [SDK-style](https://docs.microsoft.com/en-us/nuget/resources/check-project-format)
 - supported project references: [NuGet](https://www.nuget.org/) and [npm](https://www.npmjs.com) packages
 - non-supported references can me managed via [custom packages](#custom)
