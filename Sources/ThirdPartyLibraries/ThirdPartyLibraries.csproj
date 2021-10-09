@@ -3,15 +3,7 @@
     <OutputType>Exe</OutputType>
     <OutputPath>..\bin\app</OutputPath>
     <UserSecretsId>c903410c-3d05-49fe-bc8b-b95a2f4dfc69</UserSecretsId>
-    <PackageId>ThirdPartyLibraries.GlobalTool</PackageId>
-    <Authors>Max Ieremenko</Authors>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
-    <PackageTags>licenses third-party-libraries nuget-references</PackageTags>
-    <Description>This command line tool helps to manage third party libraries and their licenses in .net applications.</Description>
+	  <PackageId>ThirdPartyLibraries.GlobalTool</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-jasmine [3.5.0](https://www.npmjs.com/package/jasmine/v/3.5.0)
+jasmine [3.9.0](https://www.npmjs.com/package/jasmine/v/3.9.0)
 --------------------
 
 Used by: ThirdPartyLibraries internal
@@ -11,7 +11,7 @@ License: [MIT](../../../../licenses/mit)
 
 Description
 -----------
-Command line jasmine
+CLI for Jasmine, a simple JavaScript testing framework for browsers and Node
 
 Remarks
 -----------

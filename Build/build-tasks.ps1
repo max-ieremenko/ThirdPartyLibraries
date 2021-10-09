@@ -1,5 +1,3 @@
-Include ".\build-scripts.ps1"
-
 Properties  {
     $buildOutDir,
     $sourceDir,
@@ -17,11 +15,7 @@ Task Initialize {
     $script:buildOutApp31Dir = Join-Path $sourceDir "bin\app\netcoreapp3.1"
     $script:buildOutTestDir = Join-Path $sourceDir "bin\test"
     $script:buildOutThirdNoticesDir = Join-Path $buildOutDir "ThirdNotices"
-    $script:packageVersion = Get-AssemblyVersion (Join-Path $sourceDir "GlobalAssemblyInfo.cs")
-    $script:repositoryCommitId = Get-RepositoryCommitId
-
-    Write-Host "PackageVersion: $packageVersion"
-    Write-Host "CommitId: $repositoryCommitId"
+    $env:GITHUB_SHA = Exec { git rev-parse HEAD }
 }
 
 Task Clean {
@@ -48,6 +42,11 @@ Task Build {
 
     Exec { & dotnet publish -c Release -f net5.0 $solutionFile }
     Exec { & dotnet publish -c Release -f netcoreapp3.1 $solutionFile }
+
+    $currentLocation = Get-Location
+    Set-Location  (Join-Path $sourceDir "ThirdPartyLibraries.Npm.Demo")
+    Exec { npm install }
+    Set-Location $currentLocation
 }
 
 Task Test {
@@ -79,7 +78,7 @@ Task PackGlobalTool {
     Get-ChildItem -Path $buildOutApp50Dir -File -Recurse | % {$_.LastWriteTime = (Get-Date)}
     Get-ChildItem -Path $buildOutApp31Dir -File -Recurse | % {$_.LastWriteTime = (Get-Date)}
     
-    Exec { & dotnet pack "$appProjFile" -c Release --no-build -p:PackAsTool=true -p:PackageVersion=$packageVersion -p:RepositoryCommit=$repositoryCommitId -o "$buildOutDir" }
+    Exec { & dotnet pack "$appProjFile" -c Release --no-build -p:PackAsTool=true -o "$buildOutDir" }
 }
 
 Task PackApp {

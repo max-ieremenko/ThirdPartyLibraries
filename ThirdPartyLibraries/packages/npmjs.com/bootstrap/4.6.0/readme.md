@@ -1,4 +1,4 @@
-bootstrap [4.4.1](https://www.npmjs.com/package/bootstrap/v/4.4.1)
+bootstrap [4.6.0](https://www.npmjs.com/package/bootstrap/v/4.6.0)
 --------------------
 
 Used by: ThirdPartyLibraries

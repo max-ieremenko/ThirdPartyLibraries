@@ -3,7 +3,7 @@ Licenses
 	
 |Code|Requires approval|Requires third party notices|Packages count|
 |----------|:----|:----|:----|
-|[Apache-2.0](licenses/apache-2.0)|no|no|4|
+|[Apache-2.0](licenses/apache-2.0)|no|no|5|
 |[BSD-2-Clause](licenses/bsd-2-clause)|no|no|1|
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
@@ -13,18 +13,18 @@ Licenses
 
 
 
-Packages 58
+Packages 59
 --------
 
 |Name|Version|Source|License|Used by|
 |----------|:----|:----|:----|:----|
-|[bootstrap](packages/npmjs.com/bootstrap/4.4.1)|4.4.1|[npmjs.com](https://www.npmjs.com/package/bootstrap/v/4.4.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[bootstrap](packages/npmjs.com/bootstrap/4.6.0)|4.6.0|[npmjs.com](https://www.npmjs.com/package/bootstrap/v/4.6.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Castle.Core](packages/nuget.org/castle.core/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/Castle.Core/4.4.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[DiffEngine](packages/nuget.org/diffengine/6.4.9)|6.4.9|[nuget.org](https://www.nuget.org/packages/DiffEngine/6.4.9)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[DotLiquid](packages/nuget.org/dotliquid/2.1.436)|2.1.436|[nuget.org](https://www.nuget.org/packages/DotLiquid/2.1.436)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[EmptyFiles](packages/nuget.org/emptyfiles/2.3.3)|2.3.3|[nuget.org](https://www.nuget.org/packages/EmptyFiles/2.3.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](http://www.famfamfam.com/)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
-|[jasmine](packages/npmjs.com/jasmine/3.5.0)|3.5.0|[npmjs.com](https://www.npmjs.com/package/jasmine/v/3.5.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[jasmine](packages/npmjs.com/jasmine/3.9.0)|3.9.0|[npmjs.com](https://www.npmjs.com/package/jasmine/v/3.9.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[JetBrains.Annotations](packages/nuget.org/jetbrains.annotations/2021.1.0)|2021.1.0|[nuget.org](https://www.nuget.org/packages/JetBrains.Annotations/2021.1.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/16.10.0)|16.10.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/16.10.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.DotNet.InternalAbstractions](packages/nuget.org/microsoft.dotnet.internalabstractions/1.0.0)|1.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.DotNet.InternalAbstractions/1.0.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
@@ -40,6 +40,7 @@ Packages 58
 |[Microsoft.Extensions.FileSystemGlobbing](packages/nuget.org/microsoft.extensions.filesystemglobbing/5.0.0)|5.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/5.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Primitives](packages/nuget.org/microsoft.extensions.primitives/5.0.0)|5.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Primitives/5.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.NET.Test.Sdk](packages/nuget.org/microsoft.net.test.sdk/16.10.0)|16.10.0|[nuget.org](https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/16.10.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[Microsoft.SourceLink.GitHub](packages/nuget.org/microsoft.sourcelink.github/1.0.0)|1.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.SourceLink.GitHub/1.0.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[Microsoft.TestPlatform.ObjectModel](packages/nuget.org/microsoft.testplatform.objectmodel/16.10.0)|16.10.0|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/16.10.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.TestPlatform.TestHost](packages/nuget.org/microsoft.testplatform.testhost/16.10.0)|16.10.0|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/16.10.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Moq](packages/nuget.org/moq/4.16.1)|4.16.1|[nuget.org](https://www.nuget.org/packages/Moq/4.16.1)|[BSD-3-Clause](licenses/bsd-3-clause)|ThirdPartyLibraries internal|

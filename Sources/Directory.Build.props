@@ -1,37 +1,53 @@
 <Project>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
-    <OutputType>Library</OutputType>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-	
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
-    
-    <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsAsErrors />
 
-  <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
 
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.333">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  
-  <PropertyGroup>
-    <NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
-	<UnityVersion>5.11.10</UnityVersion>
-	<MicrosoftNETTestSdkVersion>16.10.0</MicrosoftNETTestSdkVersion>
-	<MoqVersion>4.16.1</MoqVersion>
-	<NUnitVersion>3.13.2</NUnitVersion>
-	<NUnit3TestAdapterVersion>3.17.0</NUnit3TestAdapterVersion>
-	<ShouldlyVersion>4.0.3</ShouldlyVersion>
-	<MockHttpVersion>6.0.0</MockHttpVersion>
-  </PropertyGroup>
-  
+		<CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DefaultPackageVersion>2.1.1</DefaultPackageVersion>
+
+		<Version>$(DefaultPackageVersion)</Version>
+		<AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
+		<FileVersion>$(DefaultPackageVersion).0</FileVersion>
+		<Product>Third Party Libraries</Product>
+		<Authors>Max Ieremenko</Authors>
+		<Copyright>(C) 2019-2021 Max Ieremenko.</Copyright>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
+		<PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
+		<PackageTags>licenses third-party-libraries nuget-references</PackageTags>
+		<Description>This command line tool helps to manage third party libraries and their licenses in .net applications.</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.333">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<PropertyGroup>
+		<NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
+		<UnityVersion>5.11.10</UnityVersion>
+		<MicrosoftNETTestSdkVersion>16.10.0</MicrosoftNETTestSdkVersion>
+		<MoqVersion>4.16.1</MoqVersion>
+		<NUnitVersion>3.13.2</NUnitVersion>
+		<NUnit3TestAdapterVersion>3.17.0</NUnit3TestAdapterVersion>
+		<ShouldlyVersion>4.0.3</ShouldlyVersion>
+		<MockHttpVersion>6.0.0</MockHttpVersion>
+	</PropertyGroup>
+
 </Project>
