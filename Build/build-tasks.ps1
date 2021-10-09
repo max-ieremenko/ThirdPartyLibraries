@@ -1,96 +1,52 @@
-Properties  {
-    $buildOutDir,
-    $sourceDir,
-    $repositoryDir
-}
+task LocalBuild Initialize, Clean, Build, ThirdPartyNotices, UnitTest, Pack
+task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
+task UnitTest UnitTestCore31, UnitTest50
+task Pack PackGlobalTool, PackManualDownload, PackTest
 
-Task default -Depends Initialize, Clean, Build, Test, CreateThirdPartyNotices, PackGlobalTool, PackApp, PostClean
-
-Task Initialize {
-    Assert ($buildOutDir -ne $null) "Build output is missing"
-    Assert (Test-Path $sourceDir) "Sources not found"
-    Assert (Test-Path $repositoryDir) "Repository not found"
-
-    $script:buildOutApp50Dir = Join-Path $sourceDir "bin\app\net5.0"
-    $script:buildOutApp31Dir = Join-Path $sourceDir "bin\app\netcoreapp3.1"
-    $script:buildOutTestDir = Join-Path $sourceDir "bin\test"
-    $script:buildOutThirdNoticesDir = Join-Path $buildOutDir "ThirdNotices"
+task Initialize {
     $env:GITHUB_SHA = Exec { git rev-parse HEAD }
 }
 
-Task Clean {
+task Clean {
+    $buildOutDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out"))
     if (Test-Path $buildOutDir) {
         Remove-Item -Path $buildOutDir -Recurse -Force
     }
 
-    if (Test-Path $buildOutApp50Dir) {
-        Remove-Item -Path $buildOutApp50Dir -Recurse -Force
-    }
+    $sourcesDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources"))
+    Get-ChildItem -Path $sourcesDir -Filter bin -Directory -Recurse | Remove-Item -Recurse -Force
+    Get-ChildItem -Path $sourcesDir -Filter obj -Directory -Recurse | Remove-Item -Recurse -Force
 
-    if (Test-Path $buildOutApp31Dir) {
-        Remove-Item -Path $buildOutApp31Dir -Recurse -Force
-    }
-
-    if (Test-Path $buildOutTestDir) {
-        Remove-Item -Path $buildOutTestDir -Recurse -Force
+    $nodeModules = Join-Path $sourcesDir "ThirdPartyLibraries.Npm.Demo\node_modules"
+    if (Test-Path $nodeModules) {
+        Remove-Item -Path $nodeModules -Recurse -Force
     }
 }
 
-Task Build {
-    $solutionFile = Join-Path $sourceDir "ThirdPartyLibraries.sln"
-    Exec { & dotnet restore $solutionFile }
-
-    Exec { & dotnet publish -c Release -f net5.0 $solutionFile }
-    Exec { & dotnet publish -c Release -f netcoreapp3.1 $solutionFile }
-
-    $currentLocation = Get-Location
-    Set-Location  (Join-Path $sourceDir "ThirdPartyLibraries.Npm.Demo")
-    Exec { npm install }
-    Set-Location $currentLocation
+task Build {
+    Exec { .\step-build.ps1 }
 }
 
-Task Test {
-    # https://github.com/nunit/docs/wiki/.NET-Core-and-.NET-Standard
-    $projects = (Get-ChildItem $sourceDir -Recurse -Include *.Test.csproj) | Sort-Object
-    foreach ($project in $projects) {
-        Exec { & dotnet test -c Release $project }
-    }
+task ThirdPartyNotices {
+    Exec { .\step-third-party-notices.ps1 }
 }
 
-Task CreateThirdPartyNotices {
-    $app = Join-Path $buildOutApp50Dir ThirdPartyLibraries.exe
-    
-    Write-Host "Update repository"
-    Exec { & $app update -appName ThirdPartyLibraries -source "$sourceDir" -repository "$repositoryDir" }
-
-    Write-Host "Validate repository"
-    Exec { & $app validate -appName ThirdPartyLibraries -source "$sourceDir" -repository "$repositoryDir" }
-
-    Write-Host "Generate ThirdPartyNotices"
-    Exec { & $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$buildOutThirdNoticesDir" }
-    Copy-Item -Path (Join-Path $sourceDir "..\LICENSE") -Destination "$buildOutThirdNoticesDir"
+task UnitTestCore31 {
+    Exec { .\step-unit-test.ps1 "netcoreapp3.1" }
 }
 
-Task PackGlobalTool {
-    $appProjFile = Join-Path $sourceDir "ThirdPartyLibraries\ThirdPartyLibraries.csproj"
-
-    # workaround for he DateTimeOffset specified cannot be converted into a Zip file timestamp, https://github.com/NuGet/Home/issues/7001
-    Get-ChildItem -Path $buildOutApp50Dir -File -Recurse | % {$_.LastWriteTime = (Get-Date)}
-    Get-ChildItem -Path $buildOutApp31Dir -File -Recurse | % {$_.LastWriteTime = (Get-Date)}
-    
-    Exec { & dotnet pack "$appProjFile" -c Release --no-build -p:PackAsTool=true -o "$buildOutDir" }
+task UnitTest50 {
+    Exec { .\step-unit-test.ps1 "net5.0" }
 }
 
-Task PackApp {
-    $destination = Join-Path $buildOutDir "ThirdPartyLibraries-net5.0-$packageVersion.zip"
-    Compress-Archive -Path "$buildOutApp50Dir\publish\*","$buildOutThirdNoticesDir\*" -DestinationPath $destination
-
-    $destination = Join-Path $buildOutDir "ThirdPartyLibraries-net3.1-$packageVersion.zip"
-    Compress-Archive -Path "$buildOutApp31Dir\publish\*","$buildOutThirdNoticesDir\*" -DestinationPath $destination
+task PackGlobalTool {
+    Exec { .\step-pack-global-tool.ps1 }
 }
 
-Task PostClean {
-    Remove-Item -Path $buildOutApp50Dir -Recurse -Force
-    Remove-Item -Path $buildOutApp31Dir -Recurse -Force
-    Remove-Item -Path $buildOutTestDir -Recurse -Force
+task PackManualDownload {
+    Exec { .\step-pack-manual-download.ps1 }
+}
+
+task PackTest {
+    Exec { .\step-pack-test.ps1 }
 }

@@ -4,6 +4,7 @@
 		<OutputType>Library</OutputType>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningsAsErrors />
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
 
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>

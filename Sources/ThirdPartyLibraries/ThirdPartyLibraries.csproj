@@ -31,6 +31,6 @@
   </ItemGroup>
 
   <ItemGroup Label="Packaging">
-    <Content Include="..\..\build.out\ThirdNotices\**\*" PackagePath="" />
+    <Content Include="..\..\build-out\ThirdNotices\**\*" PackagePath="" />
   </ItemGroup>
 </Project>
