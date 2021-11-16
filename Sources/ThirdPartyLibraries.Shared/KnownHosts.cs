@@ -10,7 +10,9 @@
 
         public const string GitHub = "github.com";
 
-        public const string GitHubRaw = "raw.githubusercontent.com";
+        public const string GitHubRaw = "raw.github.com";
+
+        public const string GitHubRawUserContent = "raw.githubusercontent.com";
 
         public const string GitHubApi = "api.github.com";
 

@@ -40,6 +40,7 @@ namespace ThirdPartyLibraries.Suite
             container.RegisterFactory<GitHubConfiguration>(ResolveGitHubConfiguration, new ContainerControlledLifetimeManager());
             container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHub, new TransientLifetimeManager());
             container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRaw, new TransientLifetimeManager());
+            container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRawUserContent, new TransientLifetimeManager());
             container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubApi, new TransientLifetimeManager());
 
             // custom
