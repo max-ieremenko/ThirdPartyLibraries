@@ -30,11 +30,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.354">
+		<PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.376">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -43,10 +43,10 @@
 	<PropertyGroup>
 		<NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
 		<UnityVersion>5.11.10</UnityVersion>
-		<MicrosoftNETTestSdkVersion>16.11.0</MicrosoftNETTestSdkVersion>
+		<MicrosoftNETTestSdkVersion>17.0.0</MicrosoftNETTestSdkVersion>
 		<MoqVersion>4.16.1</MoqVersion>
 		<NUnitVersion>3.13.2</NUnitVersion>
-		<NUnit3TestAdapterVersion>4.0.0</NUnit3TestAdapterVersion>
+		<NUnit3TestAdapterVersion>4.1.0</NUnit3TestAdapterVersion>
 		<ShouldlyVersion>4.0.3</ShouldlyVersion>
 		<MockHttpVersion>6.0.0</MockHttpVersion>
 	</PropertyGroup>
