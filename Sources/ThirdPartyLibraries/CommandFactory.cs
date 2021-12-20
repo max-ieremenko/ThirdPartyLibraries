@@ -9,6 +9,7 @@ using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
 using ThirdPartyLibraries.Suite.Commands;
 using Unity;
+using ConfigurationManager = ThirdPartyLibraries.Configuration.ConfigurationManager;
 
 namespace ThirdPartyLibraries
 {

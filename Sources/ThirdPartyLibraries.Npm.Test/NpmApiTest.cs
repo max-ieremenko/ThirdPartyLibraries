@@ -99,7 +99,12 @@ namespace ThirdPartyLibraries.Npm
 
             Console.WriteLine(actual);
             actual.ShouldNotBeNull();
-            DirectoryAssert.Exists(actual);
+
+            if (!Directory.Exists(actual))
+            {
+                Path.GetDirectoryName(actual).ShouldNotBeNullOrWhiteSpace();
+                DirectoryAssert.Exists(Path.GetDirectoryName(actual));
+            }
         }
     }
 }

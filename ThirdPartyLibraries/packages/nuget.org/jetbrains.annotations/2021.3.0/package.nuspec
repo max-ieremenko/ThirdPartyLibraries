@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>JetBrains.Annotations</id>
+    <version>2021.3.0</version>
+    <title>JetBrains ReSharper Annotations</title>
+    <authors>JetBrains</authors>
+    <owners>JetBrains</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>icon.png</icon>
+    <projectUrl>https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Annotations.html</projectUrl>
+    <description>ReSharper Annotations help reduce false positive warnings, explicitly declare purity and nullability in your code, deal with implicit usages of members, support special semantics of APIs in ASP.NET and XAML frameworks and otherwise increase accuracy of ReSharper code inspections.
+
+All usages of ReSharper Annotations attributes are erased from metadata by default, which means no actual binary reference to 'JetBrains.Annotations.dll' assembly is produced. If you need to preserve these attributes in metadata, just define 'JETBRAINS_ANNOTATIONS' conditional compilation symbol in your projects.</description>
+    <summary>Annotations to increase accuracy of ReSharper code inspections</summary>
+    <releaseNotes>• Package/assemblies are now deterministic
+• Source Link support added
+• Added AttributeTargets.ReturnValue for CollectionAccessAttribute
+• Added 'LanguageInjectionAttribute' to mark parameter, field, or property as an injected code fragment
+• Added 'CodeTemplateAttribute' to define structural search and replace patterns in code for members or types
+• Added 'InstantHandleAttribute.RequireAwait' property to limit the applicability of the attribute to calls under 'await' expression</releaseNotes>
+    <tags>jetbrains resharper annotations canbenull notnull</tags>
+    <repository type="git" url="https://github.com/JetBrains/JetBrains.Annotations.git" />
+    <dependencies>
+      <group targetFramework=".NETFramework2.0" />
+      <group targetFramework=".NETPortable4.0-Profile328" />
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="System.Runtime" version="4.1.0" />
+      </group>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>
