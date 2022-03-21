@@ -13,14 +13,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DefaultPackageVersion>2.1.3</DefaultPackageVersion>
+		<DefaultPackageVersion>2.1.4</DefaultPackageVersion>
 
 		<Version>$(DefaultPackageVersion)</Version>
 		<AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
 		<FileVersion>$(DefaultPackageVersion).0</FileVersion>
 		<Product>Third Party Libraries</Product>
 		<Authors>Max Ieremenko</Authors>
-		<Copyright>(C) 2019-2021 Max Ieremenko.</Copyright>
+		<Copyright>(C) 2019-2022 Max Ieremenko.</Copyright>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
