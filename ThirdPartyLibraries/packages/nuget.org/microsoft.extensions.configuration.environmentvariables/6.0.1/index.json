@@ -20,18 +20,6 @@
         {
           "Name": "Microsoft.Extensions.Configuration.Abstractions",
           "Version": "6.0.0"
-        },
-        {
-          "Name": "Microsoft.Extensions.Configuration.FileExtensions",
-          "Version": "6.0.0"
-        },
-        {
-          "Name": "Microsoft.Extensions.FileProviders.Abstractions",
-          "Version": "6.0.0"
-        },
-        {
-          "Name": "System.Text.Json",
-          "Version": "6.0.0"
         }
       ]
     }
