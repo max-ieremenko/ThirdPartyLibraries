@@ -36,7 +36,7 @@ jobs:
 
     - name: Install InvokeBuild
       shell: pwsh
-      run: Install-Module -Name InvokeBuild -RequiredVersion 5.8.7 -Force
+      run: Install-Module -Name InvokeBuild -RequiredVersion 5.9.9.0 -Force
 
     - name: Build
       shell: pwsh
@@ -68,7 +68,7 @@ jobs:
 
     - name: Install InvokeBuild
       shell: pwsh
-      run: Install-Module -Name InvokeBuild -RequiredVersion 5.8.7 -Force
+      run: Install-Module -Name InvokeBuild -RequiredVersion 5.9.9.0 -Force
 
     - name: Build
       shell: pwsh

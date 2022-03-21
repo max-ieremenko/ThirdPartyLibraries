@@ -83,10 +83,17 @@ namespace ThirdPartyLibraries.NuGet
             foreach (var row in projectDependencies)
             {
                 var targetName = row.Value.Value<string>("target");
-                if ("package".EqualsIgnoreCase(targetName))
+                if (!"package".EqualsIgnoreCase(targetName))
                 {
-                    targetPackageByName[row.Key].IsRoot = true;
+                    continue;
                 }
+
+                if (!targetPackageByName.TryGetValue(row.Key, out var target))
+                {
+                    throw new InvalidOperationException("The project {0} contains invalid reference to a package {1}.".FormatWith(GetProjectName(), row.Key));
+                }
+
+                target.IsRoot = true;
             }
 
             var dependenciesByPackage = new Dictionary<NuGetPackageId, IList<NuGetPackageId>>();

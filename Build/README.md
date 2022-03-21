@@ -9,7 +9,7 @@ To run CI build locally
 - install [InvokeBuild](https://www.powershellgallery.com/packages/InvokeBuild)
 
     ``` powershell
-    PS> Install-Module -Name InvokeBuild -RequiredVersion 5.8.7
+    PS> Install-Module -Name InvokeBuild -RequiredVersion 5.9.9.0
     ```
 
 - install [Node.js](https://nodejs.org/en/download/)

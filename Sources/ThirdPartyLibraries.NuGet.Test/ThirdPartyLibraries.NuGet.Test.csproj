@@ -7,29 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="NuGetApiTest.Common.Logging.2.0.0.nuspec.xml" />
-    <None Remove="NuGetApiTest.MIT.html" />
-    <None Remove="NuGetApiTest.Mixed.html" />
-    <None Remove="NuGetApiTest.Newtonsoft.Json.12.0.2.nuspec.xml" />
-    <None Remove="NuGetApiTest.Owin.1.0.nuspec.xml" />
-    <None Remove="NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg" />
-    <None Remove="NuGetApiTest.StyleCop.Analyzers.1.1.118.nuspec.xml" />
-    <None Remove="ProjectAssetsParserTest.project.assets.json" />
-    <None Remove="ProjectFileParserTest.csproj.xml" />
-    <None Remove="ProjectFileParserTest.Targets.csproj.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="NuGetApiTest.Common.Logging.2.0.0.nuspec.xml" />
-    <EmbeddedResource Include="NuGetApiTest.MIT.html" />
-    <EmbeddedResource Include="NuGetApiTest.Mixed.html" />
-    <EmbeddedResource Include="NuGetApiTest.Newtonsoft.Json.12.0.2.nuspec.xml" />
-    <EmbeddedResource Include="NuGetApiTest.Owin.1.0.nuspec.xml" />
-    <EmbeddedResource Include="NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg" />
-    <EmbeddedResource Include="NuGetApiTest.StyleCop.Analyzers.1.1.118.nuspec.xml" />
-    <EmbeddedResource Include="ProjectAssetsParserTest.project.assets.json" />
-    <EmbeddedResource Include="ProjectFileParserTest.Targets.csproj.xml" />
-    <EmbeddedResource Include="ProjectFileParserTest.csproj.xml" />
+    <EmbeddedResource Include="*.xml" />
+    <EmbeddedResource Include="*.html" />
+    <EmbeddedResource Include="*.nupkg" />
+    <EmbeddedResource Include="*.json" />
   </ItemGroup>
 
   <ItemGroup>

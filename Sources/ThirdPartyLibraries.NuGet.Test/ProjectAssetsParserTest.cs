@@ -1,27 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet
 {
     [TestFixture]
     public class ProjectAssetsParserTest
     {
-        private ProjectAssetsParser _sut;
-
-        [OneTimeSetUp]
-        public void BeforeAllTests()
-        {
-            using (var stream = TempFile.OpenResource(GetType(), "ProjectAssetsParserTest.project.assets.json"))
-            {
-                _sut = ProjectAssetsParser.FromStream(stream);
-            }
-        }
-
         [Test]
         public void GetTargetFrameworks()
         {
-            var actual = _sut.GetTargetFrameworks();
+            var actual = CreateSut("project").GetTargetFrameworks();
 
             actual.ShouldBe(new[] { "net452", "netcoreapp2.2", "net472" }, ignoreOrder: true);
         }
@@ -29,7 +20,7 @@ namespace ThirdPartyLibraries.NuGet
         [Test]
         public void GetNet452References()
         {
-            var actual = _sut.GetReferences("net452").ToList();
+            var actual = CreateSut("project").GetReferences("net452").ToList();
 
             actual.Count.ShouldBe(1);
 
@@ -40,7 +31,7 @@ namespace ThirdPartyLibraries.NuGet
         [Test]
         public void GetNetCore22References()
         {
-            var actual = _sut.GetReferences("netcoreapp2.2").ToList();
+            var actual = CreateSut("project").GetReferences("netcoreapp2.2").ToList();
 
             actual.Count.ShouldBe(11);
             actual[2].Package.Name.ShouldBe("System.Configuration.ConfigurationManager");
@@ -59,7 +50,7 @@ namespace ThirdPartyLibraries.NuGet
         [Test]
         public void GetNet472References()
         {
-            var actual = _sut.GetReferences("net472").ToList();
+            var actual = CreateSut("project").GetReferences("net472").ToList();
 
             actual.ShouldBeEmpty();
         }
@@ -67,7 +58,27 @@ namespace ThirdPartyLibraries.NuGet
         [Test]
         public void GetProjectName()
         {
-            _sut.GetProjectName().ShouldBe("Company.Name.Project");
+            CreateSut("project").GetProjectName().ShouldBe("Company.Name.Project");
+        }
+
+        [Test]
+        public void InvalidReference()
+        {
+            var sut = CreateSut("invalid-project");
+
+            var ex = Assert.Throws<InvalidOperationException>(() => sut.GetReferences("netcoreapp3.1"));
+            Console.WriteLine(ex);
+
+            ex.Message.ShouldContain("Company.Name.Project");
+            ex.Message.ShouldContain("StyleCop.Analyzers");
+        }
+
+        private static ProjectAssetsParser CreateSut(string fileName)
+        {
+            using (var stream = TempFile.OpenResource(typeof(ProjectAssetsParserTest), "ProjectAssetsParserTest.{0}.assets.json".FormatWith(fileName)))
+            {
+                return ProjectAssetsParser.FromStream(stream);
+            }
         }
     }
 }
