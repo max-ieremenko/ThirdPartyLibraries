@@ -5,14 +5,17 @@ using ThirdPartyLibraries.NuGet;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 {
     internal sealed class NuGetSourceCodeReferenceProvider : ISourceCodeReferenceProvider
     {
-        [Dependency]
-        public NuGetConfiguration Configuration { get; set; }
+        public NuGetSourceCodeReferenceProvider(NuGetConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public NuGetConfiguration Configuration { get; }
 
         public IEnumerable<LibraryReference> GetReferencesFrom(string path)
         {

@@ -1,27 +1,32 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Net.Http;
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Generic
 {
     [TestFixture]
     public class AppModuleTest
     {
-        private IUnityContainer _sut;
+        private IServiceProvider _sut;
 
         [SetUp]
         public void BeforeEachTest()
         {
-            _sut = new UnityContainer();
-            AppModule.ConfigureContainer(_sut);
+            var services = new ServiceCollection();
+            services.AddSingleton<Func<HttpClient>>(() => new HttpClient());
+            AppModule.ConfigureServices(services);
+
+            _sut = services.BuildServiceProvider();
         }
 
         [Test]
         public void OpenSourceOrgApiIsSingleton()
         {
-            var host1 = _sut.Resolve<ILicenseCodeSource>(KnownHosts.OpenSourceOrg).ShouldBeOfType<OpenSourceOrgApi>();
-            var host2 = _sut.Resolve<ILicenseCodeSource>(KnownHosts.OpenSourceOrgApi).ShouldBeOfType<OpenSourceOrgApi>();
+            var host1 = _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.OpenSourceOrg).ShouldBeOfType<OpenSourceOrgApi>();
+            var host2 = _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.OpenSourceOrgApi).ShouldBeOfType<OpenSourceOrgApi>();
 
             ReferenceEquals(host1, host2).ShouldBeTrue();
         }

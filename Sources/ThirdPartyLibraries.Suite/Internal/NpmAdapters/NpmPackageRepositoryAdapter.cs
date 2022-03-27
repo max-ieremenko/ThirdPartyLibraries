@@ -3,14 +3,17 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.Npm;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 {
     internal sealed class NpmPackageRepositoryAdapter : PackageRepositoryAdapterBase
     {
-        [Dependency]
-        public INpmApi Api { get; set; }
+        public NpmPackageRepositoryAdapter(INpmApi api)
+        {
+            Api = api;
+        }
+
+        public INpmApi Api { get; }
 
         protected override async Task AppendSpecAttributesAsync(LibraryId id, Package package, CancellationToken token)
         {

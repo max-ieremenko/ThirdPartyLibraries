@@ -6,13 +6,11 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
 {
     internal sealed class CustomPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
-        [Dependency]
         public IStorage Storage { get; set; }
 
         public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)

@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 {
     internal abstract class PackageRepositoryAdapterBase : IPackageRepositoryAdapter
     {
-        [Dependency]
         public IStorage Storage { get; set; }
 
         public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)

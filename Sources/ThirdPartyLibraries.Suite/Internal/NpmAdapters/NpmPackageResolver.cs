@@ -5,17 +5,21 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 {
     internal sealed class NpmPackageResolver : PackageResolverBase
     {
-        [Dependency]
-        public INpmApi Api { get; set; }
+        public NpmPackageResolver(INpmApi api, NpmConfiguration configuration, ILicenseResolver licenseResolver, IStorage storage)
+            : base(licenseResolver, storage)
+        {
+            Api = api;
+            Configuration = configuration;
+        }
 
-        [Dependency]
-        public NpmConfiguration Configuration { get; set; }
+        public INpmApi Api { get; }
+
+        public NpmConfiguration Configuration { get; }
 
         protected override bool DownloadPackageIntoRepository => Configuration.DownloadPackageIntoRepository;
 

@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <OutputPath>..\bin\app</OutputPath>
     <UserSecretsId>c903410c-3d05-49fe-bc8b-b95a2f4dfc69</UserSecretsId>
-	  <PackageId>ThirdPartyLibraries.GlobalTool</PackageId>
+	<PackageId>ThirdPartyLibraries.GlobalTool</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

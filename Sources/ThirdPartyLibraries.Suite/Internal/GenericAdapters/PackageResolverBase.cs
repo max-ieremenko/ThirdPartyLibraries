@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 {
@@ -14,11 +13,15 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
     {
         private readonly ConcurrentDictionary<LibraryId, byte[]> _packageContentById = new ConcurrentDictionary<LibraryId, byte[]>();
 
-        [Dependency]
-        public ILicenseResolver LicenseResolver { get; set; }
+        protected PackageResolverBase(ILicenseResolver licenseResolver, IStorage storage)
+        {
+            LicenseResolver = licenseResolver;
+            Storage = storage;
+        }
 
-        [Dependency]
-        public IStorage Storage { get; set; }
+        public ILicenseResolver LicenseResolver { get; }
+
+        public IStorage Storage { get; }
 
         protected abstract bool DownloadPackageIntoRepository { get; }
 

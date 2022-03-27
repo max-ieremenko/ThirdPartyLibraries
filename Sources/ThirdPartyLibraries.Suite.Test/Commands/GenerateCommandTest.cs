@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -10,7 +11,6 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
@@ -25,6 +25,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         private Mock<IPackageRepository> _packageRepository;
         private Mock<IStorage> _storage;
         private IList<Package> _packages;
+        private IServiceProvider _serviceProvider;
 
         [SetUp]
         public void BeforeEachTest()
@@ -34,7 +35,6 @@ namespace ThirdPartyLibraries.Suite.Commands
             _to = new TempFolder();
             Directory.CreateDirectory(Path.Combine(_to.Location, "configuration"));
 
-            var container = new UnityContainer();
             _packages = new List<Package>();
 
             _storage = new Mock<IStorage>(MockBehavior.Strict);
@@ -69,9 +69,17 @@ namespace ThirdPartyLibraries.Suite.Commands
                     var package = _packages.Single(i => i.Name == id.Name && i.Version == id.Version);
                     return Task.FromResult(package);
                 });
-            container.RegisterInstance(_packageRepository.Object);
 
-            _sut = new GenerateCommand(container, _logger.Object)
+            var serviceProvider = new Mock<IServiceProvider>(MockBehavior.Strict);
+            serviceProvider
+                .Setup(p => p.GetService(typeof(IPackageRepository)))
+                .Returns(_packageRepository.Object);
+            serviceProvider
+                .Setup(p => p.GetService(typeof(ILogger)))
+                .Returns(_logger.Object);
+            _serviceProvider = serviceProvider.Object;
+
+            _sut = new GenerateCommand
             {
                 To = _to.Location,
                 AppNames = { AppName }
@@ -116,7 +124,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Setup(s => s.OpenLicenseFileReadAsync("MIT", "license.txt", CancellationToken.None))
                 .ReturnsAsync(() => new MemoryStream("MIT license text".AsBytes()));
 
-            await _sut.ExecuteAsync(CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
 
             FileAssert.Exists(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
@@ -156,7 +164,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             };
             _packages.Add(package2);
 
-            await _sut.ExecuteAsync(CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
 
             FileAssert.Exists(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
 
@@ -224,7 +232,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Setup(s => s.OpenLicenseFileReadAsync(mitLicense.Code, "license.txt", CancellationToken.None))
                 .ReturnsAsync(() => new MemoryStream("MIT license text".AsBytes()));
 
-            await _sut.ExecuteAsync(CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
 
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "GPL-3.0-license.txt"));

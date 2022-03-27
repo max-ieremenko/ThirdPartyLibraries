@@ -1,26 +1,29 @@
-﻿using ThirdPartyLibraries.Shared;
-using Unity;
-using Unity.Lifetime;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Generic
 {
     public static class AppModule
     {
-        public static void ConfigureContainer(IUnityContainer container)
+        public static void ConfigureServices(IServiceCollection services)
         {
-            container.AssertNotNull(nameof(container));
+            services.AssertNotNull(nameof(services));
 
-            container.RegisterType<IStaticLicenseSource, StaticLicenseSource>(new ContainerControlledLifetimeManager());
+            services.AddSingleton<IStaticLicenseSource, StaticLicenseSource>();
 
-            container.RegisterType<OpenSourceOrgApi>(new ContainerControlledLifetimeManager());
-            container.RegisterFactory<ILicenseCodeSource>(KnownHosts.OpenSourceOrg, c => c.Resolve<OpenSourceOrgApi>(), new TransientLifetimeManager());
-            container.RegisterFactory<ILicenseCodeSource>(KnownHosts.OpenSourceOrgApi, c => c.Resolve<OpenSourceOrgApi>(), new TransientLifetimeManager());
-            
-            container.RegisterType<ILicenseCodeSource, SpdxOrgApi>(KnownHosts.SpdxOrg, new TransientLifetimeManager());
-            container.RegisterType<IFullLicenseSource, SpdxOrgApi>(new TransientLifetimeManager());
-            
-            container.RegisterType<ILicenseCodeSource, CodeProjectApi>(KnownHosts.CodeProject, new TransientLifetimeManager());
-            container.RegisterType<IFullLicenseSource, CodeProjectApi>(CodeProjectApi.LicenseCode, new TransientLifetimeManager());
+            services.AddSingleton<OpenSourceOrgApi>();
+            services.AddKeyedTransient<ILicenseCodeSource, OpenSourceOrgApi>(
+                KnownHosts.OpenSourceOrg,
+                provider => provider.GetRequiredService<OpenSourceOrgApi>());
+            services.AddKeyedTransient<ILicenseCodeSource, OpenSourceOrgApi>(
+                KnownHosts.OpenSourceOrgApi,
+                provider => provider.GetRequiredService<OpenSourceOrgApi>());
+
+            services.AddKeyedTransient<ILicenseCodeSource, SpdxOrgApi>(KnownHosts.SpdxOrg);
+            services.AddKeyedTransient<IFullLicenseSource, SpdxOrgApi>(KnownHosts.SpdxOrg);
+
+            services.AddKeyedTransient<ILicenseCodeSource, CodeProjectApi>(KnownHosts.CodeProject);
+            services.AddKeyedTransient<IFullLicenseSource, CodeProjectApi>(CodeProjectApi.LicenseCode);
         }
     }
 }

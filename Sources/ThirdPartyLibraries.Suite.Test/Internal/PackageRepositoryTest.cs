@@ -2,42 +2,42 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
     [TestFixture]
     public class PackageRepositoryTest
     {
-        private IUnityContainer _container;
+        private IServiceCollection _services;
         private Mock<IStorage> _storage;
         private Mock<ILicenseResolver> _licenseResolver;
-        private PackageRepository _sut;
 
         [SetUp]
         public void BeforeEachTest()
         {
-            _container = new UnityContainer();
+            _services = new ServiceCollection();
             _storage = new Mock<IStorage>(MockBehavior.Strict);
 
             _licenseResolver = new Mock<ILicenseResolver>(MockBehavior.Strict);
-            _container.RegisterInstance(_licenseResolver.Object);
-
-            _sut = new PackageRepository(_container, _storage.Object);
+            _services.AddSingleton(_licenseResolver.Object);
         }
 
         [Test]
         public void ResolveAdapter()
         {
-            _container.RegisterType<IPackageRepositoryAdapter, PackageRepositoryAdapter>("code");
+            _services.AddKeyedTransient<IPackageRepositoryAdapter, PackageRepositoryAdapter>("code");
 
-            var actual = _sut.ResolveAdapter("code");
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
+
+            var actual = sut.ResolveAdapter("code");
 
             actual.ShouldBeOfType<PackageRepositoryAdapter>();
             actual.Storage.ShouldBe(_storage.Object);
@@ -55,7 +55,10 @@ namespace ThirdPartyLibraries.Suite.Internal
                     HRef = "some link"
                 }.JsonSerialize());
 
-            var actual = await _sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
+
+            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
 
             actual.ShouldNotBeNull();
             actual.Code.ShouldBe("MIT");
@@ -97,7 +100,10 @@ namespace ThirdPartyLibraries.Suite.Internal
                 .Setup(r => r.CreateLicenseFileAsync("MIT", "fileName.txt", It.Is<byte[]>(i => i.AsText() == "text"), CancellationToken.None))
                 .Returns(Task.CompletedTask);
 
-            var actual = await _sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
+
+            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
 
             _storage.VerifyAll();
 
@@ -133,7 +139,10 @@ namespace ThirdPartyLibraries.Suite.Internal
                 .Setup(r => r.CreateLicenseFileAsync("MIT", "license.txt", Array.Empty<byte>(), CancellationToken.None))
                 .Returns(Task.CompletedTask);
 
-            var actual = await _sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
+
+            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
 
             _storage.VerifyAll();
 
@@ -153,7 +162,9 @@ namespace ThirdPartyLibraries.Suite.Internal
                 .ReturnsAsync(new[] { libraryId });
 
             var adapter = new Mock<IPackageRepositoryAdapter>(MockBehavior.Strict);
-            _container.RegisterInstance("source", adapter.Object);
+            adapter
+                .SetupSet(a => a.Storage = _storage.Object);
+            _services.AddKeyedTransient<IPackageRepositoryAdapter, IPackageRepositoryAdapter>("source", _ => adapter.Object);
 
             adapter
                 .Setup(a => a.LoadPackageAsync(libraryId, CancellationToken.None))
@@ -163,7 +174,10 @@ namespace ThirdPartyLibraries.Suite.Internal
                 .Setup(a => a.UpdatePackageReadMeAsync(metadata, CancellationToken.None))
                 .Returns(Task.CompletedTask);
 
-            var actual = await _sut.UpdateAllPackagesReadMeAsync(CancellationToken.None);
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
+
+            var actual = await sut.UpdateAllPackagesReadMeAsync(CancellationToken.None);
 
             actual.Count.ShouldBe(1);
             actual[0].ShouldBe(metadata);
@@ -179,12 +193,16 @@ namespace ThirdPartyLibraries.Suite.Internal
 
             var adapter = new Mock<IPackageRepositoryAdapter>(MockBehavior.Strict);
             adapter
+                .SetupSet(a => a.Storage = _storage.Object);
+            adapter
                 .Setup(a => a.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None))
                 .ReturnsAsync(PackageRemoveResult.Removed);
+            _services.AddKeyedTransient<IPackageRepositoryAdapter, IPackageRepositoryAdapter>(libraryId.SourceCode, _ => adapter.Object);
 
-            _container.RegisterInstance(libraryId.SourceCode, adapter.Object);
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await _sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None);
+            var actual = await sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None);
 
             actual.ShouldBe(PackageRemoveResult.Removed);
         }
@@ -196,16 +214,20 @@ namespace ThirdPartyLibraries.Suite.Internal
 
             var adapter = new Mock<IPackageRepositoryAdapter>(MockBehavior.Strict);
             adapter
+                .SetupSet(a => a.Storage = _storage.Object);
+            adapter
                 .Setup(a => a.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None))
                 .ReturnsAsync(PackageRemoveResult.RemovedNoRefs);
+            _services.AddKeyedTransient<IPackageRepositoryAdapter, IPackageRepositoryAdapter>(libraryId.SourceCode, _ => adapter.Object);
 
             _storage
                 .Setup(r => r.RemoveLibraryAsync(libraryId, CancellationToken.None))
                 .Returns(Task.CompletedTask);
 
-            _container.RegisterInstance(libraryId.SourceCode, adapter.Object);
+            var serviceProvider = _services.BuildServiceProvider();
+            var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await _sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None);
+            var actual = await sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None);
 
             actual.ShouldBe(PackageRemoveResult.RemovedNoRefs);
             _storage.VerifyAll();
@@ -213,7 +235,6 @@ namespace ThirdPartyLibraries.Suite.Internal
 
         private sealed class PackageRepositoryAdapter : IPackageRepositoryAdapter
         {
-            [Dependency]
             public IStorage Storage { get; set; }
 
             public Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token) => throw new NotImplementedException();

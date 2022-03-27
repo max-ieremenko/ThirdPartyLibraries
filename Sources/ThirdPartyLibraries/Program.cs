@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
-using Unity;
 
 namespace ThirdPartyLibraries
 {
@@ -14,66 +14,102 @@ namespace ThirdPartyLibraries
         private const int ExitCodeInvalidCommandLine = 1;
         private const int ExitCodeExecutionErrors = 2;
         private const int ExitCodeCommandError = 3;
+        private const int ExitCodeTerminated = 4;
 
-        public static async Task<int> Main(string[] args)
+        public static Task<int> Main(string[] args)
         {
             var logger = new ConsoleLogger();
-            var container = new UnityContainer();
 
+            CommandLine commandLine;
             try
             {
-                ConfigureContainer(container, logger);
+                commandLine = CommandLine.Parse(args);
             }
             catch (Exception ex)
             {
-                logger.Error("Application initialization error: {0}".FormatWith(ex.Message));
-                return ExitCodeExecutionErrors;
+                return Task.FromResult(HandleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine));
+            }
+
+            return RunAsync(commandLine, logger, CancellationToken.None);
+        }
+
+        private static async Task<int> RunAsync(CommandLine commandLine, ILogger logger, CancellationToken token)
+        {
+            ICommand command;
+            string repository;
+            try
+            {
+                command = CommandFactory.Create(commandLine, out repository);
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine);
+            }
+
+            ServiceProvider serviceProvider;
+            try
+            {
+                var services = new ServiceCollection();
+                if (!string.IsNullOrEmpty(repository))
+                {
+                    await AppModule.AddConfigurationAsync(services, repository, token).ConfigureAwait(false);
+                }
+
+                ConfigureServices(services, logger);
+                serviceProvider = services.BuildServiceProvider(true);
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex, "Application initialization error: {0}", logger, ExitCodeExecutionErrors);
             }
 
             bool commandResult;
-            using (container)
+            await using (serviceProvider.ConfigureAwait(false))
             {
-                ICommand command;
                 try
                 {
-                    command = await ResolveCommandAsync(container, args, CancellationToken.None);
+                    commandResult = await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    logger.Error("Invalid command line: {0}".FormatWith(ex.Message));
-                    return ExitCodeInvalidCommandLine;
-                }
-
-                try
-                {
-                    commandResult = await command.ExecuteAsync(CancellationToken.None);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.Message);
-                    logger.Info(ex.ToString());
-                    return ExitCodeExecutionErrors;
+                    return HandleError(ex, null, logger, ExitCodeExecutionErrors);
                 }
             }
 
             return commandResult ? ExitCodeOk : ExitCodeCommandError;
         }
 
-        private static Task<ICommand> ResolveCommandAsync(IUnityContainer container, string[] args, CancellationToken token)
+        private static int HandleError(Exception ex, string messageFormat, ILogger logger, int defaultExistCode)
         {
-            var commandLine = CommandLine.Parse(args);
-            return container.Resolve<CommandFactory>().CreateAsync(commandLine, token);
+            if (ex is OperationCanceledException)
+            {
+                logger.Error("Execution has been canceled by user.");
+                return ExitCodeTerminated;
+            }
+
+            if (messageFormat == null)
+            {
+                logger.Error(ex.Message);
+                logger.Info(ex.ToString());
+            }
+            else
+            {
+                logger.Error(messageFormat.FormatWith(ex.Message));
+            }
+
+            return defaultExistCode;
         }
 
-        private static void ConfigureContainer(IUnityContainer container, ILogger logger)
+        private static void ConfigureServices(IServiceCollection services, ILogger logger)
         {
-            container.RegisterInstance(logger);
+            services.AddSingleton(logger);
 
-            Suite.AppModule.ConfigureContainer(container);
-            NuGet.AppModule.ConfigureContainer(container);
-            Npm.AppModule.ConfigureContainer(container);
-            GitHub.AppModule.ConfigureContainer(container);
-            Generic.AppModule.ConfigureContainer(container);
+            AppModule.ConfigureServices(services);
+            Suite.AppModule.ConfigureServices(services);
+            NuGet.AppModule.ConfigureServices(services);
+            Npm.AppModule.ConfigureServices(services);
+            GitHub.AppModule.ConfigureServices(services);
+            Generic.AppModule.ConfigureServices(services);
         }
     }
 }

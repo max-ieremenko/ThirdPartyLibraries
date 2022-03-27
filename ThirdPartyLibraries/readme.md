@@ -3,12 +3,12 @@ Licenses
 	
 |Code|Requires approval|Requires third party notices|Packages count|
 |----------|:----|:----|:----|
-|[Apache-2.0](licenses/apache-2.0)|no|no|4|
+|[Apache-2.0](licenses/apache-2.0)|no|no|3|
 |[BSD-2-Clause](licenses/bsd-2-clause)|no|no|1|
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
 |[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
-|[MIT](licenses/mit)|no|no|32|
+|[MIT](licenses/mit)|no|no|33|
 |[ms-net-library](licenses/ms-net-library)|no|no|15|
 
 
@@ -18,13 +18,13 @@ Packages 54
 
 |Name|Version|Source|License|Used by|
 |----------|:----|:----|:----|:----|
-|[bootstrap](packages/npmjs.com/bootstrap/4.6.0)|4.6.0|[npmjs.com](https://www.npmjs.com/package/bootstrap/v/4.6.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[bootstrap](packages/npmjs.com/bootstrap/4.4.1)|4.4.1|[npmjs.com](https://www.npmjs.com/package/bootstrap/v/4.4.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Castle.Core](packages/nuget.org/castle.core/4.4.1)|4.4.1|[nuget.org](https://www.nuget.org/packages/Castle.Core/4.4.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[DiffEngine](packages/nuget.org/diffengine/6.4.9)|6.4.9|[nuget.org](https://www.nuget.org/packages/DiffEngine/6.4.9)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[DotLiquid](packages/nuget.org/dotliquid/2.2.595)|2.2.595|[nuget.org](https://www.nuget.org/packages/DotLiquid/2.2.595)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[EmptyFiles](packages/nuget.org/emptyfiles/2.3.3)|2.3.3|[nuget.org](https://www.nuget.org/packages/EmptyFiles/2.3.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](http://www.famfamfam.com/)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
-|[jasmine](packages/npmjs.com/jasmine/3.9.0)|3.9.0|[npmjs.com](https://www.npmjs.com/package/jasmine/v/3.9.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[jasmine](packages/npmjs.com/jasmine/3.5.0)|3.5.0|[npmjs.com](https://www.npmjs.com/package/jasmine/v/3.5.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[JetBrains.Annotations](packages/nuget.org/jetbrains.annotations/2021.3.0)|2021.3.0|[nuget.org](https://www.nuget.org/packages/JetBrains.Annotations/2021.3.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/17.1.0)|17.1.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/17.1.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.Extensions.Configuration](packages/nuget.org/microsoft.extensions.configuration/6.0.1)|6.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration/6.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
@@ -34,6 +34,8 @@ Packages 54
 |[Microsoft.Extensions.Configuration.FileExtensions](packages/nuget.org/microsoft.extensions.configuration.fileextensions/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Configuration.Json](packages/nuget.org/microsoft.extensions.configuration.json/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Configuration.UserSecrets](packages/nuget.org/microsoft.extensions.configuration.usersecrets/6.0.1)|6.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/6.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.DependencyInjection](packages/nuget.org/microsoft.extensions.dependencyinjection/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.DependencyInjection.Abstractions](packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.FileProviders.Abstractions](packages/nuget.org/microsoft.extensions.fileproviders.abstractions/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.FileProviders.Physical](packages/nuget.org/microsoft.extensions.fileproviders.physical/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.FileSystemGlobbing](packages/nuget.org/microsoft.extensions.filesystemglobbing/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
@@ -63,7 +65,6 @@ Packages 54
 |[System.ObjectModel](packages/nuget.org/system.objectmodel/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.ObjectModel/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
 |[System.Reflection.Metadata](packages/nuget.org/system.reflection.metadata/1.6.0)|1.6.0|[nuget.org](https://www.nuget.org/packages/System.Reflection.Metadata/1.6.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[System.Reflection.TypeExtensions](packages/nuget.org/system.reflection.typeextensions/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.Reflection.TypeExtensions/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
-|[System.Runtime.CompilerServices.Unsafe](packages/nuget.org/system.runtime.compilerservices.unsafe/4.5.2)|4.5.2|[nuget.org](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/4.5.2)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Runtime.CompilerServices.Unsafe](packages/nuget.org/system.runtime.compilerservices.unsafe/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Text.Encodings.Web](packages/nuget.org/system.text.encodings.web/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/System.Text.Encodings.Web/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Text.Json](packages/nuget.org/system.text.json/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/System.Text.Json/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
@@ -71,6 +72,5 @@ Packages 54
 |[System.Threading](packages/nuget.org/system.threading/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.Threading/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
 |[System.Xml.ReaderWriter](packages/nuget.org/system.xml.readerwriter/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.Xml.ReaderWriter/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
 |[System.Xml.XmlDocument](packages/nuget.org/system.xml.xmldocument/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.Xml.XmlDocument/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries internal|
-|[Unity](packages/nuget.org/unity/5.11.10)|5.11.10|[nuget.org](https://www.nuget.org/packages/Unity/5.11.10)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 
 *This page was generated by a tool.*

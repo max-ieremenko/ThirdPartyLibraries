@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Repository;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
@@ -17,12 +17,12 @@ namespace ThirdPartyLibraries.Suite.Internal
         [SetUp]
         public void BeforeEachTest()
         {
-            var container = new UnityContainer();
+            var services = new ServiceCollection();
 
             _referenceProvider = new Mock<ISourceCodeReferenceProvider>(MockBehavior.Strict);
-            container.RegisterInstance("some provider", _referenceProvider.Object);
+            services.AddKeyedTransient<ISourceCodeReferenceProvider, ISourceCodeReferenceProvider>("some provider", _ => _referenceProvider.Object);
 
-            _sut = new SourceCodeParser(container);
+            _sut = new SourceCodeParser(services.BuildServiceProvider());
         }
 
         [Test]

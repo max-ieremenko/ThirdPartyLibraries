@@ -1,25 +1,28 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
-using Unity;
 
 namespace ThirdPartyLibraries
 {
     internal sealed class HelpCommand : ICommand
     {
-        [Dependency]
-        public ILogger Logger { get; set; }
+        public HelpCommand(string command)
+        {
+            Command = command;
+        }
 
-        public string Command { get; set; }
+        public string Command { get; internal set; }
 
-        public ValueTask<bool> ExecuteAsync(CancellationToken token)
+        public ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var suffix = Command.IsNullOrEmpty() ? "default" : Command;
             var fileName = "CommandLine.{0}.txt".FormatWith(suffix);
-            Logger.Info(LoadContent(fileName));
+            serviceProvider.GetRequiredService<ILogger>().Info(LoadContent(fileName));
 
             return new ValueTask<bool>(false);
         }

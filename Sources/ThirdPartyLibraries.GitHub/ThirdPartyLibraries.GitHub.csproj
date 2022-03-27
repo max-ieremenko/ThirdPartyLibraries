@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
-    <PackageReference Include="Unity" Version="$(UnityVersion)" />
   </ItemGroup>
 
   <ItemGroup>

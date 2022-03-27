@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29324.140
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Shared", "ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj", "{11424A28-C7AE-417C-A21F-25AA13B2C216}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Npm", "ThirdPartyLibraries.Npm\ThirdPartyLibraries.Npm.csproj", "{A9A7EBAF-066D-4C5F-A376-514809DAB998}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Npm.Test", "ThirdPartyLibraries.Npm.Test\ThirdPartyLibraries.Npm.Test.csproj", "{352FC256-EE84-4A1B-92D8-E8A3F8993B69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Shared.Test", "ThirdPartyLibraries.Shared.Test\ThirdPartyLibraries.Shared.Test.csproj", "{C8A4B45A-EFA6-4552-B892-3A61FBA68039}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,10 @@ Global
 		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{352FC256-EE84-4A1B-92D8-E8A3F8993B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A4B45A-EFA6-4552-B892-3A61FBA68039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A4B45A-EFA6-4552-B892-3A61FBA68039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A4B45A-EFA6-4552-B892-3A61FBA68039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A4B45A-EFA6-4552-B892-3A61FBA68039}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{264B826E-546E-40BD-BFA5-2993FFA8EB29} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{6D5685B6-7C73-45AA-ACA1-45B384121E51} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{352FC256-EE84-4A1B-92D8-E8A3F8993B69} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
+		{C8A4B45A-EFA6-4552-B892-3A61FBA68039} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {373FE374-9ABB-4005-8104-E0EF52D12B1E}

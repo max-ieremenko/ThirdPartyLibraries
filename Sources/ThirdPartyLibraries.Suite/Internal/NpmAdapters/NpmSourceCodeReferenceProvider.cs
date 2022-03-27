@@ -6,7 +6,6 @@ using ThirdPartyLibraries.Npm;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 {
@@ -14,14 +13,18 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
     {
         private string _npmRoot;
 
-        [Dependency]
-        public INpmApi Api { get; set; }
+        public NpmSourceCodeReferenceProvider(INpmApi api, NpmConfiguration configuration, ILogger logger)
+        {
+            Api = api;
+            Configuration = configuration;
+            Logger = logger;
+        }
 
-        [Dependency]
-        public NpmConfiguration Configuration { get; set; }
+        public INpmApi Api { get; }
 
-        [Dependency]
-        public ILogger Logger { get; set; }
+        public NpmConfiguration Configuration { get; }
+
+        public ILogger Logger { get; }
 
         public IEnumerable<LibraryReference> GetReferencesFrom(string path)
         {

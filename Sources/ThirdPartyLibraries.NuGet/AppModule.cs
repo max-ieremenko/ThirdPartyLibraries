@@ -1,16 +1,15 @@
-﻿using ThirdPartyLibraries.Shared;
-using Unity;
-using Unity.Lifetime;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet
 {
     public static class AppModule
     {
-        public static void ConfigureContainer(IUnityContainer container)
+        public static void ConfigureServices(IServiceCollection services)
         {
-            container.AssertNotNull(nameof(container));
+            services.AssertNotNull(nameof(services));
 
-            container.RegisterType<INuGetApi, NuGetApi>(new TransientLifetimeManager());
+            services.AddTransient<INuGetApi, NuGetApi>();
         }
     }
 }
