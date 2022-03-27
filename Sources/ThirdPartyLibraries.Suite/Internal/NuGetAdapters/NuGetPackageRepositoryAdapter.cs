@@ -3,14 +3,17 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.NuGet;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 {
     internal sealed class NuGetPackageRepositoryAdapter : PackageRepositoryAdapterBase
     {
-        [Dependency]
-        public INuGetApi Api { get; set; }
+        public NuGetPackageRepositoryAdapter(INuGetApi api)
+        {
+            Api = api;
+        }
+
+        public INuGetApi Api { get; }
 
         protected override async Task AppendSpecAttributesAsync(LibraryId id, Package package, CancellationToken token)
         {

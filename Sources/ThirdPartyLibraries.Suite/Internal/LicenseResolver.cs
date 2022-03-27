@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Generic;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
     internal sealed class LicenseResolver : ILicenseResolver
     {
-        public LicenseResolver(IUnityContainer container)
+        public LicenseResolver(IServiceProvider serviceProvider)
         {
-            container.AssertNotNull(nameof(container));
+            serviceProvider.AssertNotNull(nameof(serviceProvider));
 
-            Container = container;
-            Cache = container.Resolve<ILicenseCache>();
+            ServiceProvider = serviceProvider;
+            Cache = serviceProvider.GetRequiredService<ILicenseCache>();
         }
 
-        public IUnityContainer Container { get; }
+        public IServiceProvider ServiceProvider { get; }
 
         public ILicenseCache Cache { get; }
 
@@ -26,7 +26,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             url.AssertNotNull(nameof(url));
 
             // check static
-            var code = await Container.Resolve<IStaticLicenseSource>().ResolveLicenseCodeAsync(url, token);
+            var code = await ServiceProvider.GetRequiredService<IStaticLicenseSource>().ResolveLicenseCodeAsync(url, token);
             if (!code.IsNullOrEmpty())
             {
                 return new LicenseInfo
@@ -54,7 +54,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             code.AssertNotNull(nameof(code));
 
             // check static
-            var license = await Container.Resolve<IStaticLicenseSource>().DownloadLicenseByCodeAsync(code, token);
+            var license = await ServiceProvider.GetRequiredService<IStaticLicenseSource>().DownloadLicenseByCodeAsync(code, token);
             if (license != null)
             {
                 return Convert(license);
@@ -93,9 +93,7 @@ namespace ThirdPartyLibraries.Suite.Internal
         {
             // check by code
             var name = code.ToUpperInvariant();
-            var source = Container.IsRegistered<IFullLicenseSource>(name)
-                ? Container.Resolve<IFullLicenseSource>(name)
-                : Container.Resolve<IFullLicenseSource>();
+            var source = ServiceProvider.GetKeyedService<IFullLicenseSource>(name) ?? ServiceProvider.GetRequiredService<IStaticLicenseSource>();
 
             var license = await source.DownloadLicenseByCodeAsync(code, token);
             return Convert(license);
@@ -105,17 +103,20 @@ namespace ThirdPartyLibraries.Suite.Internal
         {
             // check by host
             var host = new Uri(url).Host.ToLowerInvariant();
-            if (Container.IsRegistered<ILicenseSourceByUrl>(host))
+            
+            var licenseSourceByUrl = ServiceProvider.GetKeyedService<ILicenseSourceByUrl>(host);
+            if (licenseSourceByUrl != null)
             {
-                return await Container.Resolve<ILicenseSourceByUrl>(host).DownloadByUrlAsync(url, token);
+                return await licenseSourceByUrl.DownloadByUrlAsync(url, token);
             }
 
-            if (!Container.IsRegistered<ILicenseCodeSource>(host))
+            var licenseCodeSource = ServiceProvider.GetKeyedService<ILicenseCodeSource>(host);
+            if (licenseCodeSource == null)
             {
                 return null;
             }
 
-            var code = await Container.Resolve<ILicenseCodeSource>(host).ResolveLicenseCodeAsync(url, token);
+            var code = await licenseCodeSource.ResolveLicenseCodeAsync(url, token);
 
             if (code.IsNullOrEmpty())
             {

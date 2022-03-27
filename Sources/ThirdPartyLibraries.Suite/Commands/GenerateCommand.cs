@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
@@ -15,27 +16,14 @@ namespace ThirdPartyLibraries.Suite.Commands
     {
         internal const string OutputFileName = "ThirdPartyNotices.txt";
 
-        public GenerateCommand(IUnityContainer container, ILogger logger)
-        {
-            container.AssertNotNull(nameof(container));
-            logger.AssertNotNull(nameof(logger));
-
-            Container = container;
-            Logger = logger;
-        }
-
-        public IUnityContainer Container { get; }
-
-        public ILogger Logger { get; }
-
         public IList<string> AppNames { get; } = new List<string>();
         
         public string To { get; set; }
 
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
+        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var repository = Container.Resolve<IPackageRepository>();
-            var state = new GenerateCommandState(repository, To, Logger);
+            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+            var state = new GenerateCommandState(repository, To, serviceProvider.GetRequiredService<ILogger>());
             var packages = await LoadAllPackagesNoticesAsync(repository, token);
 
             var rootContext = new ThirdPartyNoticesContext();

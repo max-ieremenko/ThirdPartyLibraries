@@ -3,38 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class ValidateCommand : ICommand
     {
-        public ValidateCommand(IUnityContainer container, ILogger logger)
-        {
-            container.AssertNotNull(nameof(container));
-            logger.AssertNotNull(nameof(logger));
-
-            Container = container;
-            Logger = logger;
-        }
-
-        public IUnityContainer Container { get; }
-
-        public ILogger Logger { get; }
-
         public string AppName { get; set; }
 
         public IList<string> Sources { get; } = new List<string>();
 
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
+        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var state = new ValidateCommandState(Container.Resolve<IPackageRepository>(), AppName);
+            var logger = serviceProvider.GetRequiredService<ILogger>();
+            var state = new ValidateCommandState(serviceProvider.GetRequiredService<IPackageRepository>(), AppName);
             await state.InitializeAsync(token);
 
-            var issues = GetIssues(state)
+            var issues = GetIssues(serviceProvider.GetRequiredService<ISourceCodeParser>(), state)
                 .GroupBy(i => i.Issue, i => i.Id, StringComparer.OrdinalIgnoreCase)
                 .OrderBy(i => i.Key);
 
@@ -43,12 +31,12 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 hasIssues = true;
 
-                Logger.Error("Following libraries {0}:".FormatWith(issue.Key));
-                using (Logger.Indent())
+                logger.Error("Following libraries {0}:".FormatWith(issue.Key));
+                using (logger.Indent())
                 {
                     foreach (var id in issue)
                     {
-                        Logger.Error("{0} {1} from {2}".FormatWith(id.Name, id.Version, id.SourceCode));
+                        logger.Error("{0} {1} from {2}".FormatWith(id.Name, id.Version, id.SourceCode));
                     }
                 }
             }
@@ -56,9 +44,9 @@ namespace ThirdPartyLibraries.Suite.Commands
             return !hasIssues;
         }
 
-        private IEnumerable<(LibraryId Id, string Issue)> GetIssues(ValidateCommandState state)
+        private IEnumerable<(LibraryId Id, string Issue)> GetIssues(ISourceCodeParser parser, ValidateCommandState state)
         {
-            var references = Container.Resolve<ISourceCodeParser>().GetReferences(Sources);
+            var references = parser.GetReferences(Sources);
 
             var messageNotAssigned = "are not assigned to {0}".FormatWith(AppName);
             var messageReferencesNotFound = "are assigned to {0}, but references not found in the sources".FormatWith(AppName);

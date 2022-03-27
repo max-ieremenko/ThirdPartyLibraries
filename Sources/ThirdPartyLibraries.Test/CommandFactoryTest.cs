@@ -1,45 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
-using Moq;
 using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Configuration;
-using ThirdPartyLibraries.Repository;
-using ThirdPartyLibraries.Shared;
-using ThirdPartyLibraries.Suite;
 using ThirdPartyLibraries.Suite.Commands;
-using Unity;
 
 namespace ThirdPartyLibraries
 {
     [TestFixture]
     public class CommandFactoryTest
     {
-        private IUnityContainer _container;
         private CommandLine _line;
-        private CommandFactory _sut;
 
         [SetUp]
         public void BeforeEachTest()
         {
-            _container = new UnityContainer();
             _line = new CommandLine();
-
-            var logger = new Mock<ILogger>(MockBehavior.Strict);
-            _container.RegisterInstance(logger.Object);
-
-            _sut = new CommandFactory { Container = _container };
         }
 
         [Test]
-        public async Task EmptyCommandLine()
+        public void EmptyCommandLine()
         {
-            var actual = await _sut.CreateAsync(_line, CancellationToken.None);
+            var actual = CommandFactory.Create(_line, out var repository);
 
+            repository.ShouldBeNull();
             var help = actual.ShouldBeOfType<HelpCommand>();
             help.Command.ShouldBeNull();
         }
@@ -49,24 +34,25 @@ namespace ThirdPartyLibraries
         {
             _line.Command = "unknown command";
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(() => _sut.CreateAsync(_line, CancellationToken.None));
+            var ex = Assert.Throws<InvalidOperationException>(() => CommandFactory.Create(_line, out _));
 
             ex.Message.ShouldContain("unknown command");
         }
 
         [Test]
-        public async Task HelpForUpdateCommand()
+        public void HelpForUpdateCommand()
         {
             _line.Command = CommandFactory.CommandUpdate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionHelp));
 
-            var help = (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<HelpCommand>();
+            var help = CommandFactory.Create(_line, out var repository).ShouldBeOfType<HelpCommand>();
 
+            repository.ShouldBeNull();
             help.Command.ShouldBe(CommandFactory.CommandUpdate);
         }
 
         [Test]
-        public async Task CreateUpdateCommand()
+        public void CreateUpdateCommand()
         {
             _line.Command = CommandFactory.CommandUpdate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name"));
@@ -78,7 +64,7 @@ namespace ThirdPartyLibraries
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionGitHubToken, "token-value"));
 
-            var chain = (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<CommandChain>();
+            var chain = CommandFactory.Create(_line, out var repository).ShouldBeOfType<CommandChain>();
 
             chain.Chain.Length.ShouldBe(2);
 
@@ -90,26 +76,22 @@ namespace ThirdPartyLibraries
             Path.IsPathRooted(command.Sources[1]).ShouldBeTrue();
             command.Sources[1].ShouldEndWith("folder2");
 
-            ValidateStorage(@"\repository");
-
-            var section = _container.Resolve<IConfigurationManager>().GetSection<Dictionary<string, string>>("github.com");
-            section.Keys.ShouldContain("personalAccessToken");
-            section["personalAccessToken"].ShouldBe("token-value");
+            repository.ShouldBe("repository");
         }
 
         [Test]
-        public async Task CreateRefreshCommand()
+        public void CreateRefreshCommand()
         {
             _line.Command = CommandFactory.CommandRefresh;
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
 
-            (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<RefreshCommand>();
+            CommandFactory.Create(_line, out var repository).ShouldBeOfType<RefreshCommand>();
 
-            ValidateStorage(@"\repository");
+            repository.ShouldBe("repository");
         }
 
         [Test]
-        public async Task CreateValidateCommand()
+        public void CreateValidateCommand()
         {
             _line.Command = CommandFactory.CommandValidate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name"));
@@ -120,7 +102,7 @@ namespace ThirdPartyLibraries
             _line.Options.Add(new CommandOption(CommandFactory.OptionSource, "folder2"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
 
-            var command = (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<ValidateCommand>();
+            var command = CommandFactory.Create(_line, out var repository).ShouldBeOfType<ValidateCommand>();
 
             command.AppName.ShouldBe("app name");
 
@@ -129,11 +111,11 @@ namespace ThirdPartyLibraries
             Path.IsPathRooted(command.Sources[1]).ShouldBeTrue();
             command.Sources[1].ShouldEndWith("folder2");
 
-            ValidateStorage(@"\repository");
+            repository.ShouldBe("repository");
         }
 
         [Test]
-        public async Task CreateGenerateCommand()
+        public void CreateGenerateCommand()
         {
             _line.Command = CommandFactory.CommandGenerate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name 1"));
@@ -143,22 +125,12 @@ namespace ThirdPartyLibraries
             var to = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
             _line.Options.Add(new CommandOption(CommandFactory.OptionTo, to));
 
-            var command = (await _sut.CreateAsync(_line, CancellationToken.None)).ShouldBeOfType<GenerateCommand>();
+            var command = CommandFactory.Create(_line, out var repository).ShouldBeOfType<GenerateCommand>();
 
             command.AppNames.ShouldBe(new[] { "app name 1", "app name 2" });
             command.To.ShouldBe(to);
 
-            ValidateStorage(@"\repository");
-        }
-
-        private void ValidateStorage(string path)
-        {
-            _container.IsRegistered<IStorage>().ShouldBeTrue();
-            
-            var storage = _container.Resolve<IStorage>();
-
-            Path.IsPathRooted(storage.ConnectionString).ShouldBeTrue();
-            storage.ConnectionString.ShouldEndWith(path.Replace('\\', Path.DirectorySeparatorChar));
+            repository.ShouldBe("repository");
         }
     }
 }

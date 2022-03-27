@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using ThirdPartyLibraries.Generic;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
@@ -6,72 +9,72 @@ using ThirdPartyLibraries.Suite.Internal.CustomAdapters;
 using ThirdPartyLibraries.Suite.Internal.GitHubAdapters;
 using ThirdPartyLibraries.Suite.Internal.NpmAdapters;
 using ThirdPartyLibraries.Suite.Internal.NuGetAdapters;
-using Unity;
-using Unity.Lifetime;
 
 namespace ThirdPartyLibraries.Suite
 {
     public static class AppModule
     {
-        public static void ConfigureContainer(IUnityContainer container)
+        public static void ConfigureServices(IServiceCollection services)
         {
-            container.RegisterFactory<HttpClient>(_ => HttpClientExtensions.CreateHttpClient(), new TransientLifetimeManager());
+            services.AssertNotNull(nameof(services));
 
-            container.RegisterFactory<StaticLicenseConfiguration>(ResolveStaticLicenseConfiguration, new TransientLifetimeManager());
-            container.RegisterType<ISourceCodeParser, SourceCodeParser>(new TransientLifetimeManager());
-            container.RegisterType<ILicenseCache, LicenseCache>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ILicenseResolver, LicenseResolver>(new TransientLifetimeManager());
-            container.RegisterType<IPackageRepository, PackageRepository>(new TransientLifetimeManager());
+            services.AddSingleton(new Func<HttpClient>(HttpClientExtensions.CreateHttpClient));
+
+            services.AddSingleton(ResolveStaticLicenseConfiguration);
+            services.AddTransient<ISourceCodeParser, SourceCodeParser>();
+            services.AddSingleton<ILicenseCache, LicenseCache>();
+            services.AddTransient<ILicenseResolver, LicenseResolver>();
+            services.AddTransient<IPackageRepository, PackageRepository>();
 
             // nuget
-            container.RegisterFactory<NuGetConfiguration>(ResolveNuGetConfiguration, new ContainerControlledLifetimeManager());
-            container.RegisterType<ISourceCodeReferenceProvider, NuGetSourceCodeReferenceProvider>(PackageSources.NuGet, new TransientLifetimeManager());
-            container.RegisterType<IPackageResolver, NuGetPackageResolver>(PackageSources.NuGet, new TransientLifetimeManager());
-            container.RegisterType<ILicenseSourceByUrl, NuGetLicenseSource>(KnownHosts.NuGetLicense, new TransientLifetimeManager());
-            container.RegisterType<IPackageRepositoryAdapter, NuGetPackageRepositoryAdapter>(PackageSources.NuGet, new TransientLifetimeManager());
+            services.AddSingleton(ResolveNuGetConfiguration);
+            services.TryAddEnumerable(ServiceDescriptor.Transient<ISourceCodeReferenceProvider, NuGetSourceCodeReferenceProvider>());
+            services.AddKeyedTransient<IPackageResolver, NuGetPackageResolver>(PackageSources.NuGet);
+            services.AddKeyedTransient<ILicenseSourceByUrl, NuGetLicenseSource>(KnownHosts.NuGetLicense);
+            services.AddKeyedTransient<IPackageRepositoryAdapter, NuGetPackageRepositoryAdapter>(PackageSources.NuGet);
 
             // npm
-            container.RegisterFactory<NpmConfiguration>(ResolveNpmConfiguration, new ContainerControlledLifetimeManager());
-            container.RegisterType<ISourceCodeReferenceProvider, NpmSourceCodeReferenceProvider>(PackageSources.Npm, new TransientLifetimeManager());
-            container.RegisterType<IPackageRepositoryAdapter, NpmPackageRepositoryAdapter>(PackageSources.Npm, new TransientLifetimeManager());
-            container.RegisterType<IPackageResolver, NpmPackageResolver>(PackageSources.Npm, new TransientLifetimeManager());
+            services.AddSingleton(ResolveNpmConfiguration);
+            services.TryAddEnumerable(ServiceDescriptor.Transient<ISourceCodeReferenceProvider, NpmSourceCodeReferenceProvider>());
+            services.AddKeyedTransient<IPackageRepositoryAdapter, NpmPackageRepositoryAdapter>(PackageSources.Npm);
+            services.AddKeyedTransient<IPackageResolver, NpmPackageResolver>(PackageSources.Npm);
 
             // github
-            container.RegisterFactory<GitHubConfiguration>(ResolveGitHubConfiguration, new ContainerControlledLifetimeManager());
-            container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHub, new TransientLifetimeManager());
-            container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRaw, new TransientLifetimeManager());
-            container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRawUserContent, new TransientLifetimeManager());
-            container.RegisterType<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubApi, new TransientLifetimeManager());
+            services.AddSingleton(ResolveGitHubConfiguration);
+            services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHub);
+            services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRaw);
+            services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRawUserContent);
+            services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubApi);
 
             // custom
-            container.RegisterType<IPackageRepositoryAdapter, CustomPackageRepositoryAdapter>(PackageSources.Custom, new TransientLifetimeManager());
+            services.AddKeyedTransient<IPackageRepositoryAdapter, CustomPackageRepositoryAdapter>(PackageSources.Custom);
         }
 
-        private static StaticLicenseConfiguration ResolveStaticLicenseConfiguration(IUnityContainer container)
+        private static StaticLicenseConfiguration ResolveStaticLicenseConfiguration(IServiceProvider provider)
         {
-            return container
-                .Resolve<IConfigurationManager>()
+            return provider
+                .GetRequiredService<IConfigurationManager>()
                 .GetSection<StaticLicenseConfiguration>(StaticLicenseConfiguration.SectionName);
         }
 
-        private static NuGetConfiguration ResolveNuGetConfiguration(IUnityContainer container)
+        private static NuGetConfiguration ResolveNuGetConfiguration(IServiceProvider provider)
         {
-            return container
-                .Resolve<IConfigurationManager>()
+            return provider
+                .GetRequiredService<IConfigurationManager>()
                 .GetSection<NuGetConfiguration>(PackageSources.NuGet);
         }
 
-        private static NpmConfiguration ResolveNpmConfiguration(IUnityContainer container)
+        private static NpmConfiguration ResolveNpmConfiguration(IServiceProvider provider)
         {
-            return container
-                .Resolve<IConfigurationManager>()
+            return provider
+                .GetRequiredService<IConfigurationManager>()
                 .GetSection<NpmConfiguration>(PackageSources.Npm);
         }
 
-        private static GitHubConfiguration ResolveGitHubConfiguration(IUnityContainer container)
+        private static GitHubConfiguration ResolveGitHubConfiguration(IServiceProvider provider)
         {
-            return container
-                .Resolve<IConfigurationManager>()
+            return provider
+                .GetRequiredService<IConfigurationManager>()
                 .GetSection<GitHubConfiguration>(KnownHosts.GitHub);
         }
     }

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="$(UnityVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ThirdPartyLibraries.Generic\ThirdPartyLibraries.Generic.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.GitHub\ThirdPartyLibraries.GitHub.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Npm\ThirdPartyLibraries.Npm.csproj" />

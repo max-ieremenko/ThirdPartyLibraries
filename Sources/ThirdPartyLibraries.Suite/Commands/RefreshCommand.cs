@@ -1,30 +1,21 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class RefreshCommand : ICommand
     {
-        public RefreshCommand(IUnityContainer container, ILogger logger)
+        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            Container = container;
-            Logger = logger;
-        }
-
-        public IUnityContainer Container { get; }
-
-        public ILogger Logger { get; }
-     
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
-        {
-            var repository = Container.Resolve<IPackageRepository>();
+            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
             var state = new RefreshCommandState(repository);
             var packages = await repository.UpdateAllPackagesReadMeAsync(token);
 

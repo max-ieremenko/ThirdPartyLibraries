@@ -5,17 +5,21 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 {
     internal sealed class NuGetPackageResolver : PackageResolverBase
     {
-        [Dependency]
-        public NuGetConfiguration Configuration { get; set; }
+        public NuGetPackageResolver(NuGetConfiguration configuration, INuGetApi api, ILicenseResolver licenseResolver, IStorage storage)
+            : base(licenseResolver, storage)
+        {
+            Configuration = configuration;
+            Api = api;
+        }
 
-        [Dependency]
-        public INuGetApi Api { get; set; }
+        public NuGetConfiguration Configuration { get; }
+
+        public INuGetApi Api { get; }
 
         protected override bool DownloadPackageIntoRepository => Configuration.DownloadPackageIntoRepository;
 

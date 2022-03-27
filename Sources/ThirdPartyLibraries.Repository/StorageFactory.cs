@@ -8,7 +8,7 @@ namespace ThirdPartyLibraries.Repository
         {
             connectionString.AssertNotNull(nameof(connectionString));
 
-            return new FileStorage(connectionString);
+            return new FileStorage(FileTools.RootPath(connectionString));
         }
     }
 }
