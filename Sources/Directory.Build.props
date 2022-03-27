@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DefaultPackageVersion>2.1.4</DefaultPackageVersion>
+		<DefaultPackageVersion>3.0.0</DefaultPackageVersion>
 
 		<Version>$(DefaultPackageVersion)</Version>
 		<AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
