@@ -39,7 +39,7 @@ namespace ThirdPartyLibraries.Repository
                 LocalVariables = Hash.FromAnonymousObject(context)
             };
 
-            using (var writer = new StreamWriter(stream, leaveOpen: true))
+            using (var writer = new StreamWriter(stream, null, -1, true))
             {
                 template.Render(writer, templateParameters);
             }
