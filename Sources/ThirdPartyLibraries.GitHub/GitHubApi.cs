@@ -36,7 +36,7 @@ namespace ThirdPartyLibraries.GitHub
                 return null;
             }
 
-            var content = await RequestLicenseContentAsync(url, authorizationToken, token);
+            var content = await RequestLicenseContentAsync(url, authorizationToken, token).ConfigureAwait(false);
             if (content == null)
             {
                 return null;
@@ -114,7 +114,7 @@ namespace ThirdPartyLibraries.GitHub
                 .Append(window.ToString("dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture))
                 .AppendLine()
                 .AppendLine("----------------")
-                .Append(await response.Content.ReadAsStringAsync());
+                .Append(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
             return new ApiRateLimitExceededException(message.ToString(), limit, remaining, window);
         }
@@ -130,7 +130,7 @@ namespace ThirdPartyLibraries.GitHub
             JObject result;
 
             using (client)
-            using (var response = await client.GetAsync(url, token))
+            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -139,7 +139,7 @@ namespace ThirdPartyLibraries.GitHub
 
                 if (response.StatusCode == HttpStatusCode.Forbidden)
                 {
-                    var ex = await TryGetLimitInfoAsync(response);
+                    var ex = await TryGetLimitInfoAsync(response).ConfigureAwait(false);
                     if (ex != null)
                     {
                         throw ex;
@@ -148,10 +148,10 @@ namespace ThirdPartyLibraries.GitHub
 
                 if (response.StatusCode != HttpStatusCode.Unauthorized)
                 {
-                    await response.AssertStatusCodeOk();
+                    await response.AssertStatusCodeOk().ConfigureAwait(false);
                 }
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 using (var reader = new JsonTextReader(new StreamReader(stream)))
                 {
                     result = (JObject)new JsonSerializer().Deserialize(reader);

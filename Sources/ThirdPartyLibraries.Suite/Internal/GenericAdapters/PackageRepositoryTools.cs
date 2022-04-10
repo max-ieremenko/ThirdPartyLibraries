@@ -26,7 +26,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
         {
             storage.AssertNotNull(nameof(storage));
 
-            return await ReadFileAsync(storage, id, RepositoryRemarksFileName, token) ?? "no remarks";
+            return await ReadFileAsync(storage, id, RepositoryRemarksFileName, token).ConfigureAwait(false) ?? "no remarks";
         }
 
         public static Task<string> ReadThirdPartyNoticesFile(this IStorage storage, LibraryId id, CancellationToken token)
@@ -53,13 +53,13 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
         private static async Task<string> ReadFileAsync(IStorage storage, LibraryId id, string fileName, CancellationToken token)
         {
             string result = null;
-            using (var stream = await storage.OpenLibraryFileReadAsync(id, fileName, token))
+            using (var stream = await storage.OpenLibraryFileReadAsync(id, fileName, token).ConfigureAwait(false))
             {
                 if (stream != null)
                 {
                     using (var reader = new StreamReader(stream))
                     {
-                        result = await reader.ReadToEndAsync();
+                        result = await reader.ReadToEndAsync().ConfigureAwait(false);
                     }
                 }
             }
@@ -69,11 +69,11 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
         private static async Task CreateEmptyFileAsync(IStorage storage, LibraryId id, string fileName, CancellationToken token)
         {
-            using (var stream = await storage.OpenLibraryFileReadAsync(id, fileName, CancellationToken.None))
+            using (var stream = await storage.OpenLibraryFileReadAsync(id, fileName, token).ConfigureAwait(false))
             {
                 if (stream == null)
                 {
-                    await storage.WriteLibraryFileAsync(id, fileName, Array.Empty<byte>(), token);
+                    await storage.WriteLibraryFileAsync(id, fileName, Array.Empty<byte>(), token).ConfigureAwait(false);
                 }
             }
         }

@@ -10,9 +10,9 @@ namespace ThirdPartyLibraries.Npm
         
         Task<NpmPackageFile?> DownloadPackageAsync(NpmPackageId id, CancellationToken token);
 
-        Task<byte[]> ExtractPackageJsonAsync(byte[] packageContent, CancellationToken token);
+        byte[] ExtractPackageJson(byte[] packageContent);
         
-        Task<byte[]> LoadFileContentAsync(byte[] packageContent, string fileName, CancellationToken token);
+        byte[] LoadFileContent(byte[] packageContent, string fileName);
 
         string ResolveNpmRoot();
     }

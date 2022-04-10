@@ -124,7 +124,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Setup(s => s.OpenLicenseFileReadAsync("MIT", "license.txt", CancellationToken.None))
                 .ReturnsAsync(() => new MemoryStream("MIT license text".AsBytes()));
 
-            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             FileAssert.Exists(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
@@ -164,7 +164,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             };
             _packages.Add(package2);
 
-            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             FileAssert.Exists(Path.Combine(_to.Location, GenerateCommand.OutputFileName));
 
@@ -232,7 +232,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 .Setup(s => s.OpenLicenseFileReadAsync(mitLicense.Code, "license.txt", CancellationToken.None))
                 .ReturnsAsync(() => new MemoryStream("MIT license text".AsBytes()));
 
-            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "MIT-license.txt"));
             FileAssert.Exists(Path.Combine(_to.Location, "Licenses", "GPL-3.0-license.txt"));

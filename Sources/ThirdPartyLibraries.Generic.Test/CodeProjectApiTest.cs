@@ -26,7 +26,7 @@ namespace ThirdPartyLibraries.Generic
         [TestCase("https://www.codeproject.com/info/cpol10.aspx")]
         public async Task ResolveLicenseCode(string url)
         {
-            var actual = await _sut.ResolveLicenseCodeAsync(url, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(url, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe(CodeProjectApi.LicenseCode);
         }
@@ -40,7 +40,7 @@ namespace ThirdPartyLibraries.Generic
                     MediaTypeNames.Application.Zip,
                     TempFile.OpenResource(GetType(), "CodeProjectApiTest.CPOL.zip"));
 
-            var actual = await _sut.DownloadLicenseByCodeAsync(CodeProjectApi.LicenseCode, CancellationToken.None);
+            var actual = await _sut.DownloadLicenseByCodeAsync(CodeProjectApi.LicenseCode, CancellationToken.None).ConfigureAwait(false);
 
             actual.Code.ShouldBe(CodeProjectApi.LicenseCode);
             actual.FullName.ShouldNotBeNull();

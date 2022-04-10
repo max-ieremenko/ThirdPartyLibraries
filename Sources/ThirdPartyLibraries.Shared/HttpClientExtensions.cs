@@ -31,7 +31,7 @@ namespace ThirdPartyLibraries.Shared
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var error = new StringBuilder()
                     .AppendFormat("{0}: {1}", response.StatusCode, response.ReasonPhrase)
                     .AppendLine()
@@ -47,16 +47,16 @@ namespace ThirdPartyLibraries.Shared
             client.AssertNotNull(nameof(client));
             requestUri.AssertNotNull(nameof(requestUri));
 
-            using (var response = await client.GetAsync(requestUri, token))
+            using (var response = await client.GetAsync(requestUri, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return default;
                 }
 
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 using (var reader = new JsonTextReader(new StreamReader(stream)))
                 {
                     return new JsonSerializer().Deserialize<TResult>(reader);

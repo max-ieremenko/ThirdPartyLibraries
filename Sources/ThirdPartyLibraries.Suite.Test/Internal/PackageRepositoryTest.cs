@@ -58,7 +58,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var serviceProvider = _services.BuildServiceProvider();
             var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
+            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             actual.Code.ShouldBe("MIT");
@@ -103,7 +103,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var serviceProvider = _services.BuildServiceProvider();
             var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
+            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None).ConfigureAwait(false);
 
             _storage.VerifyAll();
 
@@ -142,7 +142,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var serviceProvider = _services.BuildServiceProvider();
             var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None);
+            var actual = await sut.LoadOrCreateLicenseAsync("MIT", CancellationToken.None).ConfigureAwait(false);
 
             _storage.VerifyAll();
 
@@ -177,7 +177,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var serviceProvider = _services.BuildServiceProvider();
             var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await sut.UpdateAllPackagesReadMeAsync(CancellationToken.None);
+            var actual = await sut.UpdateAllPackagesReadMeAsync(CancellationToken.None).ConfigureAwait(false);
 
             actual.Count.ShouldBe(1);
             actual[0].ShouldBe(metadata);
@@ -202,7 +202,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var serviceProvider = _services.BuildServiceProvider();
             var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None);
+            var actual = await sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe(PackageRemoveResult.Removed);
         }
@@ -227,7 +227,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var serviceProvider = _services.BuildServiceProvider();
             var sut = new PackageRepository(serviceProvider, _storage.Object);
 
-            var actual = await sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None);
+            var actual = await sut.RemoveFromApplicationAsync(libraryId, "app1", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe(PackageRemoveResult.RemovedNoRefs);
             _storage.VerifyAll();

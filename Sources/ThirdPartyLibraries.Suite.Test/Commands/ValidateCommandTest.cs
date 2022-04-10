@@ -132,7 +132,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Array.Empty<LibraryId>(),
                 false));
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeTrue();
             _loggerErrors.ShouldBeEmpty();
@@ -147,7 +147,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Array.Empty<LibraryId>(),
                 false));
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("not found in the repository"));
@@ -175,7 +175,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Array.Empty<LibraryId>(),
                 false));
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("are not assigned to " + AppName));
@@ -203,7 +203,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Array.Empty<LibraryId>(),
                 false));
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("have no license"));
@@ -232,7 +232,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Array.Empty<LibraryId>(),
                 false));
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("are not approved"));
@@ -255,7 +255,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             };
             _storagePackages.Add(package);
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("but references not found in the sources"));
@@ -286,7 +286,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             _mitLicense.RequiresApproval = true;
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("are not approved"));
@@ -317,7 +317,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             _mitLicense.RequiresThirdPartyNotices = true;
 
-            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            var actual = await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeFalse();
             _loggerErrors.ShouldContain(i => i.Contains("have no third party notices"));

@@ -39,7 +39,7 @@ namespace ThirdPartyLibraries
         [Test]
         public async Task GenericHelp()
         {
-            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             _loggerOutput.ShouldContain("<command> [options]...");
         }
@@ -53,7 +53,7 @@ namespace ThirdPartyLibraries
         {
             _sut.Command = command;
 
-            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None);
+            await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
             _loggerOutput.ShouldContain("{0} [options]...".FormatWith(command));
         }

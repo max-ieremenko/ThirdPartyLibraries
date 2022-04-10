@@ -15,7 +15,7 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
 
         public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
         {
-            var index = await Storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, CancellationToken.None);
+            var index = await Storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, token).ConfigureAwait(false);
             var package = new Package
             {
                 SourceCode = PackageSources.Custom,
@@ -29,7 +29,7 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
                 ApprovalStatus = PackageApprovalStatus.Approved
             };
 
-            package.ThirdPartyNotices = await Storage.ReadThirdPartyNoticesFile(id, token);
+            package.ThirdPartyNotices = await Storage.ReadThirdPartyNoticesFile(id, token).ConfigureAwait(false);
             return package;
         }
 

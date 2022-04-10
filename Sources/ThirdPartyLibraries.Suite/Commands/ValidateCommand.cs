@@ -20,7 +20,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         {
             var logger = serviceProvider.GetRequiredService<ILogger>();
             var state = new ValidateCommandState(serviceProvider.GetRequiredService<IPackageRepository>(), AppName);
-            await state.InitializeAsync(token);
+            await state.InitializeAsync(token).ConfigureAwait(false);
 
             var issues = GetIssues(serviceProvider.GetRequiredService<ISourceCodeParser>(), state)
                 .GroupBy(i => i.Issue, i => i.Id, StringComparer.OrdinalIgnoreCase)

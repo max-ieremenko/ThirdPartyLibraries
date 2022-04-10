@@ -21,7 +21,7 @@ namespace ThirdPartyLibraries
             {
                 token.ThrowIfCancellationRequested();
 
-                var flag = await command.ExecuteAsync(serviceProvider, token);
+                var flag = await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
                 if (!flag)
                 {
                     result = false;

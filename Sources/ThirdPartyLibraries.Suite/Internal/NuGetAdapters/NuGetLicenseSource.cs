@@ -18,7 +18,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
         {
             url.AssertNotNull(nameof(url));
 
-            var code = await NuGetApi.ResolveLicenseCodeAsync(url, token);
+            var code = await NuGetApi.ResolveLicenseCodeAsync(url, token).ConfigureAwait(false);
             if (code == null)
             {
                 return null;

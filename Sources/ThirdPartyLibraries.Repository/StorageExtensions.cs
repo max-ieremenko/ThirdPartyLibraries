@@ -22,7 +22,7 @@ namespace ThirdPartyLibraries.Repository
         {
             storage.AssertNotNull(nameof(storage));
 
-            var content = await storage.OpenLicenseFileReadAsync(licenseCode, IndexFileName, token);
+            var content = await storage.OpenLicenseFileReadAsync(licenseCode, IndexFileName, token).ConfigureAwait(false);
             using (content)
             {
                 return JsonDeserialize<LicenseIndexJson>(content);
@@ -38,7 +38,7 @@ namespace ThirdPartyLibraries.Repository
 
             try
             {
-                await storage.CreateLicenseFileAsync(model.Code, IndexFileName, content, token);
+                await storage.CreateLicenseFileAsync(model.Code, IndexFileName, content, token).ConfigureAwait(false);
             }
             catch (IOException ex)
             {
@@ -50,7 +50,7 @@ namespace ThirdPartyLibraries.Repository
         {
             storage.AssertNotNull(nameof(storage));
 
-            var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token);
+            var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
             using (content)
             {
                 return JsonDeserialize<TModel>(content);
@@ -62,7 +62,7 @@ namespace ThirdPartyLibraries.Repository
             storage.AssertNotNull(nameof(storage));
             fileName.AssertNotNull(nameof(fileName));
 
-            var content = await storage.OpenLibraryFileReadAsync(id, fileName, token);
+            var content = await storage.OpenLibraryFileReadAsync(id, fileName, token).ConfigureAwait(false);
             using (content)
             {
                 return content != null;
@@ -75,7 +75,7 @@ namespace ThirdPartyLibraries.Repository
             model.AssertNotNull(nameof(model));
 
             var content = JsonSerialize(model);
-            await storage.WriteLibraryFileAsync(id, IndexFileName, content, token);
+            await storage.WriteLibraryFileAsync(id, IndexFileName, content, token).ConfigureAwait(false);
         }
 
         public static async Task WriteLibraryReadMeAsync(this IStorage storage, LibraryId id, object context, CancellationToken token)
@@ -85,13 +85,14 @@ namespace ThirdPartyLibraries.Repository
 
             var templateFileName = LibraryReadMeTemplateFileName.FormatWith(id.SourceCode.ToLowerInvariant());
             var template = await GetOrCreateConfigurationTemplateAsync(
-                storage,
-                templateFileName,
-                () => DotLiquidTemplate.GetLibraryReadMeTemplate(id.SourceCode),
-                token);
+                    storage,
+                    templateFileName,
+                    () => DotLiquidTemplate.GetLibraryReadMeTemplate(id.SourceCode),
+                    token)
+                .ConfigureAwait(false);
 
             var readMe = DotLiquidTemplate.Render(template, context);
-            await storage.WriteLibraryFileAsync(id, ReadMeFileName, readMe, token);
+            await storage.WriteLibraryFileAsync(id, ReadMeFileName, readMe, token).ConfigureAwait(false);
         }
 
         public static async Task WriteRootReadMeAsync(this IStorage storage, RootReadMeContext context, CancellationToken token)
@@ -100,13 +101,14 @@ namespace ThirdPartyLibraries.Repository
             context.AssertNotNull(nameof(context));
 
             var template = await GetOrCreateConfigurationTemplateAsync(
-                storage,
-                ReadMeTemplateFileName,
-                DotLiquidTemplate.GetRootReadMeTemplate,
-                token);
+                    storage,
+                    ReadMeTemplateFileName,
+                    DotLiquidTemplate.GetRootReadMeTemplate,
+                    token)
+                .ConfigureAwait(false);
 
             var readMe = DotLiquidTemplate.Render(template, context);
-            await storage.WriteRootFileAsync(ReadMeFileName, readMe, token);
+            await storage.WriteRootFileAsync(ReadMeFileName, readMe, token).ConfigureAwait(false);
         }
 
         public static Task<string> GetOrCreateThirdPartyNoticesTemplateAsync(this IStorage storage, CancellationToken token)
@@ -133,24 +135,24 @@ namespace ThirdPartyLibraries.Repository
 
         private static async Task<Stream> GetOrCreateConfigurationFileAsync(IStorage storage, string fileName, Func<byte[]> getContent, CancellationToken token)
         {
-            var stream = await storage.OpenConfigurationFileReadAsync(fileName, token);
+            var stream = await storage.OpenConfigurationFileReadAsync(fileName, token).ConfigureAwait(false);
             if (stream != null)
             {
                 return stream;
             }
 
             var content = getContent();
-            await storage.CreateConfigurationFileAsync(fileName, content, token);
+            await storage.CreateConfigurationFileAsync(fileName, content, token).ConfigureAwait(false);
 
             return new MemoryStream(content);
         }
 
         private static async Task<string> GetOrCreateConfigurationTemplateAsync(IStorage storage, string fileName, Func<byte[]> getContent, CancellationToken token)
         {
-            using (var stream = await GetOrCreateConfigurationFileAsync(storage, fileName, getContent, token))
+            using (var stream = await GetOrCreateConfigurationFileAsync(storage, fileName, getContent, token).ConfigureAwait(false))
             using (var reader = new StreamReader(stream))
             {
-                return reader.ReadToEnd();
+                return await reader.ReadToEndAsync().ConfigureAwait(false);
             }
         }
 
@@ -172,7 +174,7 @@ namespace ThirdPartyLibraries.Repository
         {
             using (var stream = new MemoryStream())
             {
-                using (var writer = new StreamWriter(stream, leaveOpen: true))
+                using (var writer = new StreamWriter(stream, null, -1, true))
                 using (var jsonWriter = new JsonTextWriter(writer))
                 {
                     writer.NewLine = "\r\n";

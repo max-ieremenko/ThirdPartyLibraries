@@ -101,10 +101,10 @@ namespace ThirdPartyLibraries.Repository
                 }
             };
 
-            await _storage.Object.WriteLibraryIndexJsonAsync(id, model, CancellationToken.None);
-            var actual = await _storage.Object.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, CancellationToken.None);
+            await _storage.Object.WriteLibraryIndexJsonAsync(id, model, CancellationToken.None).ConfigureAwait(false);
+            var actual = await _storage.Object.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, CancellationToken.None).ConfigureAwait(false);
 
-            using (var stream = await _storage.Object.OpenLibraryFileReadAsync(id, StorageExtensions.IndexFileName, CancellationToken.None))
+            using (var stream = await _storage.Object.OpenLibraryFileReadAsync(id, StorageExtensions.IndexFileName, CancellationToken.None).ConfigureAwait(false))
             {
                 Console.WriteLine(new StreamReader(stream).ReadToEnd());
             }
@@ -119,12 +119,12 @@ namespace ThirdPartyLibraries.Repository
         {
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-            var actual = await _storage.Object.LibraryFileExistsAsync(id, StorageExtensions.IndexFileName, CancellationToken.None);
+            var actual = await _storage.Object.LibraryFileExistsAsync(id, StorageExtensions.IndexFileName, CancellationToken.None).ConfigureAwait(false);
             actual.ShouldBeFalse();
 
-            await _storage.Object.WriteLibraryFileAsync(id, StorageExtensions.IndexFileName, Array.Empty<byte>(), CancellationToken.None);
+            await _storage.Object.WriteLibraryFileAsync(id, StorageExtensions.IndexFileName, Array.Empty<byte>(), CancellationToken.None).ConfigureAwait(false);
 
-            actual = await _storage.Object.LibraryFileExistsAsync(id, StorageExtensions.IndexFileName, CancellationToken.None);
+            actual = await _storage.Object.LibraryFileExistsAsync(id, StorageExtensions.IndexFileName, CancellationToken.None).ConfigureAwait(false);
             actual.ShouldBeTrue();
         }
 
@@ -161,26 +161,26 @@ namespace ThirdPartyLibraries.Repository
                 }
             };
 
-            await _storage.Object.WriteRootReadMeAsync(context, CancellationToken.None);
+            await _storage.Object.WriteRootReadMeAsync(context, CancellationToken.None).ConfigureAwait(false);
 
-            var stream = await _storage.Object.OpenRootFileReadAsync(StorageExtensions.ReadMeFileName, CancellationToken.None);
-            var content = (await stream.ToArrayAsync(CancellationToken.None)).AsText();
+            var stream = await _storage.Object.OpenRootFileReadAsync(StorageExtensions.ReadMeFileName, CancellationToken.None).ConfigureAwait(false);
+            var content = (await stream.ToArrayAsync(CancellationToken.None).ConfigureAwait(false)).AsText();
             Console.WriteLine(content);
             content.ShouldContain("Licenses");
 
-            stream = await _storage.Object.OpenConfigurationFileReadAsync(StorageExtensions.ReadMeTemplateFileName, CancellationToken.None);
+            stream = await _storage.Object.OpenConfigurationFileReadAsync(StorageExtensions.ReadMeTemplateFileName, CancellationToken.None).ConfigureAwait(false);
             stream.ShouldNotBeNull();
         }
 
         [Test]
         public async Task WriteReadUseExistingTemplate()
         {
-            await _storage.Object.CreateConfigurationFileAsync(StorageExtensions.ReadMeTemplateFileName, "this is a template".AsBytes(), CancellationToken.None);
+            await _storage.Object.CreateConfigurationFileAsync(StorageExtensions.ReadMeTemplateFileName, "this is a template".AsBytes(), CancellationToken.None).ConfigureAwait(false);
             
-            await _storage.Object.WriteRootReadMeAsync(new RootReadMeContext(), CancellationToken.None);
+            await _storage.Object.WriteRootReadMeAsync(new RootReadMeContext(), CancellationToken.None).ConfigureAwait(false);
 
-            var stream = await _storage.Object.OpenRootFileReadAsync(StorageExtensions.ReadMeFileName, CancellationToken.None);
-            var content = (await stream.ToArrayAsync(CancellationToken.None)).AsText();
+            var stream = await _storage.Object.OpenRootFileReadAsync(StorageExtensions.ReadMeFileName, CancellationToken.None).ConfigureAwait(false);
+            var content = (await stream.ToArrayAsync(CancellationToken.None).ConfigureAwait(false)).AsText();
 
             content.ShouldBe("this is a template");
         }

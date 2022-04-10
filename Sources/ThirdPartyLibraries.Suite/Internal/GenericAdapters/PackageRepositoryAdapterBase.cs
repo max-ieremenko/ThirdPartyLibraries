@@ -14,7 +14,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
         public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
         {
-            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token);
+            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
 
             var package = new Package
             {
@@ -28,8 +28,8 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 package.ApprovalStatus = Enum.Parse<PackageApprovalStatus>(index.License.Status);
             }
 
-            package.Remarks = await Storage.ReadRemarksFileName(id, token);
-            package.ThirdPartyNotices = await Storage.ReadThirdPartyNoticesFile(id, token);
+            package.Remarks = await Storage.ReadRemarksFileName(id, token).ConfigureAwait(false);
+            package.ThirdPartyNotices = await Storage.ReadThirdPartyNoticesFile(id, token).ConfigureAwait(false);
 
             foreach (var license in index.Licenses)
             {
@@ -42,7 +42,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 });
             }
 
-            await AppendSpecAttributesAsync(id, package, token);
+            await AppendSpecAttributesAsync(id, package, token).ConfigureAwait(false);
             return package;
         }
 
@@ -52,7 +52,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
             package.AssertNotNull(nameof(package));
             appName.AssertNotNull(nameof(appName));
 
-            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(reference.Id, token);
+            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(reference.Id, token).ConfigureAwait(false);
 
             // licenses are updated by PackageResolver
             // only ApprovalStatus is managed by UpdateCommand
@@ -73,7 +73,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 app.Dependencies.Add(new LibraryDependency { Name = dependency.Name, Version = dependency.Version });
             }
 
-            await Storage.WriteLibraryIndexJsonAsync(reference.Id, index, token);
+            await Storage.WriteLibraryIndexJsonAsync(reference.Id, index, token).ConfigureAwait(false);
         }
 
         public async Task UpdatePackageReadMeAsync(Package package, CancellationToken token)
@@ -81,10 +81,10 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
             package.AssertNotNull(nameof(package));
 
             var id = new LibraryId(package.SourceCode, package.Name, package.Version);
-            await Storage.CreateDefaultRemarksFile(id, token);
-            await Storage.CreateDefaultThirdPartyNoticesFile(id, token);
+            await Storage.CreateDefaultRemarksFile(id, token).ConfigureAwait(false);
+            await Storage.CreateDefaultThirdPartyNoticesFile(id, token).ConfigureAwait(false);
 
-            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token);
+            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
 
             var context = new LibraryReadMeContext
             {
@@ -143,21 +143,21 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 });
             }
 
-            await Storage.WriteLibraryReadMeAsync(id, context, token);
+            await Storage.WriteLibraryReadMeAsync(id, context, token).ConfigureAwait(false);
         }
 
         public async ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token)
         {
             appName.AssertNotNull(nameof(appName));
 
-            var model = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token);
+            var model = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
             var result = PackageRemoveResult.None;
 
             var index = model.UsedBy.IndexOf(i => i.Name.EqualsIgnoreCase(appName));
             if (index >= 0)
             {
                 model.UsedBy.RemoveAt(index);
-                await Storage.WriteLibraryIndexJsonAsync(id, model, token);
+                await Storage.WriteLibraryIndexJsonAsync(id, model, token).ConfigureAwait(false);
 
                 result = model.UsedBy.Count == 0 ? PackageRemoveResult.RemovedNoRefs : PackageRemoveResult.Removed;
             }

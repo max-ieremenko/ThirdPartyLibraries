@@ -35,7 +35,7 @@ namespace ThirdPartyLibraries.Generic
                     MediaTypeNames.Application.Json,
                     TempFile.OpenResource(GetType(), "OpenSourceOrgApi.Licenses.json"));
 
-            var actual = await _sut.ResolveLicenseCodeAsync(url, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(url, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe(expected);
         }
@@ -47,7 +47,7 @@ namespace ThirdPartyLibraries.Generic
                 .When(HttpMethod.Get, "https://api.opensource.org/licenses/")
                 .Respond(HttpStatusCode.NotFound);
 
-            var actual = await _sut.ResolveLicenseCodeAsync("https://opensource.org/licenses/MIT", CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync("https://opensource.org/licenses/MIT", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeNull();
         }

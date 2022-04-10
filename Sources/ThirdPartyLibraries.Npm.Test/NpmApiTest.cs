@@ -42,7 +42,7 @@ namespace ThirdPartyLibraries.Npm
                     MediaTypeNames.Application.Octet,
                     TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.1.6.56.tgz"));
 
-            var content = await _sut.DownloadPackageAsync(package, CancellationToken.None);
+            var content = await _sut.DownloadPackageAsync(package, CancellationToken.None).ConfigureAwait(false);
 
             content.ShouldNotBeNull();
             content.Value.Name.ShouldBe("angular-1.6.55.tgz");
@@ -55,7 +55,7 @@ namespace ThirdPartyLibraries.Npm
             byte[] jsonContent;
             using (var content = TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.1.6.56.tgz"))
             {
-                jsonContent = await _sut.ExtractPackageJsonAsync(await content.ToArrayAsync(CancellationToken.None), CancellationToken.None);
+                jsonContent = _sut.ExtractPackageJson(await content.ToArrayAsync(CancellationToken.None).ConfigureAwait(false));
             }
 
             var json = _sut.ParsePackageJson(jsonContent);
@@ -78,7 +78,7 @@ namespace ThirdPartyLibraries.Npm
             byte[] file;
             using (var package = TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.1.6.56.tgz"))
             {
-                file = await _sut.LoadFileContentAsync(await package.ToArrayAsync(CancellationToken.None), "LICENSE", CancellationToken.None);
+                file = _sut.LoadFileContent(await package.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), "LICENSE");
             }
 
             file.ShouldNotBeNull();
@@ -86,7 +86,7 @@ namespace ThirdPartyLibraries.Npm
             string fileContent;
             using (var reader = new StreamReader(new MemoryStream(file)))
             {
-                fileContent = await reader.ReadToEndAsync();
+                fileContent = await reader.ReadToEndAsync().ConfigureAwait(false);
             }
 
             fileContent.ShouldContain("Copyright (c) Microsoft Corporation");

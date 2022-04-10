@@ -45,7 +45,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             var result = false;
             foreach (var code in codes)
             {
-                var license = await LoadLicenseAsync(code, token);
+                var license = await LoadLicenseAsync(code, token).ConfigureAwait(false);
                 if (license.RequiresApproval)
                 {
                     result = true;
@@ -57,7 +57,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public async Task<IList<LibraryId>> GetIdsToRemoveAsync(CancellationToken token)
         {
-            var allIds = await Repository.Storage.GetAllLibrariesAsync(token);
+            var allIds = await Repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
 
             return allIds.Where(i => !_processed.Contains(i)).ToList();
         }
@@ -69,14 +69,14 @@ namespace ThirdPartyLibraries.Suite.Commands
                 return license;
             }
 
-            license = await Repository.LoadOrCreateLicenseAsync(code, token);
+            license = await Repository.LoadOrCreateLicenseAsync(code, token).ConfigureAwait(false);
             _licenseByCode.Add(license.Code, license);
 
             if (!license.Dependencies.IsNullOrEmpty())
             {
                 foreach (var dependency in license.Dependencies)
                 {
-                    await LoadLicenseAsync(dependency, token);
+                    await LoadLicenseAsync(dependency, token).ConfigureAwait(false);
                 }
             }
 

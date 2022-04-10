@@ -59,16 +59,16 @@ namespace ThirdPartyLibraries.Generic
             string mediaType;
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(configuration.DownloadUrl, token))
+            using (var response = await client.GetAsync(configuration.DownloadUrl, token).ConfigureAwait(false))
             {
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
 
                 mediaType = response.Content.Headers.ContentType.MediaType;
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 using (var content = new MemoryStream())
                 {
-                    await stream.CopyToAsync(content, token);
+                    await stream.CopyToAsync(content, token).ConfigureAwait(false);
                     result.FileContent = content.ToArray();
                 }
             }

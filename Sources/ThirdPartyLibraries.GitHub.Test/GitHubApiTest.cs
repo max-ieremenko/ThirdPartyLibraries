@@ -36,7 +36,7 @@ namespace ThirdPartyLibraries.GitHub
                     MediaTypeNames.Application.Json,
                     TempFile.OpenResource(GetType(), "GitHubApiTest.License.Newtonsoft.Json.json"));
 
-            var actual = await _sut.LoadLicenseAsync("https://github.com/JamesNK/Newtonsoft.Json", "tokenValue", CancellationToken.None);
+            var actual = await _sut.LoadLicenseAsync("https://github.com/JamesNK/Newtonsoft.Json", "tokenValue", CancellationToken.None).ConfigureAwait(false);
 
             actual.HasValue.ShouldBeTrue();
             actual.Value.SpdxId.ShouldBe("MIT");
@@ -55,7 +55,7 @@ namespace ThirdPartyLibraries.GitHub
                     MediaTypeNames.Application.Json,
                     TempFile.OpenResource(GetType(), "GitHubApiTest.License.Shouldly.Json.json"));
 
-            var actual = await _sut.LoadLicenseAsync("https://github.com/shouldly/shouldly.git", null, CancellationToken.None);
+            var actual = await _sut.LoadLicenseAsync("https://github.com/shouldly/shouldly.git", null, CancellationToken.None).ConfigureAwait(false);
 
             actual.HasValue.ShouldBeTrue();
             actual.Value.SpdxId.ShouldBeNull();
@@ -72,7 +72,7 @@ namespace ThirdPartyLibraries.GitHub
                 .When(HttpMethod.Get, "https://api.github.com/repos/JamesNK/Newtonsoft.Json/license")
                 .Respond(HttpStatusCode.NotFound);
 
-            var actual = await _sut.LoadLicenseAsync("https://github.com/JamesNK/Newtonsoft.Json", null, CancellationToken.None);
+            var actual = await _sut.LoadLicenseAsync("https://github.com/JamesNK/Newtonsoft.Json", null, CancellationToken.None).ConfigureAwait(false);
 
             actual.HasValue.ShouldBeFalse();
         }

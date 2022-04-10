@@ -46,22 +46,22 @@ namespace ThirdPartyLibraries.Generic
             };
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync("https://www.codeproject.com/info/CPOL.zip", token))
+            using (var response = await client.GetAsync("https://www.codeproject.com/info/CPOL.zip", token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return null;
                 }
 
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 using (var zip = new ZipArchive(stream))
                 {
                     var entry = zip.Entries.Count == 1 ? zip.Entries[0] : zip.Entries.First(i => ".htm".EqualsIgnoreCase(Path.GetExtension(i.Name)));
                     using (var entryStream = entry.Open())
                     {
-                        result.FileContent = await entryStream.ToArrayAsync(token);
+                        result.FileContent = await entryStream.ToArrayAsync(token).ConfigureAwait(false);
                         result.FileName = entry.Name;
                     }
                 }
