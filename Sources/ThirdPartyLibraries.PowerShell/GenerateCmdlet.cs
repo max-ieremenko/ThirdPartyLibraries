@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.PowerShell.Internal;
 
@@ -17,17 +18,19 @@ public sealed class GenerateCmdlet : CommandCmdlet
     [Parameter(Mandatory = true, Position = 3, HelpMessage = "a path to an output folder")]
     public string To { get; set; }
 
-    protected override CommandLine CreateCommandLine()
+    protected override void ProcessRecord(CancellationToken token)
     {
-        return new CommandLine
+        var commandLine = new CommandLine
         {
-            Command = CommandFactory.CommandGenerate,
+            Command = CommandOptions.CommandGenerate,
             Options =
             {
-                new CommandOption(CommandFactory.OptionAppName, AppName),
-                new CommandOption(CommandFactory.OptionRepository, this.RootPath(Repository)),
-                new CommandOption(CommandFactory.OptionTo, this.RootPath(To))
+                new CommandOption(CommandOptions.OptionAppName, AppName),
+                new CommandOption(CommandOptions.OptionRepository, this.RootPath(Repository)),
+                new CommandOption(CommandOptions.OptionTo, this.RootPath(To))
             }
         };
+
+        ThirdPartyLibrariesProgram.Run(commandLine, this, token);
     }
 }

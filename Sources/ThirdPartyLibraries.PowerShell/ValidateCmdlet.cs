@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.PowerShell.Internal;
 
@@ -17,23 +18,23 @@ public sealed class ValidateCmdlet : CommandCmdlet
     [Parameter(Mandatory = true, Position = 3, HelpMessage = "a path to a repository folder")]
     public string Repository { get; set; }
 
-    protected override CommandLine CreateCommandLine()
+    protected override void ProcessRecord(CancellationToken token)
     {
         var commandLine = new CommandLine
         {
-            Command = CommandFactory.CommandValidate,
+            Command = CommandOptions.CommandValidate,
             Options =
             {
-                new CommandOption(CommandFactory.OptionAppName, AppName),
-                new CommandOption(CommandFactory.OptionRepository, this.RootPath(Repository))
+                new CommandOption(CommandOptions.OptionAppName, AppName),
+                new CommandOption(CommandOptions.OptionRepository, this.RootPath(Repository))
             }
         };
 
         for (var i = 0; i < Source.Length; i++)
         {
-            commandLine.Options.Add(new CommandOption(CommandFactory.OptionSource, this.RootPath(Source[i])));
+            commandLine.Options.Add(new CommandOption(CommandOptions.OptionSource, this.RootPath(Source[i])));
         }
 
-        return commandLine;
+        ThirdPartyLibrariesProgram.Run(commandLine, this, token);
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using System.Threading;
-using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.PowerShell.Internal;
 
 namespace ThirdPartyLibraries.PowerShell;
@@ -22,7 +20,7 @@ public abstract class CommandCmdlet : PSCmdlet
     {
         using (new DependencyResolver())
         {
-            RunApp();
+            ProcessRecord(_tokenSource.Token);
         }
     }
 
@@ -32,21 +30,5 @@ public abstract class CommandCmdlet : PSCmdlet
         base.StopProcessing();
     }
 
-    protected abstract CommandLine CreateCommandLine();
-
-    private void RunApp()
-    {
-        var commandLine = CreateCommandLine();
-
-        var logger = new CmdLetLogger(this);
-
-        try
-        {
-            Program.RunAsync(commandLine, logger, _tokenSource.Token).GetAwaiter().GetResult();
-        }
-        catch (Exception ex)
-        {
-            logger.Error(ex);
-        }
-    }
+    protected abstract void ProcessRecord(CancellationToken token);
 }

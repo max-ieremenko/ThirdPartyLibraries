@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.PowerShell.Internal;
 
@@ -19,28 +20,28 @@ public sealed class UpdateCmdlet : CommandCmdlet
     [Parameter(Position = 4, HelpMessage = "optional personal access token for github.com web api")]
     public string GithubPersonalAccessToken { get; set; }
 
-    protected override CommandLine CreateCommandLine()
+    protected override void ProcessRecord(CancellationToken token)
     {
         var commandLine = new CommandLine
         {
-            Command = CommandFactory.CommandUpdate,
+            Command = CommandOptions.CommandUpdate,
             Options =
             {
-                new CommandOption(CommandFactory.OptionAppName, AppName),
-                new CommandOption(CommandFactory.OptionRepository, this.RootPath(Repository))
+                new CommandOption(CommandOptions.OptionAppName, AppName),
+                new CommandOption(CommandOptions.OptionRepository, this.RootPath(Repository))
             }
         };
 
         for (var i = 0; i < Source.Length; i++)
         {
-            commandLine.Options.Add(new CommandOption(CommandFactory.OptionSource, this.RootPath(Source[i])));
+            commandLine.Options.Add(new CommandOption(CommandOptions.OptionSource, this.RootPath(Source[i])));
         }
 
         if (!string.IsNullOrEmpty(GithubPersonalAccessToken))
         {
-            commandLine.Options.Add(new CommandOption(CommandFactory.OptionGitHubToken, GithubPersonalAccessToken));
+            commandLine.Options.Add(new CommandOption(CommandOptions.OptionGitHubToken, GithubPersonalAccessToken));
         }
 
-        return commandLine;
+        ThirdPartyLibrariesProgram.Run(commandLine, this, token);
     }
 }
