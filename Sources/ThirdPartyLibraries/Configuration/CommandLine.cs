@@ -4,7 +4,7 @@ using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Configuration
 {
-    internal sealed class CommandLine
+    public sealed class CommandLine
     {
         public string Command { get; set; }
 

@@ -4,7 +4,7 @@ The repository is configured to run [CI build](https://github.com/max-ieremenko/
 
 ## Local build
 
-To run CI build locally
+build-locally.ps1 is designed to run on windows. To run CI build locally
 
 - install [InvokeBuild](https://www.powershellgallery.com/packages/InvokeBuild)
 
@@ -19,6 +19,8 @@ To run CI build locally
     ``` powershell
     PS> .\Build\step-install-dotnet.ps1
     ```
+
+- switch docker to linux containers
 
 - run build
 

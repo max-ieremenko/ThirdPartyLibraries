@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +12,11 @@ namespace ThirdPartyLibraries
 {
     internal static class AppModule
     {
-        public static async Task AddConfigurationAsync(IServiceCollection services, string repository, CancellationToken token)
+        public static async Task AddConfigurationAsync(
+            IServiceCollection services,
+            string repository,
+            Dictionary<string, string> commandLine,
+            CancellationToken token)
         {
             var storage = StorageFactory.Create(repository);
             services.AddSingleton(storage);
@@ -19,10 +24,14 @@ namespace ThirdPartyLibraries
             IConfigurationRoot configuration;
             using (var settings = await storage.GetOrCreateAppSettingsAsync(token).ConfigureAwait(false))
             {
-                configuration = new ConfigurationBuilder()
+                var builder = new ConfigurationBuilder();
+                builder.Sources.Clear();
+
+                configuration = builder
                     .AddJsonStream(settings)
-                    .AddUserSecrets(CommandFactory.UserSecretsId)
+                    .AddUserSecrets(CommandFactory.UserSecretsId, false)
                     .AddEnvironmentVariables(prefix: CommandFactory.EnvironmentVariablePrefix)
+                    .AddInMemoryCollection(commandLine)
                     .Build();
             }
 

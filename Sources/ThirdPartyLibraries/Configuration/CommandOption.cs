@@ -1,6 +1,6 @@
 ﻿namespace ThirdPartyLibraries.Configuration
 {
-    internal readonly struct CommandOption
+    public readonly struct CommandOption
     {
         public CommandOption(string name)
             : this(name, null)

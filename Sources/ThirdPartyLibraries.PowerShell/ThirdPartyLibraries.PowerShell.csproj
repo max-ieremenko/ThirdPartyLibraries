@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\pwsh</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.1" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries\ThirdPartyLibraries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ThirdPartyLibraries.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ThirdPartyLibraries.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <FilesToDelete Include="$(OutDir)JetBrains*.*" />
+      <FilesToDelete Include="$(OutDir)System.Memory.dll" />
+      <FilesToDelete Include="$(OutDir)System.Numerics.Vectors.dll" />
+      <FilesToDelete Include="$(OutDir)System.Runtime.Loader.dll" />
+      <FilesToDelete Include="$(OutDir)System.Threading.Tasks.Extensions.dll" />
+      <FilesToDelete Include="$(OutDir)System.Buffers.dll" />
+      <FilesToDelete Include="$(OutDir)System.Management.Automation.dll" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+
+</Project>
