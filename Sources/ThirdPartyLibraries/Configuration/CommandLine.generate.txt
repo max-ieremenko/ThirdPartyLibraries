@@ -11,6 +11,7 @@ exit codes:
   0 - OK
   1 - invalid command line
   2 - errors during execution
+  3 - the execution was canceled by the user
 
 example:
 > ThirdPartyLibraries generate -appName MyApp1 -appName MyApp2 -repository c:\ThirdPartyLibraries -to c:\notices
