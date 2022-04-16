@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
@@ -12,21 +13,25 @@ namespace ThirdPartyLibraries
     public class CommandFactoryTest
     {
         private CommandLine _line;
+        private Dictionary<string, string> _configuration;
 
         [SetUp]
         public void BeforeEachTest()
         {
             _line = new CommandLine();
+            _configuration = new Dictionary<string, string>();
         }
 
         [Test]
         public void EmptyCommandLine()
         {
-            var actual = CommandFactory.Create(_line, out var repository);
+            var actual = CommandFactory.Create(_line, _configuration, out var repository);
 
             repository.ShouldBeNull();
             var help = actual.ShouldBeOfType<HelpCommand>();
             help.Command.ShouldBeNull();
+
+            _configuration.ShouldBeEmpty();
         }
 
         [Test]
@@ -34,7 +39,7 @@ namespace ThirdPartyLibraries
         {
             _line.Command = "unknown command";
 
-            var ex = Assert.Throws<InvalidOperationException>(() => CommandFactory.Create(_line, out _));
+            var ex = Assert.Throws<InvalidOperationException>(() => CommandFactory.Create(_line, _configuration, out _));
 
             ex.Message.ShouldContain("unknown command");
         }
@@ -45,10 +50,12 @@ namespace ThirdPartyLibraries
             _line.Command = CommandFactory.CommandUpdate;
             _line.Options.Add(new CommandOption(CommandFactory.OptionHelp));
 
-            var help = CommandFactory.Create(_line, out var repository).ShouldBeOfType<HelpCommand>();
+            var help = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<HelpCommand>();
 
             repository.ShouldBeNull();
             help.Command.ShouldBe(CommandFactory.CommandUpdate);
+
+            _configuration.ShouldBeEmpty();
         }
 
         [Test]
@@ -64,7 +71,7 @@ namespace ThirdPartyLibraries
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionGitHubToken, "token-value"));
 
-            var chain = CommandFactory.Create(_line, out var repository).ShouldBeOfType<CommandChain>();
+            var chain = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<CommandChain>();
 
             chain.Chain.Length.ShouldBe(2);
 
@@ -77,6 +84,9 @@ namespace ThirdPartyLibraries
             command.Sources[1].ShouldEndWith("folder2");
 
             repository.ShouldBe("repository");
+
+            _configuration.Keys.ShouldBe(new[] { CommandFactory.OptionGitHubToken });
+            _configuration[CommandFactory.OptionGitHubToken].ShouldBe("token-value");
         }
 
         [Test]
@@ -85,9 +95,11 @@ namespace ThirdPartyLibraries
             _line.Command = CommandFactory.CommandRefresh;
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
 
-            CommandFactory.Create(_line, out var repository).ShouldBeOfType<RefreshCommand>();
+            CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<RefreshCommand>();
 
             repository.ShouldBe("repository");
+
+            _configuration.ShouldBeEmpty();
         }
 
         [Test]
@@ -102,7 +114,7 @@ namespace ThirdPartyLibraries
             _line.Options.Add(new CommandOption(CommandFactory.OptionSource, "folder2"));
             _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
 
-            var command = CommandFactory.Create(_line, out var repository).ShouldBeOfType<ValidateCommand>();
+            var command = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<ValidateCommand>();
 
             command.AppName.ShouldBe("app name");
 
@@ -112,6 +124,8 @@ namespace ThirdPartyLibraries
             command.Sources[1].ShouldEndWith("folder2");
 
             repository.ShouldBe("repository");
+
+            _configuration.ShouldBeEmpty();
         }
 
         [Test]
@@ -125,12 +139,14 @@ namespace ThirdPartyLibraries
             var to = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
             _line.Options.Add(new CommandOption(CommandFactory.OptionTo, to));
 
-            var command = CommandFactory.Create(_line, out var repository).ShouldBeOfType<GenerateCommand>();
+            var command = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<GenerateCommand>();
 
             command.AppNames.ShouldBe(new[] { "app name 1", "app name 2" });
             command.To.ShouldBe(to);
 
             repository.ShouldBe("repository");
+
+            _configuration.ShouldBeEmpty();
         }
     }
 }

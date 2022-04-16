@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ThirdPartyLibraries\ThirdPartyLibraries.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="..\ThirdPartyLibraries.Repository\Template\appsettings.json" Link="Configuration\ConfigurationManagerTestDomain\appsettings.json" />
+    <EmbeddedResource Include="Configuration\ConfigurationManagerTestDomain\secrets.json" />
+  </ItemGroup>
 </Project>

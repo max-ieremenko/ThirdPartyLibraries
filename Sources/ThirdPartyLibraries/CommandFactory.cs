@@ -7,24 +7,24 @@ using ThirdPartyLibraries.Suite.Commands;
 
 namespace ThirdPartyLibraries
 {
-    internal static class CommandFactory
+    public static class CommandFactory
     {
-        internal const string CommandUpdate = "update";
-        internal const string CommandRefresh = "refresh";
-        internal const string CommandValidate = "validate";
-        internal const string CommandGenerate = "generate";
+        public const string CommandUpdate = "update";
+        public const string CommandRefresh = "refresh";
+        public const string CommandValidate = "validate";
+        public const string CommandGenerate = "generate";
 
-        internal const string OptionHelp = "help";
-        internal const string OptionAppName = "appName";
-        internal const string OptionSource = "source";
-        internal const string OptionRepository = "repository";
-        internal const string OptionTo = "to";
-        internal const string OptionGitHubToken = "github.com:personalAccessToken";
+        public const string OptionHelp = "help";
+        public const string OptionAppName = "appName";
+        public const string OptionSource = "source";
+        public const string OptionRepository = "repository";
+        public const string OptionTo = "to";
+        public const string OptionGitHubToken = "github.com:personalAccessToken";
 
         internal const string UserSecretsId = "c903410c-3d05-49fe-bc8b-b95a2f4dfc69";
         internal const string EnvironmentVariablePrefix = "ThirdPartyLibraries:";
 
-        public static ICommand Create(CommandLine line, out string repository)
+        public static ICommand Create(CommandLine line, Dictionary<string, string> configuration, out string repository)
         {
             repository = null;
             if (string.IsNullOrEmpty(line.Command))
@@ -39,7 +39,7 @@ namespace ThirdPartyLibraries
                     return CreateHelp(CommandUpdate);
                 }
 
-                var update = CreateUpdateCommand(line.Options, out repository);
+                var update = CreateUpdateCommand(line.Options, configuration, out repository);
                 return new CommandChain(update, new RefreshCommand());
             }
             
@@ -86,7 +86,7 @@ namespace ThirdPartyLibraries
             return new HelpCommand(command);
         }
 
-        private static UpdateCommand CreateUpdateCommand(IList<CommandOption> options, out string repository)
+        private static UpdateCommand CreateUpdateCommand(IList<CommandOption> options, Dictionary<string, string> configuration, out string repository)
         {
             var result = new UpdateCommand();
             repository = null;
@@ -117,7 +117,7 @@ namespace ThirdPartyLibraries
                 }
                 else if (OptionGitHubToken.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
                 {
-                    Environment.SetEnvironmentVariable(EnvironmentVariablePrefix + OptionGitHubToken, option.Value, EnvironmentVariableTarget.Process);
+                    configuration.Add(OptionGitHubToken, option.Value);
                 }
             }
 
