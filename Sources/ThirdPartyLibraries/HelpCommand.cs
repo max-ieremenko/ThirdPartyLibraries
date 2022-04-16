@@ -18,13 +18,13 @@ namespace ThirdPartyLibraries
 
         public string Command { get; internal set; }
 
-        public ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var suffix = Command.IsNullOrEmpty() ? "default" : Command;
             var fileName = "CommandLine.{0}.txt".FormatWith(suffix);
             serviceProvider.GetRequiredService<ILogger>().Info(LoadContent(fileName));
 
-            return new ValueTask<bool>(false);
+            return Task.CompletedTask;
         }
 
         private static string LoadContent(string fileName)

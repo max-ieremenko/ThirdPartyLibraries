@@ -20,7 +20,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         
         public string To { get; set; }
 
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
             var state = new GenerateCommandState(repository, To, serviceProvider.GetRequiredService<ILogger>());
@@ -54,8 +54,6 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 DotLiquidTemplate.RenderTo(file, template, rootContext);
             }
-
-            return true;
         }
 
         private async Task<IList<Package>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)

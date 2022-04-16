@@ -23,14 +23,20 @@ namespace ThirdPartyLibraries.Suite.Internal
             locations.AssertNotNull(nameof(locations));
 
             var references = new List<LibraryReference>();
+            var notFound = new HashSet<LibraryId>();
 
             var parsers = ServiceProvider.GetServices<ISourceCodeReferenceProvider>();
             foreach (var parser in parsers)
             {
                 foreach (var location in locations)
                 {
-                    references.AddRange(parser.GetReferencesFrom(location));
+                    parser.AddReferencesFrom(location, references, notFound);
                 }
+            }
+
+            if (notFound.Count > 0)
+            {
+                throw new ReferenceNotFoundException(notFound.ToArray());
             }
 
             return Distinct(references);

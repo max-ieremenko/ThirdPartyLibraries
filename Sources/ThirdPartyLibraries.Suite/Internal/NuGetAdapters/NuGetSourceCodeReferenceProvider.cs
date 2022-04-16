@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ThirdPartyLibraries.NuGet;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
@@ -17,14 +16,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
         public NuGetConfiguration Configuration { get; }
 
-        public IEnumerable<LibraryReference> GetReferencesFrom(string path)
+        public void AddReferencesFrom(string path, IList<LibraryReference> references, ICollection<LibraryId> notFound)
         {
-            var result = Enumerable.Empty<LibraryReference>();
-
             if (File.Exists(path)
                 && ProjectAssetsParser.FileName.EqualsIgnoreCase(Path.GetFileName(path)))
             {
-                result = GetReferencesFromFile(path);
+                AddReferencesFromFile(path, references);
             }
 
             if (Directory.Exists(path))
@@ -32,14 +29,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 var files = Directory.GetFiles(path, ProjectAssetsParser.FileName, SearchOption.AllDirectories);
                 foreach (var file in files)
                 {
-                    result = result.Concat(GetReferencesFromFile(file));
+                    AddReferencesFromFile(file, references);
                 }
             }
-
-            return result;
         }
 
-        private IEnumerable<LibraryReference> GetReferencesFromFile(string fileName)
+        private void AddReferencesFromFile(string fileName, IList<LibraryReference> references)
         {
             var parser = ProjectAssetsParser.FromFile(fileName);
 
@@ -51,11 +46,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             foreach (var entry in GetFilteredReferences(parser, targetFrameworks))
             {
                 var isInternal = isInternalByProject || internalFilterByName.Filter(entry.Package.Name);
-                yield return new LibraryReference(
-                    new LibraryId(PackageSources.NuGet, entry.Package.Name, entry.Package.Version), 
+                var reference = new LibraryReference(
+                    new LibraryId(PackageSources.NuGet, entry.Package.Name, entry.Package.Version),
                     targetFrameworks,
                     entry.Dependencies,
                     isInternal);
+                references.Add(reference);
             }
         }
 

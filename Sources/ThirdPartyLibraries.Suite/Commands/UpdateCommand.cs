@@ -15,7 +15,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public IList<string> Sources { get; } = new List<string>();
         
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
             var state = new UpdateCommandState(repository);
@@ -25,8 +25,6 @@ namespace ThirdPartyLibraries.Suite.Commands
             var (softRemoved, hardRemoved) = await RemoveFromApplicationAsync(state, logger, token).ConfigureAwait(false);
 
             logger.Info("New {0}; updated {1}; removed {2}".FormatWith(created, updated, softRemoved + hardRemoved));
-
-            return true;
         }
 
         private async Task<(int SoftCount, int HardCount)> RemoveFromApplicationAsync(UpdateCommandState state, ILogger logger, CancellationToken token)

@@ -13,27 +13,22 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
     {
         private string _npmRoot;
 
-        public NpmSourceCodeReferenceProvider(INpmApi api, NpmConfiguration configuration, ILogger logger)
+        public NpmSourceCodeReferenceProvider(INpmApi api, NpmConfiguration configuration)
         {
             Api = api;
             Configuration = configuration;
-            Logger = logger;
         }
 
         public INpmApi Api { get; }
 
         public NpmConfiguration Configuration { get; }
 
-        public ILogger Logger { get; }
-
-        public IEnumerable<LibraryReference> GetReferencesFrom(string path)
+        public void AddReferencesFrom(string path, IList<LibraryReference> references, ICollection<LibraryId> notFound)
         {
-            var result = Enumerable.Empty<LibraryReference>();
-
             if (File.Exists(path)
                 && PackageJsonParser.FileName.EqualsIgnoreCase(Path.GetFileName(path)))
             {
-                result = GetReferencesFromFile(path);
+                AddReferencesFromFile(path, references, notFound);
             }
 
             if (Directory.Exists(path))
@@ -41,11 +36,9 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
                 var files = FindAllPackageJson(path);
                 foreach (var file in files)
                 {
-                    result = result.Concat(GetReferencesFromFile(file));
+                    AddReferencesFromFile(file, references, notFound);
                 }
             }
-
-            return result.Where(i => i != null);
         }
 
         private static IEnumerable<string> FindAllPackageJson(string path)
@@ -72,7 +65,6 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
                 if (!File.Exists(fileName))
                 {
                     // throw new FileNotFoundException("File {0} not found.".FormatWith(fileName));
-                    Logger.Error("Npm package {0}/{1} not found.".FormatWith(dependency.Name, dependency.Version));
                     return null;
                 }
             }
@@ -86,12 +78,15 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
                 isInternal);
         }
 
-        private IEnumerable<LibraryReference> GetReferencesFromFile(string fileName)
+        private void AddReferencesFromFile(
+            string fileName,
+            IList<LibraryReference> references,
+            ICollection<LibraryId> notFound)
         {
             var folderName = Path.GetFileName(Path.GetDirectoryName(fileName));
             if (new IgnoreFilter(Configuration.IgnorePackages.ByFolderName).Filter(folderName))
             {
-                yield break;
+                return;
             }
 
             var nodeModulesDirectoryName = Path.Combine(Path.GetDirectoryName(fileName), PackageJsonParser.NodeModules);
@@ -107,7 +102,15 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             {
                 if (!ignoreByName.Filter(dependency.Name))
                 {
-                    yield return ReadFromNodeModules(dependency, nodeModulesDirectoryName, false);
+                    var reference = ReadFromNodeModules(dependency, nodeModulesDirectoryName, false);
+                    if (reference == null)
+                    {
+                        notFound.Add(new LibraryId(PackageSources.Npm, dependency.Name, dependency.Version));
+                    }
+                    else
+                    {
+                        references.Add(reference);
+                    }
                 }
             }
 
@@ -115,7 +118,15 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             {
                 if (!ignoreByName.Filter(dependency.Name))
                 {
-                    yield return ReadFromNodeModules(dependency, nodeModulesDirectoryName, true);
+                    var reference = ReadFromNodeModules(dependency, nodeModulesDirectoryName, true);
+                    if (reference == null)
+                    {
+                        notFound.Add(new LibraryId(PackageSources.Npm, dependency.Name, dependency.Version));
+                    }
+                    else
+                    {
+                        references.Add(reference);
+                    }
                 }
             }
         }

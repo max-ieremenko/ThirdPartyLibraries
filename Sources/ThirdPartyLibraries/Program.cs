@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +14,7 @@ namespace ThirdPartyLibraries
         private const int ExitCodeOk = 0;
         private const int ExitCodeInvalidCommandLine = 1;
         private const int ExitCodeExecutionErrors = 2;
-        private const int ExitCodeCommandError = 3;
-        private const int ExitCodeTerminated = 4;
+        private const int ExitCodeTerminated = 3;
 
         public static Task<int> Main(string[] args)
         {
@@ -27,64 +27,80 @@ namespace ThirdPartyLibraries
             }
             catch (Exception ex)
             {
-                return Task.FromResult(HandleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine));
+                return Task.FromResult(HandleConsoleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine));
             }
 
-            return RunAsync(commandLine, logger, CancellationToken.None);
+            using (var tokenSource = new CancellationTokenSource())
+            {
+                Console.CancelKeyPress += (s, e) => tokenSource.Cancel();
+                return RunConsoleAsync(commandLine, logger, tokenSource.Token);
+            }
         }
 
-        private static async Task<int> RunAsync(CommandLine commandLine, ILogger logger, CancellationToken token)
+        public static async Task RunAsync(CommandLine commandLine, ILogger logger, CancellationToken token)
         {
+            var configuration = new Dictionary<string, string>();
+            var command = CommandFactory.Create(commandLine, configuration, out var repository);
+
+            var serviceProvider = await ConfigureServices(logger, repository, configuration, token).ConfigureAwait(false);
+
+            await using (serviceProvider.ConfigureAwait(false))
+            {
+                await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task<int> RunConsoleAsync(CommandLine commandLine, ConsoleLogger logger, CancellationToken token)
+        {
+            var configuration = new Dictionary<string, string>();
             ICommand command;
             string repository;
             try
             {
-                command = CommandFactory.Create(commandLine, out repository);
+                command = CommandFactory.Create(commandLine, configuration, out repository);
             }
             catch (Exception ex)
             {
-                return HandleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine);
+                return HandleConsoleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine);
             }
 
             ServiceProvider serviceProvider;
             try
             {
-                var services = new ServiceCollection();
-                if (!string.IsNullOrEmpty(repository))
-                {
-                    await AppModule.AddConfigurationAsync(services, repository, token).ConfigureAwait(false);
-                }
-
-                ConfigureServices(services, logger);
-                serviceProvider = services.BuildServiceProvider(true);
+                serviceProvider = await ConfigureServices(logger, repository, configuration, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                return HandleError(ex, "Application initialization error: {0}", logger, ExitCodeExecutionErrors);
+                return HandleConsoleError(ex, "Application initialization error: {0}", logger, ExitCodeExecutionErrors);
             }
 
-            bool commandResult;
             await using (serviceProvider.ConfigureAwait(false))
             {
                 try
                 {
-                    commandResult = await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
+                    await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    return HandleError(ex, null, logger, ExitCodeExecutionErrors);
+                    return HandleConsoleError(ex, null, logger, ExitCodeExecutionErrors);
                 }
             }
 
-            return commandResult ? ExitCodeOk : ExitCodeCommandError;
+            return ExitCodeOk;
         }
 
-        private static int HandleError(Exception ex, string messageFormat, ILogger logger, int defaultExistCode)
+        private static int HandleConsoleError(Exception ex, string messageFormat, ConsoleLogger logger, int defaultExistCode)
         {
             if (ex is OperationCanceledException)
             {
-                logger.Error("Execution has been canceled by user.");
+                logger.Error("The execution was canceled by the user.");
                 return ExitCodeTerminated;
+            }
+
+            if (ex is IApplicationException app)
+            {
+                logger.Error(app);
+                return defaultExistCode;
             }
 
             if (messageFormat == null)
@@ -100,8 +116,19 @@ namespace ThirdPartyLibraries
             return defaultExistCode;
         }
 
-        private static void ConfigureServices(IServiceCollection services, ILogger logger)
+        private static async Task<ServiceProvider> ConfigureServices(
+            ILogger logger,
+            string repository,
+            Dictionary<string, string> commandLine,
+            CancellationToken token)
         {
+            var services = new ServiceCollection();
+
+            if (!string.IsNullOrEmpty(repository))
+            {
+                await AppModule.AddConfigurationAsync(services, repository, commandLine, token).ConfigureAwait(false);
+            }
+
             services.AddSingleton(logger);
 
             AppModule.ConfigureServices(services);
@@ -110,6 +137,8 @@ namespace ThirdPartyLibraries
             Npm.AppModule.ConfigureServices(services);
             GitHub.AppModule.ConfigureServices(services);
             Generic.AppModule.ConfigureServices(services);
+
+            return services.BuildServiceProvider(true);
         }
     }
 }

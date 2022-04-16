@@ -13,7 +13,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class RefreshCommand : ICommand
     {
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
             var state = new RefreshCommandState(repository);
@@ -57,8 +57,6 @@ namespace ThirdPartyLibraries.Suite.Commands
             rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
 
             await repository.Storage.WriteRootReadMeAsync(rootContext, token).ConfigureAwait(false);
-
-            return true;
         }
     }
 }

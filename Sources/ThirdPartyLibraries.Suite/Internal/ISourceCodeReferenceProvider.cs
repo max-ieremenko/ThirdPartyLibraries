@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using ThirdPartyLibraries.Repository;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
     internal interface ISourceCodeReferenceProvider
     {
-        IEnumerable<LibraryReference> GetReferencesFrom(string path);
+        void AddReferencesFrom(string path, IList<LibraryReference> references, ICollection<LibraryId> notFound);
     }
 }
