@@ -3,7 +3,7 @@ Microsoft.Extensions.DependencyInjection.Abstractions [6.0.0](https://www.nuget.
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net5.0, net6.0, netcoreapp3.1
+Target frameworks: net5.0, net6.0, netcoreapp3.1, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
