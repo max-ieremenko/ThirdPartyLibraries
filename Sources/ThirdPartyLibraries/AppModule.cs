@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Suite;
 using ThirdPartyLibraries.Suite.Commands;
@@ -29,8 +30,8 @@ namespace ThirdPartyLibraries
 
                 configuration = builder
                     .AddJsonStream(settings)
-                    .AddUserSecrets(CommandFactory.UserSecretsId, false)
-                    .AddEnvironmentVariables(prefix: CommandFactory.EnvironmentVariablePrefix)
+                    .AddUserSecrets(CommandOptions.UserSecretsId, false)
+                    .AddEnvironmentVariables(prefix: CommandOptions.EnvironmentVariablePrefix)
                     .AddInMemoryCollection(commandLine)
                     .Build();
             }

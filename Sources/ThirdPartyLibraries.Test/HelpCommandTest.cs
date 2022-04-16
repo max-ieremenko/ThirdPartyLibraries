@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries
@@ -45,10 +46,10 @@ namespace ThirdPartyLibraries
         }
 
         [Test]
-        [TestCase(CommandFactory.CommandUpdate)]
-        [TestCase(CommandFactory.CommandGenerate)]
-        [TestCase(CommandFactory.CommandRefresh)]
-        [TestCase(CommandFactory.CommandValidate)]
+        [TestCase(CommandOptions.CommandUpdate)]
+        [TestCase(CommandOptions.CommandGenerate)]
+        [TestCase(CommandOptions.CommandRefresh)]
+        [TestCase(CommandOptions.CommandValidate)]
         public async Task CommandHelp(string command)
         {
             _sut.Command = command;

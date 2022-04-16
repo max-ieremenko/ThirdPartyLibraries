@@ -47,13 +47,13 @@ namespace ThirdPartyLibraries
         [Test]
         public void HelpForUpdateCommand()
         {
-            _line.Command = CommandFactory.CommandUpdate;
-            _line.Options.Add(new CommandOption(CommandFactory.OptionHelp));
+            _line.Command = CommandOptions.CommandUpdate;
+            _line.Options.Add(new CommandOption(CommandOptions.OptionHelp));
 
             var help = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<HelpCommand>();
 
             repository.ShouldBeNull();
-            help.Command.ShouldBe(CommandFactory.CommandUpdate);
+            help.Command.ShouldBe(CommandOptions.CommandUpdate);
 
             _configuration.ShouldBeEmpty();
         }
@@ -61,15 +61,15 @@ namespace ThirdPartyLibraries
         [Test]
         public void CreateUpdateCommand()
         {
-            _line.Command = CommandFactory.CommandUpdate;
-            _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name"));
+            _line.Command = CommandOptions.CommandUpdate;
+            _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name"));
 
             var source = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
-            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, source));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionSource, source));
 
-            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, "folder2"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionGitHubToken, "token-value"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionSource, "folder2"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionGitHubToken, "token-value"));
 
             var chain = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<CommandChain>();
 
@@ -85,15 +85,15 @@ namespace ThirdPartyLibraries
 
             repository.ShouldBe("repository");
 
-            _configuration.Keys.ShouldBe(new[] { CommandFactory.OptionGitHubToken });
-            _configuration[CommandFactory.OptionGitHubToken].ShouldBe("token-value");
+            _configuration.Keys.ShouldBe(new[] { CommandOptions.OptionGitHubToken });
+            _configuration[CommandOptions.OptionGitHubToken].ShouldBe("token-value");
         }
 
         [Test]
         public void CreateRefreshCommand()
         {
-            _line.Command = CommandFactory.CommandRefresh;
-            _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
+            _line.Command = CommandOptions.CommandRefresh;
+            _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
 
             CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<RefreshCommand>();
 
@@ -105,14 +105,14 @@ namespace ThirdPartyLibraries
         [Test]
         public void CreateValidateCommand()
         {
-            _line.Command = CommandFactory.CommandValidate;
-            _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name"));
+            _line.Command = CommandOptions.CommandValidate;
+            _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name"));
 
             var source = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
-            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, source));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionSource, source));
 
-            _line.Options.Add(new CommandOption(CommandFactory.OptionSource, "folder2"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionSource, "folder2"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
 
             var command = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<ValidateCommand>();
 
@@ -131,13 +131,13 @@ namespace ThirdPartyLibraries
         [Test]
         public void CreateGenerateCommand()
         {
-            _line.Command = CommandFactory.CommandGenerate;
-            _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name 1"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionAppName, "app name 2"));
-            _line.Options.Add(new CommandOption(CommandFactory.OptionRepository, "repository"));
+            _line.Command = CommandOptions.CommandGenerate;
+            _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 1"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 2"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
 
             var to = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
-            _line.Options.Add(new CommandOption(CommandFactory.OptionTo, to));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionTo, to));
 
             var command = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<GenerateCommand>();
 

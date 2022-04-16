@@ -11,7 +11,7 @@ namespace ThirdPartyLibraries.Configuration.ConfigurationManagerTestDomain
     internal sealed class MockEnvironmentVariablesConfigurationProvider : EnvironmentVariablesConfigurationProvider
     {
         public MockEnvironmentVariablesConfigurationProvider(Dictionary<string, string> variables)
-            : base(CommandFactory.EnvironmentVariablePrefix)
+            : base(CommandOptions.EnvironmentVariablePrefix)
         {
             Variables = variables;
         }

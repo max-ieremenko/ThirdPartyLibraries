@@ -38,7 +38,7 @@ namespace ThirdPartyLibraries.Configuration
         {
             var section = new SutBuilder()
                 .WithSecrets()
-                .WithEnvironmentVariable(CommandFactory.OptionGitHubToken, "environment-token")
+                .WithEnvironmentVariable(CommandOptions.OptionGitHubToken, "environment-token")
                 .Build()
                 .GetSection<GitHubConfiguration>(KnownHosts.GitHub);
 
@@ -50,8 +50,8 @@ namespace ThirdPartyLibraries.Configuration
         {
             var section = new SutBuilder()
                 .WithSecrets()
-                .WithEnvironmentVariable(CommandFactory.OptionGitHubToken, "environment-token")
-                .WithCommandLine(CommandFactory.OptionGitHubToken, "commandLine-token")
+                .WithEnvironmentVariable(CommandOptions.OptionGitHubToken, "environment-token")
+                .WithCommandLine(CommandOptions.OptionGitHubToken, "commandLine-token")
                 .Build()
                 .GetSection<GitHubConfiguration>(KnownHosts.GitHub);
 
@@ -72,7 +72,7 @@ namespace ThirdPartyLibraries.Configuration
 
             public SutBuilder WithEnvironmentVariable(string name, string value)
             {
-                _environmentVariables.Add(CommandFactory.EnvironmentVariablePrefix + name, value);
+                _environmentVariables.Add(CommandOptions.EnvironmentVariablePrefix + name, value);
                 return this;
             }
 
