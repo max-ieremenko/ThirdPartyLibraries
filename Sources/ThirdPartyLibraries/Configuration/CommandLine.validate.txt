@@ -11,7 +11,7 @@ exit codes:
   0 - OK
   1 - invalid command line
   2 - errors during execution
-  3 - validation fails
+  3 - the execution was canceled by the user
 
 example:
 > ThirdPartyLibraries validate -appName MyApp -source c:\MySolution -repository c:\ThirdPartyLibraries

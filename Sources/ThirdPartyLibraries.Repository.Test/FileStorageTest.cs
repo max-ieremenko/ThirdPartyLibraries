@@ -93,7 +93,7 @@ namespace ThirdPartyLibraries.Repository
         [Test]
         public async Task GetAllLibraries()
         {
-            var actual = await _sut.GetAllLibrariesAsync(CancellationToken.None);
+            var actual = await _sut.GetAllLibrariesAsync(CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe(
                 new[]
@@ -110,7 +110,7 @@ namespace ThirdPartyLibraries.Repository
         {
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-            var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", CancellationToken.None);
+            var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             using (actual)
@@ -125,7 +125,7 @@ namespace ThirdPartyLibraries.Repository
         {
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-            var actual = await _sut.OpenLibraryFileReadAsync(id, "package1.nuspec", CancellationToken.None);
+            var actual = await _sut.OpenLibraryFileReadAsync(id, "package1.nuspec", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeNull();
         }
@@ -135,8 +135,8 @@ namespace ThirdPartyLibraries.Repository
         {
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "1.0.0");
 
-            await _sut.WriteLibraryFileAsync(id, "readme.md", "some text".AsBytes(), CancellationToken.None);
-            var actual = await _sut.OpenLibraryFileReadAsync(id, "readme.md", CancellationToken.None);
+            await _sut.WriteLibraryFileAsync(id, "readme.md", "some text".AsBytes(), CancellationToken.None).ConfigureAwait(false);
+            var actual = await _sut.OpenLibraryFileReadAsync(id, "readme.md", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             using (actual)
@@ -150,8 +150,8 @@ namespace ThirdPartyLibraries.Repository
         {
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-            await _sut.WriteLibraryFileAsync(id, "package.nuspec", "some text".AsBytes(), CancellationToken.None);
-            var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", CancellationToken.None);
+            await _sut.WriteLibraryFileAsync(id, "package.nuspec", "some text".AsBytes(), CancellationToken.None).ConfigureAwait(false);
+            var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             using (actual)
@@ -163,7 +163,7 @@ namespace ThirdPartyLibraries.Repository
         [Test]
         public async Task LoadUnknownLicense()
         {
-            var actual = await _sut.ReadLicenseIndexJsonAsync("some code", CancellationToken.None);
+            var actual = await _sut.ReadLicenseIndexJsonAsync("some code", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeNull();
         }
@@ -192,8 +192,8 @@ namespace ThirdPartyLibraries.Repository
                 FileName = "file name.md"
             };
 
-            await _sut.CreateLicenseIndexJsonAsync(model, CancellationToken.None);
-            var actual = await _sut.ReadLicenseIndexJsonAsync(model.Code, CancellationToken.None);
+            await _sut.CreateLicenseIndexJsonAsync(model, CancellationToken.None).ConfigureAwait(false);
+            var actual = await _sut.ReadLicenseIndexJsonAsync(model.Code, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             actual.Code.ShouldBe(model.Code);
@@ -208,7 +208,7 @@ namespace ThirdPartyLibraries.Repository
             var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
             DirectoryAssert.Exists(_sut.GetPackageLocation(id));
 
-            await _sut.RemoveLibraryAsync(id, CancellationToken.None);
+            await _sut.RemoveLibraryAsync(id, CancellationToken.None).ConfigureAwait(false);
 
             DirectoryAssert.DoesNotExist(Path.GetDirectoryName(_sut.GetPackageLocation(id)));
         }
@@ -218,7 +218,7 @@ namespace ThirdPartyLibraries.Repository
         {
             var id = new LibraryId("nuget.org", "some name", "version");
 
-            await _sut.RemoveLibraryAsync(id, CancellationToken.None);
+            await _sut.RemoveLibraryAsync(id, CancellationToken.None).ConfigureAwait(false);
         }
 
         private void CopyFile(string targetName, string resourceName)

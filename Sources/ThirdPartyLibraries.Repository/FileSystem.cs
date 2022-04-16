@@ -39,7 +39,7 @@ namespace ThirdPartyLibraries.Repository
 
             using (var stream = OpenFileWrite(id, fileName))
             {
-                await stream.WriteAsync(content, 0, content.Length, token);
+                await stream.WriteAsync(content, 0, content.Length, token).ConfigureAwait(false);
             }
         }
 

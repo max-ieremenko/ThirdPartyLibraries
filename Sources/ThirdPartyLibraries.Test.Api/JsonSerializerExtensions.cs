@@ -9,7 +9,7 @@ namespace ThirdPartyLibraries
         {
             var result = new MemoryStream();
 
-            using (var writer = new StreamWriter(result, leaveOpen: true))
+            using (var writer = new StreamWriter(result, null, -1, true))
             using (var jsonWriter = new JsonTextWriter(writer))
             {
                 new JsonSerializer().Serialize(jsonWriter, content);

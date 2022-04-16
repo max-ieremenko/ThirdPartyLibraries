@@ -16,32 +16,26 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public IList<string> Sources { get; } = new List<string>();
 
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var logger = serviceProvider.GetRequiredService<ILogger>();
             var state = new ValidateCommandState(serviceProvider.GetRequiredService<IPackageRepository>(), AppName);
-            await state.InitializeAsync(token);
+            await state.InitializeAsync(token).ConfigureAwait(false);
 
             var issues = GetIssues(serviceProvider.GetRequiredService<ISourceCodeParser>(), state)
                 .GroupBy(i => i.Issue, i => i.Id, StringComparer.OrdinalIgnoreCase)
                 .OrderBy(i => i.Key);
 
-            var hasIssues = false;
+            var errors = new List<RepositoryValidationError>();
+
             foreach (var issue in issues)
             {
-                hasIssues = true;
-
-                logger.Error("Following libraries {0}:".FormatWith(issue.Key));
-                using (logger.Indent())
-                {
-                    foreach (var id in issue)
-                    {
-                        logger.Error("{0} {1} from {2}".FormatWith(id.Name, id.Version, id.SourceCode));
-                    }
-                }
+                errors.Add(new RepositoryValidationError(issue.Key, issue.ToArray()));
             }
 
-            return !hasIssues;
+            if (errors.Count > 0)
+            {
+                throw new RepositoryValidationException(errors.ToArray());
+            }
         }
 
         private IEnumerable<(LibraryId Id, string Issue)> GetIssues(ISourceCodeParser parser, ValidateCommandState state)

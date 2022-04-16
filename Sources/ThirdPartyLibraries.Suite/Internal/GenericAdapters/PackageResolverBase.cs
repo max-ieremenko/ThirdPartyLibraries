@@ -29,21 +29,21 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
         public async ValueTask<bool> DownloadAsync(LibraryId id, CancellationToken token)
         {
-            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token);
+            var index = await Storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
             var isNew = false;
 
             if (index == null)
             {
                 isNew = true;
                 index = new LibraryIndexJson();
-                await CreateNewAsync(id, index, token);
+                await CreateNewAsync(id, index, token).ConfigureAwait(false);
             }
             else
             {
-                var exists = await Storage.LibraryFileExistsAsync(id, RepositoryPackageFileName, token);
+                var exists = await Storage.LibraryFileExistsAsync(id, RepositoryPackageFileName, token).ConfigureAwait(false);
                 if (!exists && DownloadPackageIntoRepository)
                 {
-                    await GetPackageContentAsync(id, token);
+                    await GetPackageContentAsync(id, token).ConfigureAwait(false);
                 }
             }
 
@@ -54,11 +54,11 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
             {
                 foreach (var license in index.Licenses)
                 {
-                    await RefreshLicenseAsync(id, license, token);
+                    await RefreshLicenseAsync(id, license, token).ConfigureAwait(false);
                  
                     if (license.Subject.EqualsIgnoreCase(PackageLicense.SubjectPackage))
                     {
-                        await CheckPackageLicenseCodeMatchUrlAsync(id, license, token);
+                        await CheckPackageLicenseCodeMatchUrlAsync(id, license, token).ConfigureAwait(false);
                         if (license.Description.IsNullOrEmpty())
                         {
                             index.License.Code = license.Code;
@@ -69,7 +69,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
             if (isNew || indexSnapshot.HasChanges(index))
             {
-                await Storage.WriteLibraryIndexJsonAsync(id, index, token);
+                await Storage.WriteLibraryIndexJsonAsync(id, index, token).ConfigureAwait(false);
             }
 
             return isNew;
@@ -83,17 +83,17 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
         protected async Task<byte[]> GetPackageContentAsync(LibraryId id, CancellationToken token)
         {
-            using (var stream = await Storage.OpenLibraryFileReadAsync(id, RepositoryPackageFileName, token))
+            using (var stream = await Storage.OpenLibraryFileReadAsync(id, RepositoryPackageFileName, token).ConfigureAwait(false))
             {
                 if (stream != null)
                 {
-                    return await stream.ToArrayAsync(token);
+                    return await stream.ToArrayAsync(token).ConfigureAwait(false);
                 }
             }
 
             if (!_packageContentById.TryGetValue(id, out var content))
             {
-                content = await DownloadPackageContentAsync(id, token);
+                content = await DownloadPackageContentAsync(id, token).ConfigureAwait(false);
                 if (content == null)
                 {
                     throw new InvalidOperationException("Package {0} {1} not found on {2}.".FormatWith(id.Name, id.Version, id.SourceCode));
@@ -103,7 +103,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
                 if (DownloadPackageIntoRepository)
                 {
-                    await Storage.WriteLibraryFileAsync(id, RepositoryPackageFileName, content, token);
+                    await Storage.WriteLibraryFileAsync(id, RepositoryPackageFileName, content, token).ConfigureAwait(false);
                 }
             }
 
@@ -117,8 +117,8 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
             if (licenseType.EqualsIgnoreCase("file"))
             {
-                var content = await GetPackageFileContentAsync(id, licenseValue, token);
-                await Storage.WriteLibraryFileAsync(id, PackageLicense.SubjectPackage + "-" + licenseValue, content ?? Array.Empty<byte>(), token);
+                var content = await GetPackageFileContentAsync(id, licenseValue, token).ConfigureAwait(false);
+                await Storage.WriteLibraryFileAsync(id, PackageLicense.SubjectPackage + "-" + licenseValue, content ?? Array.Empty<byte>(), token).ConfigureAwait(false);
                 hasFileName = true;
             }
             else if (licenseType.EqualsIgnoreCase("expression"))
@@ -136,10 +136,10 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 var fileNames = new[] { "LICENSE.md", "LICENSE.txt", "LICENSE", "LICENSE.rtf" };
                 foreach (var fileName in fileNames)
                 {
-                    var content = await GetPackageFileContentAsync(id, fileName, token);
+                    var content = await GetPackageFileContentAsync(id, fileName, token).ConfigureAwait(false);
                     if (content != null)
                     {
-                        await Storage.WriteLibraryFileAsync(id, PackageLicense.SubjectPackage + "-" + fileName, content, token);
+                        await Storage.WriteLibraryFileAsync(id, PackageLicense.SubjectPackage + "-" + fileName, content, token).ConfigureAwait(false);
                     }
                 }
             }
@@ -155,13 +155,13 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 HRef = url
             };
 
-            var info = await LicenseResolver.ResolveByUrlAsync(url, token);
+            var info = await LicenseResolver.ResolveByUrlAsync(url, token).ConfigureAwait(false);
 
             license.Code = info?.Code;
 
             if (info?.FileContent != null)
             {
-                await Storage.WriteLibraryFileAsync(id, subject + "-" + info.FileName, info.FileContent, token);
+                await Storage.WriteLibraryFileAsync(id, subject + "-" + info.FileName, info.FileContent, token).ConfigureAwait(false);
             }
 
             return license;
@@ -174,7 +174,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 return;
             }
 
-            var test = await ResolveUrlLicenseAsync(id, license.HRef, license.Subject, token);
+            var test = await ResolveUrlLicenseAsync(id, license.HRef, license.Subject, token).ConfigureAwait(false);
 
             if (test.Code.IsNullOrEmpty())
             {
@@ -197,7 +197,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 return;
             }
 
-            var test = await ResolveUrlLicenseAsync(id, license.HRef, license.Subject, token);
+            var test = await ResolveUrlLicenseAsync(id, license.HRef, license.Subject, token).ConfigureAwait(false);
             if (test.Code.IsNullOrEmpty())
             {
                 license.Description = "License should be verified on {0}".FormatWith(license.HRef);

@@ -16,7 +16,6 @@ $destination = Join-Path $outDir "ThirdPartyLibraries.$packageVersion-net50.zip"
 $source = Join-Path $binDir "net5.0\publish\*"
 Compress-Archive -Path $source, $lic -DestinationPath $destination
 
-
 $destination = Join-Path $outDir "ThirdPartyLibraries.$packageVersion-net60.zip"
 $source = Join-Path $binDir "net6.0\publish\*"
 Compress-Archive -Path $source, $lic -DestinationPath $destination

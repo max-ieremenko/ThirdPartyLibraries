@@ -17,7 +17,7 @@ namespace ThirdPartyLibraries.Shared
 
             using (var result = new MemoryStream())
             {
-                await stream.CopyToAsync(result, token);
+                await stream.CopyToAsync(result, token).ConfigureAwait(false);
                 return result.ToArray();
             }
         }

@@ -14,21 +14,15 @@ namespace ThirdPartyLibraries
 
         public ICommand[] Chain { get; }
 
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var result = true;
-            foreach (var command in Chain)
+            for (var i = 0; i < Chain.Length; i++)
             {
+                var command = Chain[i];
                 token.ThrowIfCancellationRequested();
 
-                var flag = await command.ExecuteAsync(serviceProvider, token);
-                if (!flag)
-                {
-                    result = false;
-                }
+                await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
             }
-
-            return result;
         }
     }
 }

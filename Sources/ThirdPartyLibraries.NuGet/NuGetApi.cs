@@ -30,7 +30,7 @@ namespace ThirdPartyLibraries.NuGet
             packageContent.AssertNotNull(nameof(packageContent));
 
             var fileName = "{0}.nuspec".FormatWith(package.Name);
-            var result = await LoadFileContentAsync(packageContent, fileName, token);
+            var result = await LoadFileContentAsync(packageContent, fileName, token).ConfigureAwait(false);
 
             if (result == null)
             {
@@ -59,14 +59,14 @@ namespace ThirdPartyLibraries.NuGet
             }
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(licenseUrl, token))
+            using (var response = await client.GetAsync(licenseUrl, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return null;
                 }
 
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
             }
 
             return code;
@@ -86,18 +86,18 @@ namespace ThirdPartyLibraries.NuGet
             var url = GetPackageUri(package);
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token))
+            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return null;
                 }
 
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
-                    return await stream.ToArrayAsync(token);
+                    return await stream.ToArrayAsync(token).ConfigureAwait(false);
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace ThirdPartyLibraries.NuGet
 
                 using (var content = entry.Open())
                 {
-                    return await content.ToArrayAsync(token);
+                    return await content.ToArrayAsync(token).ConfigureAwait(false);
                 }
             }
         }

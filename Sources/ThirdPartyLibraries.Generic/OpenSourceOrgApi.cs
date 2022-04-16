@@ -29,7 +29,7 @@ namespace ThirdPartyLibraries.Generic
         {
             if (_spdxIdByCode == null)
             {
-                _spdxIdByCode = await LoadIndexAsync();
+                _spdxIdByCode = await LoadIndexAsync(token).ConfigureAwait(false);
             }
 
             if (_spdxIdByCode == null)
@@ -47,12 +47,12 @@ namespace ThirdPartyLibraries.Generic
             return new Uri(licenseUrl).AbsolutePath.Split("/", StringSplitOptions.RemoveEmptyEntries).Last();
         }
 
-        private async Task<IDictionary<string, string>> LoadIndexAsync()
+        private async Task<IDictionary<string, string>> LoadIndexAsync(CancellationToken token)
         {
             JArray content;
             using (var client = HttpClientFactory())
             {
-                content = await client.GetAsJsonAsync<JArray>(Host + "/licenses/", CancellationToken.None);
+                content = await client.GetAsJsonAsync<JArray>(Host + "/licenses/", token).ConfigureAwait(false);
             }
 
             if (content == null)

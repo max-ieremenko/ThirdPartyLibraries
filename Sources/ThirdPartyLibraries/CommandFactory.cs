@@ -5,262 +5,207 @@ using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
 using ThirdPartyLibraries.Suite.Commands;
 
-namespace ThirdPartyLibraries
+namespace ThirdPartyLibraries;
+
+internal static class CommandFactory
 {
-    internal static class CommandFactory
+    public static ICommand Create(CommandLine line, Dictionary<string, string> configuration, out string repository)
     {
-        internal const string CommandUpdate = "update";
-        internal const string CommandRefresh = "refresh";
-        internal const string CommandValidate = "validate";
-        internal const string CommandGenerate = "generate";
-
-        internal const string OptionHelp = "help";
-        internal const string OptionAppName = "appName";
-        internal const string OptionSource = "source";
-        internal const string OptionRepository = "repository";
-        internal const string OptionTo = "to";
-        internal const string OptionGitHubToken = "github.com:personalAccessToken";
-
-        internal const string UserSecretsId = "c903410c-3d05-49fe-bc8b-b95a2f4dfc69";
-        internal const string EnvironmentVariablePrefix = "ThirdPartyLibraries:";
-
-        public static ICommand Create(CommandLine line, out string repository)
+        repository = null;
+        if (string.IsNullOrEmpty(line.Command))
         {
-            repository = null;
-            if (string.IsNullOrEmpty(line.Command))
+            return CreateHelp(null);
+        }
+
+        if (CommandOptions.CommandUpdate.EqualsIgnoreCase(line.Command))
+        {
+            if (IsHelp(line.Options))
             {
-                return CreateHelp(null);
+                return CreateHelp(CommandOptions.CommandUpdate);
             }
 
-            if (CommandUpdate.EqualsIgnoreCase(line.Command))
-            {
-                if (IsHelp(line.Options))
-                {
-                    return CreateHelp(CommandUpdate);
-                }
-
-                var update = CreateUpdateCommand(line.Options, out repository);
-                return new CommandChain(update, new RefreshCommand());
-            }
+            var update = CreateUpdateCommand(line.Options, configuration, out repository);
+            return new CommandChain(update, new RefreshCommand());
+        }
             
-            if (CommandRefresh.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandRefresh.EqualsIgnoreCase(line.Command))
+        {
+            if (IsHelp(line.Options))
             {
-                if (IsHelp(line.Options))
-                {
-                    return CreateHelp(CommandRefresh);
-                }
-
-                return CreateRefreshCommand(line.Options, out repository);
+                return CreateHelp(CommandOptions.CommandRefresh);
             }
+
+            return CreateRefreshCommand(line.Options, out repository);
+        }
             
-            if (CommandValidate.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandValidate.EqualsIgnoreCase(line.Command))
+        {
+            if (IsHelp(line.Options))
             {
-                if (IsHelp(line.Options))
-                {
-                    return CreateHelp(CommandValidate);
-                }
-
-                return CreateValidateCommand(line.Options, out repository);
+                return CreateHelp(CommandOptions.CommandValidate);
             }
+
+            return CreateValidateCommand(line.Options, out repository);
+        }
             
-            if (CommandGenerate.EqualsIgnoreCase(line.Command))
-            {
-                if (IsHelp(line.Options))
-                {
-                    return CreateHelp(CommandGenerate);
-                }
-
-                return CreateGenerateCommand(line.Options, out repository);
-            }
-
-            throw new InvalidOperationException("Unknown command [{0}].".FormatWith(line.Command));
-        }
-
-        private static bool IsHelp(IList<CommandOption> options)
+        if (CommandOptions.CommandGenerate.EqualsIgnoreCase(line.Command))
         {
-            return options.Count == 0 || (options.Count == 1 && OptionHelp.Equals(options[0].Name));
+            if (IsHelp(line.Options))
+            {
+                return CreateHelp(CommandOptions.CommandGenerate);
+            }
+
+            return CreateGenerateCommand(line.Options, out repository);
         }
 
-        private static ICommand CreateHelp(string command)
+        throw new InvalidOperationException("Unknown command [{0}].".FormatWith(line.Command));
+    }
+
+    private static bool IsHelp(IList<CommandOption> options)
+    {
+        return options.Count == 0 || (options.Count == 1 && CommandOptions.OptionHelp.Equals(options[0].Name));
+    }
+
+    private static ICommand CreateHelp(string command)
+    {
+        return new HelpCommand(command);
+    }
+
+    private static UpdateCommand CreateUpdateCommand(IList<CommandOption> options, Dictionary<string, string> configuration, out string repository)
+    {
+        var result = new UpdateCommand();
+        repository = null;
+
+        for (var i = 0; i < options.Count; i++)
         {
-            return new HelpCommand(command);
+            var option = options[i];
+
+            if (option.IsSource(out var value))
+            {
+                result.Sources.Add(value);
+            }
+            else if (option.IsAppName(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionAppName, !result.AppName.IsNullOrEmpty());
+                result.AppName = value;
+            }
+            else if (option.IsRepository(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
+                repository = value;
+            }
+            else if (option.IsGitHubToken(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionGitHubToken, configuration.ContainsKey(CommandOptions.OptionGitHubToken));
+                configuration.Add(CommandOptions.OptionGitHubToken, value);
+            }
+            else
+            {
+                CommandOptions.AssertUnknown(option.Name);
+            }
         }
 
-        private static UpdateCommand CreateUpdateCommand(IList<CommandOption> options, out string repository)
+        CommandOptions.AssertMissing(CommandOptions.OptionAppName, result.AppName.IsNullOrEmpty());
+        CommandOptions.AssertMissing(CommandOptions.OptionSource, result.Sources.Count == 0);
+        CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
+
+        return result;
+    }
+
+    private static RefreshCommand CreateRefreshCommand(IList<CommandOption> options, out string repository)
+    {
+        var result = new RefreshCommand();
+        repository = null;
+
+        for (var i = 0; i < options.Count; i++)
         {
-            var result = new UpdateCommand();
-            repository = null;
+            var option = options[i];
 
-            foreach (var option in options)
+            if (option.IsRepository(out var value))
             {
-                if (OptionSource.Equals(option.Name, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(option.Value))
-                {
-                    result.Sources.Add(FileTools.RootPath(option.Value));
-                }
-                else if (OptionAppName.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!string.IsNullOrEmpty(result.AppName))
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionAppName));
-                    }
-
-                    result.AppName = option.Value;
-                }
-                else if (OptionRepository.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!repository.IsNullOrEmpty())
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionRepository));
-                    }
-
-                    repository = option.Value;
-                }
-                else if (OptionGitHubToken.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    Environment.SetEnvironmentVariable(EnvironmentVariablePrefix + OptionGitHubToken, option.Value, EnvironmentVariableTarget.Process);
-                }
+                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
+                repository = value;
             }
-
-            if (string.IsNullOrEmpty(result.AppName))
+            else
             {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionAppName));
+                CommandOptions.AssertUnknown(option.Name);
             }
-
-            if (result.Sources.Count == 0)
-            {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionSource));
-            }
-
-            if (repository.IsNullOrEmpty())
-            {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionRepository));
-            }
-
-            return result;
         }
 
-        private static RefreshCommand CreateRefreshCommand(IList<CommandOption> options, out string repository)
+        CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
+
+        return result;
+    }
+
+    private static ValidateCommand CreateValidateCommand(IList<CommandOption> options, out string repository)
+    {
+        var result = new ValidateCommand();
+        repository = null;
+
+        for (var i = 0; i < options.Count; i++)
         {
-            var result = new RefreshCommand();
-            repository = null;
+            var option = options[i];
 
-            foreach (var option in options)
+            if (option.IsSource(out var value))
             {
-                if (OptionRepository.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!repository.IsNullOrEmpty())
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionRepository));
-                    }
-
-                    repository = option.Value;
-                }
+                result.Sources.Add(value);
             }
-
-            if (repository.IsNullOrEmpty())
+            else if (option.IsAppName(out value))
             {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionRepository));
+                CommandOptions.AssertDuplicated(CommandOptions.OptionAppName, !result.AppName.IsNullOrEmpty());
+                result.AppName = value;
             }
-
-            return result;
+            else if (option.IsRepository(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
+                repository = value;
+            }
+            else
+            {
+                CommandOptions.AssertUnknown(option.Name);
+            }
         }
 
-        private static ValidateCommand CreateValidateCommand(IList<CommandOption> options, out string repository)
+        CommandOptions.AssertMissing(CommandOptions.OptionAppName, result.AppName.IsNullOrEmpty());
+        CommandOptions.AssertMissing(CommandOptions.OptionSource, result.Sources.Count == 0);
+        CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
+
+        return result;
+    }
+
+    private static GenerateCommand CreateGenerateCommand(IList<CommandOption> options, out string repository)
+    {
+        var result = new GenerateCommand();
+        repository = null;
+
+        for (var i = 0; i < options.Count; i++)
         {
-            var result = new ValidateCommand();
-            repository = null;
+            var option = options[i];
 
-            foreach (var option in options)
+            if (option.IsTo(out var value))
             {
-                if (OptionSource.Equals(option.Name, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(option.Value))
-                {
-                    result.Sources.Add(FileTools.RootPath(option.Value));
-                }
-                else if (OptionAppName.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!string.IsNullOrEmpty(result.AppName))
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionAppName));
-                    }
-
-                    result.AppName = option.Value;
-                }
-                else if (OptionRepository.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!repository.IsNullOrEmpty())
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionRepository));
-                    }
-
-                    repository = option.Value;
-                }
+                CommandOptions.AssertDuplicated(CommandOptions.OptionTo, !result.To.IsNullOrEmpty());
+                result.To = value;
             }
-
-            if (string.IsNullOrEmpty(result.AppName))
+            else if (option.IsAppName(out value))
             {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionAppName));
+                result.AppNames.Add(value);
             }
-
-            if (result.Sources.Count == 0)
+            else if (option.IsRepository(out value))
             {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionSource));
+                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
+                repository = value;
             }
-
-            if (repository.IsNullOrEmpty())
+            else
             {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionRepository));
+                CommandOptions.AssertUnknown(option.Name);
             }
-
-            return result;
         }
 
-        private static GenerateCommand CreateGenerateCommand(IList<CommandOption> options, out string repository)
-        {
-            var result = new GenerateCommand();
-            repository = null;
+        CommandOptions.AssertMissing(CommandOptions.OptionAppName, result.AppNames.Count == 0);
+        CommandOptions.AssertMissing(CommandOptions.OptionTo, result.To.IsNullOrEmpty());
+        CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
 
-            foreach (var option in options)
-            {
-                if (OptionTo.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!string.IsNullOrEmpty(result.To))
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionTo));
-                    }
-
-                    result.To = FileTools.RootPath(option.Value);
-                }
-                else if (OptionAppName.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    result.AppNames.Add(option.Value);
-                }
-                else if (OptionRepository.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!repository.IsNullOrEmpty())
-                    {
-                        throw new InvalidOperationException("Option [{0}] is duplicated.".FormatWith(OptionRepository));
-                    }
-
-                    repository = option.Value;
-                }
-            }
-
-            if (result.AppNames.Count == 0)
-            {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionAppName));
-            }
-
-            if (result.To.IsNullOrEmpty())
-            {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionTo));
-            }
-
-            if (repository.IsNullOrEmpty())
-            {
-                throw new InvalidOperationException("Missing option [{0}].".FormatWith(OptionRepository));
-            }
-
-            return result;
-        }
+        return result;
     }
 }

@@ -2,9 +2,10 @@ ThirdPartyLibraries
 ===================
 
 [![NuGet](https://img.shields.io/nuget/v/ThirdPartyLibraries.GlobalTool.svg?style=flat-square&label=nuget%20dotnet%20tool)](https://www.nuget.org/packages/ThirdPartyLibraries.GlobalTool/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/ThirdPartyLibraries.svg?style=flat-square)](https://www.powershellgallery.com/packages/ThirdPartyLibraries)
 [![GitHub release](https://img.shields.io/github/release/max-ieremenko/ThirdPartyLibraries.svg?style=flat-square&label=manual%20download)](https://github.com/max-ieremenko/ThirdPartyLibraries/releases)
 
-This command line tool helps to manage third party libraries and their licenses in .net applications.
+Command-line tool and PowerShell module help to manage third party libraries and their licenses in .net applications.
 
 This is done by creating and managing a repository. [Here](ThirdPartyLibraries) is the library repository of ThirdPartyLibraries.
 
@@ -35,6 +36,7 @@ Requirements <a name="requirements"></a>
 ----------------------------------------
 
 - tool can be installed on SDKs .NET 5.0, .NET 6.0, .NET Core 3.1
+- PowerShell module is compatible with Powershell Core 7.0+
 - supported project format: [SDK-style](https://docs.microsoft.com/en-us/nuget/resources/check-project-format)
 - supported project references: [NuGet](https://www.nuget.org/) and [npm](https://www.npmjs.com) packages
 - non-supported references can me managed via [custom packages](#custom)
@@ -54,6 +56,14 @@ $ dotnet tool install --global ThirdPartyLibraries.GlobalTool
 or download from [latest release](https://github.com/max-ieremenko/ThirdPartyLibraries/releases)
 
 [![GitHub release](https://img.shields.io/github/release/max-ieremenko/ThirdPartyLibraries.svg?style=flat-square&label=manual%20download)](https://github.com/max-ieremenko/ThirdPartyLibraries/releases)
+
+### PowerShell, from gallery
+
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/ThirdPartyLibraries.svg?style=flat-square)](https://www.powershellgallery.com/packages/ThirdPartyLibraries)
+
+```powershell
+PS> Install-Module -Name ThirdPartyLibraries
+```
 
 [Back to ToC](#table-of-contents)
 
@@ -88,6 +98,10 @@ Run the the tool
 $ ThirdPartyLibraries update -appName ThirdPartyLibraries -source c:\ThirdPartyLibraries\Sources -repository c:\RepositoryDemo
 ```
 
+```powershell
+PS> Update-ThirdPartyLibrariesRepository -AppName ThirdPartyLibraries -Source c:\ThirdPartyLibraries\Sources -Repository c:\RepositoryDemo -InformationAction Continue
+```
+
 **Important:** if the tool stops with error
 
 ```text
@@ -110,7 +124,7 @@ Refresh or update .md files in a libraries repository <a name="refresh"></a>
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
 - file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
 
-You can change templates and test your changes by runing the the tool
+You can change templates and test your changes by running the the tool
 
 ```bash
 $ ThirdPartyLibraries refresh -appName ThirdPartyLibraries -repository c:\RepositoryDemo
@@ -125,6 +139,10 @@ To validate sources against a library repository run the tool
 
 ```bash
 $ ThirdPartyLibraries validate -appName ThirdPartyLibraries -source c:\ThirdPartyLibraries\Sources -repository c:\RepositoryDemo
+```
+
+```powershell
+PS> Test-ThirdPartyLibrariesRepository -AppName ThirdPartyLibraries -Source c:\ThirdPartyLibraries\Sources -Repository c:\RepositoryDemo -InformationAction Continue
 ```
 
 The tool reports to the current output about any inconsistency between sources and repository or if TODO list in the repository is not empty, for example
@@ -142,6 +160,10 @@ Generate ThirdPartyNotices.txt out of a libraries repository <a name="generate">
 
 ```bash
 $ ThirdPartyLibraries generate -appName ThirdPartyLibraries -repository c:\RepositoryDemo -to c:\notices
+```
+
+```powershell
+PS> Publish-ThirdPartyNotices -AppName ThirdPartyLibraries -Repository c:\RepositoryDemo -InformationAction Continue
 ```
 
 [DotLiquid template](https://shopify.github.io/liquid/) for ThirdPartyNotices.txt is [configuration/third-party-notices-template.txt](ThirdPartyLibraries/configuration/third-party-notices-template.txt), context is [ThirdPartyNoticesContext.cs](Sources/ThirdPartyLibraries.Repository/Template/ThirdPartyNoticesContext.cs)

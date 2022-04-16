@@ -29,7 +29,7 @@ namespace ThirdPartyLibraries.Generic
         {
             var url = GetUrl(licenseUrl);
 
-            var content = await LoadLicenseAsync(url, token);
+            var content = await LoadLicenseAsync(url, token).ConfigureAwait(false);
             return content?.Value<string>("licenseId");
         }
 
@@ -38,7 +38,7 @@ namespace ThirdPartyLibraries.Generic
             licenseCode.AssertNotNull(nameof(licenseCode));
 
             var url = Host + "/licenses/" + licenseCode + ".json";
-            var content = await LoadLicenseAsync(url, token);
+            var content = await LoadLicenseAsync(url, token).ConfigureAwait(false);
             if (content == null)
             {
                 return null;
@@ -58,16 +58,16 @@ namespace ThirdPartyLibraries.Generic
         {
             JObject content;
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token))
+            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return null;
                 }
 
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 using (var reader = new JsonTextReader(new StreamReader(stream)))
                 {
                     content = (JObject)new JsonSerializer().Deserialize(reader);

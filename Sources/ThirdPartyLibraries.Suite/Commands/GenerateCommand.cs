@@ -20,17 +20,17 @@ namespace ThirdPartyLibraries.Suite.Commands
         
         public string To { get; set; }
 
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
             var state = new GenerateCommandState(repository, To, serviceProvider.GetRequiredService<ILogger>());
-            var packages = await LoadAllPackagesNoticesAsync(repository, token);
+            var packages = await LoadAllPackagesNoticesAsync(repository, token).ConfigureAwait(false);
 
             var rootContext = new ThirdPartyNoticesContext();
 
             foreach (var package in packages)
             {
-                var license = await state.GetLicensesAsync(package.LicenseCode, token);
+                var license = await state.GetLicensesAsync(package.LicenseCode, token).ConfigureAwait(false);
 
                 var packageContext = new ThirdPartyNoticesPackageContext
                 {
@@ -48,19 +48,17 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.FullName));
 
-            var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token);
+            var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
             var fileName = Path.Combine(To, OutputFileName);
             using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
             {
                 DotLiquidTemplate.RenderTo(file, template, rootContext);
             }
-
-            return true;
         }
 
         private async Task<IList<Package>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
         {
-           var libraries = await repository.Storage.GetAllLibrariesAsync(token);
+           var libraries = await repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
            var result = new List<Package>(libraries.Count);
 
            var sorted = libraries
@@ -70,7 +68,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
            foreach (var id in sorted)
            {
-               var package = await repository.LoadPackageAsync(id, token);
+               var package = await repository.LoadPackageAsync(id, token).ConfigureAwait(false);
                if (UsePackage(package))
                {
                    result.Add(package);

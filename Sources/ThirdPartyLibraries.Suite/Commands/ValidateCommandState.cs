@@ -32,12 +32,12 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public async Task InitializeAsync(CancellationToken token)
         {
-            var libraries = await Repository.Storage.GetAllLibrariesAsync(token);
+            var libraries = await Repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
 
             foreach (var id in libraries)
             {
-                var package = await Repository.LoadPackageAsync(id, token);
-                await LoadLicenseAsync(package.LicenseCode, token);
+                var package = await Repository.LoadPackageAsync(id, token).ConfigureAwait(false);
+                await LoadLicenseAsync(package.LicenseCode, token).ConfigureAwait(false);
 
                 _infoById.Add(id, (package.LicenseCode, package.ApprovalStatus, !package.ThirdPartyNotices.IsNullOrEmpty()));
 
@@ -123,7 +123,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 if (!_licenseByCode.ContainsKey(code))
                 {
-                    var index = await Repository.Storage.ReadLicenseIndexJsonAsync(code, token);
+                    var index = await Repository.Storage.ReadLicenseIndexJsonAsync(code, token).ConfigureAwait(false);
                     _licenseByCode.Add(code, index);
                 }
             }

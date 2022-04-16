@@ -45,7 +45,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             foreach (var code in codes)
             {
-                var index = await LoadLicenseIndexAsync(code, token);
+                var index = await LoadLicenseIndexAsync(code, token).ConfigureAwait(false);
                 if (index != null)
                 {
                     result.HRefs.Add(index.HRef);
@@ -72,7 +72,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 return index;
             }
 
-            index = await Repository.Storage.ReadLicenseIndexJsonAsync(code, token);
+            index = await Repository.Storage.ReadLicenseIndexJsonAsync(code, token).ConfigureAwait(false);
             if (index == null)
             {
                 Logger.Info("License {0} not found in the repository.".FormatWith(code));
@@ -93,10 +93,10 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Directory.CreateDirectory(Path.Combine(To, "Licenses"));
                 result.FileName = Path.Combine("Licenses", "{0}-{1}".FormatWith(index.Code, index.FileName));
 
-                using (var content = await Repository.Storage.OpenLicenseFileReadAsync(code, index.FileName, token))
+                using (var content = await Repository.Storage.OpenLicenseFileReadAsync(code, index.FileName, token).ConfigureAwait(false))
                 using (var dest = new FileStream(Path.Combine(To, result.FileName), FileMode.Create, FileAccess.ReadWrite))
                 {
-                    await content.CopyToAsync(dest, token);
+                    await content.CopyToAsync(dest, token).ConfigureAwait(false);
                 }
             }
 
@@ -104,7 +104,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 foreach (var dependency in index.Dependencies)
                 {
-                    await LoadLicenseIndexAsync(dependency, token);
+                    await LoadLicenseIndexAsync(dependency, token).ConfigureAwait(false);
                 }
             }
 

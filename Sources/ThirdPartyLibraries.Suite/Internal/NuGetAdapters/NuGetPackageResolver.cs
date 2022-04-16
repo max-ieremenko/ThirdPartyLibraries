@@ -27,24 +27,24 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
         protected override async Task CreateNewAsync(LibraryId id, LibraryIndexJson index, CancellationToken token)
         {
-            var package = await GetPackageContentAsync(id, token);
+            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
 
-            var specContent = await Api.ExtractSpecAsync(new NuGetPackageId(id.Name, id.Version), package, token);
-            await Storage.WriteLibraryFileAsync(id, NuGetConstants.RepositorySpecFileName, specContent, token);
+            var specContent = await Api.ExtractSpecAsync(new NuGetPackageId(id.Name, id.Version), package, token).ConfigureAwait(false);
+            await Storage.WriteLibraryFileAsync(id, NuGetConstants.RepositorySpecFileName, specContent, token).ConfigureAwait(false);
 
             var spec = Api.ParseSpec(specContent);
 
             var specLicenseUrl = NuGetConstants.IsDeprecateLicenseUrl(spec.LicenseUrl) ? null : spec.LicenseUrl;
-            index.Licenses.Add(await ResolvePackageLicenseAsync(id, spec.License?.Type, spec.License?.Value, specLicenseUrl, token));
+            index.Licenses.Add(await ResolvePackageLicenseAsync(id, spec.License?.Type, spec.License?.Value, specLicenseUrl, token).ConfigureAwait(false));
 
             if (!string.IsNullOrEmpty(spec.Repository?.Url))
             {
-                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.Repository.Url, PackageLicense.SubjectRepository, token));
+                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.Repository.Url, PackageLicense.SubjectRepository, token).ConfigureAwait(false));
             }
 
             if (!spec.ProjectUrl.IsNullOrEmpty())
             {
-                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.ProjectUrl, PackageLicense.SubjectProject, token));
+                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.ProjectUrl, PackageLicense.SubjectProject, token).ConfigureAwait(false));
             }
         }
 
@@ -55,8 +55,8 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
 
         protected override async Task<byte[]> GetPackageFileContentAsync(LibraryId id, string fileName, CancellationToken token)
         {
-            var package = await GetPackageContentAsync(id, token);
-            return await Api.LoadFileContentAsync(package, fileName, token);
+            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
+            return await Api.LoadFileContentAsync(package, fileName, token).ConfigureAwait(false);
         }
     }
 }

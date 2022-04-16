@@ -21,7 +21,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters
         {
             url.AssertNotNull(nameof(url));
 
-            var license = await GitHubApi.LoadLicenseAsync(url, Configuration.PersonalAccessToken, token);
+            var license = await GitHubApi.LoadLicenseAsync(url, Configuration.PersonalAccessToken, token).ConfigureAwait(false);
             if (license == null)
             {
                 return null;

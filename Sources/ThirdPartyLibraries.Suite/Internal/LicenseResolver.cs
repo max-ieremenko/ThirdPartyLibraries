@@ -26,7 +26,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             url.AssertNotNull(nameof(url));
 
             // check static
-            var code = await ServiceProvider.GetRequiredService<IStaticLicenseSource>().ResolveLicenseCodeAsync(url, token);
+            var code = await ServiceProvider.GetRequiredService<IStaticLicenseSource>().ResolveLicenseCodeAsync(url, token).ConfigureAwait(false);
             if (!code.IsNullOrEmpty())
             {
                 return new LicenseInfo
@@ -41,7 +41,7 @@ namespace ThirdPartyLibraries.Suite.Internal
                 return result;
             }
 
-            result = await DownloadByUrlAsync(url, token);
+            result = await DownloadByUrlAsync(url, token).ConfigureAwait(false);
 
             // https://github.community/t5/GitHub-API-Development-and/API-rate-limit-is-60-for-authenticated-request/m-p/43733#M3883
             Cache.AddByUrl(url, result);
@@ -54,7 +54,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             code.AssertNotNull(nameof(code));
 
             // check static
-            var license = await ServiceProvider.GetRequiredService<IStaticLicenseSource>().DownloadLicenseByCodeAsync(code, token);
+            var license = await ServiceProvider.GetRequiredService<IStaticLicenseSource>().DownloadLicenseByCodeAsync(code, token).ConfigureAwait(false);
             if (license != null)
             {
                 return Convert(license);
@@ -65,7 +65,7 @@ namespace ThirdPartyLibraries.Suite.Internal
                 return result;
             }
 
-            result = await DownloadLicenseByCodeAsync(code, token);
+            result = await DownloadLicenseByCodeAsync(code, token).ConfigureAwait(false);
 
             Cache.AddByCode(code, result);
 
@@ -95,7 +95,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var name = code.ToUpperInvariant();
             var source = ServiceProvider.GetKeyedService<IFullLicenseSource>(name) ?? ServiceProvider.GetRequiredService<IStaticLicenseSource>();
 
-            var license = await source.DownloadLicenseByCodeAsync(code, token);
+            var license = await source.DownloadLicenseByCodeAsync(code, token).ConfigureAwait(false);
             return Convert(license);
         }
 
@@ -107,7 +107,7 @@ namespace ThirdPartyLibraries.Suite.Internal
             var licenseSourceByUrl = ServiceProvider.GetKeyedService<ILicenseSourceByUrl>(host);
             if (licenseSourceByUrl != null)
             {
-                return await licenseSourceByUrl.DownloadByUrlAsync(url, token);
+                return await licenseSourceByUrl.DownloadByUrlAsync(url, token).ConfigureAwait(false);
             }
 
             var licenseCodeSource = ServiceProvider.GetKeyedService<ILicenseCodeSource>(host);
@@ -116,7 +116,7 @@ namespace ThirdPartyLibraries.Suite.Internal
                 return null;
             }
 
-            var code = await licenseCodeSource.ResolveLicenseCodeAsync(url, token);
+            var code = await licenseCodeSource.ResolveLicenseCodeAsync(url, token).ConfigureAwait(false);
 
             if (code.IsNullOrEmpty())
             {

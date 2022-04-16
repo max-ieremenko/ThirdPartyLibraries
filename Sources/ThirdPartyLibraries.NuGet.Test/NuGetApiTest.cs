@@ -36,7 +36,7 @@ namespace ThirdPartyLibraries.NuGet
             byte[] specContent;
             using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"))
             {
-                specContent = await _sut.ExtractSpecAsync(package, await content.ToArrayAsync(CancellationToken.None), CancellationToken.None);
+                specContent = await _sut.ExtractSpecAsync(package, await content.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), CancellationToken.None).ConfigureAwait(false);
             }
 
             var spec = _sut.ParseSpec(new MemoryStream(specContent));
@@ -145,7 +145,7 @@ namespace ThirdPartyLibraries.NuGet
                     MediaTypeNames.Text.Html,
                     TempFile.OpenResource(GetType(), "NuGetApiTest.MIT.html"));
 
-            var actual = await _sut.ResolveLicenseCodeAsync(Url, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(Url, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe("MIT");
         }
@@ -161,7 +161,7 @@ namespace ThirdPartyLibraries.NuGet
                     MediaTypeNames.Text.Html,
                     TempFile.OpenResource(GetType(), "NuGetApiTest.Mixed.html"));
 
-            var actual = await _sut.ResolveLicenseCodeAsync(Url, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(Url, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe("(LGPL-2.0-only WITH FLTK-exception OR Apache-2.0 )");
         }
@@ -175,7 +175,7 @@ namespace ThirdPartyLibraries.NuGet
                 .When(HttpMethod.Get, Url)
                 .Respond(HttpStatusCode.NotFound);
 
-            var actual = await _sut.ResolveLicenseCodeAsync(Url, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(Url, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeNull();
         }
@@ -190,7 +190,7 @@ namespace ThirdPartyLibraries.NuGet
         {
             using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"))
             {
-                var file = await _sut.LoadFileContentAsync(await content.ToArrayAsync(CancellationToken.None), fileName, CancellationToken.None);
+                var file = await _sut.LoadFileContentAsync(await content.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), fileName, CancellationToken.None).ConfigureAwait(false);
 
                 if (expected == null)
                 {
@@ -215,7 +215,7 @@ namespace ThirdPartyLibraries.NuGet
                     MediaTypeNames.Application.Octet,
                     TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"));
 
-            var file = await _sut.DownloadPackageAsync(package, false, CancellationToken.None);
+            var file = await _sut.DownloadPackageAsync(package, false, CancellationToken.None).ConfigureAwait(false);
 
             file.ShouldNotBeNull();
         }
@@ -236,7 +236,7 @@ namespace ThirdPartyLibraries.NuGet
             Console.WriteLine(path);
             DirectoryAssert.Exists(path);
 
-            var file = await _sut.DownloadPackageAsync(packageId, true, CancellationToken.None);
+            var file = await _sut.DownloadPackageAsync(packageId, true, CancellationToken.None).ConfigureAwait(false);
 
             file.ShouldNotBeNull();
         }

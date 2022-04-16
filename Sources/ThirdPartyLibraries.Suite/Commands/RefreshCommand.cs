@@ -13,17 +13,17 @@ namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class RefreshCommand : ICommand
     {
-        public async ValueTask<bool> ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
             var state = new RefreshCommandState(repository);
-            var packages = await repository.UpdateAllPackagesReadMeAsync(token);
+            var packages = await repository.UpdateAllPackagesReadMeAsync(token).ConfigureAwait(false);
 
             var rootContext = new RootReadMeContext();
 
             foreach (var metadata in packages.OrderBy(i => i.Name).ThenBy(i => i.Version).ThenBy(i => i.SourceCode))
             {
-                var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token);
+                var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token).ConfigureAwait(false);
 
                 foreach (var license in licenses)
                 {
@@ -56,9 +56,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
 
-            await repository.Storage.WriteRootReadMeAsync(rootContext, token);
-
-            return true;
+            await repository.Storage.WriteRootReadMeAsync(rootContext, token).ConfigureAwait(false);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ThirdPartyLibraries.NuGet
 
         public override int GetHashCode()
         {
-            return ObjectExtensions.CombineHashCodes(
+            return HashCode.Combine(
                 StringComparer.OrdinalIgnoreCase.GetHashCode(Name),
                 StringComparer.OrdinalIgnoreCase.GetHashCode(Version));
         }

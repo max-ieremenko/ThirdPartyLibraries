@@ -17,7 +17,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 
         protected override async Task AppendSpecAttributesAsync(LibraryId id, Package package, CancellationToken token)
         {
-            var json = await ReadPackageJsonAsync(id, token);
+            var json = await ReadPackageJsonAsync(id, token).ConfigureAwait(false);
          
             // no Copyright
             package.Name = json.Name;
@@ -29,7 +29,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 
         private async Task<PackageJson> ReadPackageJsonAsync(LibraryId id, CancellationToken token)
         {
-            using (var jsonContent = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryPackageJsonFileName, token))
+            using (var jsonContent = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryPackageJsonFileName, token).ConfigureAwait(false))
             {
                 return Api.ParsePackageJson(jsonContent);
             }
