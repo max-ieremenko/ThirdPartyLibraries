@@ -14,17 +14,19 @@ namespace ThirdPartyLibraries.Repository
         {
             DotLiquid.Template.NamingConvention = new CSharpNamingConvention();
 
-            DotLiquid.Template.RegisterSafeType(typeof(RootReadMeContext), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(RootReadMeLicenseContext), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(RootReadMePackageContext), new[] { "*" });
+            var allowAllMembers = new[] { "*" };
 
-            DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeContext), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(LibraryLicense), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeDependencyContext), new[] { "*" });
+            DotLiquid.Template.RegisterSafeType(typeof(RootReadMeContext), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(RootReadMeLicenseContext), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(RootReadMePackageContext), allowAllMembers);
 
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesContext), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesLicenseContext), new[] { "*" });
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageContext), new[] { "*" });
+            DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeContext), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(LibraryLicense), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeDependencyContext), allowAllMembers);
+
+            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesContext), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesLicenseContext), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageContext), allowAllMembers);
         }
 
         public static void RenderTo(Stream stream, string templateSource, object context)
