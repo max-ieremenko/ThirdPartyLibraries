@@ -16,6 +16,7 @@ public static class CommandOptions
     public const string OptionRepository = "repository";
     public const string OptionTo = "to";
     public const string OptionGitHubToken = "github.com:personalAccessToken";
+    public const string OptionTitle = "title";
 
     internal const string UserSecretsId = "c903410c-3d05-49fe-bc8b-b95a2f4dfc69";
     internal const string EnvironmentVariablePrefix = "ThirdPartyLibraries:";
@@ -77,6 +78,18 @@ public static class CommandOptions
         if (OptionGitHubToken.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
         {
             AssertNonEmpty(option);
+            value = option.Value;
+            return true;
+        }
+
+        value = null;
+        return false;
+    }
+
+    internal static bool IsTitle(in this CommandOption option, out string value)
+    {
+        if (OptionTitle.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
+        {
             value = option.Value;
             return true;
         }
