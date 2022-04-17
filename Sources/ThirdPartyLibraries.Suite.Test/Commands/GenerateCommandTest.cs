@@ -30,7 +30,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         [SetUp]
         public void BeforeEachTest()
         {
-            _logger = new Mock<ILogger>(MockBehavior.Strict);
+            _logger = new Mock<ILogger>(MockBehavior.Loose);
             
             _to = new TempFolder();
             Directory.CreateDirectory(Path.Combine(_to.Location, "configuration"));
@@ -38,6 +38,9 @@ namespace ThirdPartyLibraries.Suite.Commands
             _packages = new List<Package>();
 
             _storage = new Mock<IStorage>(MockBehavior.Strict);
+            _storage
+                .SetupGet(s => s.ConnectionString)
+                .Returns("some path");
             _storage
                 .Setup(s => s.OpenConfigurationFileReadAsync(It.IsNotNull<string>(), CancellationToken.None))
                 .Returns<string, CancellationToken>((fileName, _) =>

@@ -25,7 +25,11 @@ namespace ThirdPartyLibraries.Suite.Commands
         public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
-            var state = new GenerateCommandState(repository, To, serviceProvider.GetRequiredService<ILogger>());
+            var logger = serviceProvider.GetRequiredService<ILogger>();
+
+            Hello(logger, repository);
+
+            var state = new GenerateCommandState(repository, To, logger);
             var packages = await LoadAllPackagesNoticesAsync(repository, token).ConfigureAwait(false);
 
             var rootContext = new ThirdPartyNoticesContext
@@ -58,6 +62,16 @@ namespace ThirdPartyLibraries.Suite.Commands
             using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
             {
                 DotLiquidTemplate.RenderTo(file, template, rootContext);
+            }
+        }
+
+        private void Hello(ILogger logger, IPackageRepository repository)
+        {
+            logger.Info("generate third party notices for " + string.Join(", ", AppNames));
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+                logger.Info("to {0}".FormatWith(To));
             }
         }
 
