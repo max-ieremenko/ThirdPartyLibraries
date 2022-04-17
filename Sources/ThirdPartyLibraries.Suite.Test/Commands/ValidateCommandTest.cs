@@ -29,10 +29,7 @@ namespace ThirdPartyLibraries.Suite.Commands
         [SetUp]
         public void BeforeEachTest()
         {
-            var logger = new Mock<ILogger>(MockBehavior.Strict);
-            logger
-                .Setup(l => l.Indent())
-                .Returns((IDisposable)null);
+            var logger = new Mock<ILogger>(MockBehavior.Loose);
 
             _storagePackages = new List<PackageInfo>();
             _sourceReferences = new List<LibraryReference>();
@@ -45,6 +42,9 @@ namespace ThirdPartyLibraries.Suite.Commands
             };
 
             _storage = new Mock<IStorage>(MockBehavior.Strict);
+            _storage
+                .SetupGet(s => s.ConnectionString)
+                .Returns("some path");
             _storage
                 .Setup(s => s.GetAllLibrariesAsync(CancellationToken.None))
                 .ReturnsAsync(() => _storagePackages.Select(i => i.Id).ToArray());

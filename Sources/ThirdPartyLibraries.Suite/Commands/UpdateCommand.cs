@@ -18,13 +18,26 @@ namespace ThirdPartyLibraries.Suite.Commands
         public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
-            var state = new UpdateCommandState(repository);
             var logger = serviceProvider.GetRequiredService<ILogger>();
+
+            Hello(logger, repository);
+
+            var state = new UpdateCommandState(repository);
 
             var (created, updated) = await UpdateReferencesAsync(state, serviceProvider, logger, token).ConfigureAwait(false);
             var (softRemoved, hardRemoved) = await RemoveFromApplicationAsync(state, logger, token).ConfigureAwait(false);
 
             logger.Info("New {0}; updated {1}; removed {2}".FormatWith(created, updated, softRemoved + hardRemoved));
+        }
+
+        private void Hello(ILogger logger, IPackageRepository repository)
+        {
+            logger.Info("update application {0}".FormatWith(AppName));
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+                logger.Info("sources " + string.Join(", ", Sources));
+            }
         }
 
         private async Task<(int SoftCount, int HardCount)> RemoveFromApplicationAsync(UpdateCommandState state, ILogger logger, CancellationToken token)

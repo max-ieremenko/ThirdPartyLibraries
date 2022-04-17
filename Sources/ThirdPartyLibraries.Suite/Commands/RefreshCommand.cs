@@ -16,6 +16,8 @@ namespace ThirdPartyLibraries.Suite.Commands
         public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
             var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+            Hello(serviceProvider.GetRequiredService<ILogger>(), repository);
+
             var state = new RefreshCommandState(repository);
             var packages = await repository.UpdateAllPackagesReadMeAsync(token).ConfigureAwait(false);
 
@@ -57,6 +59,15 @@ namespace ThirdPartyLibraries.Suite.Commands
             rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
 
             await repository.Storage.WriteRootReadMeAsync(rootContext, token).ConfigureAwait(false);
+        }
+
+        private void Hello(ILogger logger, IPackageRepository repository)
+        {
+            logger.Info("update .md files");
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+            }
         }
     }
 }

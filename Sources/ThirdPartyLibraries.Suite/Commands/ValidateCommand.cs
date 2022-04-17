@@ -18,7 +18,11 @@ namespace ThirdPartyLibraries.Suite.Commands
 
         public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var state = new ValidateCommandState(serviceProvider.GetRequiredService<IPackageRepository>(), AppName);
+            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+
+            Hello(serviceProvider.GetRequiredService<ILogger>(), repository);
+
+            var state = new ValidateCommandState(repository, AppName);
             await state.InitializeAsync(token).ConfigureAwait(false);
 
             var issues = GetIssues(serviceProvider.GetRequiredService<ISourceCodeParser>(), state)
@@ -35,6 +39,16 @@ namespace ThirdPartyLibraries.Suite.Commands
             if (errors.Count > 0)
             {
                 throw new RepositoryValidationException(errors.ToArray());
+            }
+        }
+
+        private void Hello(ILogger logger, IPackageRepository repository)
+        {
+            logger.Info("validate application {0}".FormatWith(AppName));
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+                logger.Info("sources " + string.Join(", ", Sources));
             }
         }
 
