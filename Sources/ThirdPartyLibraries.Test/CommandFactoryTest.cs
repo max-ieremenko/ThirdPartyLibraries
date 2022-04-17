@@ -134,6 +134,7 @@ namespace ThirdPartyLibraries
             _line.Command = CommandOptions.CommandGenerate;
             _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 1"));
             _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 2"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionTitle, "the title"));
             _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
 
             var to = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
@@ -142,6 +143,7 @@ namespace ThirdPartyLibraries
             var command = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<GenerateCommand>();
 
             command.AppNames.ShouldBe(new[] { "app name 1", "app name 2" });
+            command.Title.ShouldBe("the title");
             command.To.ShouldBe(to);
 
             repository.ShouldBe("repository");

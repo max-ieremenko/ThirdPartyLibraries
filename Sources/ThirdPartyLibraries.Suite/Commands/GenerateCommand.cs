@@ -17,7 +17,9 @@ namespace ThirdPartyLibraries.Suite.Commands
         internal const string OutputFileName = "ThirdPartyNotices.txt";
 
         public IList<string> AppNames { get; } = new List<string>();
-        
+
+        public string Title { get; set; }
+
         public string To { get; set; }
 
         public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
@@ -26,7 +28,10 @@ namespace ThirdPartyLibraries.Suite.Commands
             var state = new GenerateCommandState(repository, To, serviceProvider.GetRequiredService<ILogger>());
             var packages = await LoadAllPackagesNoticesAsync(repository, token).ConfigureAwait(false);
 
-            var rootContext = new ThirdPartyNoticesContext();
+            var rootContext = new ThirdPartyNoticesContext
+            {
+                Title = string.IsNullOrWhiteSpace(Title) ? AppNames[0] : Title
+            };
 
             foreach (var package in packages)
             {

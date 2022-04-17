@@ -191,6 +191,11 @@ internal static class CommandFactory
             {
                 result.AppNames.Add(value);
             }
+            else if (option.IsTitle(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionTitle, !result.Title.IsNullOrEmpty());
+                result.Title = value;
+            }
             else if (option.IsRepository(out value))
             {
                 CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
