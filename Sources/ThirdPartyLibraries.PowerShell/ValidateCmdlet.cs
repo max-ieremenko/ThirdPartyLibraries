@@ -1,5 +1,5 @@
-﻿using System.Management.Automation;
-using System.Threading;
+﻿using System.Collections.Generic;
+using System.Management.Automation;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.PowerShell.Internal;
 
@@ -18,23 +18,16 @@ public sealed class ValidateCmdlet : CommandCmdlet
     [Parameter(Mandatory = true, Position = 3, HelpMessage = "a path to a repository folder")]
     public string Repository { get; set; }
 
-    protected override void ProcessRecord(CancellationToken token)
+    protected override string CreateCommandLine(IList<(string Name, string Value)> options)
     {
-        var commandLine = new CommandLine
-        {
-            Command = CommandOptions.CommandValidate,
-            Options =
-            {
-                new CommandOption(CommandOptions.OptionAppName, AppName),
-                new CommandOption(CommandOptions.OptionRepository, this.RootPath(Repository))
-            }
-        };
+        options.Add((CommandOptions.OptionAppName, AppName));
+        options.Add((CommandOptions.OptionRepository, this.RootPath(Repository)));
 
         for (var i = 0; i < Source.Length; i++)
         {
-            commandLine.Options.Add(new CommandOption(CommandOptions.OptionSource, this.RootPath(Source[i])));
+            options.Add((CommandOptions.OptionSource, this.RootPath(Source[i])));
         }
 
-        ThirdPartyLibrariesProgram.Run(commandLine, this, token);
+        return CommandOptions.CommandValidate;
     }
 }
