@@ -61,6 +61,21 @@ namespace ThirdPartyLibraries.Configuration
             return result;
         }
 
+        public static CommandLine Parse(
+            string command,
+            IList<(string Name, string Value)> options)
+        {
+            var result = new CommandLine { Command = command };
+
+            for (var i = 0; i < options.Count; i++)
+            {
+                var option = options[i];
+                result.Options.Add(new CommandOption(option.Name, option.Value));
+            }
+
+            return result;
+        }
+
         private static bool TryOption(string value, out string option)
         {
             if (value.StartsWith("-", StringComparison.Ordinal) && value.Length > 1)

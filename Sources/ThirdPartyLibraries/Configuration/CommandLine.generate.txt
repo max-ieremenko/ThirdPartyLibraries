@@ -6,11 +6,13 @@ Generate "third party notices" from the repository
   -appName: a name of the current application. Repeat -appName to aggregate information from several applications
   -repository: a path to a repository folder
   -to: a path to an output folder
+  -title: a title of third party notices, default is appName[0]
 
 exit codes:
   0 - OK
   1 - invalid command line
   2 - errors during execution
+  3 - the execution was canceled by the user
 
 example:
 > ThirdPartyLibraries generate -appName MyApp1 -appName MyApp2 -repository c:\ThirdPartyLibraries -to c:\notices

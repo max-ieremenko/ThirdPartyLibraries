@@ -5,17 +5,21 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 {
     internal sealed class NpmPackageResolver : PackageResolverBase
     {
-        [Dependency]
-        public INpmApi Api { get; set; }
+        public NpmPackageResolver(INpmApi api, NpmConfiguration configuration, ILicenseResolver licenseResolver, IStorage storage)
+            : base(licenseResolver, storage)
+        {
+            Api = api;
+            Configuration = configuration;
+        }
 
-        [Dependency]
-        public NpmConfiguration Configuration { get; set; }
+        public INpmApi Api { get; }
+
+        public NpmConfiguration Configuration { get; }
 
         protected override bool DownloadPackageIntoRepository => Configuration.DownloadPackageIntoRepository;
 
@@ -23,36 +27,36 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
 
         protected override async Task CreateNewAsync(LibraryId id, LibraryIndexJson index, CancellationToken token)
         {
-            var package = await GetPackageContentAsync(id, token);
+            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
 
-            var specContent = await Api.ExtractPackageJsonAsync(package, token);
-            await Storage.WriteLibraryFileAsync(id, NpmConstants.RepositoryPackageJsonFileName, specContent, token);
+            var specContent = Api.ExtractPackageJson(package);
+            await Storage.WriteLibraryFileAsync(id, NpmConstants.RepositoryPackageJsonFileName, specContent, token).ConfigureAwait(false);
 
             var spec = Api.ParsePackageJson(specContent);
 
-            index.Licenses.Add(await ResolvePackageLicenseAsync(id, spec.License?.Type, spec.License?.Value, null, token));
+            index.Licenses.Add(await ResolvePackageLicenseAsync(id, spec.License?.Type, spec.License?.Value, null, token).ConfigureAwait(false));
 
             if (spec.Repository?.Url != null)
             {
-                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.Repository.Url, PackageLicense.SubjectRepository, token));
+                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.Repository.Url, PackageLicense.SubjectRepository, token).ConfigureAwait(false));
             }
 
             if (!spec.HomePage.IsNullOrEmpty())
             {
-                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.HomePage, PackageLicense.SubjectHomePage, token));
+                index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.HomePage, PackageLicense.SubjectHomePage, token).ConfigureAwait(false));
             }
         }
 
         protected override async Task<byte[]> DownloadPackageContentAsync(LibraryId id, CancellationToken token)
         {
-            var file = await Api.DownloadPackageAsync(new NpmPackageId(id.Name, id.Version), token);
+            var file = await Api.DownloadPackageAsync(new NpmPackageId(id.Name, id.Version), token).ConfigureAwait(false);
             return file?.Content;
         }
 
         protected override async Task<byte[]> GetPackageFileContentAsync(LibraryId id, string fileName, CancellationToken token)
         {
-            var package = await GetPackageContentAsync(id, token);
-            return await Api.LoadFileContentAsync(package, fileName, token);
+            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
+            return Api.LoadFileContent(package, fileName);
         }
     }
 }

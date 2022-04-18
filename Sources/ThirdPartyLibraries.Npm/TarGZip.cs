@@ -6,7 +6,7 @@ using ICSharpCode.SharpZipLib.Tar;
 
 namespace ThirdPartyLibraries.Npm
 {
-    internal sealed class TarGZip : IAsyncDisposable
+    internal sealed class TarGZip : IDisposable
     {
         private readonly GZipStream _level1;
         private readonly TarInputStream _tar;
@@ -52,10 +52,10 @@ namespace ThirdPartyLibraries.Npm
             }
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
-            await _level1.DisposeAsync();
-            await _tar.DisposeAsync();
+            _level1.Dispose();
+            _tar.Dispose();
         }
     }
 }

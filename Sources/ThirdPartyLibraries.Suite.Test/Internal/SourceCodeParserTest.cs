@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Repository;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
@@ -17,16 +18,16 @@ namespace ThirdPartyLibraries.Suite.Internal
         [SetUp]
         public void BeforeEachTest()
         {
-            var container = new UnityContainer();
+            var services = new ServiceCollection();
 
             _referenceProvider = new Mock<ISourceCodeReferenceProvider>(MockBehavior.Strict);
-            container.RegisterInstance("some provider", _referenceProvider.Object);
+            services.AddKeyedTransient<ISourceCodeReferenceProvider, ISourceCodeReferenceProvider>("some provider", _ => _referenceProvider.Object);
 
-            _sut = new SourceCodeParser(container);
+            _sut = new SourceCodeParser(services.BuildServiceProvider());
         }
 
         [Test]
-        public void GetReferences()
+        public void AddReferencesFrom()
         {
             var expected = new LibraryReference(
                 new LibraryId("source", "name", "version"),
@@ -35,12 +36,32 @@ namespace ThirdPartyLibraries.Suite.Internal
                 true);
 
             _referenceProvider
-                .Setup(r => r.GetReferencesFrom("some path"))
-                .Returns(new[] { expected });
+                .Setup(r => r.AddReferencesFrom("some path", It.IsNotNull<IList<LibraryReference>>(), It.IsNotNull<ICollection<LibraryId>>()))
+                .Callback<string, IList<LibraryReference>, ICollection<LibraryId>>((path, references, notFound) =>
+                {
+                    references.Add(expected);
+                });
 
             var actual = _sut.GetReferences(new[] { "some path" });
 
             actual.ShouldBe(new[] { expected });
+        }
+
+        [Test]
+        public void AddReferencesFromNotFound()
+        {
+            var expected = new LibraryId("source", "name", "version");
+
+            _referenceProvider
+                .Setup(r => r.AddReferencesFrom("some path", It.IsNotNull<IList<LibraryReference>>(), It.IsNotNull<ICollection<LibraryId>>()))
+                .Callback<string, IList<LibraryReference>, ICollection<LibraryId>>((path, references, notFound) =>
+                {
+                    notFound.Add(expected);
+                });
+
+            var ex = Assert.Throws<ReferenceNotFoundException>(() => _sut.GetReferences(new[] { "some path" }));
+
+            ex.Libraries.ShouldBe(new[] { expected });
         }
 
         [Test]

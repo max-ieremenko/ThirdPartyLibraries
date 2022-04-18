@@ -2,23 +2,26 @@
 using System.Threading.Tasks;
 using ThirdPartyLibraries.GitHub;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters
 {
     internal sealed class GitHubLicenseSource : ILicenseSourceByUrl
     {
-        [Dependency]
-        public IGitHubApi GitHubApi { get; set; }
+        public GitHubLicenseSource(IGitHubApi gitHubApi, GitHubConfiguration configuration)
+        {
+            GitHubApi = gitHubApi;
+            Configuration = configuration;
+        }
 
-        [Dependency]
-        public GitHubConfiguration Configuration { get; set; }
+        public IGitHubApi GitHubApi { get; }
+
+        public GitHubConfiguration Configuration { get; }
 
         public async Task<LicenseInfo> DownloadByUrlAsync(string url, CancellationToken token)
         {
             url.AssertNotNull(nameof(url));
 
-            var license = await GitHubApi.LoadLicenseAsync(url, Configuration.PersonalAccessToken, token);
+            var license = await GitHubApi.LoadLicenseAsync(url, Configuration.PersonalAccessToken, token).ConfigureAwait(false);
             if (license == null)
             {
                 return null;

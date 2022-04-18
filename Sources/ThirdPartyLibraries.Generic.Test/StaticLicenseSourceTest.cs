@@ -56,7 +56,7 @@ namespace ThirdPartyLibraries.Generic
         [TestCase("https://unknown.host/fwlink/?LinkId=329770", null)]
         public async Task ResolveLicenseCode(string licenseUrl, string expected)
         {
-            var actual = await _sut.ResolveLicenseCodeAsync(licenseUrl, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(licenseUrl, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe(expected);
         }
@@ -70,7 +70,7 @@ namespace ThirdPartyLibraries.Generic
                     MediaTypeNames.Text.Html,
                     TempFile.OpenResource(GetType(), "StaticLicenseSourceTest.net_library_eula_enu.htm"));
 
-            var actual = await _sut.DownloadLicenseByCodeAsync("ms-net-library", CancellationToken.None);
+            var actual = await _sut.DownloadLicenseByCodeAsync("ms-net-library", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             actual.Code.ShouldBe("ms-net-library");

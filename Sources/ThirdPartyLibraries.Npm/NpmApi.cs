@@ -50,16 +50,16 @@ namespace ThirdPartyLibraries.Npm
 
             JObject index;
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token))
+            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return null;
                 }
 
-                await response.AssertStatusCodeOk();
+                await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
                     index = stream.JsonDeserialize<JObject>();
                 }
@@ -77,18 +77,18 @@ namespace ThirdPartyLibraries.Npm
             var fileName = packageUrl.LocalPath.Substring(packageUrl.LocalPath.LastIndexOf('/') + 1);
 
             using (var client = HttpClientFactory())
-            using (var stream = await client.GetStreamAsync(packageUrl))
+            using (var stream = await client.GetStreamAsync(packageUrl).ConfigureAwait(false))
             {
-                var content = await stream.ToArrayAsync(token);
+                var content = await stream.ToArrayAsync(token).ConfigureAwait(false);
                 return new NpmPackageFile(fileName, content);
             }
         }
 
-        public async Task<byte[]> ExtractPackageJsonAsync(byte[] packageContent, CancellationToken token)
+        public byte[] ExtractPackageJson(byte[] packageContent)
         {
             packageContent.AssertNotNull(nameof(packageContent));
 
-            var result = await ExtractPackageFileAsync(packageContent, PackageJsonParser.FileName);
+            var result = ExtractPackageFile(packageContent, PackageJsonParser.FileName);
             if (result == null)
             {
                 throw new InvalidOperationException(PackageJsonParser.FileName + " not found in the package.");
@@ -97,12 +97,12 @@ namespace ThirdPartyLibraries.Npm
             return result;
         }
 
-        public Task<byte[]> LoadFileContentAsync(byte[] packageContent, string fileName, CancellationToken token)
+        public byte[] LoadFileContent(byte[] packageContent, string fileName)
         {
             packageContent.AssertNotNull(nameof(packageContent));
             fileName.AssertNotNull(nameof(fileName));
 
-            return ExtractPackageFileAsync(packageContent, fileName);
+            return ExtractPackageFile(packageContent, fileName);
         }
 
         public string ResolveNpmRoot()
@@ -161,9 +161,9 @@ namespace ThirdPartyLibraries.Npm
             return result;
         }
 
-        private static async Task<byte[]> ExtractPackageFileAsync(byte[] packageContent, string fileName)
+        private static byte[] ExtractPackageFile(byte[] packageContent, string fileName)
         {
-            await using (var zip = new TarGZip(packageContent))
+            using (var zip = new TarGZip(packageContent))
             {
                 if (!zip.SeekToEntry(fileName))
                 {

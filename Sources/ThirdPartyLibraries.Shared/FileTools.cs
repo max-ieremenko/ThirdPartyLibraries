@@ -9,7 +9,7 @@ namespace ThirdPartyLibraries.Shared
         {
             if (string.IsNullOrEmpty(path))
             {
-                return AppDomain.CurrentDomain.BaseDirectory;
+                return Environment.CurrentDirectory;
             }
 
             if (Path.IsPathRooted(path))
@@ -17,7 +17,7 @@ namespace ThirdPartyLibraries.Shared
                 return path;
             }
 
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
+            return Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, path));
         }
     }
 }

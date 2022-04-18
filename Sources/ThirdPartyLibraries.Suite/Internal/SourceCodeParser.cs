@@ -1,36 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
     internal sealed class SourceCodeParser : ISourceCodeParser
     {
-        public SourceCodeParser(IUnityContainer container)
+        public SourceCodeParser(IServiceProvider serviceProvider)
         {
-            container.AssertNotNull(nameof(container));
+            serviceProvider.AssertNotNull(nameof(serviceProvider));
 
-            Container = container;
+            ServiceProvider = serviceProvider;
         }
 
-        public IUnityContainer Container { get; }
+        public IServiceProvider ServiceProvider { get; }
 
         public IList<LibraryReference> GetReferences(IList<string> locations)
         {
             locations.AssertNotNull(nameof(locations));
 
             var references = new List<LibraryReference>();
+            var notFound = new HashSet<LibraryId>();
 
-            var parsers = Container.ResolveAll<ISourceCodeReferenceProvider>();
+            var parsers = ServiceProvider.GetServices<ISourceCodeReferenceProvider>();
             foreach (var parser in parsers)
             {
                 foreach (var location in locations)
                 {
-                    references.AddRange(parser.GetReferencesFrom(location));
+                    parser.AddReferencesFrom(location, references, notFound);
                 }
+            }
+
+            if (notFound.Count > 0)
+            {
+                throw new ReferenceNotFoundException(notFound.ToArray());
             }
 
             return Distinct(references);

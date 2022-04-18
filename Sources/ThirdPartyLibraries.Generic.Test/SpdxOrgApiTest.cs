@@ -35,7 +35,7 @@ namespace ThirdPartyLibraries.Generic
                     MediaTypeNames.Application.Json,
                     TempFile.OpenResource(GetType(), "SpdxOrgApiTest.License.MIT.json"));
 
-            var actual = await _sut.ResolveLicenseCodeAsync(url, CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync(url, CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBe("MIT");
         }
@@ -47,7 +47,7 @@ namespace ThirdPartyLibraries.Generic
                 .When(HttpMethod.Get, "https://spdx.org/licenses/MIT.json")
                 .Respond(HttpStatusCode.NotFound);
 
-            var actual = await _sut.ResolveLicenseCodeAsync("https://spdx.org/licenses/MIT.json", CancellationToken.None);
+            var actual = await _sut.ResolveLicenseCodeAsync("https://spdx.org/licenses/MIT.json", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldBeNull();
         }
@@ -61,7 +61,7 @@ namespace ThirdPartyLibraries.Generic
                     MediaTypeNames.Application.Json,
                     TempFile.OpenResource(GetType(), "SpdxOrgApiTest.License.MIT.json"));
 
-            var actual = await _sut.DownloadLicenseByCodeAsync("MIT", CancellationToken.None);
+            var actual = await _sut.DownloadLicenseByCodeAsync("MIT", CancellationToken.None).ConfigureAwait(false);
 
             actual.ShouldNotBeNull();
             actual.Code.ShouldBe("MIT");

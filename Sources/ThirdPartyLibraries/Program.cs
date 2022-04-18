@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
-using Unity;
 
 namespace ThirdPartyLibraries
 {
@@ -13,67 +14,137 @@ namespace ThirdPartyLibraries
         private const int ExitCodeOk = 0;
         private const int ExitCodeInvalidCommandLine = 1;
         private const int ExitCodeExecutionErrors = 2;
-        private const int ExitCodeCommandError = 3;
+        private const int ExitCodeTerminated = 3;
 
-        public static async Task<int> Main(string[] args)
+        public static Task<int> Main(string[] args)
         {
             var logger = new ConsoleLogger();
-            var container = new UnityContainer();
 
+            CommandLine commandLine;
             try
             {
-                ConfigureContainer(container, logger);
+                commandLine = CommandLine.Parse(args);
             }
             catch (Exception ex)
             {
-                logger.Error("Application initialization error: {0}".FormatWith(ex.Message));
-                return ExitCodeExecutionErrors;
+                return Task.FromResult(HandleConsoleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine));
             }
 
-            bool commandResult;
-            using (container)
+            using (var tokenSource = new CancellationTokenSource())
             {
-                ICommand command;
-                try
-                {
-                    command = await ResolveCommandAsync(container, args, CancellationToken.None);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error("Invalid command line: {0}".FormatWith(ex.Message));
-                    return ExitCodeInvalidCommandLine;
-                }
+                Console.CancelKeyPress += (s, e) => tokenSource.Cancel();
+                return RunConsoleAsync(commandLine, logger, tokenSource.Token);
+            }
+        }
 
+        public static async Task RunAsync(
+            string commandName,
+            IList<(string Name, string Value)> commandOptions,
+            Action<string> logger,
+            CancellationToken token)
+        {
+            var commandLine = CommandLine.Parse(commandName, commandOptions);
+
+            var configuration = new Dictionary<string, string>();
+            var command = CommandFactory.Create(commandLine, configuration, out var repository);
+
+            var serviceProvider = await ConfigureServices(new EventLogger(logger), repository, configuration, token).ConfigureAwait(false);
+
+            await using (serviceProvider.ConfigureAwait(false))
+            {
+                await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task<int> RunConsoleAsync(CommandLine commandLine, ConsoleLogger logger, CancellationToken token)
+        {
+            var configuration = new Dictionary<string, string>();
+            ICommand command;
+            string repository;
+            try
+            {
+                command = CommandFactory.Create(commandLine, configuration, out repository);
+            }
+            catch (Exception ex)
+            {
+                return HandleConsoleError(ex, "Invalid command line: {0}", logger, ExitCodeInvalidCommandLine);
+            }
+
+            ServiceProvider serviceProvider;
+            try
+            {
+                serviceProvider = await ConfigureServices(logger, repository, configuration, token).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return HandleConsoleError(ex, "Application initialization error: {0}", logger, ExitCodeExecutionErrors);
+            }
+
+            await using (serviceProvider.ConfigureAwait(false))
+            {
                 try
                 {
-                    commandResult = await command.ExecuteAsync(CancellationToken.None);
+                    await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.Message);
-                    logger.Info(ex.ToString());
-                    return ExitCodeExecutionErrors;
+                    return HandleConsoleError(ex, null, logger, ExitCodeExecutionErrors);
                 }
             }
 
-            return commandResult ? ExitCodeOk : ExitCodeCommandError;
+            return ExitCodeOk;
         }
 
-        private static Task<ICommand> ResolveCommandAsync(IUnityContainer container, string[] args, CancellationToken token)
+        private static int HandleConsoleError(Exception ex, string messageFormat, ConsoleLogger logger, int defaultExistCode)
         {
-            var commandLine = CommandLine.Parse(args);
-            return container.Resolve<CommandFactory>().CreateAsync(commandLine, token);
+            if (ex is OperationCanceledException)
+            {
+                logger.Error("The execution was canceled by the user.");
+                return ExitCodeTerminated;
+            }
+
+            if (ex is IApplicationException app)
+            {
+                logger.Error(app);
+                return defaultExistCode;
+            }
+
+            if (messageFormat == null)
+            {
+                logger.Error(ex.Message);
+                logger.Info(ex.ToString());
+            }
+            else
+            {
+                logger.Error(messageFormat.FormatWith(ex.Message));
+            }
+
+            return defaultExistCode;
         }
 
-        private static void ConfigureContainer(IUnityContainer container, ILogger logger)
+        private static async Task<ServiceProvider> ConfigureServices(
+            ILogger logger,
+            string repository,
+            Dictionary<string, string> commandLine,
+            CancellationToken token)
         {
-            container.RegisterInstance(logger);
+            var services = new ServiceCollection();
 
-            Suite.AppModule.ConfigureContainer(container);
-            NuGet.AppModule.ConfigureContainer(container);
-            Npm.AppModule.ConfigureContainer(container);
-            GitHub.AppModule.ConfigureContainer(container);
-            Generic.AppModule.ConfigureContainer(container);
+            if (!string.IsNullOrEmpty(repository))
+            {
+                await AppModule.AddConfigurationAsync(services, repository, commandLine, token).ConfigureAwait(false);
+            }
+
+            services.AddSingleton(logger);
+
+            AppModule.ConfigureServices(services);
+            Suite.AppModule.ConfigureServices(services);
+            NuGet.AppModule.ConfigureServices(services);
+            Npm.AppModule.ConfigureServices(services);
+            GitHub.AppModule.ConfigureServices(services);
+            Generic.AppModule.ConfigureServices(services);
+
+            return services.BuildServiceProvider(true);
         }
     }
 }

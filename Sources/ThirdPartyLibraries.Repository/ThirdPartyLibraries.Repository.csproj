@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <OutputPath>..\bin\app</OutputPath>
   </PropertyGroup>
 
@@ -25,7 +26,6 @@
   <ItemGroup>
     <PackageReference Include="DotLiquid" Version="2.2.595" />
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
-    <PackageReference Include="Unity" Version="$(UnityVersion)" />
   </ItemGroup>
 
   <ItemGroup>

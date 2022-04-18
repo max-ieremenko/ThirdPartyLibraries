@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
-using Unity;
-using Unity.Resolution;
 
 namespace ThirdPartyLibraries.Suite.Internal
 {
     internal sealed class PackageRepository : IPackageRepository
     {
-        public PackageRepository(IUnityContainer container, IStorage storage)
+        public PackageRepository(IServiceProvider serviceProvider, IStorage storage)
         {
-            container.AssertNotNull(nameof(container));
+            serviceProvider.AssertNotNull(nameof(serviceProvider));
             storage.AssertNotNull(nameof(storage));
 
-            Container = container;
+            ServiceProvider = serviceProvider;
             Storage = storage;
         }
 
-        public IUnityContainer Container { get; }
+        public IServiceProvider ServiceProvider { get; }
 
         public IStorage Storage { get; }
 
@@ -42,13 +41,13 @@ namespace ThirdPartyLibraries.Suite.Internal
         {
             licenseCode.AssertNotNull(nameof(licenseCode));
 
-            var index = await Storage.ReadLicenseIndexJsonAsync(licenseCode, token);
+            var index = await Storage.ReadLicenseIndexJsonAsync(licenseCode, token).ConfigureAwait(false);
             if (index != null)
             {
                 return new RepositoryLicense(index.Code, index.RequiresApproval, index.RequiresThirdPartyNotices, index.Dependencies);
             }
 
-            var info = await Container.Resolve<ILicenseResolver>().DownloadByCodeAsync(licenseCode, token);
+            var info = await ServiceProvider.GetRequiredService<ILicenseResolver>().DownloadByCodeAsync(licenseCode, token).ConfigureAwait(false);
             if (info == null)
             {
                 info = new LicenseInfo
@@ -68,15 +67,15 @@ namespace ThirdPartyLibraries.Suite.Internal
                 RequiresApproval = true,
                 RequiresThirdPartyNotices = false
             };
-            await Storage.CreateLicenseIndexJsonAsync(index, token);
-            await Storage.CreateLicenseFileAsync(info.Code, info.FileName, info.FileContent, token);
+            await Storage.CreateLicenseIndexJsonAsync(index, token).ConfigureAwait(false);
+            await Storage.CreateLicenseFileAsync(info.Code, info.FileName, info.FileContent, token).ConfigureAwait(false);
 
             return new RepositoryLicense(index.Code, index.RequiresApproval, index.RequiresThirdPartyNotices, index.Dependencies);
         }
 
         public async Task<IList<Package>> UpdateAllPackagesReadMeAsync(CancellationToken token)
         {
-            var libraries = await Storage.GetAllLibrariesAsync(token);
+            var libraries = await Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
             var result = new List<Package>(libraries.Count);
 
             var librariesBySourceCode = libraries.GroupBy(i => i.SourceCode, StringComparer.OrdinalIgnoreCase);
@@ -85,8 +84,8 @@ namespace ThirdPartyLibraries.Suite.Internal
                 var adapter = ResolveAdapter(entry.Key);
                 foreach (var id in entry)
                 {
-                    var package = await adapter.LoadPackageAsync(id, token);
-                    await adapter.UpdatePackageReadMeAsync(package, token);
+                    var package = await adapter.LoadPackageAsync(id, token).ConfigureAwait(false);
+                    await adapter.UpdatePackageReadMeAsync(package, token).ConfigureAwait(false);
                     result.Add(package);
                 }
             }
@@ -96,10 +95,10 @@ namespace ThirdPartyLibraries.Suite.Internal
 
         public async ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token)
         {
-            var result = await ResolveAdapter(id.SourceCode).RemoveFromApplicationAsync(id, appName, token);
+            var result = await ResolveAdapter(id.SourceCode).RemoveFromApplicationAsync(id, appName, token).ConfigureAwait(false);
             if (result == PackageRemoveResult.RemovedNoRefs)
             {
-                await Storage.RemoveLibraryAsync(id, token);
+                await Storage.RemoveLibraryAsync(id, token).ConfigureAwait(false);
             }
 
             return result;
@@ -107,9 +106,9 @@ namespace ThirdPartyLibraries.Suite.Internal
 
         internal IPackageRepositoryAdapter ResolveAdapter(string sourceCode)
         {
-            return Container.Resolve<IPackageRepositoryAdapter>(
-                sourceCode,
-                new PropertyOverride(nameof(IPackageRepositoryAdapter.Storage), Storage));
+            var adapter = ServiceProvider.GetRequiredKeyedService<IPackageRepositoryAdapter>(sourceCode);
+            adapter.Storage = Storage;
+            return adapter;
         }
     }
 }

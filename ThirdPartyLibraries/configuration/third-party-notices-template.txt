@@ -1,5 +1,5 @@
-﻿﻿Third party libraries
-*********************
+﻿﻿{{Title}}
+{% for i in (1..Title.size) %}*{% endfor %}
 
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 

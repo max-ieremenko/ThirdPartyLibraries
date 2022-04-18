@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Suite;
 
@@ -13,19 +14,15 @@ namespace ThirdPartyLibraries
 
         public ICommand[] Chain { get; }
 
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var result = true;
-            foreach (var command in Chain)
+            for (var i = 0; i < Chain.Length; i++)
             {
-                var flag = await command.ExecuteAsync(token);
-                if (!flag)
-                {
-                    result = false;
-                }
-            }
+                var command = Chain[i];
+                token.ThrowIfCancellationRequested();
 
-            return result;
+                await command.ExecuteAsync(serviceProvider, token).ConfigureAwait(false);
+            }
         }
     }
 }

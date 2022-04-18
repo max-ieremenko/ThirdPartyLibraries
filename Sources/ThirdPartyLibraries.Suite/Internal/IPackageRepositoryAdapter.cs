@@ -6,7 +6,7 @@ namespace ThirdPartyLibraries.Suite.Internal
 {
     internal interface IPackageRepositoryAdapter
     {
-        IStorage Storage { get; }
+        IStorage Storage { get; set; }
 
         Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token);
 

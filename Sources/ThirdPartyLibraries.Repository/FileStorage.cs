@@ -38,6 +38,11 @@ namespace ThirdPartyLibraries.Repository
         public Task<IList<LibraryId>> GetAllLibrariesAsync(CancellationToken token)
         {
             var root = Path.Combine(Location, FolderPackages);
+            if (!Directory.Exists(root))
+            {
+                return Task.FromResult((IList<LibraryId>)Array.Empty<LibraryId>());
+            }
+
             var indexes = Directory.GetFiles(root, StorageExtensions.IndexFileName, SearchOption.AllDirectories);
 
             IList<LibraryId> result = new List<LibraryId>(indexes.Length);

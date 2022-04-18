@@ -1,24 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <RootNamespace>ThirdPartyLibraries.Repository</RootNamespace>
     <OutputPath>..\bin\test</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Storage\licenses.mit.index.json" />
-    <None Remove="Storage\npmjs.angular.index.json" />
-    <None Remove="Storage\npmjs.types.angular.index.json" />
-    <None Remove="Storage\nuget.newtonsoft.json.index.json" />
-    <None Remove="Storage\nuget.newtonsoft.json.package.nuspec" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Storage\licenses.mit.index.json" />
-    <EmbeddedResource Include="Storage\npmjs.types.angular.index.json" />
-    <EmbeddedResource Include="Storage\npmjs.angular.index.json" />
-    <EmbeddedResource Include="Storage\nuget.newtonsoft.json.index.json" />
-    <EmbeddedResource Include="Storage\nuget.newtonsoft.json.package.nuspec" />
+    <EmbeddedResource Include="Storage\*.*" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,6 @@ Write-Host "Validate repository"
 Exec { dotnet $app validate -appName ThirdPartyLibraries -source "$sourceDir" -repository "$repositoryDir" }
 
 Write-Host "Generate ThirdPartyNotices"
-Exec { dotnet $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$outDir" }
+Exec { dotnet $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$outDir" -title "Third party libraries" }
 
 Copy-Item -Path (Join-Path $sourceDir "..\LICENSE") -Destination "$outDir"

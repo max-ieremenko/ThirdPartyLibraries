@@ -1,38 +1,31 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class RefreshCommand : ICommand
     {
-        public RefreshCommand(IUnityContainer container, ILogger logger)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            Container = container;
-            Logger = logger;
-        }
+            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+            Hello(serviceProvider.GetRequiredService<ILogger>(), repository);
 
-        public IUnityContainer Container { get; }
-
-        public ILogger Logger { get; }
-     
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
-        {
-            var repository = Container.Resolve<IPackageRepository>();
             var state = new RefreshCommandState(repository);
-            var packages = await repository.UpdateAllPackagesReadMeAsync(token);
+            var packages = await repository.UpdateAllPackagesReadMeAsync(token).ConfigureAwait(false);
 
             var rootContext = new RootReadMeContext();
 
             foreach (var metadata in packages.OrderBy(i => i.Name).ThenBy(i => i.Version).ThenBy(i => i.SourceCode))
             {
-                var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token);
+                var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token).ConfigureAwait(false);
 
                 foreach (var license in licenses)
                 {
@@ -65,9 +58,16 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
 
-            await repository.Storage.WriteRootReadMeAsync(rootContext, token);
+            await repository.Storage.WriteRootReadMeAsync(rootContext, token).ConfigureAwait(false);
+        }
 
-            return true;
+        private void Hello(ILogger logger, IPackageRepository repository)
+        {
+            logger.Info("update .md files");
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+            }
         }
     }
 }

@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
@@ -15,34 +16,30 @@ namespace ThirdPartyLibraries.Suite.Commands
     {
         internal const string OutputFileName = "ThirdPartyNotices.txt";
 
-        public GenerateCommand(IUnityContainer container, ILogger logger)
-        {
-            container.AssertNotNull(nameof(container));
-            logger.AssertNotNull(nameof(logger));
-
-            Container = container;
-            Logger = logger;
-        }
-
-        public IUnityContainer Container { get; }
-
-        public ILogger Logger { get; }
-
         public IList<string> AppNames { get; } = new List<string>();
-        
+
+        public string Title { get; set; }
+
         public string To { get; set; }
 
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var repository = Container.Resolve<IPackageRepository>();
-            var state = new GenerateCommandState(repository, To, Logger);
-            var packages = await LoadAllPackagesNoticesAsync(repository, token);
+            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+            var logger = serviceProvider.GetRequiredService<ILogger>();
 
-            var rootContext = new ThirdPartyNoticesContext();
+            Hello(logger, repository);
+
+            var state = new GenerateCommandState(repository, To, logger);
+            var packages = await LoadAllPackagesNoticesAsync(repository, token).ConfigureAwait(false);
+
+            var rootContext = new ThirdPartyNoticesContext
+            {
+                Title = string.IsNullOrWhiteSpace(Title) ? AppNames[0] : Title
+            };
 
             foreach (var package in packages)
             {
-                var license = await state.GetLicensesAsync(package.LicenseCode, token);
+                var license = await state.GetLicensesAsync(package.LicenseCode, token).ConfigureAwait(false);
 
                 var packageContext = new ThirdPartyNoticesPackageContext
                 {
@@ -60,19 +57,27 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.FullName));
 
-            var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token);
+            var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
             var fileName = Path.Combine(To, OutputFileName);
             using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
             {
                 DotLiquidTemplate.RenderTo(file, template, rootContext);
             }
+        }
 
-            return true;
+        private void Hello(ILogger logger, IPackageRepository repository)
+        {
+            logger.Info("generate third party notices for " + string.Join(", ", AppNames));
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+                logger.Info("to {0}".FormatWith(To));
+            }
         }
 
         private async Task<IList<Package>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
         {
-           var libraries = await repository.Storage.GetAllLibrariesAsync(token);
+           var libraries = await repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
            var result = new List<Package>(libraries.Count);
 
            var sorted = libraries
@@ -82,7 +87,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
            foreach (var id in sorted)
            {
-               var package = await repository.LoadPackageAsync(id, token);
+               var package = await repository.LoadPackageAsync(id, token).ConfigureAwait(false);
                if (UsePackage(package))
                {
                    result.Add(package);

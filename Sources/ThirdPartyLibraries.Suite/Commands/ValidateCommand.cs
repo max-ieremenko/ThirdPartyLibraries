@@ -3,62 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Commands
 {
     public sealed class ValidateCommand : ICommand
     {
-        public ValidateCommand(IUnityContainer container, ILogger logger)
-        {
-            container.AssertNotNull(nameof(container));
-            logger.AssertNotNull(nameof(logger));
-
-            Container = container;
-            Logger = logger;
-        }
-
-        public IUnityContainer Container { get; }
-
-        public ILogger Logger { get; }
-
         public string AppName { get; set; }
 
         public IList<string> Sources { get; } = new List<string>();
 
-        public async ValueTask<bool> ExecuteAsync(CancellationToken token)
+        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var state = new ValidateCommandState(Container.Resolve<IPackageRepository>(), AppName);
-            await state.InitializeAsync(token);
+            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
 
-            var issues = GetIssues(state)
+            Hello(serviceProvider.GetRequiredService<ILogger>(), repository);
+
+            var state = new ValidateCommandState(repository, AppName);
+            await state.InitializeAsync(token).ConfigureAwait(false);
+
+            var issues = GetIssues(serviceProvider.GetRequiredService<ISourceCodeParser>(), state)
                 .GroupBy(i => i.Issue, i => i.Id, StringComparer.OrdinalIgnoreCase)
                 .OrderBy(i => i.Key);
 
-            var hasIssues = false;
+            var errors = new List<RepositoryValidationError>();
+
             foreach (var issue in issues)
             {
-                hasIssues = true;
-
-                Logger.Error("Following libraries {0}:".FormatWith(issue.Key));
-                using (Logger.Indent())
-                {
-                    foreach (var id in issue)
-                    {
-                        Logger.Error("{0} {1} from {2}".FormatWith(id.Name, id.Version, id.SourceCode));
-                    }
-                }
+                errors.Add(new RepositoryValidationError(issue.Key, issue.ToArray()));
             }
 
-            return !hasIssues;
+            if (errors.Count > 0)
+            {
+                throw new RepositoryValidationException(errors.ToArray());
+            }
         }
 
-        private IEnumerable<(LibraryId Id, string Issue)> GetIssues(ValidateCommandState state)
+        private void Hello(ILogger logger, IPackageRepository repository)
         {
-            var references = Container.Resolve<ISourceCodeParser>().GetReferences(Sources);
+            logger.Info("validate application {0}".FormatWith(AppName));
+            using (logger.Indent())
+            {
+                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+                logger.Info("sources " + string.Join(", ", Sources));
+            }
+        }
+
+        private IEnumerable<(LibraryId Id, string Issue)> GetIssues(ISourceCodeParser parser, ValidateCommandState state)
+        {
+            var references = parser.GetReferences(Sources);
 
             var messageNotAssigned = "are not assigned to {0}".FormatWith(AppName);
             var messageReferencesNotFound = "are assigned to {0}, but references not found in the sources".FormatWith(AppName);

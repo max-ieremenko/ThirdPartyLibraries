@@ -6,18 +6,16 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
-using Unity;
 
 namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
 {
     internal sealed class CustomPackageRepositoryAdapter : IPackageRepositoryAdapter
     {
-        [Dependency]
         public IStorage Storage { get; set; }
 
         public async Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token)
         {
-            var index = await Storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, CancellationToken.None);
+            var index = await Storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, token).ConfigureAwait(false);
             var package = new Package
             {
                 SourceCode = PackageSources.Custom,
@@ -31,7 +29,7 @@ namespace ThirdPartyLibraries.Suite.Internal.CustomAdapters
                 ApprovalStatus = PackageApprovalStatus.Approved
             };
 
-            package.ThirdPartyNotices = await Storage.ReadThirdPartyNoticesFile(id, token);
+            package.ThirdPartyNotices = await Storage.ReadThirdPartyNoticesFile(id, token).ConfigureAwait(false);
             return package;
         }
 
