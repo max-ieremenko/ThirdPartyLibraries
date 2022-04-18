@@ -41,7 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Shared.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.PowerShell", "ThirdPartyLibraries.PowerShell\ThirdPartyLibraries.PowerShell.csproj", "{5B17B555-ED62-4E5B-B672-C5DEA2F8D69F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyLibraries.PowerShell.IntegrationTest", "ThirdPartyLibraries.PowerShell.IntegrationTest\ThirdPartyLibraries.PowerShell.IntegrationTest.csproj", "{6FE90161-982E-4745-8A8E-C04DCD3B3BB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.PowerShell.IntegrationTest", "ThirdPartyLibraries.PowerShell.IntegrationTest\ThirdPartyLibraries.PowerShell.IntegrationTest.csproj", "{6FE90161-982E-4745-8A8E-C04DCD3B3BB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyLibraries.PowerShell.Test", "ThirdPartyLibraries.PowerShell.Test\ThirdPartyLibraries.PowerShell.Test.csproj", "{1802B72B-59EB-4722-8DC1-3E098780D4DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,10 @@ Global
 		{6FE90161-982E-4745-8A8E-C04DCD3B3BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FE90161-982E-4745-8A8E-C04DCD3B3BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE90161-982E-4745-8A8E-C04DCD3B3BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +146,7 @@ Global
 		{352FC256-EE84-4A1B-92D8-E8A3F8993B69} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{C8A4B45A-EFA6-4552-B892-3A61FBA68039} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{6FE90161-982E-4745-8A8E-C04DCD3B3BB1} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
+		{1802B72B-59EB-4722-8DC1-3E098780D4DB} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {373FE374-9ABB-4005-8104-E0EF52D12B1E}

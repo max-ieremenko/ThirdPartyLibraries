@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.PowerShell.Internal
 {
-    internal class CmdLetLogger : LoggerBase
+    internal class CmdLetLogger
     {
         private readonly Cmdlet _cmdlet;
 
@@ -22,7 +21,7 @@ namespace ThirdPartyLibraries.PowerShell.Internal
                 null));
         }
 
-        protected override void OnInfo(string message)
+        public void Info(string message)
         {
             _cmdlet.WriteInformation(new InformationRecord(message, null));
         }

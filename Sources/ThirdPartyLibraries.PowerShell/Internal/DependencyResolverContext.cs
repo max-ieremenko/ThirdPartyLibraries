@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -50,36 +49,53 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
 
     private static Action<AssemblyLoadContext> BindUnload()
     {
-        var methodInfo = typeof(AssemblyLoadContext)
-            .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-            .Where(i => "Unload".Equals(i.Name, StringComparison.Ordinal))
-            .Where(i => i.ReturnType == typeof(void))
-            .FirstOrDefault(i => i.GetParameters().Length == 0);
+        var methods = typeof(AssemblyLoadContext)
+            .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
 
-        if (methodInfo == null)
+        MethodInfo unload = null;
+        for (var i = 0; i < methods.Length; i++)
+        {
+            var method = methods[i];
+            if ("Unload".Equals(method.Name, StringComparison.Ordinal)
+                && method.ReturnType == typeof(void)
+                && method.GetParameters().Length == 0)
+            {
+                unload = method;
+                break;
+            }
+        }
+
+        if (unload == null)
         {
             throw new InvalidOperationException("Method AssemblyLoadContext.Unload not found.");
         }
 
-        return (Action<AssemblyLoadContext>)methodInfo.CreateDelegate(typeof(Action<AssemblyLoadContext>));
+        return (Action<AssemblyLoadContext>)unload.CreateDelegate(typeof(Action<AssemblyLoadContext>));
     }
 
     private static ConstructorInfo BindBaseCtor()
     {
-        var ctr = typeof(AssemblyLoadContext)
-            .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
-            .FirstOrDefault(i =>
-            {
-                var parameters = i.GetParameters();
-                return parameters.Length == 1 && parameters[0].ParameterType == typeof(bool);
-            });
+        var ctors = typeof(AssemblyLoadContext)
+            .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
 
-        if (ctr == null)
+        ConstructorInfo isCollectible = null;
+        for (var i = 0; i < ctors.Length; i++)
+        {
+            var ctor = ctors[i];
+            var parameters = ctor.GetParameters();
+            if (parameters.Length == 1 && parameters[0].ParameterType == typeof(bool))
+            {
+                isCollectible = ctor;
+                break;
+            }
+        }
+
+        if (isCollectible == null)
         {
             throw new InvalidOperationException("Method AssemblyLoadContext.ctr(bool) not found.");
         }
 
-        return ctr;
+        return isCollectible;
     }
 
     private Assembly GetOrAdd(string assemblyName)

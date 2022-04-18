@@ -1,4 +1,6 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Collections.Generic;
+using System.Management.Automation;
 using System.Threading;
 using ThirdPartyLibraries.PowerShell.Internal;
 
@@ -18,9 +20,9 @@ public abstract class CommandCmdlet : PSCmdlet
 
     protected sealed override void ProcessRecord()
     {
-        using (new DependencyResolver())
+        using (var dependencyResolver = new DependencyResolver())
         {
-            ProcessRecord(_tokenSource.Token);
+            ProcessRecord(dependencyResolver);
         }
     }
 
@@ -30,5 +32,23 @@ public abstract class CommandCmdlet : PSCmdlet
         base.StopProcessing();
     }
 
-    protected abstract void ProcessRecord(CancellationToken token);
+    protected abstract string CreateCommandLine(IList<(string Name, string Value)> options);
+
+    private void ProcessRecord(DependencyResolver dependencyResolver)
+    {
+        var options = new List<(string Name, string Value)>();
+        var command = CreateCommandLine(options);
+
+        var logger = new CmdLetLogger(this);
+
+        try
+        {
+            var run = dependencyResolver.BindRunAsync();
+            run(command, options, logger.Info, _tokenSource.Token).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+        }
+    }
 }

@@ -1,5 +1,5 @@
-﻿using System.Management.Automation;
-using System.Threading;
+﻿using System.Collections.Generic;
+using System.Management.Automation;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.PowerShell.Internal;
 
@@ -21,28 +21,21 @@ public sealed class GenerateCmdlet : CommandCmdlet
     [Parameter(Position = 4, HelpMessage = "a title of third party notices, default is appName[0]")]
     public string Title { get; set; }
 
-    protected override void ProcessRecord(CancellationToken token)
+    protected override string CreateCommandLine(IList<(string Name, string Value)> options)
     {
-        var commandLine = new CommandLine
-        {
-            Command = CommandOptions.CommandGenerate,
-            Options =
-            {
-                new CommandOption(CommandOptions.OptionRepository, this.RootPath(Repository)),
-                new CommandOption(CommandOptions.OptionTo, this.RootPath(To))
-            }
-        };
+        options.Add((CommandOptions.OptionRepository, this.RootPath(Repository)));
+        options.Add((CommandOptions.OptionTo, this.RootPath(To)));
 
         if (!string.IsNullOrEmpty(Title))
         {
-            commandLine.Options.Add(new CommandOption(CommandOptions.OptionTitle, Title));
+            options.Add((CommandOptions.OptionTitle, Title));
         }
 
         for (var i = 0; i < AppName.Length; i++)
         {
-            commandLine.Options.Add(new CommandOption(CommandOptions.OptionAppName, AppName[i]));
+            options.Add((CommandOptions.OptionAppName, AppName[i]));
         }
 
-        ThirdPartyLibrariesProgram.Run(commandLine, this, token);
+        return CommandOptions.CommandGenerate;
     }
 }
