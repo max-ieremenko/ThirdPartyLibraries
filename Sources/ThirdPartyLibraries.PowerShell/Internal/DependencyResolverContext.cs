@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -14,6 +15,7 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
     private readonly string _path;
     private readonly ConcurrentDictionary<string, Assembly> _cache;
     private readonly Func<string, Assembly> _getOrAdd;
+    private readonly IDictionary<string, string> _localFileByAssemblyName;
 
     static DependencyResolverContext()
     {
@@ -29,6 +31,8 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
         _path = path;
         _cache = new ConcurrentDictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
         _getOrAdd = GetOrAdd;
+        _localFileByAssemblyName = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        LoadLocalFiles();
     }
 
     public Assembly TryLoadLocal(AssemblyName assemblyName)
@@ -100,12 +104,28 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
 
     private Assembly GetOrAdd(string assemblyName)
     {
-        var fileName = Path.Combine(_path, assemblyName + ".dll");
-        if (File.Exists(fileName))
+        if (_localFileByAssemblyName.TryGetValue(assemblyName, out var fileName)
+            && File.Exists(fileName))
         {
             return LoadFromAssemblyPath(fileName);
         }
 
         return null;
+    }
+
+    private void LoadLocalFiles()
+    {
+        var files = Directory.GetFiles(_path);
+        for (var i = 0; i < files.Length; i++)
+        {
+            var fullName = files[i];
+            if (!".dll".Equals(Path.GetExtension(fullName), StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            var name = Path.GetFileNameWithoutExtension(fullName);
+            _localFileByAssemblyName.Add(name, fullName);
+        }
     }
 }
