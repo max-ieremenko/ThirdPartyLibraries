@@ -8,15 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="GitHubApiTest.License.Newtonsoft.Json.json" />
-    <None Remove="GitHubApiTest.License.Shouldly.Json.json" />
-    <None Remove="GitHubApiTest.LoadLicenseUnauthorized.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="GitHubApiTest.LoadLicenseUnauthorized.json" />
-    <EmbeddedResource Include="GitHubApiTest.License.Shouldly.Json.json" />
-    <EmbeddedResource Include="GitHubApiTest.License.Newtonsoft.Json.json" />
+    <EmbeddedResource Include="*.json" />
   </ItemGroup>
 
   <ItemGroup>
