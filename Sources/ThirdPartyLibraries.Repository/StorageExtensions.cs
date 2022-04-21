@@ -25,7 +25,7 @@ namespace ThirdPartyLibraries.Repository
             var content = await storage.OpenLicenseFileReadAsync(licenseCode, IndexFileName, token).ConfigureAwait(false);
             using (content)
             {
-                return JsonDeserialize<LicenseIndexJson>(content);
+                return content?.JsonDeserialize<LicenseIndexJson>();
             }
         }
 
@@ -53,7 +53,7 @@ namespace ThirdPartyLibraries.Repository
             var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
             using (content)
             {
-                return JsonDeserialize<TModel>(content);
+                return content == null ? default : content.JsonDeserialize<TModel>();
             }
         }
 
@@ -153,20 +153,6 @@ namespace ThirdPartyLibraries.Repository
             using (var reader = new StreamReader(stream))
             {
                 return await reader.ReadToEndAsync().ConfigureAwait(false);
-            }
-        }
-
-        private static TModel JsonDeserialize<TModel>(Stream content)
-        {
-            if (content == null)
-            {
-                return default;
-            }
-
-            using (var reader = new StreamReader(content))
-            using (var jsonReader = new JsonTextReader(reader))
-            {
-                return new JsonSerializer().Deserialize<TModel>(jsonReader);
             }
         }
 
