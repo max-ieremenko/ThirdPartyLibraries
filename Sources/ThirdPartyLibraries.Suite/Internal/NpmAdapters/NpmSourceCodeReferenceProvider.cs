@@ -92,7 +92,7 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             var nodeModulesDirectoryName = Path.Combine(Path.GetDirectoryName(fileName), PackageJsonParser.NodeModules);
             if (!Directory.Exists(nodeModulesDirectoryName))
             {
-                throw new DirectoryNotFoundException("Directory {0} not found.".FormatWith(nodeModulesDirectoryName));
+                throw new DirectoryNotFoundException("Directory {0} not found. Did you run \"npm restore\"?".FormatWith(nodeModulesDirectoryName));
             }
 
             var parser = PackageJsonParser.FromFile(fileName);
