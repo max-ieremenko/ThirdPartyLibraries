@@ -14,6 +14,8 @@ namespace ThirdPartyLibraries.PowerShell.Internal
 
         public void Error(Exception exception)
         {
+            _cmdlet.WriteVerbose(exception.ToString());
+
             _cmdlet.WriteError(new ErrorRecord(
                 exception,
                 null,

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,60 +6,91 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
-namespace ThirdPartyLibraries.Shared
+namespace ThirdPartyLibraries.Shared;
+
+public static class HttpClientExtensions
 {
-    public static class HttpClientExtensions
+    private static readonly ProductHeaderValue UserAgent =
+        new("ThirdPartyLibraries", typeof(HttpClientExtensions).Assembly.GetName().Version.ToString());
+
+    public static HttpClient CreateHttpClient()
     {
-        private static readonly ProductHeaderValue UserAgent =
-            new ProductHeaderValue("ThirdPartyLibraries", typeof(HttpClientExtensions).Assembly.GetName().Version.ToString());
+        var client = new HttpClient();
 
-        public static HttpClient CreateHttpClient()
+        // http://developer.github.com/v3/#user-agent-required
+        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(UserAgent));
+        return client;
+    }
+
+    public static async Task AssertStatusCodeOk(this HttpResponseMessage response)
+    {
+        response.AssertNotNull(nameof(response));
+
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            var client = new HttpClient();
-
-            // http://developer.github.com/v3/#user-agent-required
-            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(UserAgent));
-            return client;
+            return;
         }
 
-        public static async Task AssertStatusCodeOk(this HttpResponseMessage response)
+        string responseContent = null;
+
+        if (response.Content != null)
         {
-            response.AssertNotNull(nameof(response));
-
-            if (response.StatusCode != HttpStatusCode.OK)
+            try
             {
-                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var error = new StringBuilder()
-                    .AppendFormat("{0}: {1}", response.StatusCode, response.ReasonPhrase)
-                    .AppendLine()
-                    .AppendLine("----------------")
-                    .Append(responseContent);
-
-                throw new InvalidOperationException(error.ToString());
+                responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+            catch
+            {
             }
         }
 
-        public static async Task<TResult> GetAsJsonAsync<TResult>([NotNull] this HttpClient client, [NotNull] string requestUri, CancellationToken token)
+        var error = new StringBuilder()
+            .AppendFormat("Unable to access {0}: {1} - {2}", response.RequestMessage.RequestUri, response.StatusCode, response.ReasonPhrase);
+
+        if (!string.IsNullOrWhiteSpace(responseContent))
         {
-            client.AssertNotNull(nameof(client));
-            requestUri.AssertNotNull(nameof(requestUri));
+            error
+                .AppendLine()
+                .AppendLine("----------------")
+                .Append(responseContent);
+        }
 
-            using (var response = await client.GetAsync(requestUri, token).ConfigureAwait(false))
+        throw new HttpRequestException(error.ToString());
+    }
+
+    public static async Task<HttpResponseMessage> InvokeGetAsync([NotNull] this HttpClient client, [NotNull] string requestUri, CancellationToken token)
+    {
+        client.AssertNotNull(nameof(client));
+        requestUri.AssertNotNull(nameof(requestUri));
+
+        try
+        {
+            return await client.GetAsync(requestUri, token).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            throw new HttpRequestException("Unable to access {0}: {1}".FormatWith(requestUri, ex.Message), ex);
+        }
+    }
+
+    public static async Task<TResult> GetAsJsonAsync<TResult>([NotNull] this HttpClient client, [NotNull] string requestUri, CancellationToken token)
+    {
+        client.AssertNotNull(nameof(client));
+        requestUri.AssertNotNull(nameof(requestUri));
+
+        using (var response = await client.InvokeGetAsync(requestUri, token).ConfigureAwait(false))
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                if (response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return default;
-                }
+                return default;
+            }
 
-                await response.AssertStatusCodeOk().ConfigureAwait(false);
+            await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                using (var reader = new JsonTextReader(new StreamReader(stream)))
-                {
-                    return new JsonSerializer().Deserialize<TResult>(reader);
-                }
+            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+            {
+                return stream.JsonDeserialize<TResult>();
             }
         }
     }

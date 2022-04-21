@@ -59,7 +59,7 @@ namespace ThirdPartyLibraries.Generic
             string mediaType;
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(configuration.DownloadUrl, token).ConfigureAwait(false))
+            using (var response = await client.InvokeGetAsync(configuration.DownloadUrl, token).ConfigureAwait(false))
             {
                 await response.AssertStatusCodeOk().ConfigureAwait(false);
 
