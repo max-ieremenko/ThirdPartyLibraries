@@ -59,7 +59,7 @@ namespace ThirdPartyLibraries.NuGet
             }
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(licenseUrl, token).ConfigureAwait(false))
+            using (var response = await client.InvokeGetAsync(licenseUrl, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {

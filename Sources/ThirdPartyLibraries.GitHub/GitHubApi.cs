@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.Shared;
 
@@ -130,7 +128,7 @@ namespace ThirdPartyLibraries.GitHub
             JObject result;
 
             using (client)
-            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
+            using (var response = await client.InvokeGetAsync(url, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -152,9 +150,8 @@ namespace ThirdPartyLibraries.GitHub
                 }
 
                 using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                using (var reader = new JsonTextReader(new StreamReader(stream)))
                 {
-                    result = (JObject)new JsonSerializer().Deserialize(reader);
+                    result = stream.JsonDeserialize<JObject>();
                 }
 
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
