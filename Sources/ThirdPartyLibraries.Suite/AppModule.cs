@@ -18,7 +18,7 @@ namespace ThirdPartyLibraries.Suite
         {
             services.AssertNotNull(nameof(services));
 
-            services.AddSingleton(new Func<HttpClient>(HttpClientExtensions.CreateHttpClient));
+            services.AddSingleton(ResolveHttpClientFactory);
 
             services.AddSingleton(ResolveStaticLicenseConfiguration);
             services.AddTransient<ISourceCodeParser, SourceCodeParser>();
@@ -76,6 +76,17 @@ namespace ThirdPartyLibraries.Suite
             return provider
                 .GetRequiredService<IConfigurationManager>()
                 .GetSection<GitHubConfiguration>(KnownHosts.GitHub);
+        }
+
+        private static Func<HttpClient> ResolveHttpClientFactory(IServiceProvider provider)
+        {
+            var configuration = provider
+                .GetRequiredService<IConfigurationManager>()
+                .GetSection<SkipCertificateCheckConfiguration>(SkipCertificateCheckConfiguration.SectionName);
+
+            var factory = new HttpClientFactory(configuration);
+
+            return factory.CreateHttpClient;
         }
     }
 }

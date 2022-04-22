@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using ThirdPartyLibraries.Shared;
 
@@ -21,7 +20,16 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 return false;
             }
 
-            return Patterns.Any(i => Regex.IsMatch(name, i, RegexOptions.IgnoreCase));
+            for (var i = 0; i < Patterns.Count; i++)
+            {
+                var pattern = Patterns[i];
+                if (Regex.IsMatch(name, pattern, RegexOptions.IgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

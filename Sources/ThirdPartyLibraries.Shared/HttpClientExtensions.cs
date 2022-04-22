@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,18 +10,6 @@ namespace ThirdPartyLibraries.Shared;
 
 public static class HttpClientExtensions
 {
-    private static readonly ProductHeaderValue UserAgent =
-        new("ThirdPartyLibraries", typeof(HttpClientExtensions).Assembly.GetName().Version.ToString());
-
-    public static HttpClient CreateHttpClient()
-    {
-        var client = new HttpClient();
-
-        // http://developer.github.com/v3/#user-agent-required
-        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(UserAgent));
-        return client;
-    }
-
     public static async Task AssertStatusCodeOk(this HttpResponseMessage response)
     {
         response.AssertNotNull(nameof(response));
