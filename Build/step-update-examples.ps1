@@ -12,7 +12,7 @@ foreach ($example in $examples) {
 
     try {
         Copy-Item -Path (Join-Path $example "third-party-notices-template.txt") -Destination $originalTemplateFileName -Force
-        Exec { dotnet $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$outDir" -title "Third party libraries" }
+        Exec { dotnet $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$example" -title "Third party libraries" }
     }
     finally {
         Copy-Item -Path $originalTemplateBackup -Destination $originalTemplateFileName -Force

@@ -58,11 +58,15 @@ namespace ThirdPartyLibraries.Suite.Commands
             rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.FullName));
 
             var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
+            Directory.CreateDirectory(To);
             var fileName = Path.Combine(To, OutputFileName);
             using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
             {
                 DotLiquidTemplate.RenderTo(file, template, rootContext);
             }
+
+            state.CleanUpLicensesDirectory();
+            await CopyLicenseFilesAsync(fileName, state, token).ConfigureAwait(false);
         }
 
         private void Hello(ILogger logger, IPackageRepository repository)
@@ -114,6 +118,24 @@ namespace ThirdPartyLibraries.Suite.Commands
             }
 
             return false;
+        }
+
+        private async Task CopyLicenseFilesAsync(string reportFileName, GenerateCommandState state, CancellationToken token)
+        {
+            var reportContent = File.ReadAllText(reportFileName);
+
+            foreach (var fileName in state.LicenseFiles)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                if (reportContent.Contains(fileName, StringComparison.OrdinalIgnoreCase))
+                {
+                    await state.CopyLicenseFileAsync(fileName, token).ConfigureAwait(false);
+                }
+            }
         }
     }
 }
