@@ -1,4 +1,4 @@
-task LocalBuild Initialize, Clean, CiBuild, PsCoreTest
+task LocalBuild Initialize, Clean, CiBuild, PsCoreTest, UpdateExamples
 task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
 
 task UnitTest UnitTestCore31, UnitTest50, UnitTest60
@@ -88,4 +88,8 @@ task PsCoreTest {
     }
 
     Build-Parallel $builds -ShowParameter ImageName -MaximumBuilds 4
+}
+
+task UpdateExamples {
+    Exec { .\step-update-examples.ps1 }
 }
