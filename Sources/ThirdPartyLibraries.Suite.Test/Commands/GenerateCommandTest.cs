@@ -106,7 +106,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 HRef = "https://www.nuget.org/packages/Newtonsoft.Json/12.0.2",
                 Author = "James Newton-King",
                 Copyright = "Copyright © James Newton-King 2008",
-                UsedBy = new[] { new PackageApplication(AppName, false) },
+                UsedBy = new[] { PackageApplication.Public(AppName) },
                 ThirdPartyNotices = "some extra notices"
             };
             _packages.Add(package);
@@ -155,7 +155,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 Name = "internal package",
                 Version = "1",
-                UsedBy = new[] { new PackageApplication(AppName, true) }
+                UsedBy = new[] { PackageApplication.Internal(AppName) }
             };
             _packages.Add(package1);
 
@@ -163,7 +163,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             {
                 Name = "other application",
                 Version = "1",
-                UsedBy = new[] { new PackageApplication(AppName + "2", false) }
+                UsedBy = new[] { PackageApplication.Public(AppName + "2") }
             };
             _packages.Add(package2);
 
@@ -184,7 +184,7 @@ namespace ThirdPartyLibraries.Suite.Commands
                 Name = "name",
                 Version = "version",
                 LicenseCode = "LGPL-3.0",
-                UsedBy = new[] { new PackageApplication(AppName, false) }
+                UsedBy = new[] { PackageApplication.Public(AppName) }
             };
             _packages.Add(package);
 
