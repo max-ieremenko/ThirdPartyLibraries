@@ -91,7 +91,7 @@ namespace ThirdPartyLibraries.Suite.Commands
             if (!index.FileName.IsNullOrEmpty())
             {
                 Directory.CreateDirectory(Path.Combine(To, "Licenses"));
-                result.FileName = Path.Combine("Licenses", "{0}-{1}".FormatWith(index.Code, index.FileName));
+                result.FileName = "Licenses/{0}-{1}".FormatWith(index.Code, index.FileName);
 
                 using (var content = await Repository.Storage.OpenLicenseFileReadAsync(code, index.FileName, token).ConfigureAwait(false))
                 using (var dest = new FileStream(Path.Combine(To, result.FileName), FileMode.Create, FileAccess.ReadWrite))
