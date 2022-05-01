@@ -7,13 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Internal\GitHubAdapters\GitHubConfigurationTest.appsettings.json" />
-    <None Remove="Internal\NpmAdapters\NpmConfigurationTest.appsettings.json" />
-    <None Remove="Internal\NuGetAdapters\LicenseResolverConfigurationTest.appsettings.json" />
-    <None Remove="Internal\NuGetAdapters\NuGetConfigurationTest.appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <EmbeddedResource Include="Commands\GenerateCommandTemplates\*.txt" />
     <EmbeddedResource Include="Internal\GitHubAdapters\GitHubConfigurationTest.appsettings.json" />
     <EmbeddedResource Include="Internal\NpmAdapters\NpmConfigurationTest.appsettings.json" />
     <EmbeddedResource Include="Internal\NuGetAdapters\NuGetConfigurationTest.appsettings.json" />

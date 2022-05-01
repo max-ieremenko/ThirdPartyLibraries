@@ -10,13 +10,14 @@ namespace ThirdPartyLibraries.Repository
 {
     public static class StorageExtensions
     {
+        public const string ThirdPartyNoticesTemplateFileName = "third-party-notices-template.txt";
+        
         internal const string ReadMeFileName = "readme.md";
         internal const string ReadMeTemplateFileName = "readme-template.txt";
         internal const string IndexFileName = "index.json";
         internal const string AppSettingsFileName = "appsettings.json";
 
         private const string LibraryReadMeTemplateFileName = "{0}-readme-template.txt";
-        private const string ThirdPartyNoticesTemplateFileName = "third-party-notices-template.txt";
 
         public static async Task<LicenseIndexJson> ReadLicenseIndexJsonAsync(this IStorage storage, string licenseCode, CancellationToken token)
         {

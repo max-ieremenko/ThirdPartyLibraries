@@ -12,8 +12,11 @@ namespace ThirdPartyLibraries.Suite.Commands
 {
     internal sealed class GenerateCommandState
     {
+        private const string LicensesDirectory = "Licenses";
+
         private readonly IDictionary<string, LicenseIndexJson> _indexByCode;
         private readonly IDictionary<string, ThirdPartyNoticesLicenseContext> _licenseByCode;
+        private readonly IDictionary<string, LicenseFile> _licenseFileByReportName;
 
         public GenerateCommandState(IPackageRepository repository, string to, ILogger logger)
         {
@@ -23,6 +26,7 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             _indexByCode = new Dictionary<string, LicenseIndexJson>(StringComparer.OrdinalIgnoreCase);
             _licenseByCode = new Dictionary<string, ThirdPartyNoticesLicenseContext>(StringComparer.OrdinalIgnoreCase);
+            _licenseFileByReportName = new Dictionary<string, LicenseFile>(StringComparer.OrdinalIgnoreCase);
         }
 
         public IPackageRepository Repository { get; }
@@ -32,6 +36,8 @@ namespace ThirdPartyLibraries.Suite.Commands
         public ILogger Logger { get; }
 
         public IEnumerable<ThirdPartyNoticesLicenseContext> Licenses => _licenseByCode.Values;
+
+        public IEnumerable<string> LicenseFiles => _licenseFileByReportName.Keys;
 
         public async Task<ThirdPartyNoticesLicenseContext> GetLicensesAsync(string licenseExpression, CancellationToken token)
         {
@@ -65,6 +71,59 @@ namespace ThirdPartyLibraries.Suite.Commands
             return result;
         }
 
+        public void CleanUpLicensesDirectory()
+        {
+            var path = Path.Combine(To, LicensesDirectory);
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+            }
+        }
+
+        public Task CopyLicenseFileAsync(string fileName, CancellationToken token)
+        {
+            var file = _licenseFileByReportName[fileName];
+            return CopyLicenseFileRecursivelyAsync(file, new HashSet<string>(StringComparer.OrdinalIgnoreCase), token);
+        }
+
+        private async Task CopyLicenseFileRecursivelyAsync(LicenseFile file, HashSet<string> distinct, CancellationToken token)
+        {
+            if (!distinct.Add(file.LicenseCode))
+            {
+                return;
+            }
+
+            await CopyLicenseFileContentAsync(file, token).ConfigureAwait(false);
+
+            foreach (var dependency in file.Dependencies)
+            {
+                var dependencyFile = _licenseFileByReportName[dependency];
+                await CopyLicenseFileRecursivelyAsync(dependencyFile, distinct, token).ConfigureAwait(false);
+            }
+        }
+
+        private async Task CopyLicenseFileContentAsync(LicenseFile file, CancellationToken token)
+        {
+            if (file.RepositoryName.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var fileName = Path.Combine(To, file.ReportName);
+            if (File.Exists(fileName))
+            {
+                return;
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+
+            using (var content = await Repository.Storage.OpenLicenseFileReadAsync(file.LicenseCode, file.RepositoryName, token).ConfigureAwait(false))
+            using (var dest = new FileStream(Path.Combine(To, fileName), FileMode.Create, FileAccess.ReadWrite))
+            {
+                await content.CopyToAsync(dest, token).ConfigureAwait(false);
+            }
+        }
+
         private async Task<LicenseIndexJson> LoadLicenseIndexAsync(string code, CancellationToken token)
         {
             if (_indexByCode.TryGetValue(code, out var index))
@@ -88,27 +147,46 @@ namespace ThirdPartyLibraries.Suite.Commands
 
             _indexByCode.Add(code, result);
 
+            var licenseFile = new LicenseFile(code, index.FileName);
+            _licenseFileByReportName.Add(licenseFile.ReportName, licenseFile);
+
             if (!index.FileName.IsNullOrEmpty())
             {
-                Directory.CreateDirectory(Path.Combine(To, "Licenses"));
-                result.FileName = "Licenses/{0}-{1}".FormatWith(index.Code, index.FileName);
-
-                using (var content = await Repository.Storage.OpenLicenseFileReadAsync(code, index.FileName, token).ConfigureAwait(false))
-                using (var dest = new FileStream(Path.Combine(To, result.FileName), FileMode.Create, FileAccess.ReadWrite))
-                {
-                    await content.CopyToAsync(dest, token).ConfigureAwait(false);
-                }
+                result.FileName = licenseFile.ReportName;
             }
 
             if (!index.Dependencies.IsNullOrEmpty())
             {
                 foreach (var dependency in index.Dependencies)
                 {
-                    await LoadLicenseIndexAsync(dependency, token).ConfigureAwait(false);
+                    var dependencyIndex = await LoadLicenseIndexAsync(dependency, token).ConfigureAwait(false);
+                    if (!dependencyIndex.FileName.IsNullOrEmpty())
+                    {
+                        licenseFile.Dependencies.Add(dependencyIndex.FileName);
+                    }
                 }
             }
 
             return result;
+        }
+
+        private sealed class LicenseFile
+        {
+            public LicenseFile(string licenseCode, string repositoryName)
+            {
+                LicenseCode = licenseCode;
+                ReportName = "{0}/{1}-{2}".FormatWith(LicensesDirectory, licenseCode, repositoryName.IsNullOrEmpty() ? "dummy.txt" : repositoryName);
+                RepositoryName = repositoryName;
+                Dependencies = new List<string>();
+            }
+
+            public string LicenseCode { get; }
+
+            public string ReportName { get; }
+
+            public string RepositoryName { get; }
+
+            public IList<string> Dependencies { get; }
         }
     }
 }
