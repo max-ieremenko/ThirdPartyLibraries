@@ -118,7 +118,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
             if (licenseType.EqualsIgnoreCase("file"))
             {
                 var content = await GetPackageFileContentAsync(id, licenseValue, token).ConfigureAwait(false);
-                await Storage.WriteLibraryFileAsync(id, PackageLicense.SubjectPackage + "-" + licenseValue, content ?? Array.Empty<byte>(), token).ConfigureAwait(false);
+                await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, licenseValue), content ?? Array.Empty<byte>(), token).ConfigureAwait(false);
                 hasFileName = true;
             }
             else if (licenseType.EqualsIgnoreCase("expression"))
@@ -133,13 +133,12 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
             if (!hasFileName)
             {
-                var fileNames = new[] { "LICENSE.md", "LICENSE.txt", "LICENSE", "LICENSE.rtf" };
-                foreach (var fileName in fileNames)
+                foreach (var fileName in PackageLicense.StaticLicenseFileNames)
                 {
                     var content = await GetPackageFileContentAsync(id, fileName, token).ConfigureAwait(false);
                     if (content != null)
                     {
-                        await Storage.WriteLibraryFileAsync(id, PackageLicense.SubjectPackage + "-" + fileName, content, token).ConfigureAwait(false);
+                        await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, fileName), content, token).ConfigureAwait(false);
                     }
                 }
             }
@@ -161,7 +160,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
             if (info?.FileContent != null)
             {
-                await Storage.WriteLibraryFileAsync(id, subject + "-" + info.FileName, info.FileContent, token).ConfigureAwait(false);
+                await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(subject, info.FileName), info.FileContent, token).ConfigureAwait(false);
             }
 
             return license;

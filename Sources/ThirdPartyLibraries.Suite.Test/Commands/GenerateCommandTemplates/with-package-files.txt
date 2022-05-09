@@ -1,0 +1,20 @@
+﻿{{Title}}
+{% for i in (1..Title.size) %}*{% endfor %}
+
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+
+{% for package in Packages -%}
+{{package.Name}} ({{package.HRef}})
+{%- if package.Author -%}
+    Authors: {{package.Author}}
+{%- endif -%}
+{%- if package.Copyright -%}
+	Copyright: {{package.Copyright}}
+{%- endif -%}
+	License: {{package.PackageLicense.FullName}}, full text can be found at {{package.PackageLicense.HRef}} or in {{package.PackageLicense.FileName}}
+{%- if package.ThirdPartyNotices -%}
+
+{{package.ThirdPartyNotices}}
+{%- endif -%}
+
+{% endfor -%}
