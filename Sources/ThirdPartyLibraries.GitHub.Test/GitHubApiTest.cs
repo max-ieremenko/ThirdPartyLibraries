@@ -132,5 +132,18 @@ namespace ThirdPartyLibraries.GitHub
             actual.Message.ShouldContain("some text");
             actual.Message.ShouldContain("some url");
         }
+
+        [Test]
+        [TestCase("https://github.com/JamesNK/Newtonsoft.Json", "JamesNK", "Newtonsoft.Json")]
+        [TestCase("https://github.com/shouldly/shouldly.git", "shouldly", "shouldly")]
+        [TestCase("https://raw.githubusercontent.com/moq/moq4/master/License.txt", "moq", "moq4")]
+        [TestCase("https://github.com/unitycontainer", null, null)]
+        public void TryExtractRepositoryName(string url, string owner, string name)
+        {
+            _sut.TryExtractRepositoryName(url, out var actualOwner, out var actualName).ShouldBe(owner != null);
+
+            actualOwner.ShouldBe(owner);
+            actualName.ShouldBe(name);
+        }
     }
 }
