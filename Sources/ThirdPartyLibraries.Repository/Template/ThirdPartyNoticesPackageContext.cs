@@ -1,17 +1,25 @@
-﻿namespace ThirdPartyLibraries.Repository.Template
+﻿namespace ThirdPartyLibraries.Repository.Template;
+
+public sealed class ThirdPartyNoticesPackageContext
 {
-    public sealed class ThirdPartyNoticesPackageContext
-    {
-        public string Name { get; set; }
+    // package name
+    public string Name { get; set; }
 
-        public string HRef { get; set; }
+    // package public url
+    public string HRef { get; set; }
 
-        public string Author { get; set; }
+    // package author(s)
+    public string Author { get; set; }
 
-        public string Copyright { get; set; }
+    // package copyright
+    public string Copyright { get; set; }
 
-        public string ThirdPartyNotices { get; set; }
+    // optional notices, saved into repository
+    public string ThirdPartyNotices { get; set; }
 
-        public ThirdPartyNoticesLicenseContext License { get; set; }
-    }
+    // repository license assigned to this package
+    public ThirdPartyNoticesLicenseContext License { get; set; }
+
+    // license assigned to this package, based on the package specification
+    public ThirdPartyNoticesPackageLicenseContext PackageLicense { get; set; }
 }

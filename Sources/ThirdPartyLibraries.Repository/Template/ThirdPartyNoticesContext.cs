@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace ThirdPartyLibraries.Repository.Template
+namespace ThirdPartyLibraries.Repository.Template;
+
+public sealed class ThirdPartyNoticesContext
 {
-    public sealed class ThirdPartyNoticesContext
-    {
-        public string Title { get; set; }
+    // Application Title, comes from command line
+    public string Title { get; set; }
 
-        public IList<ThirdPartyNoticesLicenseContext> Licenses { get; } = new List<ThirdPartyNoticesLicenseContext>();
+    // list of repository licenses referenced by packages
+    public IList<ThirdPartyNoticesLicenseContext> Licenses { get; } = new List<ThirdPartyNoticesLicenseContext>();
 
-        public IList<ThirdPartyNoticesPackageContext> Packages { get; } = new List<ThirdPartyNoticesPackageContext>();
-    }
+    // list of packages
+    public IList<ThirdPartyNoticesPackageContext> Packages { get; } = new List<ThirdPartyNoticesPackageContext>();
 }
