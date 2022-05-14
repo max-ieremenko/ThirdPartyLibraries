@@ -221,6 +221,20 @@ namespace ThirdPartyLibraries.Repository
             await _sut.RemoveLibraryAsync(id, CancellationToken.None).ConfigureAwait(false);
         }
 
+        [Test]
+        [TestCase("index.json", "index.json")]
+        [TestCase("INDEX.json", "index.json")]
+        [TestCase("*.json", "index.json")]
+        [TestCase("*.*", "index.json", "package.nuspec")]
+        public async Task FindLibraryFiles(string searchPattern, params string[] expected)
+        {
+            var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
+
+            var actual = await _sut.FindLibraryFilesAsync(id, searchPattern, CancellationToken.None).ConfigureAwait(false);
+
+            actual.ShouldBe(expected, ignoreOrder: true);
+        }
+
         private void CopyFile(string targetName, string resourceName)
         {
             targetName = targetName.Replace('\\', Path.DirectorySeparatorChar);

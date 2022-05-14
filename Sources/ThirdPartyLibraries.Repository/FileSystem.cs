@@ -43,6 +43,35 @@ namespace ThirdPartyLibraries.Repository
             }
         }
 
+        public Task<string[]> FindFilesAsync(TId id, string searchPattern, CancellationToken token)
+        {
+            var location = _getLocation(id);
+            if (!Directory.Exists(location))
+            {
+                return Task.FromResult(Array.Empty<string>());
+            }
+
+            var options = new EnumerationOptions
+            {
+                MatchCasing = MatchCasing.CaseInsensitive,
+                RecurseSubdirectories = false
+            };
+
+            var files = Directory.GetFiles(location, searchPattern, options);
+            if (files.Length == 0)
+            {
+                return Task.FromResult(Array.Empty<string>());
+            }
+
+            var result = new string[files.Length];
+            for (var i = 0; i < files.Length; i++)
+            {
+                result[i] = Path.GetFileName(files[i]);
+            }
+
+            return Task.FromResult(result);
+        }
+
         private Stream OpenFileWrite(TId id, string fileName)
         {
             var location = _getLocation(id);
