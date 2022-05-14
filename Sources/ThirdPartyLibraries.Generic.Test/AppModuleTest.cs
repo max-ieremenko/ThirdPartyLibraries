@@ -30,5 +30,19 @@ namespace ThirdPartyLibraries.Generic
 
             ReferenceEquals(host1, host2).ShouldBeTrue();
         }
+
+        [Test]
+        public void ResolveCodeProjectApi()
+        {
+            _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.CodeProject).ShouldBeOfType<CodeProjectApi>();
+            _sut.GetRequiredKeyedService<IFullLicenseSource>(CodeProjectApi.LicenseCode).ShouldBeOfType<CodeProjectApi>();
+        }
+
+        [Test]
+        public void ResolveSpdxOrgApi()
+        {
+            _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.SpdxOrg.ToUpperInvariant()).ShouldBeOfType<SpdxOrgApi>();
+            _sut.GetRequiredService<IFullLicenseSource>().ShouldBeOfType<SpdxOrgApi>();
+        }
     }
 }

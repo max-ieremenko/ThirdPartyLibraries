@@ -91,11 +91,19 @@ namespace ThirdPartyLibraries.Suite.Internal
 
         private async Task<LicenseInfo> DownloadLicenseByCodeAsync(string code, CancellationToken token)
         {
-            // check by code
-            var name = code.ToUpperInvariant();
-            var source = ServiceProvider.GetKeyedService<IFullLicenseSource>(name) ?? ServiceProvider.GetRequiredService<IStaticLicenseSource>();
+            var license = await ServiceProvider
+                .GetRequiredService<IStaticLicenseSource>()
+                .DownloadLicenseByCodeAsync(code, token)
+                .ConfigureAwait(false);
 
-            var license = await source.DownloadLicenseByCodeAsync(code, token).ConfigureAwait(false);
+            if (license != null)
+            {
+                return Convert(license);
+            }
+
+            var source = ServiceProvider.GetKeyedService<IFullLicenseSource>(code) ?? ServiceProvider.GetRequiredService<IFullLicenseSource>();
+            license = await source.DownloadLicenseByCodeAsync(code, token).ConfigureAwait(false);
+
             return Convert(license);
         }
 
