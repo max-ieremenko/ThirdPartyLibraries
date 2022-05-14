@@ -170,6 +170,8 @@ PS> Publish-ThirdPartyNotices -AppName ThirdPartyLibraries -Repository c:\Reposi
 
 *third-party-notices-template.txt* will be created after the first run *ThirdPartyLibraries generate*.
 
+Other examples third-party-notices-template are [here](Examples/third-party-notices-template).
+
 [Back to ToC](#table-of-contents)
 
 Configuration <a name="configuration"></a>
