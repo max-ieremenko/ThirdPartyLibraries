@@ -27,6 +27,7 @@ namespace ThirdPartyLibraries.Repository
             DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesContext), allowAllMembers);
             DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesLicenseContext), allowAllMembers);
             DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageContext), allowAllMembers);
+            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageLicenseContext), allowAllMembers);
         }
 
         public static void RenderTo(Stream stream, string templateSource, object context)
