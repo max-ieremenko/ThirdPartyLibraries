@@ -30,5 +30,12 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
                 CodeHRef = url
             };
         }
+
+        public bool TryExtractRepositoryName(string url, out string owner, out string name)
+        {
+            owner = default;
+            name = default;
+            return false;
+        }
     }
 }
