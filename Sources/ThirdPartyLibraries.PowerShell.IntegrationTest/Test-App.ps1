@@ -7,6 +7,15 @@ Show-ThirdPartyLibrariesInfo
 
 Update-ThirdPartyLibrariesRepository -AppName "Test" -Source "/sources" -Repository "/repository" -InformationAction Continue
 
+$mit = Get-Content /repository/licenses/mit/index.json | ConvertFrom-Json
+if ($mit.Code -ne "MIT" -or !$mit.HRef -or !$mit.FileName) {
+    throw "MIT index.json is invalid."
+}
+
+if (!(Get-Content /repository/licenses/mit/license.txt)) {
+    throw "MIT license content is empty."
+}
+
 try {
     Test-ThirdPartyLibrariesRepository -AppName "Test" -Source "/sources" -Repository "/repository" -InformationAction Continue
 }

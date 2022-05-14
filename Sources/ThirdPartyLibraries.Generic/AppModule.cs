@@ -20,7 +20,7 @@ namespace ThirdPartyLibraries.Generic
                 provider => provider.GetRequiredService<OpenSourceOrgApi>());
 
             services.AddKeyedTransient<ILicenseCodeSource, SpdxOrgApi>(KnownHosts.SpdxOrg);
-            services.AddKeyedTransient<IFullLicenseSource, SpdxOrgApi>(KnownHosts.SpdxOrg);
+            services.AddTransient<IFullLicenseSource, SpdxOrgApi>();
 
             services.AddKeyedTransient<ILicenseCodeSource, CodeProjectApi>(KnownHosts.CodeProject);
             services.AddKeyedTransient<IFullLicenseSource, CodeProjectApi>(CodeProjectApi.LicenseCode);
