@@ -1,7 +1,7 @@
 DiffEngine [6.4.9](https://www.nuget.org/packages/DiffEngine/6.4.9)
 --------------------
 
-Used by: ThirdPartyLibraries
+Used by: ThirdPartyLibraries internal
 
 Target frameworks: net5.0, net6.0, netcoreapp3.1, netstandard2.1
 

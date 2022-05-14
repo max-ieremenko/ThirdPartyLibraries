@@ -1,7 +1,7 @@
 Microsoft.CSharp [4.7.0](https://www.nuget.org/packages/Microsoft.CSharp/4.7.0)
 --------------------
 
-Used by: ThirdPartyLibraries
+Used by: ThirdPartyLibraries internal
 
 Target frameworks: netstandard2.1
 

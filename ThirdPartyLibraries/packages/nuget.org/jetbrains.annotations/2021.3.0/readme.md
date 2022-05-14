@@ -1,7 +1,7 @@
 JetBrains.Annotations [2021.3.0](https://www.nuget.org/packages/JetBrains.Annotations/2021.3.0)
 --------------------
 
-Used by: ThirdPartyLibraries
+Used by: ThirdPartyLibraries internal
 
 Target frameworks: net5.0, net6.0, netcoreapp3.1, netstandard2.1
 

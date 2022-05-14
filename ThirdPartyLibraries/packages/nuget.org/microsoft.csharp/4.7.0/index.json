@@ -6,7 +6,7 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false,
+      "InternalOnly": true,
       "TargetFrameworks": [
         "netstandard2.1"
       ]

@@ -7,10 +7,6 @@ License Apache License 2.0, full text can be found at https://spdx.org/licenses/
     DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.595)
         Authors: Tim Jones, Alessandro Petrelli
 
-License BSD 2-Clause "Simplified" License, full text can be found at https://spdx.org/licenses/BSD-2-Clause or in Licenses/BSD-2-Clause-license.txt
-    Shouldly (https://www.nuget.org/packages/Shouldly/4.0.3)
-        Authors: Jake Ginnivan, Joseph Woodward, Simon Cropp
-
 License MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm or in Licenses/ms-net-library-license.html
     System.Runtime.Loader (https://www.nuget.org/packages/System.Runtime.Loader/4.3.0)
         Authors: Microsoft
@@ -19,21 +15,7 @@ License MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.
 License MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
     bootstrap (https://www.npmjs.com/package/bootstrap/v/4.4.1)
         Authors: The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-    ConfigureAwaitChecker.Analyzer (https://www.nuget.org/packages/ConfigureAwaitChecker.Analyzer/5.0.0)
-        Authors: Jiří Činčura
-        Copyright: Copyright (c) Jiri {x2} Cincura
-    DiffEngine (https://www.nuget.org/packages/DiffEngine/6.4.9)
-        Authors: https://github.com/VerifyTests/DiffEngine/graphs/contributors
-        Copyright: Copyright 2020. All rights reserved
-    EmptyFiles (https://www.nuget.org/packages/EmptyFiles/2.3.3)
-        Authors: https://github.com/SimonCropp/EmptyFiles/graphs/contributors
-        Copyright: Copyright 2020. All rights reserved
-    JetBrains.Annotations (https://www.nuget.org/packages/JetBrains.Annotations/2021.3.0)
-        Authors: JetBrains
     Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/6.0.0)
-        Authors: Microsoft
-        Copyright: © Microsoft Corporation. All rights reserved.
-    Microsoft.CSharp (https://www.nuget.org/packages/Microsoft.CSharp/4.7.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
     Microsoft.Extensions.Configuration (https://www.nuget.org/packages/Microsoft.Extensions.Configuration/6.0.1)
@@ -75,9 +57,6 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/6.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
-    Microsoft.SourceLink.GitHub (https://www.nuget.org/packages/Microsoft.SourceLink.GitHub/1.1.1)
-        Authors: Microsoft
-        Copyright: © Microsoft Corporation. All rights reserved.
     Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)
         Authors: James Newton-King
         Copyright: Copyright © James Newton-King 2008
@@ -99,9 +78,6 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation.  All rights reserved.
-    System.Runtime.CompilerServices.Unsafe (https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/5.0.0)
-        Authors: Microsoft
-        Copyright: © Microsoft Corporation. All rights reserved.
     System.Runtime.CompilerServices.Unsafe (https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.

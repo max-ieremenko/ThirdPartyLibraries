@@ -1,7 +1,7 @@
 System.Runtime.CompilerServices.Unsafe [5.0.0](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/5.0.0)
 --------------------
 
-Used by: ThirdPartyLibraries
+Used by: ThirdPartyLibraries internal
 
 Target frameworks: netstandard2.1
 
