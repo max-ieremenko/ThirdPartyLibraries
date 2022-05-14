@@ -119,6 +119,11 @@ namespace ThirdPartyLibraries.Repository
             return _packages.OpenFileReadAsync(id, fileName, token);
         }
 
+        public Task<string[]> FindLibraryFilesAsync(LibraryId id, string searchPattern, CancellationToken token)
+        {
+            return _packages.FindFilesAsync(id, searchPattern, token);
+        }
+
         public Task WriteLibraryFileAsync(LibraryId id, string fileName, byte[] content, CancellationToken token)
         {
             return _packages.WriteFileAsync(id, fileName, content, token);
