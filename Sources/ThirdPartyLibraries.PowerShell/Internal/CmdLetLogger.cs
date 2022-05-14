@@ -27,5 +27,10 @@ namespace ThirdPartyLibraries.PowerShell.Internal
         {
             _cmdlet.WriteInformation(new InformationRecord(message, null));
         }
+
+        public void Warn(string message)
+        {
+            Info("WARN: " + message);
+        }
     }
 }

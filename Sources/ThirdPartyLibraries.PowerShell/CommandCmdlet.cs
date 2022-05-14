@@ -44,7 +44,7 @@ public abstract class CommandCmdlet : PSCmdlet
         try
         {
             var run = dependencyResolver.BindRunAsync();
-            run(command, options, logger.Info, _tokenSource.Token).GetAwaiter().GetResult();
+            run(command, options, logger.Info, logger.Warn, _tokenSource.Token).GetAwaiter().GetResult();
         }
         catch (Exception ex)
         {
