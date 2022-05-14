@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.Shared;
 
@@ -40,14 +39,7 @@ namespace ThirdPartyLibraries.Npm
         {
             stream.AssertNotNull(nameof(stream));
 
-            JObject content;
-
-            using (var reader = new StreamReader(stream))
-            using (var jsonReader = new JsonTextReader(reader))
-            {
-                content = (JObject)new JsonSerializer().Deserialize(jsonReader);
-            }
-
+            var content = stream.JsonDeserialize<JObject>();
             return new PackageJsonParser(content);
         }
 

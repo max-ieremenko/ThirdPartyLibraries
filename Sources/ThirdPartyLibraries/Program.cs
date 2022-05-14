@@ -40,7 +40,8 @@ namespace ThirdPartyLibraries
         public static async Task RunAsync(
             string commandName,
             IList<(string Name, string Value)> commandOptions,
-            Action<string> logger,
+            Action<string> infoLogger,
+            Action<string> warnLogger,
             CancellationToken token)
         {
             var commandLine = CommandLine.Parse(commandName, commandOptions);
@@ -48,7 +49,7 @@ namespace ThirdPartyLibraries
             var configuration = new Dictionary<string, string>();
             var command = CommandFactory.Create(commandLine, configuration, out var repository);
 
-            var serviceProvider = await ConfigureServices(new EventLogger(logger), repository, configuration, token).ConfigureAwait(false);
+            var serviceProvider = await ConfigureServices(new EventLogger(infoLogger, warnLogger), repository, configuration, token).ConfigureAwait(false);
 
             await using (serviceProvider.ConfigureAwait(false))
             {

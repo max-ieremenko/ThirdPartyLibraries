@@ -40,11 +40,13 @@ public abstract class CommandCmdlet : PSCmdlet
         var command = CreateCommandLine(options);
 
         var logger = new CmdLetLogger(this);
+        var program = new ProgramRunAdapter(logger);
 
         try
         {
             var run = dependencyResolver.BindRunAsync();
-            run(command, options, logger.Info, _tokenSource.Token).GetAwaiter().GetResult();
+            var runTask = run(command, options, program.OnInfo, program.OnWarn, _tokenSource.Token);
+            program.Wait(runTask);
         }
         catch (Exception ex)
         {

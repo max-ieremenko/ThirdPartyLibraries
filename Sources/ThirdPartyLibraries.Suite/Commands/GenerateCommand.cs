@@ -10,110 +10,136 @@ using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 
-namespace ThirdPartyLibraries.Suite.Commands
+namespace ThirdPartyLibraries.Suite.Commands;
+
+public sealed class GenerateCommand : ICommand
 {
-    public sealed class GenerateCommand : ICommand
+    internal const string OutputFileName = "ThirdPartyNotices.txt";
+
+    public IList<string> AppNames { get; } = new List<string>();
+
+    public string Title { get; set; }
+
+    public string To { get; set; }
+
+    public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
     {
-        internal const string OutputFileName = "ThirdPartyNotices.txt";
+        var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+        var logger = serviceProvider.GetRequiredService<ILogger>();
 
-        public IList<string> AppNames { get; } = new List<string>();
+        Hello(logger, repository);
 
-        public string Title { get; set; }
+        var state = new GenerateCommandState(repository, serviceProvider.GetKeyedService<ILicenseSourceByUrl>, To, logger);
+        var packages = await LoadAllPackagesNoticesAsync(repository, token).ConfigureAwait(false);
 
-        public string To { get; set; }
-
-        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        var rootContext = new ThirdPartyNoticesContext
         {
-            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
-            var logger = serviceProvider.GetRequiredService<ILogger>();
+            Title = string.IsNullOrWhiteSpace(Title) ? AppNames[0] : Title
+        };
 
-            Hello(logger, repository);
+        foreach (var package in packages)
+        {
+            var license = await state.GetLicensesAsync(package.LicenseCode, token).ConfigureAwait(false);
+            var packageLicense = await state.GetPackageLicenseAsync(package, token).ConfigureAwait(false);
 
-            var state = new GenerateCommandState(repository, To, logger);
-            var packages = await LoadAllPackagesNoticesAsync(repository, token).ConfigureAwait(false);
-
-            var rootContext = new ThirdPartyNoticesContext
+            var packageContext = new ThirdPartyNoticesPackageContext
             {
-                Title = string.IsNullOrWhiteSpace(Title) ? AppNames[0] : Title
+                Name = package.Name,
+                License = license,
+                PackageLicense = packageLicense,
+                Copyright = package.Copyright,
+                HRef = package.HRef,
+                Author = package.Author,
+                ThirdPartyNotices = package.ThirdPartyNotices
             };
 
-            foreach (var package in packages)
+            rootContext.Packages.Add(packageContext);
+            license.Packages.Add(packageContext);
+        }
+
+        rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.FullName));
+
+        await state.AlignFileNamesAsync(token).ConfigureAwait(false);
+
+        var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
+
+        Directory.CreateDirectory(To);
+        var fileName = Path.Combine(To, OutputFileName);
+        using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
+        {
+            DotLiquidTemplate.RenderTo(file, template, rootContext);
+        }
+
+        state.CleanUpLicensesDirectory();
+        await CopyLicenseFilesAsync(fileName, state, token).ConfigureAwait(false);
+    }
+
+    private void Hello(ILogger logger, IPackageRepository repository)
+    {
+        logger.Info("generate third party notices for " + string.Join(", ", AppNames));
+        using (logger.Indent())
+        {
+            logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
+            logger.Info("to {0}".FormatWith(To));
+        }
+    }
+
+    private async Task<IList<Package>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
+    {
+        var libraries = await repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
+        var result = new List<Package>(libraries.Count);
+
+        var sorted = libraries
+            .OrderBy(i => i.Name)
+            .ThenBy(i => i.Version)
+            .ThenBy(i => i.SourceCode);
+
+        foreach (var id in sorted)
+        {
+            var package = await repository.LoadPackageAsync(id, token).ConfigureAwait(false);
+            if (UsePackage(package))
             {
-                var license = await state.GetLicensesAsync(package.LicenseCode, token).ConfigureAwait(false);
-
-                var packageContext = new ThirdPartyNoticesPackageContext
-                {
-                    Name = package.Name,
-                    License = license,
-                    Copyright = package.Copyright,
-                    HRef = package.HRef,
-                    Author = package.Author,
-                    ThirdPartyNotices = package.ThirdPartyNotices
-                };
-
-                rootContext.Packages.Add(packageContext);
-                license.Packages.Add(packageContext);
-            }
-
-            rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.FullName));
-
-            var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
-            var fileName = Path.Combine(To, OutputFileName);
-            using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
-            {
-                DotLiquidTemplate.RenderTo(file, template, rootContext);
+                result.Add(package);
             }
         }
 
-        private void Hello(ILogger logger, IPackageRepository repository)
+        return result;
+    }
+
+    private bool UsePackage(Package package)
+    {
+        if (package.LicenseCode.IsNullOrEmpty())
         {
-            logger.Info("generate third party notices for " + string.Join(", ", AppNames));
-            using (logger.Indent())
-            {
-                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
-                logger.Info("to {0}".FormatWith(To));
-            }
-        }
-
-        private async Task<IList<Package>> LoadAllPackagesNoticesAsync(IPackageRepository repository, CancellationToken token)
-        {
-           var libraries = await repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
-           var result = new List<Package>(libraries.Count);
-
-           var sorted = libraries
-               .OrderBy(i => i.Name)
-               .ThenBy(i => i.Version)
-               .ThenBy(i => i.SourceCode);
-
-           foreach (var id in sorted)
-           {
-               var package = await repository.LoadPackageAsync(id, token).ConfigureAwait(false);
-               if (UsePackage(package))
-               {
-                   result.Add(package);
-               }
-           }
-
-           return result;
-        }
-
-        private bool UsePackage(Package package)
-        {
-            if (package.LicenseCode.IsNullOrEmpty())
-            {
-                return false;
-            }
-
-            foreach (var appName in AppNames)
-            {
-                var appIndex = package.UsedBy.IndexOf(i => appName.EqualsIgnoreCase(i.Name) && !i.InternalOnly);
-                if (appIndex >= 0)
-                {
-                    return true;
-                }
-            }
-
             return false;
+        }
+
+        foreach (var appName in AppNames)
+        {
+            var appIndex = package.UsedBy.IndexOf(i => appName.EqualsIgnoreCase(i.Name) && !i.InternalOnly);
+            if (appIndex >= 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private async Task CopyLicenseFilesAsync(string reportFileName, GenerateCommandState state, CancellationToken token)
+    {
+        var reportContent = File.ReadAllText(reportFileName);
+
+        foreach (var fileName in state.GetAllLicenseFiles())
+        {
+            if (token.IsCancellationRequested)
+            {
+                break;
+            }
+
+            if (reportContent.Contains(fileName, StringComparison.OrdinalIgnoreCase))
+            {
+                await state.CopyToLicensesDirectory(fileName, token).ConfigureAwait(false);
+            }
         }
     }
 }

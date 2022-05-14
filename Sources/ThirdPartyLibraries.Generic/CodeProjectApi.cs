@@ -46,7 +46,7 @@ namespace ThirdPartyLibraries.Generic
             };
 
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync("https://www.codeproject.com/info/CPOL.zip", token).ConfigureAwait(false))
+            using (var response = await client.InvokeGetAsync("https://www.codeproject.com/info/CPOL.zip", token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {

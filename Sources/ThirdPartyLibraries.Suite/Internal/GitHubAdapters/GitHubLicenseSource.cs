@@ -30,6 +30,13 @@ namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters
             return CreateLicenseInfo(license.Value);
         }
 
+        public bool TryExtractRepositoryName(string url, out string owner, out string name)
+        {
+            url.AssertNotNull(nameof(url));
+
+            return GitHubApi.TryExtractRepositoryName(url, out owner, out name);
+        }
+
         private static LicenseInfo CreateLicenseInfo(GitHubLicense license)
         {
             return new LicenseInfo

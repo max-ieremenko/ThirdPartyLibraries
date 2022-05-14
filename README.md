@@ -170,6 +170,8 @@ PS> Publish-ThirdPartyNotices -AppName ThirdPartyLibraries -Repository c:\Reposi
 
 *third-party-notices-template.txt* will be created after the first run *ThirdPartyLibraries generate*.
 
+Other examples third-party-notices-template are [here](Examples/third-party-notices-template).
+
 [Back to ToC](#table-of-contents)
 
 Configuration <a name="configuration"></a>
@@ -200,22 +202,61 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
   },
   "github.com": {
     "personalAccessToken": ""
+  },
+  "staticLicenseUrls": {
+    "byCode": [
+      {
+        "code": "ms-net-library",
+        "fullName": "MICROSOFT .NET LIBRARY",
+        "downloadUrl": "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm"
+      }
+    ],
+    "byUrl": [
+      {
+        "code": "Apache-2.0",
+        "urls": [
+          "http://www.apache.org/licenses/LICENSE-2.0",
+          "http://www.apache.org/licenses/LICENSE-2.0.html",
+          "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        ]
+      }
+    ]
+  },
+  "skipCertificateCheck": {
+    "byHost": [ "localhost" ]
   }
 }
 ```
 
-|Attribute|Description
-|:--|:----------|
-|nuget.org/allowToUseLocalCache|*true* or *false* (default) flag to allow get package metadata from NuGet local [disk cache](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)|
-|nuget.org/downloadPackageIntoRepository|*true* or *false* (default) flag to download package into a repository|
-|nuget.org/ignorePackages/byName|regex expressions array. Ignore all packages by name|
-|nuget.org/ignorePackages/byProjectName|regex expressions array. Ignore all packages by project name|
-|nuget.org/internalPackages/byName|regex expressions array. Mark all packages by name as InternalOnly=true|
-|nuget.org/internalPackages/byProjectName|regex expressions array. Mark all packages by project name as InternalOnly=true|
-|npmjs.com/downloadPackageIntoRepository|*true* or *false* (default) flag to download package into a repository|
-|npmjs.com/ignorePackages/byName|regex expressions array. Ignore all packages by name|
-|npmjs.com/ignorePackages/byFolderName|regex expressions array. Ignore all packages by folder name|
-|github.com/personalAccessToken|see [GitHub personal access token](#personalAccessToken) for more details|
+### section nuget.org
+
+- `allowToUseLocalCache`: *true* or *false* (default) flag to allow get a package metadata from NuGet local [disk cache](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)|
+- `downloadPackageIntoRepository`: *true* or *false* (default) flag to download package into a repository
+- `ignorePackages/byName`: regex expressions array. Ignore all packages by name
+- `ignorePackages/byProjectName`: regex expressions array. Ignore all packages by project name
+- `internalPackages/byName`: regex expressions array. Mark all packages by name as InternalOnly=true
+- `internalPackages/byProjectName`: regex expressions array. Mark all packages by project name as InternalOnly=true
+
+### section npmjs.com
+
+- `downloadPackageIntoRepository`: *true* or *false* (default) flag to download package into a repository
+- `ignorePackages/byName`: regex expressions array. Ignore all packages by name
+- `ignorePackages/byFolderName`: regex expressions array. Ignore all packages by folder name
+
+### section github.com
+
+- `personalAccessToken`: see [GitHub personal access token](#personalAccessToken) for more details
+
+### staticLicenseUrls
+
+setup well-know licenses
+
+- `byCode`: array of well-know codes with a link to license url
+- `byUrl`: array of well-know license urls
+
+### skipCertificateCheck
+
+- `byHost`: regex expressions array. Ignore server certificate validation for specific hosts
 
 [Back to ToC](#table-of-contents)
 
@@ -226,7 +267,7 @@ Most of the NuGet packages are referenced to GitHub. In order to resolve license
 
 Api has [the rate limit to 60 requests per hour](https://developer.github.com/v3/#rate-limiting) for unauthenticated requests.
 
-To authentificate requests
+To authenticate requests
 1. Create personal access token, details are [here](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 > for the token leave all scopes and permissions blank
 2. Run the tool with the token

@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 
-namespace ThirdPartyLibraries.Repository.Template
+namespace ThirdPartyLibraries.Repository.Template;
+
+public sealed class ThirdPartyNoticesLicenseContext
 {
-    public sealed class ThirdPartyNoticesLicenseContext
-    {
-        public string FullName { get; set; }
+    // license full name
+    public string FullName { get; set; }
 
-        public IList<string> HRefs { get; } = new List<string>();
+    // license public urls
+    public List<string> HRefs { get; } = new();
 
-        public IList<string> FileNames { get; } = new List<string>();
+    // license content
+    public List<string> FileNames { get; } = new();
 
-        public IList<ThirdPartyNoticesPackageContext> Packages { get; } = new List<ThirdPartyNoticesPackageContext>();
-    }
+    // list of packages referenced by this license
+    public List<ThirdPartyNoticesPackageContext> Packages { get; } = new();
 }

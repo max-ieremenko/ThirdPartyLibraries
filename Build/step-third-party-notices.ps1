@@ -1,6 +1,7 @@
 $sourceDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources"))
 $repositoryDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\ThirdPartyLibraries"))
 $outDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out\ThirdNotices"))
+$version = (Select-Xml -Path (Join-Path $sourceDir "Directory.Build.props") -XPath "Project/PropertyGroup/DefaultPackageVersion").Node.InnerText
 
 $app = Join-Path $sourceDir "bin\app\net5.0\ThirdPartyLibraries.dll"
     
@@ -11,6 +12,6 @@ Write-Host "Validate repository"
 Exec { dotnet $app validate -appName ThirdPartyLibraries -source "$sourceDir" -repository "$repositoryDir" }
 
 Write-Host "Generate ThirdPartyNotices"
-Exec { dotnet $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$outDir" -title "Third party libraries" }
+Exec { dotnet $app generate -appName ThirdPartyLibraries -repository "$repositoryDir" -to "$outDir" -title "Third party libraries $version" }
 
 Copy-Item -Path (Join-Path $sourceDir "..\LICENSE") -Destination "$outDir"

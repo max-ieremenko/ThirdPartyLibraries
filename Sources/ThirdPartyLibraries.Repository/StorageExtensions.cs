@@ -10,13 +10,14 @@ namespace ThirdPartyLibraries.Repository
 {
     public static class StorageExtensions
     {
+        public const string ThirdPartyNoticesTemplateFileName = "third-party-notices-template.txt";
+        
         internal const string ReadMeFileName = "readme.md";
         internal const string ReadMeTemplateFileName = "readme-template.txt";
         internal const string IndexFileName = "index.json";
         internal const string AppSettingsFileName = "appsettings.json";
 
         private const string LibraryReadMeTemplateFileName = "{0}-readme-template.txt";
-        private const string ThirdPartyNoticesTemplateFileName = "third-party-notices-template.txt";
 
         public static async Task<LicenseIndexJson> ReadLicenseIndexJsonAsync(this IStorage storage, string licenseCode, CancellationToken token)
         {
@@ -25,7 +26,7 @@ namespace ThirdPartyLibraries.Repository
             var content = await storage.OpenLicenseFileReadAsync(licenseCode, IndexFileName, token).ConfigureAwait(false);
             using (content)
             {
-                return JsonDeserialize<LicenseIndexJson>(content);
+                return content?.JsonDeserialize<LicenseIndexJson>();
             }
         }
 
@@ -53,7 +54,7 @@ namespace ThirdPartyLibraries.Repository
             var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
             using (content)
             {
-                return JsonDeserialize<TModel>(content);
+                return content == null ? default : content.JsonDeserialize<TModel>();
             }
         }
 
@@ -153,20 +154,6 @@ namespace ThirdPartyLibraries.Repository
             using (var reader = new StreamReader(stream))
             {
                 return await reader.ReadToEndAsync().ConfigureAwait(false);
-            }
-        }
-
-        private static TModel JsonDeserialize<TModel>(Stream content)
-        {
-            if (content == null)
-            {
-                return default;
-            }
-
-            using (var reader = new StreamReader(content))
-            using (var jsonReader = new JsonTextReader(reader))
-            {
-                return new JsonSerializer().Deserialize<TModel>(jsonReader);
             }
         }
 

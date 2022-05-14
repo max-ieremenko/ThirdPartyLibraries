@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.Shared;
 
@@ -65,18 +63,35 @@ namespace ThirdPartyLibraries.GitHub
             return result;
         }
 
+        public bool TryExtractRepositoryName(string url, out string owner, out string name)
+        {
+            return TryExtractRepositoryName(new Uri(url), out owner, out name);
+        }
+
         internal static string GetLicenseUrl(Uri url)
         {
-            // https://
-            var path = url.AbsolutePath.Split('/', StringSplitOptions.RemoveEmptyEntries);
-
-            if (path.Length < 2)
+            if (!TryExtractRepositoryName(url, out var owner, out var name))
             {
                 return null;
             }
 
-            var owner = path[0];
-            var repository = path[1];
+            return Host + "/repos/{0}/{1}/license".FormatWith(owner, name);
+        }
+
+        private static bool TryExtractRepositoryName(Uri url, out string owner, out string repository)
+        {
+            // https://
+            var path = url.AbsolutePath.Split('/', StringSplitOptions.RemoveEmptyEntries);
+
+            owner = default;
+            repository = default;
+            if (path.Length < 2)
+            {
+                return false;
+            }
+
+            owner = path[0];
+            repository = path[1];
             if (url.Host.EqualsIgnoreCase(KnownHosts.GitHubApi))
             {
                 owner = path[1];
@@ -88,7 +103,7 @@ namespace ThirdPartyLibraries.GitHub
                 repository = repository.Substring(0, repository.Length - 4);
             }
 
-            return Host + "/repos/{0}/{1}/license".FormatWith(owner, repository);
+            return true;
         }
 
         private static async Task<ApiRateLimitExceededException> TryGetLimitInfoAsync(HttpResponseMessage response)
@@ -130,7 +145,7 @@ namespace ThirdPartyLibraries.GitHub
             JObject result;
 
             using (client)
-            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
+            using (var response = await client.InvokeGetAsync(url, token).ConfigureAwait(false))
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -152,9 +167,8 @@ namespace ThirdPartyLibraries.GitHub
                 }
 
                 using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                using (var reader = new JsonTextReader(new StreamReader(stream)))
                 {
-                    result = (JObject)new JsonSerializer().Deserialize(reader);
+                    result = stream.JsonDeserialize<JObject>();
                 }
 
                 if (response.StatusCode == HttpStatusCode.Unauthorized)

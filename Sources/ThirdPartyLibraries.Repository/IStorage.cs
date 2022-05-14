@@ -29,6 +29,8 @@ namespace ThirdPartyLibraries.Repository
 
         Task RemoveLibraryAsync(LibraryId id, CancellationToken token);
 
+        Task<string[]> FindLibraryFilesAsync(LibraryId id, string searchPattern, CancellationToken token);
+
         Task<Stream> OpenLicenseFileReadAsync(string licenseCode, string fileName, CancellationToken token);
 
         Task CreateLicenseFileAsync(string licenseCode, string fileName, byte[] content, CancellationToken token);

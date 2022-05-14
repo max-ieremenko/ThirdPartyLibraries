@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="NpmApiTest.TypesAngular.1.6.56.tgz" />
-    <None Remove="NpmApiTest.TypesAngular.get.json" />
-    <None Remove="NpmApiTest.TypesAngular.package.json" />
-    <None Remove="PackageJsonParserTest.TypesAngular.package.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="NpmApiTest.TypesAngular.1.6.56.tgz" />
     <EmbeddedResource Include="NpmApiTest.TypesAngular.get.json" />
     <EmbeddedResource Include="NpmApiTest.TypesAngular.package.json" />

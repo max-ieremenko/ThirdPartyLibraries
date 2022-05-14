@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using RunAsync = System.Func<string, System.Collections.Generic.IList<(string Name, string Value)>, System.Action<string>, System.Threading.CancellationToken, System.Threading.Tasks.Task>;
+using RunAsync = System.Func<string, System.Collections.Generic.IList<(string Name, string Value)>, System.Action<string>, System.Action<string>, System.Threading.CancellationToken, System.Threading.Tasks.Task>;
 
 namespace ThirdPartyLibraries.PowerShell.Internal;
 
@@ -20,7 +20,7 @@ internal sealed class DependencyResolver : IDisposable
         var method = assembly
             .EntryPoint!
             .DeclaringType!
-            .GetMethod("RunAsync", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            .GetMethod(nameof(Program.RunAsync), BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
 
         var result = method!.CreateDelegate(typeof(RunAsync));
         return (RunAsync)result;

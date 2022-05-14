@@ -1,11 +1,12 @@
 ﻿using System;
 
-namespace ThirdPartyLibraries.Shared
-{
-    public interface ILogger
-    {
-        void Info(string message);
+namespace ThirdPartyLibraries.Shared;
 
-        IDisposable Indent();
-    }
+public interface ILogger
+{
+    void Info(string message);
+
+    void Warn(string message);
+
+    IDisposable Indent();
 }

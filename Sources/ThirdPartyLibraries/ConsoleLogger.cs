@@ -1,33 +1,52 @@
 ﻿using System;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries
+namespace ThirdPartyLibraries;
+
+internal sealed class ConsoleLogger : LoggerBase
 {
-    internal sealed class ConsoleLogger : LoggerBase
+    public void Error(IApplicationException exception)
     {
-        public void Error(IApplicationException exception)
+        using (new WithForegroundColor(ConsoleColor.Red))
         {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-
             exception.Log(this);
-
-            Console.ForegroundColor = color;
         }
+    }
 
-        public void Error(string message)
+    public void Error(string message)
+    {
+        using (new WithForegroundColor(ConsoleColor.Red))
         {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-
             Console.WriteLine(GetIndentation() + message);
-
-            Console.ForegroundColor = color;
         }
+    }
 
-        protected override void OnInfo(string message)
+    protected override void OnInfo(string message)
+    {
+        Console.WriteLine(message);
+    }
+
+    protected override void OnWarn(string message)
+    {
+        using (new WithForegroundColor(ConsoleColor.Yellow))
         {
             Console.WriteLine(message);
+        }
+    }
+
+    private readonly ref struct WithForegroundColor
+    {
+        private readonly ConsoleColor _original;
+
+        public WithForegroundColor(ConsoleColor color)
+        {
+            _original = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+        }
+
+        public void Dispose()
+        {
+            Console.ForegroundColor = _original;
         }
     }
 }

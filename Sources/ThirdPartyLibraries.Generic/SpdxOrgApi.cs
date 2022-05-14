@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.Shared;
 
@@ -58,20 +56,8 @@ namespace ThirdPartyLibraries.Generic
         {
             JObject content;
             using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
             {
-                if (response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
-
-                await response.AssertStatusCodeOk().ConfigureAwait(false);
-
-                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                using (var reader = new JsonTextReader(new StreamReader(stream)))
-                {
-                    content = (JObject)new JsonSerializer().Deserialize(reader);
-                }
+                content = await client.GetAsJsonAsync<JObject>(url, token).ConfigureAwait(false);
             }
 
             return content;
