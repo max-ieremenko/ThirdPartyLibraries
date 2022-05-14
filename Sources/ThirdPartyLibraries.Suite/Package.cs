@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Suite
 {
@@ -37,5 +38,21 @@ namespace ThirdPartyLibraries.Suite
         public IList<PackageLicense> Licenses { get; } = new List<PackageLicense>();
 
         public PackageApplication[] UsedBy { get; set; } = Array.Empty<PackageApplication>();
+
+        public bool TryFindLicense(string subject, out PackageLicense license)
+        {
+            license = null;
+            for (var i = 0; i < Licenses.Count; i++)
+            {
+                var candidate = Licenses[i];
+                if (candidate.Subject.EqualsIgnoreCase(subject))
+                {
+                    license = candidate;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
