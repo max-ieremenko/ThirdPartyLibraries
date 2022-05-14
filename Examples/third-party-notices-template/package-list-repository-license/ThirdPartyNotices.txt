@@ -5,177 +5,177 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 
 bootstrap (https://www.npmjs.com/package/bootstrap/v/4.4.1)
     Authors: The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 ConfigureAwaitChecker.Analyzer (https://www.nuget.org/packages/ConfigureAwaitChecker.Analyzer/5.0.0)
     Authors: Jiří Činčura
-	Copyright: Copyright (c) Jiri {x2} Cincura
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: Copyright (c) Jiri {x2} Cincura
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 DiffEngine (https://www.nuget.org/packages/DiffEngine/6.4.9)
     Authors: https://github.com/VerifyTests/DiffEngine/graphs/contributors
-	Copyright: Copyright 2020. All rights reserved
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: Copyright 2020. All rights reserved
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.595)
     Authors: Tim Jones, Alessandro Petrelli
-	License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
+    License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
 EmptyFiles (https://www.nuget.org/packages/EmptyFiles/2.3.3)
     Authors: https://github.com/SimonCropp/EmptyFiles/graphs/contributors
-	Copyright: Copyright 2020. All rights reserved
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: Copyright 2020. All rights reserved
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 JetBrains.Annotations (https://www.nuget.org/packages/JetBrains.Annotations/2021.3.0)
     Authors: JetBrains
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.CSharp (https://www.nuget.org/packages/Microsoft.CSharp/4.7.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration (https://www.nuget.org/packages/Microsoft.Extensions.Configuration/6.0.1)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration.Binder (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration.EnvironmentVariables (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration.FileExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration.Json (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Configuration.UserSecrets (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/6.0.1)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.DependencyInjection (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.DependencyInjection.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.FileProviders.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.FileProviders.Physical (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.FileSystemGlobbing (https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Microsoft.SourceLink.GitHub (https://www.nuget.org/packages/Microsoft.SourceLink.GitHub/1.1.1)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)
     Authors: James Newton-King
-	Copyright: Copyright © James Newton-King 2008
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: Copyright © James Newton-King 2008
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 SharpZipLib (https://www.nuget.org/packages/SharpZipLib/1.3.3)
     Authors: ICSharpCode
-	Copyright: Copyright © 2000-2021 SharpZipLib Contributors
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: Copyright © 2000-2021 SharpZipLib Contributors
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 Shouldly (https://www.nuget.org/packages/Shouldly/4.0.3)
     Authors: Jake Ginnivan, Joseph Woodward, Simon Cropp
-	License: BSD 2-Clause "Simplified" License, full text can be found at https://spdx.org/licenses/BSD-2-Clause or in Licenses/BSD-2-Clause-license.txt
+    License: BSD 2-Clause "Simplified" License, full text can be found at https://spdx.org/licenses/BSD-2-Clause or in Licenses/BSD-2-Clause-license.txt
 
 System.Buffers (https://www.nuget.org/packages/System.Buffers/4.5.1)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Memory (https://www.nuget.org/packages/System.Memory/4.5.4)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation.  All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation.  All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation.  All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation.  All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Runtime.CompilerServices.Unsafe (https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/5.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Runtime.CompilerServices.Unsafe (https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Runtime.Loader (https://www.nuget.org/packages/System.Runtime.Loader/4.3.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation.  All rights reserved.
-	License: MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm or in Licenses/ms-net-library-license.html
+    Copyright: © Microsoft Corporation.  All rights reserved.
+    License: MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm or in Licenses/ms-net-library-license.html
 
 System.Text.Encodings.Web (https://www.nuget.org/packages/System.Text.Encodings.Web/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Text.Json (https://www.nuget.org/packages/System.Text.Json/6.0.0)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
 System.Threading.Tasks.Extensions (https://www.nuget.org/packages/System.Threading.Tasks.Extensions/4.5.4)
     Authors: Microsoft
-	Copyright: © Microsoft Corporation. All rights reserved.
-	License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
