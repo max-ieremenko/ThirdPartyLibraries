@@ -73,6 +73,24 @@ namespace ThirdPartyLibraries.NuGet
             ex.Message.ShouldContain("StyleCop.Analyzers");
         }
 
+        [Test]
+        [TestCase("netcoreapp2.2", ".NETCoreApp,Version=v2.2")]
+        [TestCase("netstandard1.3", ".NETStandard,Version=v1.3")]
+        [TestCase("netstandard2.0", ".NETStandard,Version=v2.0")]
+        [TestCase("net20", ".NETFramework,Version=v2.0")]
+        [TestCase("net35", ".NETFramework,Version=v3.5")]
+        [TestCase("net35-client", ".NETFramework,Version=v3.5,Profile=Client")]
+        [TestCase("net451", ".NETFramework,Version=v4.5.1")]
+        [TestCase("net452", ".NETFramework,Version=v4.5.2")]
+        [TestCase("net472", ".NETFramework,Version=v4.7.2")]
+        [TestCase("net48", ".NETFramework,Version=v4.8")]
+        [TestCase("net6.0", "net6.0")]
+        [TestCase("net6.0-windows7.0", "net6.0-windows7.0")]
+        public void MapTargetFrameworkProjFormatToNuGetFormat(string projFormat, string expected)
+        {
+            ProjectAssetsParser.MapTargetFrameworkProjFormatToNuGetFormat(projFormat).ShouldBe(expected);
+        }
+
         private static ProjectAssetsParser CreateSut(string fileName)
         {
             using (var stream = TempFile.OpenResource(typeof(ProjectAssetsParserTest), "ProjectAssetsParserTest.{0}.assets.json".FormatWith(fileName)))
