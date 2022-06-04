@@ -86,6 +86,11 @@ Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)
     Copyright: Copyright © James Newton-King 2008
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/newtonsoft.json.md
 
+NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.2.0)
+    Authors: Microsoft
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
+
 PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
