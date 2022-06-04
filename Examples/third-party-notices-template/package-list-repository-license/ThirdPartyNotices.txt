@@ -7,7 +7,7 @@ bootstrap (https://www.npmjs.com/package/bootstrap/v/4.4.1)
     Authors: The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
-DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.595)
+DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.656)
     Authors: Tim Jones, Alessandro Petrelli
     License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 

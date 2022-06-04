@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ConfigureAwaitChecker.Analyzer</id>
+    <version>5.0.0.1</version>
+    <title>ConfigureAwaitChecker.Analyzer</title>
+    <authors>Jiří Činčura</authors>
+    <developmentDependency>true</developmentDependency>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/cincuranet/ConfigureAwaitChecker</projectUrl>
+    <description>Checks for `ConfigureAwait(false)` usage.
+
+More info:
+* https://www.tabsoverspaces.com/id/233852
+* https://www.tabsoverspaces.com/id/233732
+* https://www.tabsoverspaces.com/id/233523
+* https://www.tabsoverspaces.com/id/233476</description>
+    <copyright>Copyright (c) Jiri {x2} Cincura</copyright>
+    <tags>ConfigureAwaitChecker, analyzers, async, await, configureawait</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>
