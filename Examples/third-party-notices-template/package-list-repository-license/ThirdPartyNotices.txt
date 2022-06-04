@@ -7,7 +7,7 @@ bootstrap (https://www.npmjs.com/package/bootstrap/v/4.4.1)
     Authors: The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
-DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.595)
+DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.656)
     Authors: Tim Jones, Alessandro Petrelli
     License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
@@ -85,6 +85,11 @@ Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)
     Authors: James Newton-King
     Copyright: Copyright © James Newton-King 2008
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
+
+NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.2.0)
+    Authors: Microsoft
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
 PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)
     Authors: Microsoft

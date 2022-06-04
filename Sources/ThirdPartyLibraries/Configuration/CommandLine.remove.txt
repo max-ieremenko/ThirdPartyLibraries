@@ -1,0 +1,16 @@
+﻿Usage: ThirdPartyLibraries remove [options]...
+
+Remove application(s) from the repository
+
+[options]
+  -appName: a name of the application to remove. Repeat -appName to remove several applications
+  -repository: a path to a repository folder
+
+exit codes:
+  0 - OK
+  1 - invalid command line
+  2 - errors during execution
+  3 - the execution was canceled by the user
+
+example:
+> ThirdPartyLibraries remove -appName MyApp -repository c:\ThirdPartyLibraries

@@ -58,6 +58,17 @@ internal static class CommandFactory
             return CreateGenerateCommand(line.Options, out repository);
         }
 
+        if (CommandOptions.CommandRemove.EqualsIgnoreCase(line.Command))
+        {
+            if (IsHelp(line.Options))
+            {
+                return CreateHelp(CommandOptions.CommandRemove);
+            }
+
+            var remove = CreateRemoveCommand(line.Options, out repository);
+            return new CommandChain(remove, new RefreshCommand());
+        }
+
         throw new InvalidOperationException("Unknown command [{0}].".FormatWith(line.Command));
     }
 
@@ -209,6 +220,36 @@ internal static class CommandFactory
 
         CommandOptions.AssertMissing(CommandOptions.OptionAppName, result.AppNames.Count == 0);
         CommandOptions.AssertMissing(CommandOptions.OptionTo, result.To.IsNullOrEmpty());
+        CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
+
+        return result;
+    }
+
+    private static RemoveCommand CreateRemoveCommand(IList<CommandOption> options, out string repository)
+    {
+        var result = new RemoveCommand();
+        repository = null;
+
+        for (var i = 0; i < options.Count; i++)
+        {
+            var option = options[i];
+
+            if (option.IsAppName(out var value))
+            {
+                result.AppNames.Add(value);
+            }
+            else if (option.IsRepository(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
+                repository = value;
+            }
+            else
+            {
+                CommandOptions.AssertUnknown(option.Name);
+            }
+        }
+
+        CommandOptions.AssertMissing(CommandOptions.OptionAppName, result.AppNames.Count == 0);
         CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
 
         return result;

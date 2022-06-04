@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using NuGet.Frameworks;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet
@@ -56,7 +57,7 @@ namespace ThirdPartyLibraries.NuGet
         public IEnumerable<(NuGetPackageId Package, IList<NuGetPackageId> Dependencies)> GetReferences(string targetFramework)
         {
             var framework = MapTargetFrameworkProjFormatToNuGetFormat(targetFramework);
-            
+
             var projectFrameworks = Content.Value<JObject>("project").Value<JObject>("frameworks");
             var projectFramework = projectFrameworks.Value<JObject>(targetFramework);
             if (projectFramework == null)
@@ -93,75 +94,14 @@ namespace ThirdPartyLibraries.NuGet
             {
                 AddPackage(dependenciesByPackage, targetPackageByName, name);
             }
-            
+
             return dependenciesByPackage.Select(i => (i.Key, i.Value));
         }
 
-        private static string MapTargetFrameworkProjFormatToNuGetFormat(string projFormat)
+        internal static string MapTargetFrameworkProjFormatToNuGetFormat(string projFormat)
         {
-            const string core = "netcoreapp";
-            const string standard = "netstandard";
-
-            // netcoreapp2.2 => .NETCoreApp,Version=v2.2
-            if (projFormat.StartsWithIgnoreCase(core))
-            {
-                var version = projFormat.Substring(core.Length);
-                return ".NETCoreApp,Version=v" + version;
-            }
-
-            // netstandard2.0 => .NETStandard,Version=v2.0
-            if (projFormat.StartsWithIgnoreCase(standard))
-            {
-                var version = projFormat.Substring(standard.Length);
-                return ".NETStandard,Version=v" + version;
-            }
-
-            if ("net48".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.8";
-            }
-
-            if ("net472".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.7.2";
-            }
-
-            if ("net471".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.7.1";
-            }
-
-            if ("net47".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.7";
-            }
-
-            if ("net462".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.6.2";
-            }
-
-            if ("net461".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.6.1";
-            }
-
-            if ("net46".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.6";
-            }
-
-            if ("net452".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.5.2";
-            }
-
-            if ("net451".EqualsIgnoreCase(projFormat))
-            {
-                return ".NETFramework,Version=v4.5.1";
-            }
-
-            return projFormat;
+            var framework = NuGetFramework.Parse(projFormat);
+            return framework.ToString();
         }
 
         private static void AddPackage(
