@@ -12,11 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Configuration\CommandLine.generate.txt" />
-    <EmbeddedResource Include="Configuration\CommandLine.validate.txt" />
-    <EmbeddedResource Include="Configuration\CommandLine.refresh.txt" />
-    <EmbeddedResource Include="Configuration\CommandLine.update.txt" />
-    <EmbeddedResource Include="Configuration\CommandLine.default.txt" />
+    <EmbeddedResource Include="Configuration\*.txt" />
   </ItemGroup>
   
   <ItemGroup>

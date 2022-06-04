@@ -46,3 +46,16 @@ if (-not (Test-Path "/notices/ThirdPartyNotices.txt")) {
 if (-not (Test-Path "/notices/Licenses")) {
     throw "Licenses not found."
 }
+
+$packages = Get-ChildItem "/repository/packages/nuget.org"
+if (-not $packages.Count) {
+    throw "packages/nuget.org is empty."
+}
+
+Remove-AppFromThirdPartyLibrariesRepository -AppName "Test" -Repository "/repository" -InformationAction Continue
+
+$packages = Get-ChildItem "/repository/packages/nuget.org"
+if ($packages.Count) {
+    throw "packages/nuget.org must be empty."
+}
+

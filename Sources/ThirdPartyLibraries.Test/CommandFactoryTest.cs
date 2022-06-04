@@ -150,5 +150,27 @@ namespace ThirdPartyLibraries
 
             _configuration.ShouldBeEmpty();
         }
+
+        [Test]
+        public void CreateRemoveCommand()
+        {
+            _line.Command = CommandOptions.CommandRemove;
+            _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 1"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 2"));
+            _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
+
+            var chain = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<CommandChain>();
+
+            chain.Chain.Length.ShouldBe(2);
+
+            var command = chain.Chain[0].ShouldBeOfType<RemoveCommand>();
+            command.AppNames.ShouldBe(new[] { "app name 1", "app name 2" });
+
+            repository.ShouldBe("repository");
+
+            chain.Chain[1].ShouldBeOfType<RefreshCommand>();
+
+            _configuration.ShouldBeEmpty();
+        }
     }
 }

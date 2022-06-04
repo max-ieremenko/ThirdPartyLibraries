@@ -9,6 +9,7 @@ public static class CommandOptions
     public const string CommandRefresh = "refresh";
     public const string CommandValidate = "validate";
     public const string CommandGenerate = "generate";
+    public const string CommandRemove = "remove";
 
     public const string OptionHelp = "help";
     public const string OptionAppName = "appName";
