@@ -5,5 +5,6 @@
   validate: validate existing sources against the repository
   refresh: update .md files in the repository
   generate: generate "third party notices" from the repository
+  remove: remove app from the repository
 
 Run 'ThirdPartyLibraries <command> -help' for more information on a command.
