@@ -48,7 +48,8 @@ namespace ThirdPartyLibraries.Npm
             _sut.GetDevDependencies().ShouldBe(new[]
             {
                 new NpmPackageId("@types/angular-animate", "^1.5.10"),
-                new NpmPackageId("@types/angular-mocks", "^1.7.0")
+                new NpmPackageId("@types/angular-mocks", "^1.7.0"),
+                new NpmPackageId("test", "*")
             });
         }
 
