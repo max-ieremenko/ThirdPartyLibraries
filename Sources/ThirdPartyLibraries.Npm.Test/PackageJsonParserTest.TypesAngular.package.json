@@ -59,7 +59,8 @@
   },
   "devDependencies": {
     "@types/angular-animate": "^1.5.10",
-    "@types/angular-mocks": "^1.7.0"
+    "@types/angular-mocks": "^1.7.0",
+    "test": ""
   },
   "deprecated": false,
   "description": "TypeScript definitions for Angular JS",
