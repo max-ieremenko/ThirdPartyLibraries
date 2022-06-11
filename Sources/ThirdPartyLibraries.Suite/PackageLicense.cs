@@ -7,7 +7,9 @@
         public const string SubjectRepository = "repository";
         public const string SubjectProject = "project";
 
-        public static readonly string[] StaticLicenseFileNames = { "LICENSE.md", "LICENSE.txt", "LICENSE", "LICENSE.rtf" };
+        public const string DefaultLicenseFilePattern = "LICENSE";
+
+        public static readonly string[] StaticLicenseFileNames = { "LICENSE.md", "LICENSE.txt", DefaultLicenseFilePattern, "LICENSE.rtf" };
 
         public string Code { get; set; }
 

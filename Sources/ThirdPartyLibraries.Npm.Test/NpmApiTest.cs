@@ -73,23 +73,41 @@ namespace ThirdPartyLibraries.Npm
         }
 
         [Test]
-        public async Task LoadFileContent()
+        [TestCase("LICENSE", "Copyright (c) Microsoft Corporation")]
+        [TestCase("license", "Copyright (c) Microsoft Corporation")]
+        [TestCase("license.txt", null)]
+        public async Task LoadFileContent(string fileName, string expected)
         {
             byte[] file;
             using (var package = TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.1.6.56.tgz"))
             {
-                file = _sut.LoadFileContent(await package.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), "LICENSE");
+                file = _sut.LoadFileContent(await package.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), fileName);
             }
 
-            file.ShouldNotBeNull();
-
-            string fileContent;
-            using (var reader = new StreamReader(new MemoryStream(file)))
+            if (expected == null)
             {
-                fileContent = await reader.ReadToEndAsync().ConfigureAwait(false);
+                file.ShouldBeNull();
+            }
+            else
+            {
+                file.ShouldNotBeNull();
+                file.AsText().ShouldContain(expected);
+            }
+        }
+
+        [Test]
+        [TestCase("^license$", "LICENSE")]
+        [TestCase("lic", "LICENSE")]
+        [TestCase("i", "index.d.ts", "jqlite.d.ts", "LICENSE")]
+        public async Task FindFiles(string searchPattern, params string[] expected)
+        {
+            string[] actual;
+            using (var package = TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.1.6.56.tgz"))
+            {
+                actual = _sut.FindFiles(await package.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), searchPattern);
             }
 
-            fileContent.ShouldContain("Copyright (c) Microsoft Corporation");
+            actual.ShouldBe(expected, ignoreOrder: true);
         }
 
         [Test]

@@ -15,5 +15,7 @@ namespace ThirdPartyLibraries.NuGet
         Task<byte[]> DownloadPackageAsync(NuGetPackageId package, bool allowToUseLocalCache, CancellationToken token);
 
         Task<byte[]> LoadFileContentAsync(byte[] packageContent, string fileName, CancellationToken token);
+
+        string[] FindFiles(byte[] packageContent, string searchPattern);
     }
 }

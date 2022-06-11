@@ -14,6 +14,8 @@ namespace ThirdPartyLibraries.Npm
         
         byte[] LoadFileContent(byte[] packageContent, string fileName);
 
+        string[] FindFiles(byte[] packageContent, string searchPattern);
+
         string ResolveNpmRoot();
     }
 }

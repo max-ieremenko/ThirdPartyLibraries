@@ -79,7 +79,9 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
 
         protected abstract Task<byte[]> DownloadPackageContentAsync(LibraryId id, CancellationToken token);
 
-        protected abstract Task<byte[]> GetPackageFileContentAsync(LibraryId id, string fileName, CancellationToken token);
+        protected abstract Task<byte[]> GetPackageFileContentAsync(byte[] package, string fileName, CancellationToken token);
+
+        protected abstract string[] FindPackageFiles(byte[] package, string searchPattern);
 
         protected async Task<byte[]> GetPackageContentAsync(LibraryId id, CancellationToken token)
         {
@@ -113,13 +115,11 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
         protected async Task<LibraryLicense> ResolvePackageLicenseAsync(LibraryId id, string licenseType, string licenseValue, string licenseUrl, CancellationToken token)
         {
             var license = new LibraryLicense { Subject = PackageLicense.SubjectPackage };
-            var hasFileName = false;
+            string licenseFileName = null;
 
             if (licenseType.EqualsIgnoreCase("file"))
             {
-                var content = await GetPackageFileContentAsync(id, licenseValue, token).ConfigureAwait(false);
-                await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, licenseValue), content ?? Array.Empty<byte>(), token).ConfigureAwait(false);
-                hasFileName = true;
+                licenseFileName = licenseValue;
             }
             else if (licenseType.EqualsIgnoreCase("expression"))
             {
@@ -131,17 +131,7 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
                 license.HRef = licenseUrl;
             }
 
-            if (!hasFileName)
-            {
-                foreach (var fileName in PackageLicense.StaticLicenseFileNames)
-                {
-                    var content = await GetPackageFileContentAsync(id, fileName, token).ConfigureAwait(false);
-                    if (content != null)
-                    {
-                        await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, fileName), content, token).ConfigureAwait(false);
-                    }
-                }
-            }
+            await CopyPackageLicenseFileAsync(id, licenseFileName, token).ConfigureAwait(false);
 
             return license;
         }
@@ -205,6 +195,38 @@ namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters
             {
                 license.Description = null;
                 license.Code = test.Code;
+            }
+        }
+
+        private async Task CopyPackageLicenseFileAsync(LibraryId id, string licenseFileName, CancellationToken token)
+        {
+            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
+
+            if (!string.IsNullOrWhiteSpace(licenseFileName))
+            {
+                var content = await GetPackageFileContentAsync(package, licenseFileName, token).ConfigureAwait(false);
+                if (content != null)
+                {
+                    await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, licenseFileName), content, token).ConfigureAwait(false);
+                    return;
+                }
+            }
+
+            foreach (var fileName in PackageLicense.StaticLicenseFileNames)
+            {
+                var content = await GetPackageFileContentAsync(package, fileName, token).ConfigureAwait(false);
+                if (content != null)
+                {
+                    await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, fileName), content, token).ConfigureAwait(false);
+                    return;
+                }
+            }
+
+            var files = FindPackageFiles(package, PackageLicense.DefaultLicenseFilePattern);
+            if (files.Length == 1)
+            {
+                var content = await GetPackageFileContentAsync(package, files[0], token).ConfigureAwait(false);
+                await Storage.WriteLibraryFileAsync(id, PackageLicense.GetLicenseFileName(PackageLicense.SubjectPackage, files[0]), content, token).ConfigureAwait(false);
             }
         }
 

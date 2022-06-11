@@ -53,10 +53,15 @@ namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
             return file?.Content;
         }
 
-        protected override async Task<byte[]> GetPackageFileContentAsync(LibraryId id, string fileName, CancellationToken token)
+        protected override Task<byte[]> GetPackageFileContentAsync(byte[] package, string fileName, CancellationToken token)
         {
-            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
-            return Api.LoadFileContent(package, fileName);
+            var content = Api.LoadFileContent(package, fileName);
+            return Task.FromResult(content);
+        }
+
+        protected override string[] FindPackageFiles(byte[] package, string searchPattern)
+        {
+            return Api.FindFiles(package, searchPattern);
         }
     }
 }
