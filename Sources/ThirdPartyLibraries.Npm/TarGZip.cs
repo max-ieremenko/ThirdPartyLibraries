@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Tar;
 
 namespace ThirdPartyLibraries.Npm
@@ -27,20 +27,33 @@ namespace ThirdPartyLibraries.Npm
             TarEntry entry;
             while ((entry = _tar.GetNextEntry()) != null)
             {
-                if (entry.IsDirectory || entry.TarHeader.TypeFlag == TarHeader.LF_LINK || entry.TarHeader.TypeFlag == TarHeader.LF_SYMLINK)
+                if (IsFile(entry))
                 {
-                    continue;
-                }
-
-                // remove root directory
-                var entryName = entry.Name.AsSpan(entry.Name.IndexOf('/') + 1);
-                if (entryName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
+                    var entryName = GetFileName(entry);
+                    if (entryName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
                 }
             }
 
             return false;
+        }
+
+        public IEnumerable<string> GetFileNames()
+        {
+            TarEntry entry;
+            while ((entry = _tar.GetNextEntry()) != null)
+            {
+                if (IsFile(entry))
+                {
+                    var entryName = GetFileName(entry);
+                    if (entryName.IndexOf('/') < 0)
+                    {
+                        yield return entryName.ToString();
+                    }
+                }
+            }
         }
 
         public byte[] GetCurrentEntryContent()
@@ -56,6 +69,19 @@ namespace ThirdPartyLibraries.Npm
         {
             _level1.Dispose();
             _tar.Dispose();
+        }
+
+        private static bool IsFile(TarEntry entry)
+        {
+            return !entry.IsDirectory
+                   && entry.TarHeader.TypeFlag != TarHeader.LF_LINK
+                   && entry.TarHeader.TypeFlag != TarHeader.LF_SYMLINK;
+        }
+
+        private static ReadOnlySpan<char> GetFileName(TarEntry entry)
+        {
+            // remove root directory
+            return entry.Name.AsSpan(entry.Name.IndexOf('/') + 1);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -120,6 +122,29 @@ namespace ThirdPartyLibraries.NuGet
                     return await content.ToArrayAsync(token).ConfigureAwait(false);
                 }
             }
+        }
+
+        public string[] FindFiles(byte[] packageContent, string searchPattern)
+        {
+            packageContent.AssertNotNull(nameof(packageContent));
+            searchPattern.AssertNotNull(nameof(searchPattern));
+
+            var result = new List<string>();
+            
+            var pattern = new Regex(searchPattern, RegexOptions.IgnoreCase);
+            using (var zip = new ZipArchive(new MemoryStream(packageContent), ZipArchiveMode.Read, false))
+            {
+                for (var i = 0; i < zip.Entries.Count; i++)
+                {
+                    var entry = zip.Entries[i];
+                    if (entry.FullName.IndexOf('/') < 0 && pattern.IsMatch(entry.FullName))
+                    {
+                        result.Add(entry.FullName);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         internal static string ExtractLicenseCode(string licenseUrl)
