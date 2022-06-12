@@ -1,12 +1,11 @@
-$outDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../build-out"))
+$outDir = $settings.output
 $temp = Join-Path $outDir "pwsh"
 
-Copy-Item -Path (Join-Path $PSScriptRoot "../Sources/bin/pwsh") -Destination $temp -Recurse
+Copy-Item -Path (Join-Path $settings.bin "pwsh") -Destination $temp -Recurse
 
 # .psd1 set module version
-$version = Select-Xml -Path (Join-Path $PSScriptRoot "../Sources/Directory.Build.props") -XPath "Project/PropertyGroup/DefaultPackageVersion"
 $psdFile = Join-Path $temp "ThirdPartyLibraries.psd1"
-((Get-Content -Path $psdFile -Raw) -replace "3.2.1", $version.Node.InnerText) | Set-Content -Path $psdFile
+((Get-Content -Path $psdFile -Raw) -replace "3.2.1", $settings.version) | Set-Content -Path $psdFile
 
 Get-ChildItem $temp -Include *.pdb -Recurse | Remove-Item
 

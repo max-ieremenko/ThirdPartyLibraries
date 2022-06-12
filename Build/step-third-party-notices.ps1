@@ -1,9 +1,9 @@
-$sourceDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources"))
-$repositoryDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\ThirdPartyLibraries"))
-$outDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out\ThirdNotices"))
-$version = (Select-Xml -Path (Join-Path $sourceDir "Directory.Build.props") -XPath "Project/PropertyGroup/DefaultPackageVersion").Node.InnerText
+$sourceDir = $settings.sources
+$repositoryDir = $settings.repository
+$outDir = Join-Path $settings.output "ThirdNotices"
+$version = $settings.version
 
-$app = Join-Path $sourceDir "bin\app\net5.0\ThirdPartyLibraries.dll"
+$app = Join-Path $settings.bin "app/net5.0/ThirdPartyLibraries.dll"
     
 Write-Host "Update repository"
 Exec { dotnet $app update -appName ThirdPartyLibraries -source "$sourceDir" -repository "$repositoryDir" }

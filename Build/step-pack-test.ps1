@@ -1,12 +1,7 @@
 . (Join-Path $PSScriptRoot ".\step-pack-test-scripts.ps1")
 
-$binDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out"))
-
-$packageList = Get-ChildItem -Path $binDir -Recurse -File -Include "*.nupkg", "*.zip" | ForEach-Object {$_.FullName}
-
-if ((-not $packageList) -or (-not $packageList.Length)) {
-    throw "no packages found."
-}
+$packageList = Get-ChildItem -Path $settings.output -Recurse -File -Include "*.nupkg", "*.zip" | ForEach-Object {$_.FullName}
+assert ($packageList -and $packageList.Length) "no packages found."
 
 $packageList
 
