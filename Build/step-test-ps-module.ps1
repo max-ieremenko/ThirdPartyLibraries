@@ -1,14 +1,24 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory = $true)]
+    [ValidateScript({ Test-Path $_ })]
+    [string]
+    $Output,
+
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({ Test-Path $_ })]
+    [string]
+    $Sources,
+
+    [Parameter(Mandatory = $true)]
     [string]
     $ImageName
 )
 
 task Test {
     $nugetLocal = Join-Path $Env:USERPROFILE ".nuget\packages"
-    $pwsh = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out\pwsh.zip"))
-    $source = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources\ThirdPartyLibraries.PowerShell.IntegrationTest"))
+    $pwsh = Join-Path $Output "pwsh.zip"
+    $source = Join-Path $Sources "ThirdPartyLibraries.PowerShell.IntegrationTest"
     $userSecrets = Join-Path $Env:APPDATA "Microsoft\UserSecrets"
 
     $runArgs = $(

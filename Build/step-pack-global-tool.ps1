@@ -1,11 +1,10 @@
-$projectFile = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources\ThirdPartyLibraries\ThirdPartyLibraries.csproj"))
-$outDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out"))
+$projectFile = Join-Path $settings.sources "ThirdPartyLibraries/ThirdPartyLibraries.csproj"
 
 Exec {
     dotnet pack `
         -c Release `
         -p:PackAsTool=true `
         -p:GlobalTool=true `
-        -o $outDir `
+        -o $settings.output `
         $projectFile
 }

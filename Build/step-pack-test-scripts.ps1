@@ -23,32 +23,17 @@ function Test-Package {
 
     $name = Split-Path $PackageFileName -Leaf
 
-    Test-FileExists $name $TempDirectory "LICENSE"
-    Test-FileExists $name $TempDirectory "ThirdPartyNotices.txt"
-    Test-FileExists $name $TempDirectory "Licenses\MIT-license.txt"
+    assert (Test-Path (Join-Path $TempDirectory "LICENSE")) "File LICENSE not found in $name"
+    assert (Test-Path (Join-Path $TempDirectory "ThirdPartyNotices.txt")) "File ThirdPartyNotices.txt not found in $name"
+    assert (Test-Path (Join-Path $TempDirectory "Licenses/MIT-license.txt")) "File Licenses/MIT-license.txt not found in $name"
 
     $name = [System.IO.Path]::GetExtension($PackageFileName)
     if ($name -eq ".nupkg") {
         # test .nuspec
         $nuspecFile = Get-ChildItem -Path $TempDirectory -Filter *.nuspec
-        if (-not $nuspecFile) {
-            throw (".nuspec not found in " + $PackageFileName)
-        }
+        assert ($nuspecFile) ".nuspec not found in $PackageFileName"
 
         Test-NuGetSpec $nuspecFile.FullName
-    }
-}
-
-function Test-FileExists {
-    param (
-        [string]$packageName,
-        [string]$directory,
-        [string]$fileName
-    )
-
-    $path = Join-Path $directory $fileName
-    if (-not (Test-Path $path)) {
-        throw ("File " + $fileName + " not found in " + $name)
     }
 }
 

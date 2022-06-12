@@ -1,18 +1,20 @@
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({ Test-Path $_ })]
+    [string]
+    $Bin,
+
+    [Parameter(Mandatory = $true)]
     [ValidateSet("netcoreapp3.1", "net5.0", "net6.0")] 
     [string]
     $Framework
 )
 
-$sourceDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources\bin\test\$Framework"))
+$sourceDir = Join-Path $Bin "test/$Framework"
+$testList = Get-ChildItem -Path $sourceDir -Filter *.Test.dll ` | ForEach-Object { $_.FullName }
 
-$testList = Get-ChildItem -Path $sourceDir -Filter *.Test.dll ` | ForEach-Object {$_.FullName}
-
-if ((-not $testList) -or (-not $testList.Length)) {
-    throw ($Framework + " test list is empty.")
-}
+assert ($testList -and $testList.Length) "$Framework test list is empty"
 
 $testList
-dotnet vstest $testList
+Exec { dotnet vstest $testList }
