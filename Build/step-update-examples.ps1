@@ -1,6 +1,6 @@
-$app = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources\bin\app\net6.0\ThirdPartyLibraries.dll"))
-$repositoryDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\ThirdPartyLibraries"))
-$examplesDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Examples\third-party-notices-template"))
+$app = Join-Path $settings.bin "app/net6.0/ThirdPartyLibraries.dll"
+$repositoryDir = $settings.repository
+$examplesDir = Join-Path $settings.examples "..\Examples\third-party-notices-template"
 
 $originalTemplateFileName = Join-Path $repositoryDir "configuration\third-party-notices-template.txt"
 $originalTemplateBackup = [System.IO.Path]::GetTempFileName()

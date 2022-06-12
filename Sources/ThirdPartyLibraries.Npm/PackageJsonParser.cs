@@ -191,13 +191,22 @@ namespace ThirdPartyLibraries.Npm
         {
             if (root == null)
             {
-                yield break;
+                return Array.Empty<NpmPackageId>();
             }
 
+            var result = new List<NpmPackageId>();
             foreach (var property in root.Properties())
             {
-                yield return new NpmPackageId(property.Name, (string)property.Value);
+                var version = (string)property.Value;
+                if (string.IsNullOrWhiteSpace(version))
+                {
+                    version = "*";
+                }
+
+                result.Add(new NpmPackageId(property.Name, version));
             }
+
+            return result;
         }
 
         private static string ParseAuthorName(object value)

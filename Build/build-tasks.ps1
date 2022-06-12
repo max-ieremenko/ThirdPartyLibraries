@@ -4,21 +4,35 @@ task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
 task UnitTest UnitTestCore31, UnitTest50, UnitTest60
 task Pack PackGlobalTool, PackPowerShellModule, PackManualDownload, PackTest
 
+Enter-Build {
+    $settings = @{
+        sources    = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources"));
+        output     = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../build-out"));
+        bin        = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources/bin"));
+        repository = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../ThirdPartyLibraries"));
+        examples   = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Examples"));
+        version    = $(
+            $buildProps = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources/Directory.Build.props"))
+            $packageVersion = (Select-Xml -Path $buildProps -XPath "Project/PropertyGroup/DefaultPackageVersion").Node.InnerText
+            assert $packageVersion "Package version not found"
+            $packageVersion
+        );
+    }
+}
+
 task Initialize {
     $env:GITHUB_SHA = Exec { git rev-parse HEAD }
 }
 
 task Clean {
-    $buildOutDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\build-out"))
-    if (Test-Path $buildOutDir) {
-        Remove-Item -Path $buildOutDir -Recurse -Force
+    if (Test-Path $settings.output) {
+        Remove-Item -Path $settings.output -Recurse -Force
     }
 
-    $sourcesDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\Sources"))
-    Get-ChildItem -Path $sourcesDir -Filter bin -Directory -Recurse | Remove-Item -Recurse -Force
-    Get-ChildItem -Path $sourcesDir -Filter obj -Directory -Recurse | Remove-Item -Recurse -Force
+    Get-ChildItem -Path $settings.sources -Filter bin -Directory -Recurse | Remove-Item -Recurse -Force
+    Get-ChildItem -Path $settings.sources -Filter obj -Directory -Recurse | Remove-Item -Recurse -Force
 
-    $nodeModules = Join-Path $sourcesDir "ThirdPartyLibraries.Npm.Demo\node_modules"
+    $nodeModules = Join-Path $settings.sources "ThirdPartyLibraries.Npm.Demo\node_modules"
     if (Test-Path $nodeModules) {
         Remove-Item -Path $nodeModules -Recurse -Force
     }
@@ -33,15 +47,15 @@ task ThirdPartyNotices {
 }
 
 task UnitTestCore31 {
-    Exec { .\step-unit-test.ps1 "netcoreapp3.1" }
+    Exec { .\step-unit-test.ps1 $settings.bin "netcoreapp3.1" }
 }
 
 task UnitTest50 {
-    Exec { .\step-unit-test.ps1 "net5.0" }
+    Exec { .\step-unit-test.ps1 $settings.bin "net5.0" }
 }
 
 task UnitTest60 {
-    Exec { .\step-unit-test.ps1 "net6.0" }
+    Exec { .\step-unit-test.ps1 $settings.bin "net6.0" }
 }
 
 task PackGlobalTool {
@@ -83,6 +97,8 @@ task PsCoreTest {
         $builds += @{
             File      = "step-test-ps-module.ps1";
             Task      = "Test";
+            Output    = $settings.output;
+            Sources   = $settings.sources;
             ImageName = $image;
         }
     }

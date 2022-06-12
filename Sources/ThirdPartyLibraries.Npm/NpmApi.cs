@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -86,9 +88,7 @@ namespace ThirdPartyLibraries.Npm
 
         public byte[] ExtractPackageJson(byte[] packageContent)
         {
-            packageContent.AssertNotNull(nameof(packageContent));
-
-            var result = ExtractPackageFile(packageContent, PackageJsonParser.FileName);
+            var result = LoadFileContent(packageContent, PackageJsonParser.FileName);
             if (result == null)
             {
                 throw new InvalidOperationException(PackageJsonParser.FileName + " not found in the package.");
@@ -102,7 +102,37 @@ namespace ThirdPartyLibraries.Npm
             packageContent.AssertNotNull(nameof(packageContent));
             fileName.AssertNotNull(nameof(fileName));
 
-            return ExtractPackageFile(packageContent, fileName);
+            using (var zip = new TarGZip(packageContent))
+            {
+                if (!zip.SeekToEntry(fileName))
+                {
+                    return null;
+                }
+
+                return zip.GetCurrentEntryContent();
+            }
+        }
+
+        public string[] FindFiles(byte[] packageContent, string searchPattern)
+        {
+            packageContent.AssertNotNull(nameof(packageContent));
+            searchPattern.AssertNotNull(nameof(searchPattern));
+
+            var pattern = new Regex(searchPattern, RegexOptions.IgnoreCase);
+
+            var result = new List<string>();
+            using (var zip = new TarGZip(packageContent))
+            {
+                foreach (var name in zip.GetFileNames())
+                {
+                    if (pattern.IsMatch(name))
+                    {
+                        result.Add(name);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         public string ResolveNpmRoot()
@@ -159,19 +189,6 @@ namespace ThirdPartyLibraries.Npm
             ////}
 
             return result;
-        }
-
-        private static byte[] ExtractPackageFile(byte[] packageContent, string fileName)
-        {
-            using (var zip = new TarGZip(packageContent))
-            {
-                if (!zip.SeekToEntry(fileName))
-                {
-                    return null;
-                }
-
-                return zip.GetCurrentEntryContent();
-            }
         }
     }
 }

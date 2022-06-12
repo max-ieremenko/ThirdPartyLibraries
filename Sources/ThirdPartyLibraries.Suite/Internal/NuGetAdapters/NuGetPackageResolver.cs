@@ -53,10 +53,14 @@ namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
             return Api.DownloadPackageAsync(new NuGetPackageId(id.Name, id.Version), Configuration.AllowToUseLocalCache, token);
         }
 
-        protected override async Task<byte[]> GetPackageFileContentAsync(LibraryId id, string fileName, CancellationToken token)
+        protected override Task<byte[]> GetPackageFileContentAsync(byte[] package, string fileName, CancellationToken token)
         {
-            var package = await GetPackageContentAsync(id, token).ConfigureAwait(false);
-            return await Api.LoadFileContentAsync(package, fileName, token).ConfigureAwait(false);
+            return Api.LoadFileContentAsync(package, fileName, token);
+        }
+
+        protected override string[] FindPackageFiles(byte[] package, string searchPattern)
+        {
+            return Api.FindFiles(package, searchPattern);
         }
     }
 }

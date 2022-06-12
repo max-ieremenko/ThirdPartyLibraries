@@ -205,6 +205,21 @@ namespace ThirdPartyLibraries.NuGet
         }
 
         [Test]
+        [TestCase("^license$", "LICENSE")]
+        [TestCase("lic", "LICENSE")]
+        [TestCase("install")]
+        public async Task FindFilesStyleCopAnalyzers(string searchPattern, params string[] expected)
+        {
+            string[] actual;
+            using (var content = TempFile.OpenResource(GetType(), "NuGetApiTest.StyleCop.Analyzers.1.1.118.nupkg"))
+            {
+                actual = _sut.FindFiles(await content.ToArrayAsync(CancellationToken.None).ConfigureAwait(false), searchPattern);
+            }
+
+            actual.ShouldBe(expected, ignoreOrder: true);
+        }
+
+        [Test]
         public async Task DownloadPackageStyleCopAnalyzersFromWeb()
         {
             var package = new NuGetPackageId("StyleCop.Analyzers", "1.1.118");
