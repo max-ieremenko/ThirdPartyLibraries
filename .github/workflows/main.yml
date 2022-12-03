@@ -26,21 +26,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dotnet sdk
+    - name: Install dependencies
       shell: pwsh
-      run: .\Build\step-install-dotnet.ps1
+      run: ./Build/install-dependencies.ps1
 
     - name: Dotnet info
       shell: pwsh
       run: dotnet --info
 
-    - name: Install InvokeBuild
-      shell: pwsh
-      run: Install-Module -Name InvokeBuild -RequiredVersion 5.9.9.0 -Force
-
     - name: Build
       shell: pwsh
-      run: .\Build\build-ci.ps1
+      run: ./Build/build-ci.ps1
 
     - name: Artifact packages
       uses: actions/upload-artifact@v2
@@ -58,18 +54,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dotnet sdk
+    - name: Install dependencies
       shell: pwsh
-      run: .\Build\step-install-dotnet.ps1
+      run: ./Build/install-dependencies.ps1
 
     - name: Dotnet info
       shell: pwsh
       run: dotnet --info
 
-    - name: Install InvokeBuild
-      shell: pwsh
-      run: Install-Module -Name InvokeBuild -RequiredVersion 5.9.9.0 -Force
-
     - name: Build
       shell: pwsh
-      run: .\Build\build-ci.ps1
+      run: ./Build/build-ci.ps1
