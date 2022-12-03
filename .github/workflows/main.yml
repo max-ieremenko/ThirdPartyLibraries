@@ -36,7 +36,7 @@ jobs:
 
     - name: Build
       shell: pwsh
-      run: ./Build/build-ci.ps1
+      run: ./Build/build-ci.ps1 "${{ secrets.GITHUB_TOKEN }}"
 
     - name: Artifact packages
       uses: actions/upload-artifact@v3
@@ -64,4 +64,4 @@ jobs:
 
     - name: Build
       shell: pwsh
-      run: ./Build/build-ci.ps1
+      run: ./Build/build-ci.ps1 "${{ secrets.GITHUB_TOKEN }}"
