@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ThirdPartyLibraries.Suite
+namespace ThirdPartyLibraries.Suite;
+
+public interface ICommand
 {
-    public interface ICommand
-    {
-        Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token);
-    }
+    Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token);
 }

@@ -5,84 +5,83 @@ using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 
-namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
+namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters;
+
+internal sealed class NuGetSourceCodeReferenceProvider : ISourceCodeReferenceProvider
 {
-    internal sealed class NuGetSourceCodeReferenceProvider : ISourceCodeReferenceProvider
+    public NuGetSourceCodeReferenceProvider(NuGetConfiguration configuration)
     {
-        public NuGetSourceCodeReferenceProvider(NuGetConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public NuGetConfiguration Configuration { get; }
+
+    public void AddReferencesFrom(string path, IList<LibraryReference> references, ICollection<LibraryId> notFound)
+    {
+        if (File.Exists(path)
+            && ProjectAssetsParser.FileName.EqualsIgnoreCase(Path.GetFileName(path)))
         {
-            Configuration = configuration;
+            AddReferencesFromFile(path, references);
         }
 
-        public NuGetConfiguration Configuration { get; }
-
-        public void AddReferencesFrom(string path, IList<LibraryReference> references, ICollection<LibraryId> notFound)
+        if (Directory.Exists(path))
         {
-            if (File.Exists(path)
-                && ProjectAssetsParser.FileName.EqualsIgnoreCase(Path.GetFileName(path)))
+            var files = Directory.GetFiles(path, ProjectAssetsParser.FileName, SearchOption.AllDirectories);
+            foreach (var file in files)
             {
-                AddReferencesFromFile(path, references);
+                AddReferencesFromFile(file, references);
             }
+        }
+    }
 
-            if (Directory.Exists(path))
+    private void AddReferencesFromFile(string fileName, IList<LibraryReference> references)
+    {
+        var parser = ProjectAssetsParser.FromFile(fileName);
+
+        var targetFrameworks = parser.GetTargetFrameworks();
+
+        var internalFilterByName = new IgnoreFilter(Configuration.InternalPackages.ByName);
+        var isInternalByProject = new IgnoreFilter(Configuration.InternalPackages.ByProjectName).Filter(parser.GetProjectName());
+
+        foreach (var entry in GetFilteredReferences(parser, targetFrameworks))
+        {
+            var isInternal = isInternalByProject || internalFilterByName.Filter(entry.Package.Name);
+            var reference = new LibraryReference(
+                new LibraryId(PackageSources.NuGet, entry.Package.Name, entry.Package.Version),
+                targetFrameworks,
+                entry.Dependencies,
+                isInternal);
+            references.Add(reference);
+        }
+    }
+
+    private IEnumerable<(NuGetPackageId Package, IList<LibraryId> Dependencies)> GetFilteredReferences(ProjectAssetsParser parser, string[] targetFrameworks)
+    {
+        if (new IgnoreFilter(Configuration.IgnorePackages.ByProjectName).Filter(parser.GetProjectName()))
+        {
+            yield break;
+        }
+
+        var ignoreFilterByName = new IgnoreFilter(Configuration.IgnorePackages.ByName);
+        foreach (var targetFramework in targetFrameworks)
+        {
+            foreach (var entry in parser.GetReferences(targetFramework))
             {
-                var files = Directory.GetFiles(path, ProjectAssetsParser.FileName, SearchOption.AllDirectories);
-                foreach (var file in files)
+                if (ignoreFilterByName.Filter(entry.Package.Name))
                 {
-                    AddReferencesFromFile(file, references);
+                    continue;
                 }
-            }
-        }
 
-        private void AddReferencesFromFile(string fileName, IList<LibraryReference> references)
-        {
-            var parser = ProjectAssetsParser.FromFile(fileName);
-
-            var targetFrameworks = parser.GetTargetFrameworks();
-
-            var internalFilterByName = new IgnoreFilter(Configuration.InternalPackages.ByName);
-            var isInternalByProject = new IgnoreFilter(Configuration.InternalPackages.ByProjectName).Filter(parser.GetProjectName());
-
-            foreach (var entry in GetFilteredReferences(parser, targetFrameworks))
-            {
-                var isInternal = isInternalByProject || internalFilterByName.Filter(entry.Package.Name);
-                var reference = new LibraryReference(
-                    new LibraryId(PackageSources.NuGet, entry.Package.Name, entry.Package.Version),
-                    targetFrameworks,
-                    entry.Dependencies,
-                    isInternal);
-                references.Add(reference);
-            }
-        }
-
-        private IEnumerable<(NuGetPackageId Package, IList<LibraryId> Dependencies)> GetFilteredReferences(ProjectAssetsParser parser, string[] targetFrameworks)
-        {
-            if (new IgnoreFilter(Configuration.IgnorePackages.ByProjectName).Filter(parser.GetProjectName()))
-            {
-               yield break;
-            }
-
-            var ignoreFilterByName = new IgnoreFilter(Configuration.IgnorePackages.ByName);
-            foreach (var targetFramework in targetFrameworks)
-            {
-                foreach (var entry in parser.GetReferences(targetFramework))
+                var dependencies = new List<LibraryId>(entry.Dependencies.Count);
+                foreach (var d in entry.Dependencies)
                 {
-                    if (ignoreFilterByName.Filter(entry.Package.Name))
+                    if (!ignoreFilterByName.Filter(d.Name))
                     {
-                        continue;
+                        dependencies.Add(new LibraryId(PackageSources.NuGet, d.Name, d.Version));
                     }
-
-                    var dependencies = new List<LibraryId>(entry.Dependencies.Count);
-                    foreach (var d in entry.Dependencies)
-                    {
-                        if (!ignoreFilterByName.Filter(d.Name))
-                        {
-                            dependencies.Add(new LibraryId(PackageSources.NuGet, d.Name, d.Version));
-                        }
-                    }
-
-                    yield return (entry.Package, dependencies);
                 }
+
+                yield return (entry.Package, dependencies);
             }
         }
     }

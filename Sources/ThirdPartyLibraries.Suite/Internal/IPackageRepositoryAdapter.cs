@@ -2,18 +2,17 @@
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
 
-namespace ThirdPartyLibraries.Suite.Internal
+namespace ThirdPartyLibraries.Suite.Internal;
+
+internal interface IPackageRepositoryAdapter
 {
-    internal interface IPackageRepositoryAdapter
-    {
-        IStorage Storage { get; set; }
+    IStorage Storage { get; set; }
 
-        Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token);
+    Task<Package> LoadPackageAsync(LibraryId id, CancellationToken token);
 
-        Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token);
+    Task UpdatePackageAsync(LibraryReference reference, Package package, string appName, CancellationToken token);
 
-        Task UpdatePackageReadMeAsync(Package package, CancellationToken token);
+    Task UpdatePackageReadMeAsync(Package package, CancellationToken token);
 
-        ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token);
-    }
+    ValueTask<PackageRemoveResult> RemoveFromApplicationAsync(LibraryId id, string appName, CancellationToken token);
 }

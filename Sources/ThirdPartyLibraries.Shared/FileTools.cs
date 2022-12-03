@@ -1,23 +1,22 @@
 ﻿using System;
 using System.IO;
 
-namespace ThirdPartyLibraries.Shared
+namespace ThirdPartyLibraries.Shared;
+
+public static class FileTools
 {
-    public static class FileTools
+    public static string RootPath(string path)
     {
-        public static string RootPath(string path)
+        if (string.IsNullOrEmpty(path))
         {
-            if (string.IsNullOrEmpty(path))
-            {
-                return Environment.CurrentDirectory;
-            }
-
-            if (Path.IsPathRooted(path))
-            {
-                return path;
-            }
-
-            return Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, path));
+            return Environment.CurrentDirectory;
         }
+
+        if (Path.IsPathRooted(path))
+        {
+            return path;
+        }
+
+        return Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, path));
     }
 }

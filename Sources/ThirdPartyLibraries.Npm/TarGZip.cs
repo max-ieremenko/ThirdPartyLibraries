@@ -4,84 +4,83 @@ using System.IO;
 using System.IO.Compression;
 using ICSharpCode.SharpZipLib.Tar;
 
-namespace ThirdPartyLibraries.Npm
+namespace ThirdPartyLibraries.Npm;
+
+internal sealed class TarGZip : IDisposable
 {
-    internal sealed class TarGZip : IDisposable
+    private readonly GZipStream _level1;
+    private readonly TarInputStream _tar;
+
+    public TarGZip(byte[] content)
+        : this(new MemoryStream(content))
     {
-        private readonly GZipStream _level1;
-        private readonly TarInputStream _tar;
+    }
 
-        public TarGZip(byte[] content)
-            : this(new MemoryStream(content))
-        {
-        }
+    public TarGZip(Stream content)
+    {
+        _level1 = new GZipStream(content, CompressionMode.Decompress, leaveOpen: false);
+        _tar = new TarInputStream(_level1, null);
+    }
 
-        public TarGZip(Stream content)
+    public bool SeekToEntry(string name)
+    {
+        TarEntry entry;
+        while ((entry = _tar.GetNextEntry()) != null)
         {
-            _level1 = new GZipStream(content, CompressionMode.Decompress, leaveOpen: false);
-            _tar = new TarInputStream(_level1, null);
-        }
-
-        public bool SeekToEntry(string name)
-        {
-            TarEntry entry;
-            while ((entry = _tar.GetNextEntry()) != null)
+            if (IsFile(entry))
             {
-                if (IsFile(entry))
+                var entryName = GetFileName(entry);
+                if (entryName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
                 {
-                    var entryName = GetFileName(entry);
-                    if (entryName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public IEnumerable<string> GetFileNames()
-        {
-            TarEntry entry;
-            while ((entry = _tar.GetNextEntry()) != null)
-            {
-                if (IsFile(entry))
-                {
-                    var entryName = GetFileName(entry);
-                    if (entryName.IndexOf('/') < 0)
-                    {
-                        yield return entryName.ToString();
-                    }
+                    return true;
                 }
             }
         }
 
-        public byte[] GetCurrentEntryContent()
+        return false;
+    }
+
+    public IEnumerable<string> GetFileNames()
+    {
+        TarEntry entry;
+        while ((entry = _tar.GetNextEntry()) != null)
         {
-            using (var copy = new MemoryStream())
+            if (IsFile(entry))
             {
-                _tar.CopyEntryContents(copy);
-                return copy.ToArray();
+                var entryName = GetFileName(entry);
+                if (entryName.IndexOf('/') < 0)
+                {
+                    yield return entryName.ToString();
+                }
             }
         }
+    }
 
-        public void Dispose()
+    public byte[] GetCurrentEntryContent()
+    {
+        using (var copy = new MemoryStream())
         {
-            _level1.Dispose();
-            _tar.Dispose();
+            _tar.CopyEntryContents(copy);
+            return copy.ToArray();
         }
+    }
 
-        private static bool IsFile(TarEntry entry)
-        {
-            return !entry.IsDirectory
-                   && entry.TarHeader.TypeFlag != TarHeader.LF_LINK
-                   && entry.TarHeader.TypeFlag != TarHeader.LF_SYMLINK;
-        }
+    public void Dispose()
+    {
+        _level1.Dispose();
+        _tar.Dispose();
+    }
 
-        private static ReadOnlySpan<char> GetFileName(TarEntry entry)
-        {
-            // remove root directory
-            return entry.Name.AsSpan(entry.Name.IndexOf('/') + 1);
-        }
+    private static bool IsFile(TarEntry entry)
+    {
+        return !entry.IsDirectory
+               && entry.TarHeader.TypeFlag != TarHeader.LF_LINK
+               && entry.TarHeader.TypeFlag != TarHeader.LF_SYMLINK;
+    }
+
+    private static ReadOnlySpan<char> GetFileName(TarEntry entry)
+    {
+        // remove root directory
+        return entry.Name.AsSpan(entry.Name.IndexOf('/') + 1);
     }
 }

@@ -1,11 +1,10 @@
-﻿namespace ThirdPartyLibraries.Suite.Internal
+﻿namespace ThirdPartyLibraries.Suite.Internal;
+
+internal enum PackageRemoveResult
 {
-    internal enum PackageRemoveResult
-    {
-        None,
+    None,
 
-        Removed,
+    Removed,
 
-        RemovedNoRefs
-    }
+    RemovedNoRefs
 }

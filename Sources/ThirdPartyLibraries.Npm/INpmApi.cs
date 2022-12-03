@@ -2,20 +2,19 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ThirdPartyLibraries.Npm
+namespace ThirdPartyLibraries.Npm;
+
+public interface INpmApi
 {
-    public interface INpmApi
-    {
-        PackageJson ParsePackageJson(Stream content);
+    PackageJson ParsePackageJson(Stream content);
         
-        Task<NpmPackageFile?> DownloadPackageAsync(NpmPackageId id, CancellationToken token);
+    Task<NpmPackageFile?> DownloadPackageAsync(NpmPackageId id, CancellationToken token);
 
-        byte[] ExtractPackageJson(byte[] packageContent);
+    byte[] ExtractPackageJson(byte[] packageContent);
         
-        byte[] LoadFileContent(byte[] packageContent, string fileName);
+    byte[] LoadFileContent(byte[] packageContent, string fileName);
 
-        string[] FindFiles(byte[] packageContent, string searchPattern);
+    string[] FindFiles(byte[] packageContent, string searchPattern);
 
-        string ResolveNpmRoot();
-    }
+    string ResolveNpmRoot();
 }

@@ -1,9 +1,8 @@
-﻿namespace ThirdPartyLibraries.Generic
-{
-    public sealed class StaticLicenseByUrl
-    {
-        public string Code { get; set; }
+﻿namespace ThirdPartyLibraries.Generic;
 
-        public string[] Urls { get; set; }
-    }
+public sealed class StaticLicenseByUrl
+{
+    public string Code { get; set; }
+
+    public string[] Urls { get; set; }
 }

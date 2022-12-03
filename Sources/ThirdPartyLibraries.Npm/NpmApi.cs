@@ -12,183 +12,182 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Npm
+namespace ThirdPartyLibraries.Npm;
+
+internal sealed class NpmApi : INpmApi
 {
-    internal sealed class NpmApi : INpmApi
+    public const string Host = "https://" + KnownHosts.NpmRegistry;
+
+    public NpmApi(Func<HttpClient> httpClientFactory)
     {
-        public const string Host = "https://" + KnownHosts.NpmRegistry;
+        httpClientFactory.AssertNotNull(nameof(httpClientFactory));
 
-        public NpmApi(Func<HttpClient> httpClientFactory)
+        HttpClientFactory = httpClientFactory;
+    }
+
+    public Func<HttpClient> HttpClientFactory { get; }
+
+    public PackageJson ParsePackageJson(Stream content)
+    {
+        content.AssertNotNull(nameof(content));
+
+        var parser = new PackageJsonParser(content.JsonDeserialize<JObject>());
+        return new PackageJson
         {
-            httpClientFactory.AssertNotNull(nameof(httpClientFactory));
+            Name = parser.GetName(),
+            Version = parser.GetVersion(),
+            HomePage = parser.GetHomePage(),
+            Authors = parser.GetAuthors(),
+            Description = parser.GetDescription(),
+            License = parser.GetLicense(),
+            Repository = parser.GetRepository(),
+            PackageHRef = new Uri(new Uri("https://" + KnownHosts.Npm), "package/{0}/v/{1}".FormatWith(parser.GetName(), parser.GetVersion())).ToString()
+        };
+    }
 
-            HttpClientFactory = httpClientFactory;
-        }
+    public async Task<NpmPackageFile?> DownloadPackageAsync(NpmPackageId id, CancellationToken token)
+    {
+        // does not work: https://registry.npmjs.org/@types%2Fangular/1.6.55
+        var url = new Uri(new Uri(Host), UrlEncoder.Default.Encode(id.Name));
 
-        public Func<HttpClient> HttpClientFactory { get; }
-
-        public PackageJson ParsePackageJson(Stream content)
+        JObject index;
+        using (var client = HttpClientFactory())
+        using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
         {
-            content.AssertNotNull(nameof(content));
-
-            var parser = new PackageJsonParser(content.JsonDeserialize<JObject>());
-            return new PackageJson
-            {
-                Name = parser.GetName(),
-                Version = parser.GetVersion(),
-                HomePage = parser.GetHomePage(),
-                Authors = parser.GetAuthors(),
-                Description = parser.GetDescription(),
-                License = parser.GetLicense(),
-                Repository = parser.GetRepository(),
-                PackageHRef = new Uri(new Uri("https://" + KnownHosts.Npm), "package/{0}/v/{1}".FormatWith(parser.GetName(), parser.GetVersion())).ToString()
-            };
-        }
-
-        public async Task<NpmPackageFile?> DownloadPackageAsync(NpmPackageId id, CancellationToken token)
-        {
-            // does not work: https://registry.npmjs.org/@types%2Fangular/1.6.55
-            var url = new Uri(new Uri(Host), UrlEncoder.Default.Encode(id.Name));
-
-            JObject index;
-            using (var client = HttpClientFactory())
-            using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
-            {
-                if (response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
-
-                await response.AssertStatusCodeOk().ConfigureAwait(false);
-
-                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                {
-                    index = stream.JsonDeserialize<JObject>();
-                }
-            }
-
-            var version = index.Value<JObject>("versions").Value<JObject>(id.Version);
-            if (version == null)
+            if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 return null;
             }
 
-            // https://registry.npmjs.org/@types/angular/-/angular-1.6.55.tgz
-            var packageUrl = new Uri(version.Value<JObject>("dist").Value<string>("tarball"));
+            await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-            var fileName = packageUrl.LocalPath.Substring(packageUrl.LocalPath.LastIndexOf('/') + 1);
-
-            using (var client = HttpClientFactory())
-            using (var stream = await client.GetStreamAsync(packageUrl).ConfigureAwait(false))
+            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
             {
-                var content = await stream.ToArrayAsync(token).ConfigureAwait(false);
-                return new NpmPackageFile(fileName, content);
+                index = stream.JsonDeserialize<JObject>();
             }
         }
 
-        public byte[] ExtractPackageJson(byte[] packageContent)
+        var version = index.Value<JObject>("versions").Value<JObject>(id.Version);
+        if (version == null)
         {
-            var result = LoadFileContent(packageContent, PackageJsonParser.FileName);
-            if (result == null)
-            {
-                throw new InvalidOperationException(PackageJsonParser.FileName + " not found in the package.");
-            }
-
-            return result;
+            return null;
         }
 
-        public byte[] LoadFileContent(byte[] packageContent, string fileName)
+        // https://registry.npmjs.org/@types/angular/-/angular-1.6.55.tgz
+        var packageUrl = new Uri(version.Value<JObject>("dist").Value<string>("tarball"));
+
+        var fileName = packageUrl.LocalPath.Substring(packageUrl.LocalPath.LastIndexOf('/') + 1);
+
+        using (var client = HttpClientFactory())
+        using (var stream = await client.GetStreamAsync(packageUrl).ConfigureAwait(false))
         {
-            packageContent.AssertNotNull(nameof(packageContent));
-            fileName.AssertNotNull(nameof(fileName));
+            var content = await stream.ToArrayAsync(token).ConfigureAwait(false);
+            return new NpmPackageFile(fileName, content);
+        }
+    }
 
-            using (var zip = new TarGZip(packageContent))
-            {
-                if (!zip.SeekToEntry(fileName))
-                {
-                    return null;
-                }
-
-                return zip.GetCurrentEntryContent();
-            }
+    public byte[] ExtractPackageJson(byte[] packageContent)
+    {
+        var result = LoadFileContent(packageContent, PackageJsonParser.FileName);
+        if (result == null)
+        {
+            throw new InvalidOperationException(PackageJsonParser.FileName + " not found in the package.");
         }
 
-        public string[] FindFiles(byte[] packageContent, string searchPattern)
+        return result;
+    }
+
+    public byte[] LoadFileContent(byte[] packageContent, string fileName)
+    {
+        packageContent.AssertNotNull(nameof(packageContent));
+        fileName.AssertNotNull(nameof(fileName));
+
+        using (var zip = new TarGZip(packageContent))
         {
-            packageContent.AssertNotNull(nameof(packageContent));
-            searchPattern.AssertNotNull(nameof(searchPattern));
-
-            var pattern = new Regex(searchPattern, RegexOptions.IgnoreCase);
-
-            var result = new List<string>();
-            using (var zip = new TarGZip(packageContent))
+            if (!zip.SeekToEntry(fileName))
             {
-                foreach (var name in zip.GetFileNames())
-                {
-                    if (pattern.IsMatch(name))
-                    {
-                        result.Add(name);
-                    }
-                }
+                return null;
             }
 
-            return result.ToArray();
+            return zip.GetCurrentEntryContent();
         }
+    }
 
-        public string ResolveNpmRoot()
+    public string[] FindFiles(byte[] packageContent, string searchPattern)
+    {
+        packageContent.AssertNotNull(nameof(packageContent));
+        searchPattern.AssertNotNull(nameof(searchPattern));
+
+        var pattern = new Regex(searchPattern, RegexOptions.IgnoreCase);
+
+        var result = new List<string>();
+        using (var zip = new TarGZip(packageContent))
         {
-            var info = new ProcessStartInfo
+            foreach (var name in zip.GetFileNames())
             {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                ErrorDialog = false,
-                Environment =
+                if (pattern.IsMatch(name))
                 {
-                    { "npm_config_loglevel", "silent" }
-                }
-            };
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                info.FileName = "cmd";
-                info.Arguments = "/c \"npm root -g\"";
-                info.LoadUserProfile = true;
-            }
-            else
-            {
-                info.FileName = "npm";
-                info.Arguments = "root -g";
-            }
-
-            Process process;
-            try
-            {
-                process = Process.Start(info);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Fail to execute command [npm root -g]: {0}".FormatWith(ex.Message), ex);
-            }
-
-            string result;
-            using (process)
-            {
-                process.WaitForExit((int)TimeSpan.FromSeconds(10).TotalMilliseconds);
-                result = process.StandardOutput.ReadToEnd().Trim('\r', '\n');
-
-                if (process.ExitCode != 0)
-                {
-                    throw new InvalidOperationException("The command [npm root -g] exited with code {0}.".FormatWith(process.ExitCode));
+                    result.Add(name);
                 }
             }
-
-            ////if (!Directory.Exists(result))
-            ////{
-            ////    throw new DirectoryNotFoundException(string.Format("Npm root directory {0} not found.", result));
-            ////}
-
-            return result;
         }
+
+        return result.ToArray();
+    }
+
+    public string ResolveNpmRoot()
+    {
+        var info = new ProcessStartInfo
+        {
+            CreateNoWindow = true,
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            ErrorDialog = false,
+            Environment =
+            {
+                { "npm_config_loglevel", "silent" }
+            }
+        };
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            info.FileName = "cmd";
+            info.Arguments = "/c \"npm root -g\"";
+            info.LoadUserProfile = true;
+        }
+        else
+        {
+            info.FileName = "npm";
+            info.Arguments = "root -g";
+        }
+
+        Process process;
+        try
+        {
+            process = Process.Start(info);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Fail to execute command [npm root -g]: {0}".FormatWith(ex.Message), ex);
+        }
+
+        string result;
+        using (process)
+        {
+            process.WaitForExit((int)TimeSpan.FromSeconds(10).TotalMilliseconds);
+            result = process.StandardOutput.ReadToEnd().Trim('\r', '\n');
+
+            if (process.ExitCode != 0)
+            {
+                throw new InvalidOperationException("The command [npm root -g] exited with code {0}.".FormatWith(process.ExitCode));
+            }
+        }
+
+        ////if (!Directory.Exists(result))
+        ////{
+        ////    throw new DirectoryNotFoundException(string.Format("Npm root directory {0} not found.", result));
+        ////}
+
+        return result;
     }
 }

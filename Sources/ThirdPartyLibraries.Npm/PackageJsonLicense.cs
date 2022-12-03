@@ -1,10 +1,9 @@
-﻿namespace ThirdPartyLibraries.Npm
-{
-    public sealed class PackageJsonLicense
-    {
-        // file; expression
-        public string Type { get; set; }
+﻿namespace ThirdPartyLibraries.Npm;
 
-        public string Value { get; set; }
-    }
+public sealed class PackageJsonLicense
+{
+    // file; expression
+    public string Type { get; set; }
+
+    public string Value { get; set; }
 }

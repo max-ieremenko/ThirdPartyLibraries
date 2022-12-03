@@ -8,124 +8,123 @@ using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 
-namespace ThirdPartyLibraries.Suite.Commands
+namespace ThirdPartyLibraries.Suite.Commands;
+
+internal sealed class ValidateCommandState
 {
-    internal sealed class ValidateCommandState
+    private readonly HashSet<LibraryId> _appPackages;
+    private readonly IDictionary<LibraryId, (string LicenseCode, PackageApprovalStatus Status, bool HasThirdPartyNotices)> _infoById;
+    private readonly IDictionary<string, LicenseIndexJson> _licenseByCode;
+
+    public ValidateCommandState(IPackageRepository repository, string appName)
     {
-        private readonly HashSet<LibraryId> _appPackages;
-        private readonly IDictionary<LibraryId, (string LicenseCode, PackageApprovalStatus Status, bool HasThirdPartyNotices)> _infoById;
-        private readonly IDictionary<string, LicenseIndexJson> _licenseByCode;
+        Repository = repository;
+        AppName = appName;
 
-        public ValidateCommandState(IPackageRepository repository, string appName)
-        {
-            Repository = repository;
-            AppName = appName;
+        _appPackages = new HashSet<LibraryId>();
+        _infoById = new Dictionary<LibraryId, (string, PackageApprovalStatus, bool)>();
+        _licenseByCode = new Dictionary<string, LicenseIndexJson>(StringComparer.OrdinalIgnoreCase);
+    }
 
-            _appPackages = new HashSet<LibraryId>();
-            _infoById = new Dictionary<LibraryId, (string, PackageApprovalStatus, bool)>();
-            _licenseByCode = new Dictionary<string, LicenseIndexJson>(StringComparer.OrdinalIgnoreCase);
-        }
-
-        public IPackageRepository Repository { get; }
+    public IPackageRepository Repository { get; }
         
-        public string AppName { get; }
+    public string AppName { get; }
 
-        public async Task InitializeAsync(CancellationToken token)
+    public async Task InitializeAsync(CancellationToken token)
+    {
+        var libraries = await Repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
+
+        foreach (var id in libraries)
         {
-            var libraries = await Repository.Storage.GetAllLibrariesAsync(token).ConfigureAwait(false);
+            var package = await Repository.LoadPackageAsync(id, token).ConfigureAwait(false);
+            await LoadLicenseAsync(package.LicenseCode, token).ConfigureAwait(false);
 
-            foreach (var id in libraries)
+            _infoById.Add(id, (package.LicenseCode, package.ApprovalStatus, !package.ThirdPartyNotices.IsNullOrEmpty()));
+
+            if (!package.SourceCode.Equals(PackageSources.Custom) && package.UsedBy.Any(i => i.Name.EqualsIgnoreCase(AppName)))
             {
-                var package = await Repository.LoadPackageAsync(id, token).ConfigureAwait(false);
-                await LoadLicenseAsync(package.LicenseCode, token).ConfigureAwait(false);
+                _appPackages.Add(id);
+            }
+        }
+    }
 
-                _infoById.Add(id, (package.LicenseCode, package.ApprovalStatus, !package.ThirdPartyNotices.IsNullOrEmpty()));
+    public bool PackageExists(LibraryId libraryId) => _infoById.ContainsKey(libraryId);
 
-                if (!package.SourceCode.Equals(PackageSources.Custom) && package.UsedBy.Any(i => i.Name.EqualsIgnoreCase(AppName)))
-                {
-                    _appPackages.Add(id);
-                }
+    public string GetPackageLicenseCode(LibraryId libraryId)
+    {
+        _infoById.TryGetValue(libraryId, out var info);
+        return info.LicenseCode;
+    }
+
+    public bool IsAssignedToApp(LibraryId libraryId)
+    {
+        return _appPackages.Remove(libraryId);
+    }
+
+    public bool GetLicenseRequiresApproval(LibraryId libraryId)
+    {
+        var info = _infoById[libraryId];
+        var codes = LicenseExpression.GetCodes(info.LicenseCode);
+
+        foreach (var code in codes)
+        {
+            if (_licenseByCode[code].RequiresApproval)
+            {
+                return true;
             }
         }
 
-        public bool PackageExists(LibraryId libraryId) => _infoById.ContainsKey(libraryId);
+        return false;
+    }
 
-        public string GetPackageLicenseCode(LibraryId libraryId)
+    public bool GetLicenseRequiresThirdPartyNotices(LibraryId libraryId)
+    {
+        var info = _infoById[libraryId];
+        var codes = LicenseExpression.GetCodes(info.LicenseCode);
+
+        foreach (var code in codes)
         {
-            _infoById.TryGetValue(libraryId, out var info);
-            return info.LicenseCode;
-        }
-
-        public bool IsAssignedToApp(LibraryId libraryId)
-        {
-            return _appPackages.Remove(libraryId);
-        }
-
-        public bool GetLicenseRequiresApproval(LibraryId libraryId)
-        {
-            var info = _infoById[libraryId];
-            var codes = LicenseExpression.GetCodes(info.LicenseCode);
-
-            foreach (var code in codes)
+            if (_licenseByCode[code].RequiresThirdPartyNotices)
             {
-                if (_licenseByCode[code].RequiresApproval)
-                {
-                    return true;
-                }
+                return true;
             }
-
-            return false;
         }
 
-        public bool GetLicenseRequiresThirdPartyNotices(LibraryId libraryId)
+        return false;
+    }
+
+    public PackageApprovalStatus GetPackageApprovalStatus(LibraryId libraryId)
+    {
+        _infoById.TryGetValue(libraryId, out var info);
+        return info.Status;
+    }
+
+    public bool GetPackageHasThirdPartyNotices(LibraryId libraryId)
+    {
+        _infoById.TryGetValue(libraryId, out var info);
+        return info.HasThirdPartyNotices;
+    }
+
+    public IEnumerable<LibraryId> GetAppTrash()
+    {
+        return _appPackages;
+    }
+
+    private async Task LoadLicenseAsync(string licenseExpression, CancellationToken token)
+    {
+        if (licenseExpression.IsNullOrEmpty())
         {
-            var info = _infoById[libraryId];
-            var codes = LicenseExpression.GetCodes(info.LicenseCode);
-
-            foreach (var code in codes)
-            {
-                if (_licenseByCode[code].RequiresThirdPartyNotices)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return;
         }
 
-        public PackageApprovalStatus GetPackageApprovalStatus(LibraryId libraryId)
-        {
-            _infoById.TryGetValue(libraryId, out var info);
-            return info.Status;
-        }
-
-        public bool GetPackageHasThirdPartyNotices(LibraryId libraryId)
-        {
-            _infoById.TryGetValue(libraryId, out var info);
-            return info.HasThirdPartyNotices;
-        }
-
-        public IEnumerable<LibraryId> GetAppTrash()
-        {
-            return _appPackages;
-        }
-
-        private async Task LoadLicenseAsync(string licenseExpression, CancellationToken token)
-        {
-            if (licenseExpression.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            var codes = LicenseExpression.GetCodes(licenseExpression);
+        var codes = LicenseExpression.GetCodes(licenseExpression);
             
-            foreach (var code in codes)
+        foreach (var code in codes)
+        {
+            if (!_licenseByCode.ContainsKey(code))
             {
-                if (!_licenseByCode.ContainsKey(code))
-                {
-                    var index = await Repository.Storage.ReadLicenseIndexJsonAsync(code, token).ConfigureAwait(false);
-                    _licenseByCode.Add(code, index);
-                }
+                var index = await Repository.Storage.ReadLicenseIndexJsonAsync(code, token).ConfigureAwait(false);
+                _licenseByCode.Add(code, index);
             }
         }
     }

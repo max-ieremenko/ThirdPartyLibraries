@@ -6,81 +6,80 @@ using DotLiquid.NamingConventions;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Repository
+namespace ThirdPartyLibraries.Repository;
+
+public static class DotLiquidTemplate
 {
-    public static class DotLiquidTemplate
+    static DotLiquidTemplate()
     {
-        static DotLiquidTemplate()
+        DotLiquid.Template.NamingConvention = new CSharpNamingConvention();
+
+        var allowAllMembers = new[] { "*" };
+
+        DotLiquid.Template.RegisterSafeType(typeof(RootReadMeContext), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(RootReadMeLicenseContext), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(RootReadMePackageContext), allowAllMembers);
+
+        DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeContext), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(LibraryLicense), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeDependencyContext), allowAllMembers);
+
+        DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesContext), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesLicenseContext), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageContext), allowAllMembers);
+        DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageLicenseContext), allowAllMembers);
+    }
+
+    public static void RenderTo(Stream stream, string templateSource, object context)
+    {
+        stream.AssertNotNull(nameof(stream));
+        templateSource.AssertNotNull(nameof(templateSource));
+        context.AssertNotNull(nameof(context));
+
+        var template = DotLiquid.Template.Parse(templateSource);
+        var templateParameters = new RenderParameters(CultureInfo.InvariantCulture)
         {
-            DotLiquid.Template.NamingConvention = new CSharpNamingConvention();
+            LocalVariables = Hash.FromAnonymousObject(context)
+        };
 
-            var allowAllMembers = new[] { "*" };
-
-            DotLiquid.Template.RegisterSafeType(typeof(RootReadMeContext), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(RootReadMeLicenseContext), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(RootReadMePackageContext), allowAllMembers);
-
-            DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeContext), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(LibraryLicense), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(LibraryReadMeDependencyContext), allowAllMembers);
-
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesContext), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesLicenseContext), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageContext), allowAllMembers);
-            DotLiquid.Template.RegisterSafeType(typeof(ThirdPartyNoticesPackageLicenseContext), allowAllMembers);
+        using (var writer = new StreamWriter(stream, null, -1, true))
+        {
+            template.Render(writer, templateParameters);
         }
+    }
 
-        public static void RenderTo(Stream stream, string templateSource, object context)
+    internal static byte[] GetRootReadMeTemplate() => GetTemplate("Root.ReadMeTemplate.txt");
+
+    internal static byte[] GetLibraryReadMeTemplate(string librarySourceCode) => GetTemplate(librarySourceCode + ".ReadMeTemplate.txt");
+
+    internal static byte[] GetThirdPartyNoticesTemplate() => GetTemplate("ThirdPartyNotices.Template.txt");
+
+    internal static byte[] GetAppSettingsTemplate() => GetTemplate("appsettings.json");
+
+    internal static byte[] Render(string templateSource, object context)
+    {
+        using (var stream = new MemoryStream())
         {
-            stream.AssertNotNull(nameof(stream));
-            templateSource.AssertNotNull(nameof(templateSource));
-            context.AssertNotNull(nameof(context));
+            RenderTo(stream, templateSource, context);
+            return stream.ToArray();
+        }
+    }
 
-            var template = DotLiquid.Template.Parse(templateSource);
-            var templateParameters = new RenderParameters(CultureInfo.InvariantCulture)
-            {
-                LocalVariables = Hash.FromAnonymousObject(context)
-            };
+    private static byte[] GetTemplate(string fileName)
+    {
+        var anchor = typeof(RootReadMeContext);
 
-            using (var writer = new StreamWriter(stream, null, -1, true))
+        using (var source = anchor.Assembly.GetManifestResourceStream(anchor, fileName))
+        {
+            if (source == null)
             {
-                template.Render(writer, templateParameters);
+                throw new ArgumentOutOfRangeException(nameof(fileName), "Template [{0}] not found.".FormatWith(fileName));
             }
-        }
 
-        internal static byte[] GetRootReadMeTemplate() => GetTemplate("Root.ReadMeTemplate.txt");
-
-        internal static byte[] GetLibraryReadMeTemplate(string librarySourceCode) => GetTemplate(librarySourceCode + ".ReadMeTemplate.txt");
-
-        internal static byte[] GetThirdPartyNoticesTemplate() => GetTemplate("ThirdPartyNotices.Template.txt");
-
-        internal static byte[] GetAppSettingsTemplate() => GetTemplate("appsettings.json");
-
-        internal static byte[] Render(string templateSource, object context)
-        {
-            using (var stream = new MemoryStream())
+            using (var dest = new MemoryStream())
             {
-                RenderTo(stream, templateSource, context);
-                return stream.ToArray();
-            }
-        }
-
-        private static byte[] GetTemplate(string fileName)
-        {
-            var anchor = typeof(RootReadMeContext);
-
-            using (var source = anchor.Assembly.GetManifestResourceStream(anchor, fileName))
-            {
-                if (source == null)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(fileName), "Template [{0}] not found.".FormatWith(fileName));
-                }
-
-                using (var dest = new MemoryStream())
-                {
-                    source.CopyTo(dest);
-                    return dest.ToArray();
-                }
+                source.CopyTo(dest);
+                return dest.ToArray();
             }
         }
     }

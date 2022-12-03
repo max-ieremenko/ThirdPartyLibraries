@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Repository;
 
-namespace ThirdPartyLibraries.Suite.Internal
+namespace ThirdPartyLibraries.Suite.Internal;
+
+internal interface IPackageResolver
 {
-    internal interface IPackageResolver
-    {
-        ValueTask<bool> DownloadAsync(LibraryId id, CancellationToken token);
-    }
+    ValueTask<bool> DownloadAsync(LibraryId id, CancellationToken token);
 }

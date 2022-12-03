@@ -1,8 +1,7 @@
-﻿namespace ThirdPartyLibraries.Suite
+﻿namespace ThirdPartyLibraries.Suite;
+
+public interface IConfigurationManager
 {
-    public interface IConfigurationManager
-    {
-        T GetSection<T>(string name)
-            where T : new();
-    }
+    T GetSection<T>(string name)
+        where T : new();
 }

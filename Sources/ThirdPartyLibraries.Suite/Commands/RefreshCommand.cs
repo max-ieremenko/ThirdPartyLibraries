@@ -9,65 +9,64 @@ using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 
-namespace ThirdPartyLibraries.Suite.Commands
+namespace ThirdPartyLibraries.Suite.Commands;
+
+public sealed class RefreshCommand : ICommand
 {
-    public sealed class RefreshCommand : ICommand
+    public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
     {
-        public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+        var repository = serviceProvider.GetRequiredService<IPackageRepository>();
+        Hello(serviceProvider.GetRequiredService<ILogger>(), repository);
+
+        var state = new RefreshCommandState(repository);
+        var packages = await repository.UpdateAllPackagesReadMeAsync(token).ConfigureAwait(false);
+
+        var rootContext = new RootReadMeContext();
+
+        foreach (var metadata in packages.OrderBy(i => i.Name).ThenBy(i => i.Version).ThenBy(i => i.SourceCode))
         {
-            var repository = serviceProvider.GetRequiredService<IPackageRepository>();
-            Hello(serviceProvider.GetRequiredService<ILogger>(), repository);
+            var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token).ConfigureAwait(false);
 
-            var state = new RefreshCommandState(repository);
-            var packages = await repository.UpdateAllPackagesReadMeAsync(token).ConfigureAwait(false);
-
-            var rootContext = new RootReadMeContext();
-
-            foreach (var metadata in packages.OrderBy(i => i.Name).ThenBy(i => i.Version).ThenBy(i => i.SourceCode))
+            foreach (var license in licenses)
             {
-                var (licenses, markdownExpression) = await state.GetLicensesAsync(metadata.LicenseCode, token).ConfigureAwait(false);
-
-                foreach (var license in licenses)
-                {
-                    license.PackagesCount++;
-                }
-
-                var packageContext = new RootReadMePackageContext
-                {
-                    Source = metadata.SourceCode,
-                    Name = metadata.Name,
-                    Version = metadata.Version,
-                    License = metadata.LicenseCode,
-                    IsApproved = metadata.ApprovalStatus == PackageApprovalStatus.Approved || metadata.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved,
-                    UsedBy = PackageRepositoryTools.BuildUsedBy(metadata.UsedBy),
-                    SourceHRef = metadata.HRef,
-                    LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version)),
-                    LicenseLocalHRef = licenses.FirstOrDefault()?.LocalHRef,
-                    LicenseMarkdownExpression = markdownExpression
-                };
-
-                if (packageContext.SourceHRef.IsNullOrEmpty())
-                {
-                    packageContext.SourceHRef = packageContext.LocalHRef;
-                }
-
-                rootContext.Packages.Add(packageContext);
+                license.PackagesCount++;
             }
 
-            rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.Code));
+            var packageContext = new RootReadMePackageContext
+            {
+                Source = metadata.SourceCode,
+                Name = metadata.Name,
+                Version = metadata.Version,
+                License = metadata.LicenseCode,
+                IsApproved = metadata.ApprovalStatus == PackageApprovalStatus.Approved || metadata.ApprovalStatus == PackageApprovalStatus.AutomaticallyApproved,
+                UsedBy = PackageRepositoryTools.BuildUsedBy(metadata.UsedBy),
+                SourceHRef = metadata.HRef,
+                LocalHRef = repository.Storage.GetPackageLocalHRef(new LibraryId(metadata.SourceCode, metadata.Name, metadata.Version)),
+                LicenseLocalHRef = licenses.FirstOrDefault()?.LocalHRef,
+                LicenseMarkdownExpression = markdownExpression
+            };
 
-            rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
+            if (packageContext.SourceHRef.IsNullOrEmpty())
+            {
+                packageContext.SourceHRef = packageContext.LocalHRef;
+            }
 
-            await repository.Storage.WriteRootReadMeAsync(rootContext, token).ConfigureAwait(false);
+            rootContext.Packages.Add(packageContext);
         }
 
-        private void Hello(ILogger logger, IPackageRepository repository)
+        rootContext.Licenses.AddRange(state.Licenses.OrderBy(i => i.Code));
+
+        rootContext.TodoPackages.AddRange(rootContext.Packages.Where(i => !i.IsApproved || i.License.IsNullOrEmpty()));
+
+        await repository.Storage.WriteRootReadMeAsync(rootContext, token).ConfigureAwait(false);
+    }
+
+    private void Hello(ILogger logger, IPackageRepository repository)
+    {
+        logger.Info("update .md files");
+        using (logger.Indent())
         {
-            logger.Info("update .md files");
-            using (logger.Indent())
-            {
-                logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
-            }
+            logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
         }
     }
 }

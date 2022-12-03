@@ -8,66 +8,65 @@ using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Generic
+namespace ThirdPartyLibraries.Generic;
+
+internal sealed class CodeProjectApi : ILicenseCodeSource, IFullLicenseSource
 {
-    internal sealed class CodeProjectApi : ILicenseCodeSource, IFullLicenseSource
+    public const string LicenseCode = "CPOL";
+
+    public CodeProjectApi(Func<HttpClient> httpClientFactory)
     {
-        public const string LicenseCode = "CPOL";
+        httpClientFactory.AssertNotNull(nameof(httpClientFactory));
 
-        public CodeProjectApi(Func<HttpClient> httpClientFactory)
+        HttpClientFactory = httpClientFactory;
+    }
+
+    public Func<HttpClient> HttpClientFactory { get; }
+
+    public Task<string> ResolveLicenseCodeAsync(string licenseUrl, CancellationToken token)
+    {
+        string result = null;
+
+        var url = new Uri(licenseUrl);
+        if (KnownHosts.CodeProject.EqualsIgnoreCase(url.Host) && "/info/cpol10.aspx".EqualsIgnoreCase(url.AbsolutePath))
         {
-            httpClientFactory.AssertNotNull(nameof(httpClientFactory));
-
-            HttpClientFactory = httpClientFactory;
+            result = LicenseCode;
         }
 
-        public Func<HttpClient> HttpClientFactory { get; }
+        return Task.FromResult(result);
+    }
 
-        public Task<string> ResolveLicenseCodeAsync(string licenseUrl, CancellationToken token)
+    public async Task<GenericLicense> DownloadLicenseByCodeAsync(string licenseCode, CancellationToken token)
+    {
+        var result = new GenericLicense
         {
-            string result = null;
+            Code = LicenseCode,
+            FullName = "Code Project Open License (CPOL) 1.02",
+            FileHRef = "https://www.codeproject.com/info/cpol10.aspx"
+        };
 
-            var url = new Uri(licenseUrl);
-            if (KnownHosts.CodeProject.EqualsIgnoreCase(url.Host) && "/info/cpol10.aspx".EqualsIgnoreCase(url.AbsolutePath))
+        using (var client = HttpClientFactory())
+        using (var response = await client.InvokeGetAsync("https://www.codeproject.com/info/CPOL.zip", token).ConfigureAwait(false))
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                result = LicenseCode;
+                return null;
             }
 
-            return Task.FromResult(result);
-        }
+            await response.AssertStatusCodeOk().ConfigureAwait(false);
 
-        public async Task<GenericLicense> DownloadLicenseByCodeAsync(string licenseCode, CancellationToken token)
-        {
-            var result = new GenericLicense
+            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+            using (var zip = new ZipArchive(stream))
             {
-                Code = LicenseCode,
-                FullName = "Code Project Open License (CPOL) 1.02",
-                FileHRef = "https://www.codeproject.com/info/cpol10.aspx"
-            };
-
-            using (var client = HttpClientFactory())
-            using (var response = await client.InvokeGetAsync("https://www.codeproject.com/info/CPOL.zip", token).ConfigureAwait(false))
-            {
-                if (response.StatusCode == HttpStatusCode.NotFound)
+                var entry = zip.Entries.Count == 1 ? zip.Entries[0] : zip.Entries.First(i => ".htm".EqualsIgnoreCase(Path.GetExtension(i.Name)));
+                using (var entryStream = entry.Open())
                 {
-                    return null;
-                }
-
-                await response.AssertStatusCodeOk().ConfigureAwait(false);
-
-                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                using (var zip = new ZipArchive(stream))
-                {
-                    var entry = zip.Entries.Count == 1 ? zip.Entries[0] : zip.Entries.First(i => ".htm".EqualsIgnoreCase(Path.GetExtension(i.Name)));
-                    using (var entryStream = entry.Open())
-                    {
-                        result.FileContent = await entryStream.ToArrayAsync(token).ConfigureAwait(false);
-                        result.FileName = entry.Name;
-                    }
+                    result.FileContent = await entryStream.ToArrayAsync(token).ConfigureAwait(false);
+                    result.FileName = entry.Name;
                 }
             }
-
-            return result;
         }
+
+        return result;
     }
 }
