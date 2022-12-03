@@ -8,7 +8,7 @@ build-locally.ps1 is designed to run on windows. To run CI build locally
 
 - install dependencies
 
-[net6.0 sdk](https://dotnet.microsoft.com/download/dotnet/6.0), 
+[net7.0 sdk](https://dotnet.microsoft.com/download/dotnet/7.0), 
 [InvokeBuild](https://www.powershellgallery.com/packages/InvokeBuild)
 
     ``` powershell

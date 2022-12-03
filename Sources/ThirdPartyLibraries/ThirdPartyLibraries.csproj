@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(GlobalTool)' != true">netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GlobalTool)' == true">netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GlobalTool)' != true">netstandard2.1;$(SupportedFrameworks)</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GlobalTool)' == true">$(SupportedFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -3,7 +3,7 @@ Microsoft.TestPlatform.TestHost [17.2.0](https://www.nuget.org/packages/Microsof
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, netcoreapp3.1
+Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1
 
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 
