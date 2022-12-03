@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ThirdPartyLibraries.Shared.DependencyInjection
+namespace ThirdPartyLibraries.Shared.DependencyInjection;
+
+internal sealed class KeyedServiceCollection<TService>
 {
-    internal sealed class KeyedServiceCollection<TService>
+    private readonly Dictionary<string, Type> _implementationTypeByKey = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+
+    public void Add(string key, Type implementationType)
     {
-        private readonly Dictionary<string, Type> _implementationTypeByKey = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+        _implementationTypeByKey.Add(key, implementationType);
+    }
 
-        public void Add(string key, Type implementationType)
-        {
-            _implementationTypeByKey.Add(key, implementationType);
-        }
-
-        public Type GetImplementationType(string key)
-        {
-            _implementationTypeByKey.TryGetValue(key, out var result);
-            return result;
-        }
+    public Type GetImplementationType(string key)
+    {
+        _implementationTypeByKey.TryGetValue(key, out var result);
+        return result;
     }
 }

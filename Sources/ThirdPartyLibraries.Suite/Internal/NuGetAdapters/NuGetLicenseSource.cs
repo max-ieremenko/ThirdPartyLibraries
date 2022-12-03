@@ -3,39 +3,38 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.NuGet;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters
+namespace ThirdPartyLibraries.Suite.Internal.NuGetAdapters;
+
+internal sealed class NuGetLicenseSource : ILicenseSourceByUrl
 {
-    internal sealed class NuGetLicenseSource : ILicenseSourceByUrl
+    public NuGetLicenseSource(INuGetApi nuGetApi)
     {
-        public NuGetLicenseSource(INuGetApi nuGetApi)
+        NuGetApi = nuGetApi;
+    }
+
+    public INuGetApi NuGetApi { get; }
+
+    public async Task<LicenseInfo> DownloadByUrlAsync(string url, CancellationToken token)
+    {
+        url.AssertNotNull(nameof(url));
+
+        var code = await NuGetApi.ResolveLicenseCodeAsync(url, token).ConfigureAwait(false);
+        if (code == null)
         {
-            NuGetApi = nuGetApi;
+            return null;
         }
 
-        public INuGetApi NuGetApi { get; }
-
-        public async Task<LicenseInfo> DownloadByUrlAsync(string url, CancellationToken token)
+        return new LicenseInfo
         {
-            url.AssertNotNull(nameof(url));
+            Code = code,
+            CodeHRef = url
+        };
+    }
 
-            var code = await NuGetApi.ResolveLicenseCodeAsync(url, token).ConfigureAwait(false);
-            if (code == null)
-            {
-                return null;
-            }
-
-            return new LicenseInfo
-            {
-                Code = code,
-                CodeHRef = url
-            };
-        }
-
-        public bool TryExtractRepositoryName(string url, out string owner, out string name)
-        {
-            owner = default;
-            name = default;
-            return false;
-        }
+    public bool TryExtractRepositoryName(string url, out string owner, out string name)
+    {
+        owner = default;
+        name = default;
+        return false;
     }
 }

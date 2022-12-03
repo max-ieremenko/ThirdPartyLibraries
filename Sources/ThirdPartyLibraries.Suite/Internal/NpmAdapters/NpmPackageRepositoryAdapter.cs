@@ -4,35 +4,34 @@ using ThirdPartyLibraries.Npm;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 
-namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters
+namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters;
+
+internal sealed class NpmPackageRepositoryAdapter : PackageRepositoryAdapterBase
 {
-    internal sealed class NpmPackageRepositoryAdapter : PackageRepositoryAdapterBase
+    public NpmPackageRepositoryAdapter(INpmApi api)
     {
-        public NpmPackageRepositoryAdapter(INpmApi api)
-        {
-            Api = api;
-        }
+        Api = api;
+    }
 
-        public INpmApi Api { get; }
+    public INpmApi Api { get; }
 
-        protected override async Task AppendSpecAttributesAsync(LibraryId id, Package package, CancellationToken token)
-        {
-            var json = await ReadPackageJsonAsync(id, token).ConfigureAwait(false);
+    protected override async Task AppendSpecAttributesAsync(LibraryId id, Package package, CancellationToken token)
+    {
+        var json = await ReadPackageJsonAsync(id, token).ConfigureAwait(false);
          
-            // no Copyright
-            package.Name = json.Name;
-            package.Version = json.Version;
-            package.Description = json.Description;
-            package.HRef = json.PackageHRef;
-            package.Author = json.Authors;
-        }
+        // no Copyright
+        package.Name = json.Name;
+        package.Version = json.Version;
+        package.Description = json.Description;
+        package.HRef = json.PackageHRef;
+        package.Author = json.Authors;
+    }
 
-        private async Task<PackageJson> ReadPackageJsonAsync(LibraryId id, CancellationToken token)
+    private async Task<PackageJson> ReadPackageJsonAsync(LibraryId id, CancellationToken token)
+    {
+        using (var jsonContent = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryPackageJsonFileName, token).ConfigureAwait(false))
         {
-            using (var jsonContent = await Storage.OpenLibraryFileReadAsync(id, NpmConstants.RepositoryPackageJsonFileName, token).ConfigureAwait(false))
-            {
-                return Api.ParsePackageJson(jsonContent);
-            }
+            return Api.ParsePackageJson(jsonContent);
         }
     }
 }

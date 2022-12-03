@@ -6,56 +6,55 @@ using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal;
 
-namespace ThirdPartyLibraries.Suite.Commands
+namespace ThirdPartyLibraries.Suite.Commands;
+
+internal sealed class RefreshCommandState
 {
-    internal sealed class RefreshCommandState
+    private readonly IDictionary<string, RootReadMeLicenseContext> _licenseByCode;
+
+    public RefreshCommandState(IPackageRepository repository)
     {
-        private readonly IDictionary<string, RootReadMeLicenseContext> _licenseByCode;
+        Repository = repository;
 
-        public RefreshCommandState(IPackageRepository repository)
+        _licenseByCode = new Dictionary<string, RootReadMeLicenseContext>(StringComparer.OrdinalIgnoreCase);
+    }
+
+    public IPackageRepository Repository { get; }
+
+    public IEnumerable<RootReadMeLicenseContext> Licenses => _licenseByCode.Values;
+
+    public async Task<(IList<RootReadMeLicenseContext> Licenses, string MarkdownExpression)> GetLicensesAsync(string licenseExpression, CancellationToken token)
+    {
+        if (licenseExpression.IsNullOrEmpty())
         {
-            Repository = repository;
-
-            _licenseByCode = new Dictionary<string, RootReadMeLicenseContext>(StringComparer.OrdinalIgnoreCase);
+            return (Array.Empty<RootReadMeLicenseContext>(), null);
         }
 
-        public IPackageRepository Repository { get; }
+        var codes = LicenseExpression.GetCodes(licenseExpression);
 
-        public IEnumerable<RootReadMeLicenseContext> Licenses => _licenseByCode.Values;
-
-        public async Task<(IList<RootReadMeLicenseContext> Licenses, string MarkdownExpression)> GetLicensesAsync(string licenseExpression, CancellationToken token)
+        var licenses = new RootReadMeLicenseContext[codes.Count];
+        for (var i = 0; i < licenses.Length; i++)
         {
-            if (licenseExpression.IsNullOrEmpty())
+            var code = codes[i];
+            if (!_licenseByCode.TryGetValue(code, out var license))
             {
-                return (Array.Empty<RootReadMeLicenseContext>(), null);
-            }
-
-            var codes = LicenseExpression.GetCodes(licenseExpression);
-
-            var licenses = new RootReadMeLicenseContext[codes.Count];
-            for (var i = 0; i < licenses.Length; i++)
-            {
-                var code = codes[i];
-                if (!_licenseByCode.TryGetValue(code, out var license))
+                var repositoryLicense = await Repository.LoadOrCreateLicenseAsync(code, token).ConfigureAwait(false);
+                license = new RootReadMeLicenseContext
                 {
-                    var repositoryLicense = await Repository.LoadOrCreateLicenseAsync(code, token).ConfigureAwait(false);
-                    license = new RootReadMeLicenseContext
-                    {
-                        Code = repositoryLicense.Code,
-                        RequiresApproval = repositoryLicense.RequiresApproval,
-                        RequiresThirdPartyNotices = repositoryLicense.RequiresThirdPartyNotices,
-                        LocalHRef = Repository.Storage.GetLicenseLocalHRef(repositoryLicense.Code)
-                    };
+                    Code = repositoryLicense.Code,
+                    RequiresApproval = repositoryLicense.RequiresApproval,
+                    RequiresThirdPartyNotices = repositoryLicense.RequiresThirdPartyNotices,
+                    LocalHRef = Repository.Storage.GetLicenseLocalHRef(repositoryLicense.Code)
+                };
 
-                    _licenseByCode.Add(code, license);
-                }
-
-                licenses[i] = license;
+                _licenseByCode.Add(code, license);
             }
 
-            var markdownExpression = LicenseExpression.ReplaceCodes(licenseExpression, code => "[{0}]({1})".FormatWith(code, _licenseByCode[code].LocalHRef));
-
-            return (licenses, markdownExpression);
+            licenses[i] = license;
         }
+
+        var markdownExpression = LicenseExpression.ReplaceCodes(licenseExpression, code => "[{0}]({1})".FormatWith(code, _licenseByCode[code].LocalHRef));
+
+        return (licenses, markdownExpression);
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace ThirdPartyLibraries.NuGet
-{
-    public sealed class NuGetSpecLicense
-    {
-        public string Type { get; set; }
+﻿namespace ThirdPartyLibraries.NuGet;
 
-        public string Value { get; set; }
-    }
+public sealed class NuGetSpecLicense
+{
+    public string Type { get; set; }
+
+    public string Value { get; set; }
 }

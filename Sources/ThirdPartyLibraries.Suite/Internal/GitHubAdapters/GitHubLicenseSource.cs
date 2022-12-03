@@ -3,50 +3,49 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.GitHub;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters
+namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters;
+
+internal sealed class GitHubLicenseSource : ILicenseSourceByUrl
 {
-    internal sealed class GitHubLicenseSource : ILicenseSourceByUrl
+    public GitHubLicenseSource(IGitHubApi gitHubApi, GitHubConfiguration configuration)
     {
-        public GitHubLicenseSource(IGitHubApi gitHubApi, GitHubConfiguration configuration)
+        GitHubApi = gitHubApi;
+        Configuration = configuration;
+    }
+
+    public IGitHubApi GitHubApi { get; }
+
+    public GitHubConfiguration Configuration { get; }
+
+    public async Task<LicenseInfo> DownloadByUrlAsync(string url, CancellationToken token)
+    {
+        url.AssertNotNull(nameof(url));
+
+        var license = await GitHubApi.LoadLicenseAsync(url, Configuration.PersonalAccessToken, token).ConfigureAwait(false);
+        if (license == null)
         {
-            GitHubApi = gitHubApi;
-            Configuration = configuration;
+            return null;
         }
 
-        public IGitHubApi GitHubApi { get; }
+        return CreateLicenseInfo(license.Value);
+    }
 
-        public GitHubConfiguration Configuration { get; }
+    public bool TryExtractRepositoryName(string url, out string owner, out string name)
+    {
+        url.AssertNotNull(nameof(url));
 
-        public async Task<LicenseInfo> DownloadByUrlAsync(string url, CancellationToken token)
+        return GitHubApi.TryExtractRepositoryName(url, out owner, out name);
+    }
+
+    private static LicenseInfo CreateLicenseInfo(GitHubLicense license)
+    {
+        return new LicenseInfo
         {
-            url.AssertNotNull(nameof(url));
-
-            var license = await GitHubApi.LoadLicenseAsync(url, Configuration.PersonalAccessToken, token).ConfigureAwait(false);
-            if (license == null)
-            {
-                return null;
-            }
-
-            return CreateLicenseInfo(license.Value);
-        }
-
-        public bool TryExtractRepositoryName(string url, out string owner, out string name)
-        {
-            url.AssertNotNull(nameof(url));
-
-            return GitHubApi.TryExtractRepositoryName(url, out owner, out name);
-        }
-
-        private static LicenseInfo CreateLicenseInfo(GitHubLicense license)
-        {
-            return new LicenseInfo
-            {
-                Code = license.SpdxId,
-                CodeHRef = license.SpdxIdHRef,
-                FileHRef = license.FileContentHRef,
-                FileName = license.FileName,
-                FileContent = license.FileContent,
-            };
-        }
+            Code = license.SpdxId,
+            CodeHRef = license.SpdxIdHRef,
+            FileHRef = license.FileContentHRef,
+            FileName = license.FileName,
+            FileContent = license.FileContent,
+        };
     }
 }

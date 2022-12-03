@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace ThirdPartyLibraries.Generic
+namespace ThirdPartyLibraries.Generic;
+
+public interface IFullLicenseSource
 {
-    public interface IFullLicenseSource
-    {
-        Task<GenericLicense> DownloadLicenseByCodeAsync(string licenseCode, CancellationToken token);
-    }
+    Task<GenericLicense> DownloadLicenseByCodeAsync(string licenseCode, CancellationToken token);
 }

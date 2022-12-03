@@ -9,43 +9,42 @@ using ThirdPartyLibraries.Suite;
 using ThirdPartyLibraries.Suite.Commands;
 using ConfigurationManager = ThirdPartyLibraries.Configuration.ConfigurationManager;
 
-namespace ThirdPartyLibraries
+namespace ThirdPartyLibraries;
+
+internal static class AppModule
 {
-    internal static class AppModule
+    public static async Task AddConfigurationAsync(
+        IServiceCollection services,
+        string repository,
+        Dictionary<string, string> commandLine,
+        CancellationToken token)
     {
-        public static async Task AddConfigurationAsync(
-            IServiceCollection services,
-            string repository,
-            Dictionary<string, string> commandLine,
-            CancellationToken token)
+        var storage = StorageFactory.Create(repository);
+        services.AddSingleton(storage);
+
+        IConfigurationRoot configuration;
+        using (var settings = await storage.GetOrCreateAppSettingsAsync(token).ConfigureAwait(false))
         {
-            var storage = StorageFactory.Create(repository);
-            services.AddSingleton(storage);
+            var builder = new ConfigurationBuilder();
+            builder.Sources.Clear();
 
-            IConfigurationRoot configuration;
-            using (var settings = await storage.GetOrCreateAppSettingsAsync(token).ConfigureAwait(false))
-            {
-                var builder = new ConfigurationBuilder();
-                builder.Sources.Clear();
-
-                configuration = builder
-                    .AddJsonStream(settings)
-                    .AddUserSecrets(CommandOptions.UserSecretsId, false)
-                    .AddEnvironmentVariables(prefix: CommandOptions.EnvironmentVariablePrefix)
-                    .AddInMemoryCollection(commandLine)
-                    .Build();
-            }
-
-            services.AddSingleton<IConfigurationManager>(new ConfigurationManager(configuration));
+            configuration = builder
+                .AddJsonStream(settings)
+                .AddUserSecrets(CommandOptions.UserSecretsId, false)
+                .AddEnvironmentVariables(prefix: CommandOptions.EnvironmentVariablePrefix)
+                .AddInMemoryCollection(commandLine)
+                .Build();
         }
 
-        public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddTransient<HelpCommand>();
-            services.AddTransient<UpdateCommand>();
-            services.AddTransient<RefreshCommand>();
-            services.AddTransient<ValidateCommand>();
-            services.AddTransient<GenerateCommand>();
-        }
+        services.AddSingleton<IConfigurationManager>(new ConfigurationManager(configuration));
+    }
+
+    public static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddTransient<HelpCommand>();
+        services.AddTransient<UpdateCommand>();
+        services.AddTransient<RefreshCommand>();
+        services.AddTransient<ValidateCommand>();
+        services.AddTransient<GenerateCommand>();
     }
 }

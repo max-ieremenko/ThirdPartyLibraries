@@ -7,35 +7,34 @@ using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
 
-namespace ThirdPartyLibraries
+namespace ThirdPartyLibraries;
+
+internal sealed class HelpCommand : ICommand
 {
-    internal sealed class HelpCommand : ICommand
+    public HelpCommand(string command)
     {
-        public HelpCommand(string command)
+        Command = command;
+    }
+
+    public string Command { get; internal set; }
+
+    public Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
+    {
+        var suffix = Command.IsNullOrEmpty() ? "default" : Command;
+        var fileName = "CommandLine.{0}.txt".FormatWith(suffix);
+        serviceProvider.GetRequiredService<ILogger>().Info(LoadContent(fileName));
+
+        return Task.CompletedTask;
+    }
+
+    private static string LoadContent(string fileName)
+    {
+        var scope = typeof(CommandLine);
+
+        using (var stream = scope.Assembly.GetManifestResourceStream(scope, fileName))
+        using (var reader = new StreamReader(stream))
         {
-            Command = command;
-        }
-
-        public string Command { get; internal set; }
-
-        public Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
-        {
-            var suffix = Command.IsNullOrEmpty() ? "default" : Command;
-            var fileName = "CommandLine.{0}.txt".FormatWith(suffix);
-            serviceProvider.GetRequiredService<ILogger>().Info(LoadContent(fileName));
-
-            return Task.CompletedTask;
-        }
-
-        private static string LoadContent(string fileName)
-        {
-            var scope = typeof(CommandLine);
-
-            using (var stream = scope.Assembly.GetManifestResourceStream(scope, fileName))
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            return reader.ReadToEnd();
         }
     }
 }

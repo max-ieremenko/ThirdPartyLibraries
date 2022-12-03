@@ -1,7 +1,6 @@
-﻿namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters
+﻿namespace ThirdPartyLibraries.Suite.Internal.GitHubAdapters;
+
+internal sealed class GitHubConfiguration
 {
-    internal sealed class GitHubConfiguration
-    {
-        public string PersonalAccessToken { get; set; }
-    }
+    public string PersonalAccessToken { get; set; }
 }

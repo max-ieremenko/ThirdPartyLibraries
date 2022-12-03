@@ -1,14 +1,13 @@
-﻿namespace ThirdPartyLibraries.Suite
+﻿namespace ThirdPartyLibraries.Suite;
+
+public enum PackageApprovalStatus
 {
-    public enum PackageApprovalStatus
-    {
-        // must not be in the storage
-        None,
+    // must not be in the storage
+    None,
 
-        HasToBeApproved,
+    HasToBeApproved,
 
-        AutomaticallyApproved,
+    AutomaticallyApproved,
 
-        Approved
-    }
+    Approved
 }
