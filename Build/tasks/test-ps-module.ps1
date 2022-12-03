@@ -1,32 +1,30 @@
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory)]
     [ValidateScript({ Test-Path $_ })]
     [string]
-    $Output,
+    $PowerShellPath,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory)]
     [ValidateScript({ Test-Path $_ })]
     [string]
-    $Sources,
+    $TestPath,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory)]
     [string]
     $ImageName
 )
 
-task Test {
+task Default {
     $nugetLocal = Join-Path $Env:USERPROFILE ".nuget\packages"
-    $pwsh = Join-Path $Output "pwsh.zip"
-    $source = Join-Path $Sources "ThirdPartyLibraries.PowerShell.IntegrationTest"
     $userSecrets = Join-Path $Env:APPDATA "Microsoft\UserSecrets"
 
     $runArgs = $(
         "run"
         , "--rm"
         , "-v", "$($nugetLocal):/root/.nuget/packages:ro"
-        , "-v", "$($pwsh):/pwsh.zip:ro"
-        , "-v", "$($source):/sources:ro"
+        , "-v", "$($PowerShellPath):/pwsh.zip:ro"
+        , "-v", "$($TestPath):/sources:ro"
     )
 
     if (Test-Path $userSecrets) {
