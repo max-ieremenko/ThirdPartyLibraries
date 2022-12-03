@@ -1,3 +1,10 @@
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [string]
+    $GithubToken
+)
+
 task LocalBuild Initialize, Clean, CiBuild, PsCoreTest, UpdateExamples
 task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
 
@@ -49,7 +56,8 @@ task ThirdPartyNotices {
         -Version $settings.version `
         -SourcesPath $settings.sources `
         -RepositoryPath $settings.repository `
-        -OutPath (Join-Path $settings.output "ThirdNotices")
+        -OutPath (Join-Path $settings.output "ThirdNotices") `
+        -GithubToken $GithubToken
 }
 
 task UnitTest {
