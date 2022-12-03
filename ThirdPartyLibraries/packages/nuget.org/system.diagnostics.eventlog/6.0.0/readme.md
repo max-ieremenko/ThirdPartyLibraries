@@ -3,7 +3,7 @@ System.Diagnostics.EventLog [6.0.0](https://www.nuget.org/packages/System.Diagno
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, netcoreapp3.1
+Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

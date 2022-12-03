@@ -3,7 +3,7 @@ Microsoft.Extensions.Configuration.UserSecrets [6.0.1](https://www.nuget.org/pac
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net5.0, net6.0, netcoreapp3.1, netstandard2.1
+Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
