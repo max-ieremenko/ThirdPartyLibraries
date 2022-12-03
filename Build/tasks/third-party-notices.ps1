@@ -21,13 +21,22 @@ param(
 
     [Parameter(Mandatory)]
     [string]
-    $OutPath
+    $OutPath,
+
+    [Parameter()]
+    [string]
+    $GithubToken
 )
 
 task Default Update, Validate, Generate, CopyLicense
 
 task Update {
-    exec { dotnet $AppPath update -appName ThirdPartyLibraries -source $SourcesPath -repository $RepositoryPath }
+    $runArgs = $()
+    if ($GithubToken) {
+        $runArgs = "-github.com:personalAccessToken", $GithubToken
+    }
+
+    exec { dotnet $AppPath update -appName ThirdPartyLibraries -source $SourcesPath -repository $RepositoryPath $runArgs }
 }
 
 task Validate {
