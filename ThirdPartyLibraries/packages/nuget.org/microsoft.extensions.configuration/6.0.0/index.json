@@ -16,11 +16,11 @@
       ],
       "Dependencies": [
         {
-          "Name": "Microsoft.Extensions.Configuration",
+          "Name": "Microsoft.Extensions.Configuration.Abstractions",
           "Version": "6.0.0"
         },
         {
-          "Name": "Microsoft.Extensions.Configuration.Abstractions",
+          "Name": "Microsoft.Extensions.Primitives",
           "Version": "6.0.0"
         }
       ]
@@ -35,9 +35,9 @@
     },
     {
       "Subject": "repository",
-      "Code": null,
+      "Code": "MIT",
       "HRef": "https://github.com/dotnet/runtime",
-      "Description": "License should be verified on https://github.com/dotnet/runtime"
+      "Description": null
     },
     {
       "Subject": "project",

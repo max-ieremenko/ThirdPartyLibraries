@@ -25,7 +25,7 @@ Dependencies 5
 
 |Name|Version|
 |----------|:----|
-|[Microsoft.Extensions.Configuration](../../../../packages/nuget.org/microsoft.extensions.configuration/6.0.1)|6.0.1|
+|[Microsoft.Extensions.Configuration](../../../../packages/nuget.org/microsoft.extensions.configuration/6.0.0)|6.0.0|
 |[Microsoft.Extensions.Configuration.Abstractions](../../../../packages/nuget.org/microsoft.extensions.configuration.abstractions/6.0.0)|6.0.0|
 |[Microsoft.Extensions.Configuration.FileExtensions](../../../../packages/nuget.org/microsoft.extensions.configuration.fileextensions/6.0.0)|6.0.0|
 |[Microsoft.Extensions.FileProviders.Abstractions](../../../../packages/nuget.org/microsoft.extensions.fileproviders.abstractions/6.0.0)|6.0.0|
