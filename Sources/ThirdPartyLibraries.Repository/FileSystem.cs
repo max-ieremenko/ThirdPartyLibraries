@@ -4,81 +4,80 @@ using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Repository
+namespace ThirdPartyLibraries.Repository;
+
+internal sealed class FileSystem<TId>
 {
-    internal sealed class FileSystem<TId>
+    private readonly Func<TId, string> _getLocation;
+    private readonly FileMode _fileCreateMode;
+
+    public FileSystem(Func<TId, string> getLocation, FileMode fileCreateMode)
     {
-        private readonly Func<TId, string> _getLocation;
-        private readonly FileMode _fileCreateMode;
+        _getLocation = getLocation;
+        _fileCreateMode = fileCreateMode;
+    }
 
-        public FileSystem(Func<TId, string> getLocation, FileMode fileCreateMode)
+    public Task<Stream> OpenFileReadAsync(TId id, string fileName, CancellationToken token)
+    {
+        fileName.AssertNotNull(nameof(fileName));
+
+        Stream result = null;
+
+        var path = Path.Combine(_getLocation(id), fileName);
+        if (File.Exists(path))
         {
-            _getLocation = getLocation;
-            _fileCreateMode = fileCreateMode;
+            result = File.OpenRead(path);
         }
 
-        public Task<Stream> OpenFileReadAsync(TId id, string fileName, CancellationToken token)
+        return Task.FromResult(result);
+    }
+
+    public async Task WriteFileAsync(TId id, string fileName, byte[] content, CancellationToken token)
+    {
+        fileName.AssertNotNull(nameof(fileName));
+        content.AssertNotNull(nameof(content));
+
+        using (var stream = OpenFileWrite(id, fileName))
         {
-            fileName.AssertNotNull(nameof(fileName));
+            await stream.WriteAsync(content, 0, content.Length, token).ConfigureAwait(false);
+        }
+    }
 
-            Stream result = null;
-
-            var path = Path.Combine(_getLocation(id), fileName);
-            if (File.Exists(path))
-            {
-                result = File.OpenRead(path);
-            }
-
-            return Task.FromResult(result);
+    public Task<string[]> FindFilesAsync(TId id, string searchPattern, CancellationToken token)
+    {
+        var location = _getLocation(id);
+        if (!Directory.Exists(location))
+        {
+            return Task.FromResult(Array.Empty<string>());
         }
 
-        public async Task WriteFileAsync(TId id, string fileName, byte[] content, CancellationToken token)
+        var options = new EnumerationOptions
         {
-            fileName.AssertNotNull(nameof(fileName));
-            content.AssertNotNull(nameof(content));
+            MatchCasing = MatchCasing.CaseInsensitive,
+            RecurseSubdirectories = false
+        };
 
-            using (var stream = OpenFileWrite(id, fileName))
-            {
-                await stream.WriteAsync(content, 0, content.Length, token).ConfigureAwait(false);
-            }
+        var files = Directory.GetFiles(location, searchPattern, options);
+        if (files.Length == 0)
+        {
+            return Task.FromResult(Array.Empty<string>());
         }
 
-        public Task<string[]> FindFilesAsync(TId id, string searchPattern, CancellationToken token)
+        var result = new string[files.Length];
+        for (var i = 0; i < files.Length; i++)
         {
-            var location = _getLocation(id);
-            if (!Directory.Exists(location))
-            {
-                return Task.FromResult(Array.Empty<string>());
-            }
-
-            var options = new EnumerationOptions
-            {
-                MatchCasing = MatchCasing.CaseInsensitive,
-                RecurseSubdirectories = false
-            };
-
-            var files = Directory.GetFiles(location, searchPattern, options);
-            if (files.Length == 0)
-            {
-                return Task.FromResult(Array.Empty<string>());
-            }
-
-            var result = new string[files.Length];
-            for (var i = 0; i < files.Length; i++)
-            {
-                result[i] = Path.GetFileName(files[i]);
-            }
-
-            return Task.FromResult(result);
+            result[i] = Path.GetFileName(files[i]);
         }
 
-        private Stream OpenFileWrite(TId id, string fileName)
-        {
-            var location = _getLocation(id);
-            Directory.CreateDirectory(location);
+        return Task.FromResult(result);
+    }
 
-            var path = Path.Combine(location, fileName);
-            return new FileStream(path, _fileCreateMode, FileAccess.ReadWrite);
-        }
+    private Stream OpenFileWrite(TId id, string fileName)
+    {
+        var location = _getLocation(id);
+        Directory.CreateDirectory(location);
+
+        var path = Path.Combine(location, fileName);
+        return new FileStream(path, _fileCreateMode, FileAccess.ReadWrite);
     }
 }

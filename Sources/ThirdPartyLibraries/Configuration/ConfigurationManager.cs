@@ -2,25 +2,24 @@
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
 
-namespace ThirdPartyLibraries.Configuration
+namespace ThirdPartyLibraries.Configuration;
+
+internal sealed class ConfigurationManager : IConfigurationManager
 {
-    internal sealed class ConfigurationManager : IConfigurationManager
+    public ConfigurationManager(IConfigurationRoot configuration)
     {
-        public ConfigurationManager(IConfigurationRoot configuration)
-        {
-            configuration.AssertNotNull(nameof(configuration));
+        configuration.AssertNotNull(nameof(configuration));
 
-            Configuration = configuration;
-        }
+        Configuration = configuration;
+    }
 
-        public IConfigurationRoot Configuration { get; }
+    public IConfigurationRoot Configuration { get; }
 
-        public T GetSection<T>(string name)
-            where T : new()
-        {
-            var result = new T();
-            Configuration.GetSection(name).Bind(result);
-            return result;
-        }
+    public T GetSection<T>(string name)
+        where T : new()
+    {
+        var result = new T();
+        Configuration.GetSection(name).Bind(result);
+        return result;
     }
 }

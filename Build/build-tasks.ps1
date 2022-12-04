@@ -1,22 +1,29 @@
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [string]
+    $GithubToken
+)
+
 task LocalBuild Initialize, Clean, CiBuild, PsCoreTest, UpdateExamples
 task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
 
-task UnitTest UnitTestCore31, UnitTest50, UnitTest60
 task Pack PackGlobalTool, PackPowerShellModule, PackManualDownload, PackTest
 
 Enter-Build {
     $settings = @{
-        sources    = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources"));
-        output     = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../build-out"));
-        bin        = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources/bin"));
-        repository = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../ThirdPartyLibraries"));
-        examples   = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Examples"));
+        sources    = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources"))
+        output     = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../build-out"))
+        bin        = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources/bin"))
+        repository = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../ThirdPartyLibraries"))
+        examples   = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Examples"))
+        frameworks = "netcoreapp3.1", "net5.0", "net6.0", "net7.0"
         version    = $(
             $buildProps = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../Sources/Directory.Build.props"))
             $packageVersion = (Select-Xml -Path $buildProps -XPath "Project/PropertyGroup/DefaultPackageVersion").Node.InnerText
             assert $packageVersion "Package version not found"
             $packageVersion
-        );
+        )
     }
 }
 
@@ -39,39 +46,68 @@ task Clean {
 }
 
 task Build {
-    Exec { .\step-build.ps1 }
+    Invoke-Build -File "tasks/build.ps1" -SourcesPath $settings.sources
 }
 
 task ThirdPartyNotices {
-    Exec { .\step-third-party-notices.ps1 }
+    Invoke-Build `
+        -File "tasks/third-party-notices.ps1" `
+        -AppPath (Join-Path $settings.bin "app/net6.0/ThirdPartyLibraries.dll") `
+        -Version $settings.version `
+        -SourcesPath $settings.sources `
+        -RepositoryPath $settings.repository `
+        -OutPath (Join-Path $settings.output "ThirdNotices") `
+        -GithubToken $GithubToken
 }
 
-task UnitTestCore31 {
-    Exec { .\step-unit-test.ps1 $settings.bin "netcoreapp3.1" }
-}
-
-task UnitTest50 {
-    Exec { .\step-unit-test.ps1 $settings.bin "net5.0" }
-}
-
-task UnitTest60 {
-    Exec { .\step-unit-test.ps1 $settings.bin "net6.0" }
+task UnitTest {
+    $builds = @()
+    foreach ($framework in $settings.frameworks) {
+        $builds += @{ File = "tasks/unit-test.ps1"; BinPath = $settings.bin; Framework = $framework }
+    }
+    
+    Build-Parallel $builds -ShowParameter Framework -MaximumBuilds 4
 }
 
 task PackGlobalTool {
-    Exec { .\step-pack-global-tool.ps1 }
+    Invoke-Build -File "tasks/pack-global-tool.ps1" -SourcesPath $settings.sources -OutPath $settings.output
 }
 
 task PackPowerShellModule {
-    .\step-pack-ps-module.ps1
+    Invoke-Build -File "tasks/pack-ps-module.ps1" `
+        -BinPath $settings.bin `
+        -Version $settings.version `
+        -OutPath $settings.output
 }
 
 task PackManualDownload {
-    Exec { .\step-pack-manual-download.ps1 }
+    $builds = @()
+    foreach ($framework in $settings.frameworks) {
+        $builds += @{ 
+            File      = "tasks/pack-manual-download.ps1"
+            BinPath   = $settings.bin
+            Version   = $settings.version
+            Framework = $framework
+            OutPath   = $settings.output
+        }
+    }
+    
+    Build-Parallel $builds -ShowParameter Framework -MaximumBuilds 4
 }
 
 task PackTest {
-    Exec { .\step-pack-test.ps1 }
+    $packageList = Get-ChildItem -Path $settings.output -Recurse -File -Include "*.nupkg", "*.zip" | ForEach-Object { $_.FullName }
+    assert ($packageList -and $packageList.Length) "no packages found."
+
+    $builds = @()
+    foreach ($package in $packageList) {
+        $builds += @{ 
+            File = "tasks/pack-test.ps1"
+            Path = $package
+        }
+    }
+
+    Build-Parallel $builds -ShowParameter Path -MaximumBuilds 4
 }
 
 task PsCoreTest {
@@ -90,16 +126,15 @@ task PsCoreTest {
         , "mcr.microsoft.com/powershell:7.2.0-ubuntu-20.04"
         , "mcr.microsoft.com/powershell:7.2.1-ubuntu-20.04"
         , "mcr.microsoft.com/powershell:7.2.2-ubuntu-20.04"
-        , "mcr.microsoft.com/powershell:7.3.0-preview.3-ubuntu-20.04")
+        , "mcr.microsoft.com/powershell:7.3-ubuntu-20.04")
 
     $builds = @()
     foreach ($image in $images) {
         $builds += @{
-            File      = "step-test-ps-module.ps1";
-            Task      = "Test";
-            Output    = $settings.output;
-            Sources   = $settings.sources;
-            ImageName = $image;
+            File           = "tasks/test-ps-module.ps1"
+            PowerShellPath = (Join-Path $settings.output "pwsh.zip")
+            TestPath       = (Join-Path $settings.sources "ThirdPartyLibraries.PowerShell.IntegrationTest")
+            ImageName      = $image
         }
     }
 
@@ -107,5 +142,17 @@ task PsCoreTest {
 }
 
 task UpdateExamples {
-    Exec { .\step-update-examples.ps1 }
+    $examples = Get-ChildItem -Path (Join-Path $settings.examples "third-party-notices-template") -Directory
+
+    $builds = @()
+    foreach ($example in $examples) {
+        $builds += @{ 
+            File           = "tasks/update-example.ps1"
+            AppPath        = (Join-Path $settings.bin "app/net6.0/ThirdPartyLibraries.dll")
+            ExamplePath    = $example.FullName
+            RepositoryPath = $settings.repository
+        }
+    }
+    
+    Build-Parallel $builds -ShowParameter ExamplePath -MaximumBuilds 1
 }

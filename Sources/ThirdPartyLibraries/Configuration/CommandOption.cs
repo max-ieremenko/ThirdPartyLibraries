@@ -1,20 +1,19 @@
-﻿namespace ThirdPartyLibraries.Configuration
+﻿namespace ThirdPartyLibraries.Configuration;
+
+internal readonly struct CommandOption
 {
-    internal readonly struct CommandOption
+    public CommandOption(string name)
+        : this(name, null)
     {
-        public CommandOption(string name)
-            : this(name, null)
-        {
-        }
-
-        public CommandOption(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
-
-        public string Name { get; }
-
-        public string Value { get; }
     }
+
+    public CommandOption(string name, string value)
+    {
+        Name = name;
+        Value = value;
+    }
+
+    public string Name { get; }
+
+    public string Value { get; }
 }

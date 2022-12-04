@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;$(SupportedFrameworks)</TargetFrameworks>
     <OutputPath>..\bin\app</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
-    <PackageReference Include="SharpZipLib" Version="1.3.3" />
+    <PackageReference Include="SharpZipLib" Version="1.4.1" />
     <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
   </ItemGroup>
 

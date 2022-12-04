@@ -1,0 +1,39 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true,
+      "TargetFrameworks": [
+        "netcoreapp3.1",
+        "net5.0",
+        "net6.0",
+        "net7.0",
+        "netstandard2.1"
+      ]
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "MIT",
+      "HRef": "https://licenses.nuget.org/MIT",
+      "Description": null
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/JetBrains/JetBrains.Annotations.git",
+      "Description": null
+    },
+    {
+      "Subject": "project",
+      "Code": null,
+      "HRef": "https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Annotations.html",
+      "Description": "License should be verified on https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Annotations.html"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ Microsoft.Win32.Registry [5.0.0](https://www.nuget.org/packages/Microsoft.Win32.
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, netcoreapp3.1
+Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

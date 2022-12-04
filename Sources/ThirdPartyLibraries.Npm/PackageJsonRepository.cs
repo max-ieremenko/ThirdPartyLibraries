@@ -1,9 +1,8 @@
-﻿namespace ThirdPartyLibraries.Npm
-{
-    public sealed class PackageJsonRepository
-    {
-        public string Type { get; set; }
+﻿namespace ThirdPartyLibraries.Npm;
 
-        public string Url { get; set; }
-    }
+public sealed class PackageJsonRepository
+{
+    public string Type { get; set; }
+
+    public string Url { get; set; }
 }

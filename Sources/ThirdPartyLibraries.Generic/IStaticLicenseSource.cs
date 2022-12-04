@@ -1,6 +1,5 @@
-﻿namespace ThirdPartyLibraries.Generic
+﻿namespace ThirdPartyLibraries.Generic;
+
+public interface IStaticLicenseSource : ILicenseCodeSource, IFullLicenseSource
 {
-    public interface IStaticLicenseSource : ILicenseCodeSource, IFullLicenseSource
-    {
-    }
 }

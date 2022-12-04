@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;$(SupportedFrameworks)</TargetFrameworks>
     <OutputPath>..\bin\app</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftDependencyInjectionVersion)" />
   </ItemGroup>

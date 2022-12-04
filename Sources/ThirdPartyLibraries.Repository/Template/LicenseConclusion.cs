@@ -1,9 +1,8 @@
-﻿namespace ThirdPartyLibraries.Repository.Template
-{
-    public sealed class LicenseConclusion
-    {
-        public string Code { get; set; }
+﻿namespace ThirdPartyLibraries.Repository.Template;
 
-        public string Status { get; set; }
-    }
+public sealed class LicenseConclusion
+{
+    public string Code { get; set; }
+
+    public string Status { get; set; }
 }
