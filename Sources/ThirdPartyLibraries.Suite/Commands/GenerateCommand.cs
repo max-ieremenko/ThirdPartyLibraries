@@ -22,6 +22,10 @@ public sealed class GenerateCommand : ICommand
 
     public string To { get; set; }
 
+    public string ToFileName { get; set; }
+
+    public string Template { get; set; }
+
     public async Task ExecuteAsync(IServiceProvider serviceProvider, CancellationToken token)
     {
         var repository = serviceProvider.GetRequiredService<IPackageRepository>();
@@ -61,10 +65,18 @@ public sealed class GenerateCommand : ICommand
 
         await state.AlignFileNamesAsync(token).ConfigureAwait(false);
 
-        var template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
+        string template;
+        if (string.IsNullOrEmpty(Template))
+        {
+            template = await repository.Storage.GetOrCreateThirdPartyNoticesTemplateAsync(token).ConfigureAwait(false);
+        }
+        else
+        {
+            template = await File.ReadAllTextAsync(Template, token).ConfigureAwait(false);
+        }
 
         Directory.CreateDirectory(To);
-        var fileName = Path.Combine(To, OutputFileName);
+        var fileName = GetOutputFileName();
         using (var file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
         {
             DotLiquidTemplate.RenderTo(file, template, rootContext);
@@ -80,7 +92,11 @@ public sealed class GenerateCommand : ICommand
         using (logger.Indent())
         {
             logger.Info("repository {0}".FormatWith(repository.Storage.ConnectionString));
-            logger.Info("to {0}".FormatWith(To));
+            logger.Info("to {0}".FormatWith(GetOutputFileName()));
+            if (!string.IsNullOrEmpty(Template))
+            {
+                logger.Info("template {0}".FormatWith(Template));
+            }
         }
     }
 
@@ -142,4 +158,6 @@ public sealed class GenerateCommand : ICommand
             }
         }
     }
+
+    private string GetOutputFileName() => Path.Combine(To, string.IsNullOrEmpty(ToFileName) ? OutputFileName : ToFileName);
 }

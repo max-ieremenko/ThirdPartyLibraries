@@ -21,6 +21,12 @@ public sealed class GenerateCmdlet : CommandCmdlet
     [Parameter(Position = 4, HelpMessage = "a title of third party notices, default is appName[0]")]
     public string Title { get; set; }
 
+    [Parameter(Position = 5, HelpMessage = "output file name, default is ThirdPartyNotices.txt")]
+    public string ToFileName { get; set; }
+
+    [Parameter(Position = 6, HelpMessage = "a path to a DotLiquid template file, default is configuration/third-party-notices-template.txt in the repository folder")]
+    public string Template { get; set; }
+
     protected override string CreateCommandLine(IList<(string Name, string Value)> options)
     {
         options.Add((CommandOptions.OptionRepository, this.RootPath(Repository)));
@@ -34,6 +40,16 @@ public sealed class GenerateCmdlet : CommandCmdlet
         for (var i = 0; i < AppName.Length; i++)
         {
             options.Add((CommandOptions.OptionAppName, AppName[i]));
+        }
+
+        if (!string.IsNullOrEmpty(ToFileName))
+        {
+            options.Add((CommandOptions.OptionToFileName, ToFileName));
+        }
+
+        if (!string.IsNullOrEmpty(Template))
+        {
+            options.Add((CommandOptions.OptionTemplate, this.RootPath(Template)));
         }
 
         return CommandOptions.CommandGenerate;
