@@ -24,7 +24,7 @@
     <FileVersion>$(DefaultPackageVersion).0</FileVersion>
     <Product>Third Party Libraries</Product>
     <Authors>Max Ieremenko</Authors>
-    <Copyright>(C) 2019-2022 Max Ieremenko.</Copyright>
+    <Copyright>(C) 2019-2023 Max Ieremenko.</Copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
