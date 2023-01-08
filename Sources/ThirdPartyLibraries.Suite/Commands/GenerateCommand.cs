@@ -49,6 +49,7 @@ public sealed class GenerateCommand : ICommand
             var packageContext = new ThirdPartyNoticesPackageContext
             {
                 Name = package.Name,
+                Version = package.Version,
                 License = license,
                 PackageLicense = packageLicense,
                 Copyright = package.Copyright,

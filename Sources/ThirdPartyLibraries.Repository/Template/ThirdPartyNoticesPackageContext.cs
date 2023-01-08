@@ -5,6 +5,9 @@ public sealed class ThirdPartyNoticesPackageContext
     // package name
     public string Name { get; set; }
 
+    // package version
+    public string Version { get; set; }
+
     // package public url
     public string HRef { get; set; }
 
