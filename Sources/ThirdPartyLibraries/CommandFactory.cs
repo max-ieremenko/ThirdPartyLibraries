@@ -212,6 +212,16 @@ internal static class CommandFactory
                 CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
                 repository = value;
             }
+            else if (option.IsToFileName(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionToFileName, !result.ToFileName.IsNullOrEmpty());
+                result.ToFileName = value;
+            }
+            else if (option.IsTemplate(out value))
+            {
+                CommandOptions.AssertDuplicated(CommandOptions.OptionTemplate, !result.Template.IsNullOrEmpty());
+                result.Template = value;
+            }
             else
             {
                 CommandOptions.AssertUnknown(option.Name);

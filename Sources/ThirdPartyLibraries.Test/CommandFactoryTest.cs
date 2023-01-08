@@ -136,15 +136,21 @@ public class CommandFactoryTest
         _line.Options.Add(new CommandOption(CommandOptions.OptionAppName, "app name 2"));
         _line.Options.Add(new CommandOption(CommandOptions.OptionTitle, "the title"));
         _line.Options.Add(new CommandOption(CommandOptions.OptionRepository, "repository"));
+        _line.Options.Add(new CommandOption(CommandOptions.OptionToFileName, "output.txt"));
 
         var to = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\folder1" : "/folder1";
         _line.Options.Add(new CommandOption(CommandOptions.OptionTo, to));
+
+        var template = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? @"c:\template.txt" : "/template.txt";
+        _line.Options.Add(new CommandOption(CommandOptions.OptionTemplate, template));
 
         var command = CommandFactory.Create(_line, _configuration, out var repository).ShouldBeOfType<GenerateCommand>();
 
         command.AppNames.ShouldBe(new[] { "app name 1", "app name 2" });
         command.Title.ShouldBe("the title");
         command.To.ShouldBe(to);
+        command.ToFileName.ShouldBe("output.txt");
+        command.Template.ShouldBe(template);
 
         repository.ShouldBe("repository");
 

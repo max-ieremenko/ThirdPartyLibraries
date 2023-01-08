@@ -7,6 +7,8 @@ Generate "third party notices" from the repository
   -repository: a path to a repository folder
   -to: a path to an output folder
   -title: a title of third party notices, default is appName[0]
+  -toFileName: output file name, default is ThirdPartyNotices.txt
+  -template: a path to a DotLiquid template file, default is configuration/third-party-notices-template.txt in the repository folder
 
 exit codes:
   0 - OK

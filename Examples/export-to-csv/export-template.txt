@@ -1,0 +1,4 @@
+﻿"Name","Version","Package Url","License","License Url","Authors","Copyright"
+{%- for package in Packages -%}
+"{{package.Name}}","{{package.Version}}","{{package.HRef}}","{{package.License.FullName}}","{{package.License.HRefs | first}}","{{package.Author}}","{{package.Copyright}}"
+{%- endfor -%}
