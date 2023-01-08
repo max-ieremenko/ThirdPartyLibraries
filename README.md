@@ -170,7 +170,17 @@ PS> Publish-ThirdPartyNotices -AppName ThirdPartyLibraries -Repository c:\Reposi
 
 *third-party-notices-template.txt* will be created after the first run *ThirdPartyLibraries generate*.
 
-Other examples third-party-notices-template are [here](Examples/third-party-notices-template).
+The template `configuration/third-party-notices-template.txt` is used by default and it can be replaced from the command line. For example, the following command creates packages.csv file with a packages list:
+
+```bash
+$ ThirdPartyLibraries generate -appName ThirdPartyLibraries -repository c:\RepositoryDemo -to c:\notices -toFileName packages.csv -template c:\RepositoryDemo\Examples\export-to-csv\export-template.txt
+```
+
+```powershell
+PS> Publish-ThirdPartyNotices -AppName ThirdPartyLibraries -Repository c:\RepositoryDemo -ToFileName packages.csv -Template c:\RepositoryDemo\Examples\export-to-csv\export-template.txt -InformationAction Continue
+```
+
+Other examples third-party-notices-template are [here](Examples).
 
 [Back to ToC](#table-of-contents)
 

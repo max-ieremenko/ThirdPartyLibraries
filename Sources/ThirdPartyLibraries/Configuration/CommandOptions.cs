@@ -18,86 +18,27 @@ public static class CommandOptions
     public const string OptionTo = "to";
     public const string OptionGitHubToken = "github.com:personalAccessToken";
     public const string OptionTitle = "title";
+    public const string OptionToFileName = "toFileName";
+    public const string OptionTemplate = "template";
 
     internal const string UserSecretsId = "c903410c-3d05-49fe-bc8b-b95a2f4dfc69";
     internal const string EnvironmentVariablePrefix = "ThirdPartyLibraries:";
 
-    internal static bool IsSource(in this CommandOption option, out string value)
-    {
-        if (OptionSource.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            AssertNonEmpty(option);
-            value = FileTools.RootPath(option.Value);
-            return true;
-        }
+    internal static bool IsSource(in this CommandOption option, out string value) => IsPath(option, OptionSource, out value);
 
-        value = null;
-        return false;
-    }
+    internal static bool IsTo(in this CommandOption option, out string value) => IsPath(option, OptionTo, out value);
 
-    internal static bool IsTo(in this CommandOption option, out string value)
-    {
-        if (OptionTo.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            AssertNonEmpty(option);
-            value = FileTools.RootPath(option.Value);
-            return true;
-        }
+    internal static bool IsAppName(in this CommandOption option, out string value) => Is(option, OptionAppName, out value);
 
-        value = null;
-        return false;
-    }
+    internal static bool IsRepository(in this CommandOption option, out string value) => Is(option, OptionRepository, out value);
 
-    internal static bool IsAppName(in this CommandOption option, out string value)
-    {
-        if (OptionAppName.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            AssertNonEmpty(option);
-            value = option.Value;
-            return true;
-        }
+    internal static bool IsGitHubToken(in this CommandOption option, out string value) => Is(option, OptionGitHubToken, out value);
 
-        value = null;
-        return false;
-    }
+    internal static bool IsTitle(in this CommandOption option, out string value) => Is(option, OptionTitle, out value);
 
-    internal static bool IsRepository(in this CommandOption option, out string value)
-    {
-        if (OptionRepository.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            AssertNonEmpty(option);
-            value = option.Value;
-            return true;
-        }
+    internal static bool IsToFileName(in this CommandOption option, out string value) => Is(option, OptionToFileName, out value);
 
-        value = null;
-        return false;
-    }
-
-    internal static bool IsGitHubToken(in this CommandOption option, out string value)
-    {
-        if (OptionGitHubToken.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            AssertNonEmpty(option);
-            value = option.Value;
-            return true;
-        }
-
-        value = null;
-        return false;
-    }
-
-    internal static bool IsTitle(in this CommandOption option, out string value)
-    {
-        if (OptionTitle.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            value = option.Value;
-            return true;
-        }
-
-        value = null;
-        return false;
-    }
+    internal static bool IsTemplate(in this CommandOption option, out string value) => IsPath(option, OptionTemplate, out value);
 
     internal static void AssertMissing(string optionName, bool condition)
     {
@@ -126,5 +67,31 @@ public static class CommandOptions
         {
             throw new InvalidOperationException("Missing value for option [{0}].".FormatWith(option.Name));
         }
+    }
+
+    private static bool Is(in this CommandOption option, string expectedName, out string value)
+    {
+        if (expectedName.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            AssertNonEmpty(option);
+            value = option.Value;
+            return true;
+        }
+
+        value = null;
+        return false;
+    }
+
+    private static bool IsPath(in this CommandOption option, string expectedName, out string value)
+    {
+        if (expectedName.Equals(option.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            AssertNonEmpty(option);
+            value = FileTools.RootPath(option.Value);
+            return true;
+        }
+
+        value = null;
+        return false;
     }
 }

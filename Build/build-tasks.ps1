@@ -142,17 +142,30 @@ task PsCoreTest {
 }
 
 task UpdateExamples {
-    $examples = Get-ChildItem -Path (Join-Path $settings.examples "third-party-notices-template") -Directory
-
+    $appPath = Join-Path $settings.bin "app/net6.0/ThirdPartyLibraries.dll"
     $builds = @()
+
+    $examples = Get-ChildItem -Path (Join-Path $settings.examples "third-party-notices-template") -Directory
     foreach ($example in $examples) {
         $builds += @{ 
             File           = "tasks/update-example.ps1"
-            AppPath        = (Join-Path $settings.bin "app/net6.0/ThirdPartyLibraries.dll")
+            AppPath        = $appPath
             ExamplePath    = $example.FullName
             RepositoryPath = $settings.repository
+            TemplatePath   = (Join-Path $example.FullName "third-party-notices-template.txt")
+            ToFileName     = "ThirdPartyNotices.txt"
         }
     }
     
+    $example = Join-Path $settings.examples "export-to-csv"
+    $builds += @{ 
+        File           = "tasks/update-example.ps1"
+        AppPath        = $appPath
+        ExamplePath    = $example
+        RepositoryPath = $settings.repository
+        TemplatePath   = (Join-Path $example "export-template.txt")
+        ToFileName     = "packages.csv"
+    }
+
     Build-Parallel $builds -ShowParameter ExamplePath -MaximumBuilds 1
 }
