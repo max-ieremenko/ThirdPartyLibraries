@@ -9,6 +9,9 @@ License Apache License 2.0, full text can be found at https://spdx.org/licenses/
     NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.4.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
+    NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.4.0)
+        Authors: Microsoft
+        Copyright: © Microsoft Corporation. All rights reserved.
 
 License MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm or in Licenses/ms-net-library-license.html
     System.Runtime.Loader (https://www.nuget.org/packages/System.Runtime.Loader/4.3.0)
