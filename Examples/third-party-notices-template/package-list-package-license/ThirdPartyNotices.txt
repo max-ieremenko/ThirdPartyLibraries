@@ -91,6 +91,11 @@ NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.4.0)
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
+NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.4.0)
+    Authors: Microsoft
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
+
 PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.

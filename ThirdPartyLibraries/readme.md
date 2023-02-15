@@ -3,7 +3,7 @@ Licenses
 	
 |Code|Requires approval|Requires third party notices|Packages count|
 |----------|:----|:----|:----|
-|[Apache-2.0](licenses/apache-2.0)|no|no|4|
+|[Apache-2.0](licenses/apache-2.0)|no|no|5|
 |[BSD-2-Clause](licenses/bsd-2-clause)|no|no|1|
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
@@ -13,7 +13,7 @@ Licenses
 
 
 
-Packages 57
+Packages 58
 --------
 
 |Name|Version|Source|License|Used by|
@@ -52,6 +52,7 @@ Packages 57
 |[Newtonsoft.Json](packages/nuget.org/newtonsoft.json/13.0.2)|13.0.2|[nuget.org](https://www.nuget.org/packages/Newtonsoft.Json/13.0.2)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[NuGet.Frameworks](packages/nuget.org/nuget.frameworks/5.11.0)|5.11.0|[nuget.org](https://www.nuget.org/packages/NuGet.Frameworks/5.11.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 |[NuGet.Frameworks](packages/nuget.org/nuget.frameworks/6.4.0)|6.4.0|[nuget.org](https://www.nuget.org/packages/NuGet.Frameworks/6.4.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
+|[NuGet.Versioning](packages/nuget.org/nuget.versioning/6.4.0)|6.4.0|[nuget.org](https://www.nuget.org/packages/NuGet.Versioning/6.4.0)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[NUnit](packages/nuget.org/nunit/3.13.3)|3.13.3|[nuget.org](https://www.nuget.org/packages/NUnit/3.13.3)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[NUnit3TestAdapter](packages/nuget.org/nunit3testadapter/4.3.1)|4.3.1|[nuget.org](https://www.nuget.org/packages/NUnit3TestAdapter/4.3.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[PowerShellStandard.Library](packages/nuget.org/powershellstandard.library/5.1.1)|5.1.1|[nuget.org](https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)|[MIT](licenses/mit)|ThirdPartyLibraries|

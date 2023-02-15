@@ -40,4 +40,14 @@ public class NuGetSpecParserTest
 
         actual.ShouldBe(expectedIds, true);
     }
+
+    [Test]
+    [TestCase("1.0", "1.0.0")]
+    [TestCase("9.2.0", "9.2.0")]
+    [TestCase("9.2.0.0", "9.2.0")]
+    [TestCase("9.2.0.1", "9.2.0.1")]
+    public void FixVersion(string metadataVersion, string expected)
+    {
+        NuGetSpecParser.FixVersion(metadataVersion).ShouldBe(expected);
+    }
 }
