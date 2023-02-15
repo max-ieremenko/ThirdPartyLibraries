@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using System.Xml.XPath;
+using NuGet.Versioning;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet;
@@ -34,7 +35,7 @@ internal static class NuGetSpecParser
     }
 
     // https://docs.microsoft.com/en-us/nuget/reference/nuspec#dependencies-element
-    public static IEnumerable<NuGetPackageId> ExtractDependencies(
+    internal static IEnumerable<NuGetPackageId> ExtractDependencies(
         IDictionary<string, NuGetPackageId[]> dependenciesByTargetFramework,
         string targetFramework)
     {
@@ -47,6 +48,8 @@ internal static class NuGetSpecParser
 
         return (noGroup ?? Enumerable.Empty<NuGetPackageId>()).Concat(targetGroup ?? Enumerable.Empty<NuGetPackageId>());
     }
+
+    internal static string FixVersion(string metadataVersion) => NuGetVersion.Parse(metadataVersion).ToFullString();
 
     private static XPathNavigator FindMetaData(XPathDocument doc)
     {
@@ -75,11 +78,7 @@ internal static class NuGetSpecParser
             License = ParseSpecLicense(metadata, ns)
         };
 
-        if (Version.TryParse(spec.Version, out var version) && version.Build < 0)
-        {
-            // minimum 3 octets in the package version
-            spec.Version += ".0";
-        }
+        spec.Version = FixVersion(spec.Version);
 
         return spec;
     }
