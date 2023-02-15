@@ -17,6 +17,7 @@
 "Microsoft.Extensions.Primitives","6.0.0","https://www.nuget.org/packages/Microsoft.Extensions.Primitives/6.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "Newtonsoft.Json","13.0.2","https://www.nuget.org/packages/Newtonsoft.Json/13.0.2","MIT License","https://spdx.org/licenses/MIT","James Newton-King","Copyright © James Newton-King 2008"
 "NuGet.Frameworks","6.4.0","https://www.nuget.org/packages/NuGet.Frameworks/6.4.0","Apache License 2.0","https://spdx.org/licenses/Apache-2.0","Microsoft","© Microsoft Corporation. All rights reserved."
+"NuGet.Versioning","6.4.0","https://www.nuget.org/packages/NuGet.Versioning/6.4.0","Apache License 2.0","https://spdx.org/licenses/Apache-2.0","Microsoft","© Microsoft Corporation. All rights reserved."
 "PowerShellStandard.Library","5.1.1","https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "SharpZipLib","1.4.1","https://www.nuget.org/packages/SharpZipLib/1.4.1","MIT License","https://spdx.org/licenses/MIT","ICSharpCode","Copyright © 2000-2022 SharpZipLib Contributors"
 "System.Buffers","4.5.1","https://www.nuget.org/packages/System.Buffers/4.5.1","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
