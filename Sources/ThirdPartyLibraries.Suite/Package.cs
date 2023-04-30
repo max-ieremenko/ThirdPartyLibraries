@@ -22,6 +22,9 @@ public sealed class Package
 
     public PackageApprovalStatus ApprovalStatus { get; set; }
 
+    // nuget.org, github.com
+    public string HRefText { get; set; }
+
     // https://www.nuget.org/packages/Newtonsoft.Json/12.0.2
     public string HRef { get; set; }
 

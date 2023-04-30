@@ -44,7 +44,7 @@ public class NuGetApiTest
         spec.ShouldNotBeNull();
         spec.Id.ShouldBe("StyleCop.Analyzers");
         spec.Version.ShouldBe("1.1.118");
-        spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/StyleCop.Analyzers/1.1.118");
+        spec.PackageHRef.ShouldBeNull();
         spec.Description.ShouldBe("An implementation of StyleCop's rules using Roslyn analyzers and code fixes");
         spec.Authors.ShouldBe("Sam Harwell et. al.");
         spec.Copyright.ShouldBe("Copyright 2015 Tunnel Vision Laboratories, LLC");
@@ -71,7 +71,7 @@ public class NuGetApiTest
         spec.ShouldNotBeNull();
         spec.Id.ShouldBe("Newtonsoft.Json");
         spec.Version.ShouldBe("12.0.2");
-        spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/Newtonsoft.Json/12.0.2");
+        spec.PackageHRef.ShouldBeNull();
         spec.Description.ShouldBe("Json.NET is a popular high-performance JSON framework for .NET");
         spec.Authors.ShouldBe("James Newton-King");
         spec.Copyright.ShouldBe("Copyright © James Newton-King 2008");
@@ -123,7 +123,7 @@ public class NuGetApiTest
         spec.ShouldNotBeNull();
         spec.Id.ShouldBe("Common.Logging");
         spec.Version.ShouldBe("2.0.0");
-        spec.PackageHRef.ShouldBe("https://www.nuget.org/packages/Common.Logging/2.0.0");
+        spec.PackageHRef.ShouldBeNull();
         spec.Description.ShouldBe("Common.Logging library introduces a simple abstraction to allow you to select a specific logging implementation at runtime.");
         spec.Authors.ShouldBe("Aleksandar Seovic, Mark Pollack, Erich Eichinger");
         spec.Copyright.ShouldBeNull();

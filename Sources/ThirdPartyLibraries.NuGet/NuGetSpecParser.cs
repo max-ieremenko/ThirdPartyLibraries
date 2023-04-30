@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Xml;
 using System.Xml.XPath;
 using NuGet.Versioning;
@@ -28,7 +27,6 @@ internal static class NuGetSpecParser
         ns.AddNamespace("n", namespaceUri);
 
         var spec = ParseSpec(FindMetaData(doc), ns);
-        spec.PackageHRef = "https://" + KnownHosts.NuGetOrg + "/packages/" + HttpUtility.UrlEncode(spec.Id) + "/" + HttpUtility.UrlEncode(spec.Version);
         spec.Version = new SemanticVersion(spec.Version).Version;
 
         return spec;

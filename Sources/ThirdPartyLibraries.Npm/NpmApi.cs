@@ -5,7 +5,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,7 +47,7 @@ internal sealed class NpmApi : INpmApi
     public async Task<NpmPackageFile?> DownloadPackageAsync(NpmPackageId id, CancellationToken token)
     {
         // does not work: https://registry.npmjs.org/@types%2Fangular/1.6.55
-        var url = new Uri(new Uri(Host), UrlEncoder.Default.Encode(id.Name));
+        var url = new Uri(new Uri(Host), Uri.EscapeDataString(id.Name));
 
         JObject index;
         using (var client = HttpClientFactory())

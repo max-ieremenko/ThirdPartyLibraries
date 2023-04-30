@@ -4,7 +4,7 @@ Third party libraries
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 
 License Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
-    DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.677)
+    DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.692)
         Authors: Tim Jones, Alessandro Petrelli
     NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.4.0)
         Authors: Microsoft
@@ -63,13 +63,13 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/6.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
-    Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.2)
+    Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
         Authors: James Newton-King
         Copyright: Copyright © James Newton-King 2008
     PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
-    SharpZipLib (https://www.nuget.org/packages/SharpZipLib/1.4.1)
+    SharpZipLib (https://www.nuget.org/packages/SharpZipLib/1.4.2)
         Authors: ICSharpCode
         Copyright: Copyright © 2000-2022 SharpZipLib Contributors
     System.Buffers (https://www.nuget.org/packages/System.Buffers/4.5.1)
@@ -78,9 +78,6 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     System.Memory (https://www.nuget.org/packages/System.Memory/4.5.4)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
-    System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)
-        Authors: Microsoft
-        Copyright: © Microsoft Corporation.  All rights reserved.
     System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation.  All rights reserved.

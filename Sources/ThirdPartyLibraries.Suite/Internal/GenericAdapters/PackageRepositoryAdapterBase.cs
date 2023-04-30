@@ -20,6 +20,7 @@ internal abstract class PackageRepositoryAdapterBase : IPackageRepositoryAdapter
         {
             SourceCode = id.SourceCode,
             LicenseCode = index.License.Code,
+            HRef = index.Source,
             UsedBy = index.UsedBy.Select(i => new PackageApplication(i.Name, i.InternalOnly)).ToArray()
         };
 

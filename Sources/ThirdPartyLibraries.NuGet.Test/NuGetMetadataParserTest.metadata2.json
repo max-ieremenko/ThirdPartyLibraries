@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "contentHash": "base64 string",
+  "source": "https://nuget.pkg.github.com/organization/index.json"
+}
