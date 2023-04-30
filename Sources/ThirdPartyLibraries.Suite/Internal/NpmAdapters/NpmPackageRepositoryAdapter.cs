@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Npm;
 using ThirdPartyLibraries.Repository;
+using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 
 namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters;
@@ -24,6 +25,7 @@ internal sealed class NpmPackageRepositoryAdapter : PackageRepositoryAdapterBase
         package.Version = json.Version;
         package.Description = json.Description;
         package.HRef = json.PackageHRef;
+        package.HRefText = PackageSources.Npm;
         package.Author = json.Authors;
     }
 

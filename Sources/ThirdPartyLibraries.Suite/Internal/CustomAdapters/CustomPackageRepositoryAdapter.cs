@@ -25,6 +25,7 @@ internal sealed class CustomPackageRepositoryAdapter : IPackageRepositoryAdapter
             Author = index.Author,
             Copyright = index.Copyright,
             HRef = index.HRef,
+            HRefText = PackageSources.Custom,
             UsedBy = index.UsedBy.Select(i => new PackageApplication(i.Name, i.InternalOnly)).ToArray(),
             ApprovalStatus = PackageApprovalStatus.Approved
         };

@@ -34,7 +34,7 @@ public sealed class RefreshCommand : ICommand
 
             var packageContext = new RootReadMePackageContext
             {
-                Source = metadata.SourceCode,
+                Source = metadata.HRefText,
                 Name = metadata.Name,
                 Version = metadata.Version,
                 License = metadata.LicenseCode,
