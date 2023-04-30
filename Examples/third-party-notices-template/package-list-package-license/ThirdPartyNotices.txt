@@ -7,7 +7,7 @@ bootstrap (https://www.npmjs.com/package/bootstrap/v/4.6.1)
     Authors: The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/bootstrap
 
-DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.677)
+DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.692)
     Authors: Tim Jones, Alessandro Petrelli
     License: Apache License 2.0, full text can be found at http://www.apache.org/licenses/LICENSE-2.0 or in Licenses/dotliquid.txt
 
@@ -81,7 +81,7 @@ Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extens
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/MIT-dotnet.txt
 
-Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.2)
+Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
     Authors: James Newton-King
     Copyright: Copyright © James Newton-King 2008
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/newtonsoft.json.md
@@ -101,7 +101,7 @@ PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Li
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://github.com/PowerShell/PowerShell/blob/master/LICENSE.txt or in Licenses/powershellstandard.library.txt
 
-SharpZipLib (https://www.nuget.org/packages/SharpZipLib/1.4.1)
+SharpZipLib (https://www.nuget.org/packages/SharpZipLib/1.4.2)
     Authors: ICSharpCode
     Copyright: Copyright © 2000-2022 SharpZipLib Contributors
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/MIT-license.txt
