@@ -16,6 +16,8 @@ public static class KnownHosts
 
     public const string GitHubApi = "api.github.com";
 
+    public const string GitHubNuGet = "nuget.pkg.github.com";
+
     public const string ApacheOrg = "www.apache.org";
 
     public const string OpenSourceOrg = "opensource.org";
