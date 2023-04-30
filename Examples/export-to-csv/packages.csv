@@ -22,7 +22,6 @@
 "SharpZipLib","1.4.1","https://www.nuget.org/packages/SharpZipLib/1.4.1","MIT License","https://spdx.org/licenses/MIT","ICSharpCode","Copyright © 2000-2022 SharpZipLib Contributors"
 "System.Buffers","4.5.1","https://www.nuget.org/packages/System.Buffers/4.5.1","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "System.Memory","4.5.4","https://www.nuget.org/packages/System.Memory/4.5.4","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
-"System.Numerics.Vectors","4.4.0","https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation.  All rights reserved."
 "System.Numerics.Vectors","4.5.0","https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation.  All rights reserved."
 "System.Runtime.CompilerServices.Unsafe","6.0.0","https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "System.Runtime.Loader","4.3.0","https://www.nuget.org/packages/System.Runtime.Loader/4.3.0","MICROSOFT .NET LIBRARY","https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm","Microsoft","© Microsoft Corporation.  All rights reserved."
