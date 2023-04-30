@@ -32,6 +32,7 @@ public static class AppModule
         services.AddKeyedTransient<IPackageResolver, NuGetPackageResolver>(PackageSources.NuGet);
         services.AddKeyedTransient<ILicenseSourceByUrl, NuGetLicenseSource>(KnownHosts.NuGetLicense);
         services.AddKeyedTransient<IPackageRepositoryAdapter, NuGetPackageRepositoryAdapter>(PackageSources.NuGet);
+        services.AddKeyedTransient<INuGetPackageUrlResolver, DefaultNuGetPackageUrlResolver>(KnownHosts.NuGetApi);
 
         // npm
         services.AddSingleton(ResolveNpmConfiguration);
@@ -45,6 +46,7 @@ public static class AppModule
         services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRaw);
         services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubRawUserContent);
         services.AddKeyedTransient<ILicenseSourceByUrl, GitHubLicenseSource>(KnownHosts.GitHubApi);
+        services.AddKeyedTransient<INuGetPackageUrlResolver, GitHubNuGetPackageUrlResolver>(KnownHosts.GitHubNuGet);
 
         // custom
         services.AddKeyedTransient<IPackageRepositoryAdapter, CustomPackageRepositoryAdapter>(PackageSources.Custom);
