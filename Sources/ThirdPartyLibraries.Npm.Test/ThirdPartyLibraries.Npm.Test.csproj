@@ -15,15 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkVersion)" />
-    <PackageReference Include="Moq" Version="$(MoqVersion)" />
-    <PackageReference Include="NUnit" Version="$(NUnitVersion)" />
-    <PackageReference Include="NUnit3TestAdapter" Version="$(NUnit3TestAdapterVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="RichardSzalay.MockHttp" Version="$(MockHttpVersion)" />
-    <PackageReference Include="Shouldly" Version="$(ShouldlyVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
+    <PackageReference Include="RichardSzalay.MockHttp" />
+    <PackageReference Include="Shouldly" />
   </ItemGroup>
 
   <ItemGroup>
