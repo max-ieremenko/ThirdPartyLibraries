@@ -31,7 +31,7 @@ public class NpmApiTest
         var package = new NpmPackageId("@types/angular", "1.6.55");
 
         _mockHttp
-            .When(HttpMethod.Get, NpmApi.Host + "/@types%2Fangular")
+            .When(HttpMethod.Get, NpmApi.Host + "/%40types%2Fangular")
             .Respond(
                 MediaTypeNames.Application.Json,
                 TempFile.OpenResource(GetType(), "NpmApiTest.TypesAngular.get.json"));

@@ -78,9 +78,6 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     System.Memory (https://www.nuget.org/packages/System.Memory/4.5.4)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
-    System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)
-        Authors: Microsoft
-        Copyright: © Microsoft Corporation.  All rights reserved.
     System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation.  All rights reserved.

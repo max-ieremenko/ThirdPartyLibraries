@@ -26,7 +26,6 @@
     <PackageVersion Include="SharpZipLib" Version="1.4.1" />
     <PackageVersion Include="Shouldly" Version="4.1.0" />
     <PackageVersion Include="System.Runtime.Loader" Version="4.3.0" />
-    <PackageVersion Include="System.Text.Encodings.Web" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
