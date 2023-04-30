@@ -46,6 +46,8 @@ internal sealed class NuGetPackageResolver : PackageResolverBase
         {
             index.Licenses.Add(await ResolveUrlLicenseAsync(id, spec.ProjectUrl, PackageLicense.SubjectProject, token).ConfigureAwait(false));
         }
+
+        index.Source = Api.ResolvePackageSource(new NuGetPackageId(id.Name, id.Version));
     }
 
     protected override Task<byte[]> DownloadPackageContentAsync(LibraryId id, CancellationToken token)

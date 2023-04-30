@@ -147,6 +147,23 @@ internal sealed class NuGetApi : INuGetApi
         return result.ToArray();
     }
 
+    public string ResolvePackageSource(NuGetPackageId package)
+    {
+        var fileName = Path.Combine(GetLocalCachePath(package), ".nupkg.metadata");
+        if (!File.Exists(fileName))
+        {
+            return null;
+        }
+
+        string result;
+        using (var stream = File.OpenRead(fileName))
+        {
+            result = NuGetMetadataParser.Parse(stream).Source;
+        }
+
+        return string.IsNullOrWhiteSpace(result) ? null : result;
+    }
+
     internal static string ExtractLicenseCode(string licenseUrl)
     {
         var expression = new UriBuilder(licenseUrl).Path.Trim();

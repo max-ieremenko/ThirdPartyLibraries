@@ -17,4 +17,6 @@ public interface INuGetApi
     Task<byte[]> LoadFileContentAsync(byte[] packageContent, string fileName, CancellationToken token);
 
     string[] FindFiles(byte[] packageContent, string searchPattern);
+
+    string ResolvePackageSource(NuGetPackageId package);
 }
