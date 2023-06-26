@@ -3,7 +3,7 @@ Microsoft.CodeCoverage [17.5.0](https://www.nuget.org/packages/Microsoft.CodeCov
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1
+Target frameworks: net6.0, net7.0, netcoreapp3.1
 
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 
