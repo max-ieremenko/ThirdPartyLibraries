@@ -3,7 +3,7 @@ System.Reflection.Metadata [1.6.0](https://www.nuget.org/packages/System.Reflect
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1
+Target frameworks: net6.0, net7.0, netcoreapp3.1
 
 License: [MIT](../../../../licenses/mit) 
 

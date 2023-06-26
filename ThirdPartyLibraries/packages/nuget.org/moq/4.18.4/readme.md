@@ -3,7 +3,7 @@ Moq [4.18.4](https://www.nuget.org/packages/Moq/4.18.4)
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1
+Target frameworks: net6.0, net7.0, netcoreapp3.1
 
 License: [BSD-3-Clause](../../../../licenses/bsd-3-clause) 
 
