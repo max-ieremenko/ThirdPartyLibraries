@@ -10,22 +10,22 @@ namespace ThirdPartyLibraries.PowerShell;
 public sealed class GenerateCmdlet : CommandCmdlet
 {
     [Parameter(Mandatory = true, Position = 1, HelpMessage = "a name of the current application")]
-    public string[] AppName { get; set; }
+    public string[] AppName { get; set; } = null!;
 
     [Parameter(Mandatory = true, Position = 2, HelpMessage = "a path to a repository folder")]
-    public string Repository { get; set; }
+    public string Repository { get; set; } = null!;
 
     [Parameter(Mandatory = true, Position = 3, HelpMessage = "a path to an output folder")]
-    public string To { get; set; }
+    public string To { get; set; } = null!;
 
     [Parameter(Position = 4, HelpMessage = "a title of third party notices, default is appName[0]")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     [Parameter(Position = 5, HelpMessage = "output file name, default is ThirdPartyNotices.txt")]
-    public string ToFileName { get; set; }
+    public string? ToFileName { get; set; }
 
     [Parameter(Position = 6, HelpMessage = "a path to a DotLiquid template file, default is configuration/third-party-notices-template.txt in the repository folder")]
-    public string Template { get; set; }
+    public string? Template { get; set; }
 
     protected override string CreateCommandLine(IList<(string Name, string Value)> options)
     {

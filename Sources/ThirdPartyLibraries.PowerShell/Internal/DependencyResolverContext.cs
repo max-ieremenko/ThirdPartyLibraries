@@ -13,8 +13,8 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
     private static readonly ConstructorInfo BaseCtorRef;
 
     private readonly string _path;
-    private readonly ConcurrentDictionary<string, Assembly> _cache;
-    private readonly Func<string, Assembly> _getOrAdd;
+    private readonly ConcurrentDictionary<string, Assembly?> _cache;
+    private readonly Func<string, Assembly?> _getOrAdd;
     private readonly IDictionary<string, string> _localFileByAssemblyName;
 
     static DependencyResolverContext()
@@ -29,13 +29,13 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
         BaseCtorRef.Invoke(this, new object[] { true });
 
         _path = path;
-        _cache = new ConcurrentDictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
+        _cache = new ConcurrentDictionary<string, Assembly?>(StringComparer.OrdinalIgnoreCase);
         _getOrAdd = GetOrAdd;
         _localFileByAssemblyName = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         LoadLocalFiles();
     }
 
-    public Assembly TryLoadLocal(AssemblyName assemblyName)
+    public Assembly? TryLoadLocal(AssemblyName assemblyName)
     {
         return _cache.GetOrAdd(assemblyName.Name, _getOrAdd);
     }
@@ -46,7 +46,7 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
         UnloadRef(this);
     }
 
-    protected override Assembly Load(AssemblyName assemblyName)
+    protected override Assembly? Load(AssemblyName assemblyName)
     {
         return TryLoadLocal(assemblyName);
     }
@@ -56,7 +56,7 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
         var methods = typeof(AssemblyLoadContext)
             .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
 
-        MethodInfo unload = null;
+        MethodInfo? unload = null;
         for (var i = 0; i < methods.Length; i++)
         {
             var method = methods[i];
@@ -82,7 +82,7 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
         var ctors = typeof(AssemblyLoadContext)
             .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
 
-        ConstructorInfo isCollectible = null;
+        ConstructorInfo? isCollectible = null;
         for (var i = 0; i < ctors.Length; i++)
         {
             var ctor = ctors[i];
@@ -102,7 +102,7 @@ internal sealed class DependencyResolverContext : AssemblyLoadContext
         return isCollectible;
     }
 
-    private Assembly GetOrAdd(string assemblyName)
+    private Assembly? GetOrAdd(string assemblyName)
     {
         if (_localFileByAssemblyName.TryGetValue(assemblyName, out var fileName)
             && File.Exists(fileName))

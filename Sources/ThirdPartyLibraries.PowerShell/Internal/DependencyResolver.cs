@@ -17,7 +17,7 @@ internal sealed class DependencyResolver : IDisposable
     public RunAsync BindRunAsync()
     {
         var assembly = _context.TryLoadLocal(new AssemblyName("ThirdPartyLibraries"));
-        var method = assembly
+        var method = assembly!
             .EntryPoint!
             .DeclaringType!
             .GetMethod(nameof(Program.RunAsync), BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);

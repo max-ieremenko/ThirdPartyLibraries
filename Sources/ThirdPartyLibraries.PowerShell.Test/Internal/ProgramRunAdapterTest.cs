@@ -10,8 +10,8 @@ namespace ThirdPartyLibraries.PowerShell.Internal;
 [TestFixture]
 public class ProgramRunAdapterTest
 {
-    private CmdLetLoggerMock _logger;
-    private ProgramRunAdapter _sut;
+    private CmdLetLoggerMock _logger = null!;
+    private ProgramRunAdapter _sut = null!;
 
     [SetUp]
     public void BeforeEachTest()
