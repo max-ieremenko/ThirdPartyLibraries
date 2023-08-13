@@ -20,7 +20,7 @@ License MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.
 
 License MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
     bootstrap (https://www.npmjs.com/package/bootstrap/v/4.6.1)
-        Authors: The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+        Authors: The Bootstrap Authors
     Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/7.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
@@ -60,6 +60,12 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     Microsoft.Extensions.FileSystemGlobbing (https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/7.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
+    Microsoft.Extensions.Options (https://www.nuget.org/packages/Microsoft.Extensions.Options/7.0.0)
+        Authors: Microsoft
+        Copyright: © Microsoft Corporation. All rights reserved.
+    Microsoft.Extensions.Options.ConfigurationExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/7.0.0)
+        Authors: Microsoft
+        Copyright: © Microsoft Corporation. All rights reserved.
     Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/7.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
@@ -78,6 +84,9 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     System.Memory (https://www.nuget.org/packages/System.Memory/4.5.5)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
+    System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)
+        Authors: Microsoft
+        Copyright: © Microsoft Corporation.  All rights reserved.
     System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation.  All rights reserved.
