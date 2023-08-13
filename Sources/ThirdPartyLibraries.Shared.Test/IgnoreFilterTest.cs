@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 
-namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters;
+namespace ThirdPartyLibraries.Shared;
 
 [TestFixture]
 public class IgnoreFilterTest
@@ -10,7 +10,7 @@ public class IgnoreFilterTest
     [TestCase(null, "name", false)]
     [TestCase("n.*", "name", true)]
     [TestCase("x.*", "name", false)]
-    public void Filter(string pattern, string name, bool expected)
+    public void Filter(string? pattern, string name, bool expected)
     {
         var sut = new IgnoreFilter(pattern == null ? null : new[] { pattern });
         sut.Filter(name).ShouldBe(expected);

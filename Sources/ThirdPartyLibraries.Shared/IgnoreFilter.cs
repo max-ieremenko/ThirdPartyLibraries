@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Suite.Internal.GenericAdapters;
+namespace ThirdPartyLibraries.Shared;
 
-internal readonly struct IgnoreFilter
+public readonly struct IgnoreFilter
 {
-    public IgnoreFilter(IList<string> patterns)
+    public IgnoreFilter(IList<string>? patterns)
     {
         Patterns = patterns;
     }
 
-    public IList<string> Patterns { get; }
+    public IList<string>? Patterns { get; }
 
     public bool Filter(string name)
     {
-        if (Patterns.IsNullOrEmpty())
+        if (Patterns == null || Patterns.Count == 0)
         {
             return false;
         }
