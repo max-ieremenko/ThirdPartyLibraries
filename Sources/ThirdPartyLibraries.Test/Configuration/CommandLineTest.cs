@@ -45,6 +45,6 @@ public class CommandLineTest
     {
         var ex = Assert.Throws<InvalidOperationException>(() => CommandLine.Parse(args));
 
-        ex.Message.ShouldContain(args.Last());
+        ex!.Message.ShouldContain(args.Last());
     }
 }

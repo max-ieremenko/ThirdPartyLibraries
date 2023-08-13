@@ -7,7 +7,7 @@ internal readonly struct CommandOption
     {
     }
 
-    public CommandOption(string name, string value)
+    public CommandOption(string name, string? value)
     {
         Name = name;
         Value = value;
@@ -15,5 +15,5 @@ internal readonly struct CommandOption
 
     public string Name { get; }
 
-    public string Value { get; }
+    public string? Value { get; }
 }

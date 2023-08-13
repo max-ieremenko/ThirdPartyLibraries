@@ -12,9 +12,9 @@ namespace ThirdPartyLibraries;
 [TestFixture]
 public class HelpCommandTest
 {
-    private HelpCommand _sut;
-    private IServiceProvider _serviceProvider;
-    private string _loggerOutput;
+    private HelpCommand _sut = null!;
+    private IServiceProvider _serviceProvider = null!;
+    private string? _loggerOutput;
 
     [SetUp]
     public void BeforeEachTest()
@@ -42,7 +42,7 @@ public class HelpCommandTest
     {
         await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
-        _loggerOutput.ShouldContain("<command> [options]...");
+        _loggerOutput!.ShouldContain("<command> [options]...");
     }
 
     [Test]
@@ -56,6 +56,6 @@ public class HelpCommandTest
 
         await _sut.ExecuteAsync(_serviceProvider, CancellationToken.None).ConfigureAwait(false);
 
-        _loggerOutput.ShouldContain("{0} [options]...".FormatWith(command));
+        _loggerOutput!.ShouldContain($"{command} [options]...");
     }
 }
