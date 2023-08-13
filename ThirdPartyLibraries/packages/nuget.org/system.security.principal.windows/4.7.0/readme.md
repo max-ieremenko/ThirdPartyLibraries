@@ -1,15 +1,14 @@
-System.Security.Principal.Windows [5.0.0](https://www.nuget.org/packages/System.Security.Principal.Windows/5.0.0)
+System.Security.Principal.Windows [4.7.0](https://www.nuget.org/packages/System.Security.Principal.Windows/4.7.0)
 --------------------
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net7.0, netcoreapp3.1
+Target frameworks: netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
 - package license: [MIT](https://licenses.nuget.org/MIT) 
-- repository license: [MIT](git://github.com/dotnet/runtime) 
-- project license: [MIT](https://github.com/dotnet/runtime) 
+- project license: [Unknown](https://github.com/dotnet/corefx) 
 
 Description
 -----------

@@ -1,5 +1,5 @@
 {
-  "Source": "https://api.nuget.org/v3/index.json",
+  "Source": "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\",
   "License": {
     "Code": "MIT",
     "Status": "AutomaticallyApproved"
@@ -22,8 +22,7 @@
     {
       "Subject": "project",
       "Code": null,
-      "HRef": "https://github.com/dotnet/corefx",
-      "Description": "License should be verified on https://github.com/dotnet/corefx"
+      "HRef": "https://github.com/dotnet/corefx"
     }
   ]
 }

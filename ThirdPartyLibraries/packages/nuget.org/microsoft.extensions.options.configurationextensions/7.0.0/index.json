@@ -13,7 +13,23 @@
       ],
       "Dependencies": [
         {
+          "Name": "Microsoft.Extensions.Configuration.Abstractions",
+          "Version": "7.0.0"
+        },
+        {
+          "Name": "Microsoft.Extensions.Configuration.Binder",
+          "Version": "7.0.4"
+        },
+        {
           "Name": "Microsoft.Extensions.DependencyInjection.Abstractions",
+          "Version": "7.0.0"
+        },
+        {
+          "Name": "Microsoft.Extensions.Options",
+          "Version": "7.0.0"
+        },
+        {
+          "Name": "Microsoft.Extensions.Primitives",
           "Version": "7.0.0"
         }
       ]
@@ -33,8 +49,7 @@
     {
       "Subject": "project",
       "Code": null,
-      "HRef": "https://dot.net/",
-      "Description": "License should be verified on https://dot.net/"
+      "HRef": "https://dot.net/"
     }
   ]
 }

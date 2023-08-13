@@ -9,9 +9,9 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netcoreapp3.1",
         "net6.0",
-        "net7.0"
+        "net7.0",
+        "netcoreapp3.1"
       ]
     }
   ],
@@ -19,20 +19,17 @@
     {
       "Subject": "package",
       "Code": null,
-      "HRef": null,
-      "Description": null
+      "HRef": "LICENSE_NET.txt"
     },
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/microsoft/codecoverage",
-      "Description": null
+      "HRef": "https://github.com/microsoft/codecoverage"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/microsoft/codecoverage",
-      "Description": null
+      "HRef": "https://github.com/microsoft/codecoverage"
     }
   ]
 }

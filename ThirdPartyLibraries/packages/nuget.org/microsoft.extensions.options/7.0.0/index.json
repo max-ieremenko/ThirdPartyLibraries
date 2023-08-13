@@ -1,26 +1,24 @@
 {
   "Source": "https://api.nuget.org/v3/index.json",
   "License": {
-    "Code": "ms-net-library",
+    "Code": "MIT",
     "Status": "AutomaticallyApproved"
   },
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": true,
+      "InternalOnly": false,
       "TargetFrameworks": [
-        "net6.0",
-        "net7.0",
-        "netcoreapp3.1"
+        "netstandard2.1"
       ],
       "Dependencies": [
         {
-          "Name": "Microsoft.CodeCoverage",
-          "Version": "17.6.3"
+          "Name": "Microsoft.Extensions.DependencyInjection.Abstractions",
+          "Version": "7.0.0"
         },
         {
-          "Name": "Microsoft.TestPlatform.TestHost",
-          "Version": "17.6.3"
+          "Name": "Microsoft.Extensions.Primitives",
+          "Version": "7.0.0"
         }
       ]
     }
@@ -28,18 +26,18 @@
   "Licenses": [
     {
       "Subject": "package",
-      "Code": null,
-      "HRef": "LICENSE_NET.txt"
+      "Code": "MIT",
+      "HRef": "https://licenses.nuget.org/MIT"
     },
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/microsoft/vstest"
+      "HRef": "https://github.com/dotnet/runtime"
     },
     {
       "Subject": "project",
-      "Code": "MIT",
-      "HRef": "https://github.com/microsoft/vstest/"
+      "Code": null,
+      "HRef": "https://dot.net/"
     }
   ]
 }
