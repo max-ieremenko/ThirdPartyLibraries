@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using ThirdPartyLibraries.Repository;
+using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Shared;
 
-namespace ThirdPartyLibraries.Suite.Internal;
+namespace ThirdPartyLibraries.Suite.Shared;
 
 internal sealed class ReferenceNotFoundException : ApplicationException, IApplicationException
 {
@@ -23,7 +23,7 @@ internal sealed class ReferenceNotFoundException : ApplicationException, IApplic
             for (var i = 0; i < Libraries.Length; i++)
             {
                 var library = Libraries[i];
-                logger.Info("{0} {1} from {2}".FormatWith(library.Name, library.Version, library.SourceCode));
+                logger.Info($"{library.Name} {library.Version} from {library.SourceCode}");
             }
         }
     }
