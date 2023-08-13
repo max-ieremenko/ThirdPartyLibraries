@@ -233,7 +233,8 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
     ]
   },
   "skipCertificateCheck": {
-    "byHost": [ "localhost" ]
+    "byHost": [ "localhost" ],
+    "logRequest": true
   }
 }
 ```
@@ -267,6 +268,7 @@ setup well-know licenses
 ### skipCertificateCheck
 
 - `byHost`: regex expressions array. Ignore server certificate validation for specific hosts
+- `logRequest`: *true* or *false* (default) flag to log any HTTP request
 
 [Back to ToC](#table-of-contents)
 

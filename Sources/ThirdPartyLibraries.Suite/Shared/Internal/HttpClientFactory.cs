@@ -44,12 +44,20 @@ internal sealed class HttpClientFactory
         }
 
         var host = request.RequestUri?.Host;
-        if (string.IsNullOrEmpty(host))
+        if (string.IsNullOrEmpty(host) || !new IgnoreFilter(_configuration.ByHost).Filter(host))
         {
             return false;
         }
 
-        return new IgnoreFilter(_configuration.ByHost).Filter(host);
+        if (_configuration.LogRequest)
+        {
+            using (_logger.Indent())
+            {
+                _logger.Warn($"ignore invalid server certificate on {request.RequestUri}");
+            }
+        }
+
+        return true;
     }
 
     private HttpClientHandler CreateHandler()
