@@ -3,27 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>$(SupportedFrameworks)</TargetFrameworks>
     <RootNamespace>ThirdPartyLibraries.Generic</RootNamespace>
-    <NoWarn>1701;1702;8002</NoWarn>
     <OutputPath>..\bin\test</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="CodeProjectApiTest.CPOL.zip" />
-    <EmbeddedResource Include="OpenSourceOrgApi.Licenses.json" />
-    <EmbeddedResource Include="SpdxOrgApiTest.License.MIT.json" />
-    <EmbeddedResource Include="StaticLicenseSourceTest.appsettings.json" />
-    <EmbeddedResource Include="StaticLicenseSourceTest.net_library_eula_enu.htm" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
-    <PackageReference Include="RichardSzalay.MockHttp" />
-    <PackageReference Include="Shouldly" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,4 +18,11 @@
     <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Internal\*.json" />
+    <EmbeddedResource Include="Internal\*.htm" />
+    <EmbeddedResource Include="Internal\*.txt" />
+    <EmbeddedResource Include="Internal\CodeProjectLicenseLoaderTest.CPOL.zip" />
+    <EmbeddedResource Include="Configuration\StaticLicenseConfigurationTest.appsettings.json" />
+  </ItemGroup>
 </Project>
