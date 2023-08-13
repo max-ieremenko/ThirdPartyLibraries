@@ -1,28 +1,29 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using ThirdPartyLibraries.Shared;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Generic.Configuration;
+using ThirdPartyLibraries.Generic.Internal;
 
 namespace ThirdPartyLibraries.Generic;
 
 public static class AppModule
 {
-    public static void ConfigureServices(IServiceCollection services)
+    public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AssertNotNull(nameof(services));
+        services.Configure<StaticLicenseConfiguration>(configuration.GetSection(StaticLicenseConfiguration.SectionName));
 
-        services.AddSingleton<IStaticLicenseSource, StaticLicenseSource>();
+        services.TryAddEnumerable(ServiceDescriptor.Transient<ILicenseByCodeLoader, StaticLicenseByCodeLoader>());
+        services.TryAddEnumerable(ServiceDescriptor.Transient<ILicenseByUrlLoader, StaticLicenseByUrlLoader>());
 
-        services.AddSingleton<OpenSourceOrgApi>();
-        services.AddKeyedTransient<ILicenseCodeSource, OpenSourceOrgApi>(
-            KnownHosts.OpenSourceOrg,
-            provider => provider.GetRequiredService<OpenSourceOrgApi>());
-        services.AddKeyedTransient<ILicenseCodeSource, OpenSourceOrgApi>(
-            KnownHosts.OpenSourceOrgApi,
-            provider => provider.GetRequiredService<OpenSourceOrgApi>());
+        services.TryAddEnumerable(ServiceDescriptor.Transient<ILicenseByCodeLoader, CodeProjectLicenseLoader>());
+        services.TryAddEnumerable(ServiceDescriptor.Transient<ILicenseByUrlLoader, CodeProjectLicenseLoader>());
 
-        services.AddKeyedTransient<ILicenseCodeSource, SpdxOrgApi>(KnownHosts.SpdxOrg);
-        services.AddTransient<IFullLicenseSource, SpdxOrgApi>();
+        services.AddSingleton<OpenSourceLicenseLoader>();
+        services.TryAddEnumerable(ServiceDescriptor.Transient<ILicenseByUrlLoader, OpenSourceLicenseLoader>(provider => provider.GetRequiredService<OpenSourceLicenseLoader>()));
+        services.TryAddEnumerable(ServiceDescriptor.Transient<ILicenseByCodeLoader, OpenSourceLicenseLoader>(provider => provider.GetRequiredService<OpenSourceLicenseLoader>()));
 
-        services.AddKeyedTransient<ILicenseCodeSource, CodeProjectApi>(KnownHosts.CodeProject);
-        services.AddKeyedTransient<IFullLicenseSource, CodeProjectApi>(CodeProjectApi.LicenseCode);
+        services.AddTransient<SpdxOrgRepository>();
+        services.AddTransient<OpenSourceOrgRepository>();
     }
 }

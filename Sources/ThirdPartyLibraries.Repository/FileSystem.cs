@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Repository;
 
@@ -17,11 +16,9 @@ internal sealed class FileSystem<TId>
         _fileCreateMode = fileCreateMode;
     }
 
-    public Task<Stream> OpenFileReadAsync(TId id, string fileName, CancellationToken token)
+    public Task<Stream?> OpenFileReadAsync(TId id, string fileName, CancellationToken token)
     {
-        fileName.AssertNotNull(nameof(fileName));
-
-        Stream result = null;
+        Stream? result = null;
 
         var path = Path.Combine(_getLocation(id), fileName);
         if (File.Exists(path))
@@ -34,9 +31,6 @@ internal sealed class FileSystem<TId>
 
     public async Task WriteFileAsync(TId id, string fileName, byte[] content, CancellationToken token)
     {
-        fileName.AssertNotNull(nameof(fileName));
-        content.AssertNotNull(nameof(content));
-
         using (var stream = OpenFileWrite(id, fileName))
         {
             await stream.WriteAsync(content, 0, content.Length, token).ConfigureAwait(false);
@@ -70,6 +64,17 @@ internal sealed class FileSystem<TId>
         }
 
         return Task.FromResult(result);
+    }
+
+    public Task RemoveFileAsync(TId id, string fileName, CancellationToken token)
+    {
+        var path = Path.Combine(_getLocation(id), fileName);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
+        return Task.CompletedTask;
     }
 
     private Stream OpenFileWrite(TId id, string fileName)

@@ -9,16 +9,16 @@ namespace ThirdPartyLibraries.PowerShell;
 public sealed class UpdateCmdlet : CommandCmdlet
 {
     [Parameter(Mandatory = true, Position = 1, HelpMessage = "a name of the current application")]
-    public string AppName { get; set; }
+    public string AppName { get; set; } = null!;
 
     [Parameter(Mandatory = true, Position = 2, HelpMessage = "a path(s) to a folder with solution/projects or to a project file. Folder will be analized recursively")]
-    public string[] Source { get; set; }
+    public string[] Source { get; set; } = null!;
 
     [Parameter(Mandatory = true, Position = 3, HelpMessage = "a path to a repository folder")]
-    public string Repository { get; set; }
+    public string Repository { get; set; } = null!;
 
     [Parameter(Position = 4, HelpMessage = "optional personal access token for github.com web api")]
-    public string GithubPersonalAccessToken { get; set; }
+    public string? GithubPersonalAccessToken { get; set; }
 
     protected override string CreateCommandLine(IList<(string Name, string Value)> options)
     {

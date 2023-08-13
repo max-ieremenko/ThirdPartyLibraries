@@ -1,15 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;$(SupportedFrameworks)</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <OutputPath>..\bin\app</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.Domain\ThirdPartyLibraries.Domain.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
   </ItemGroup>
 

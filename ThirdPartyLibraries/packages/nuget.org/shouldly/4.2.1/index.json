@@ -9,9 +9,6 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netcoreapp3.1",
-        "net6.0",
-        "net7.0",
         "netstandard2.1"
       ],
       "Dependencies": [
@@ -34,8 +31,7 @@
     {
       "Subject": "package",
       "Code": "BSD-2-Clause",
-      "HRef": "https://licenses.nuget.org/BSD-2-Clause",
-      "Description": null
+      "HRef": "https://licenses.nuget.org/BSD-2-Clause"
     },
     {
       "Subject": "repository",

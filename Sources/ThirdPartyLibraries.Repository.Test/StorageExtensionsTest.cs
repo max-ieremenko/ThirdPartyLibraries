@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 
@@ -14,7 +15,7 @@ namespace ThirdPartyLibraries.Repository;
 [TestFixture]
 public class StorageExtensionsTest
 {
-    private Mock<IStorage> _storage;
+    private Mock<IStorage> _storage = null!;
 
     [SetUp]
     public void BeforeEachTest()
@@ -26,8 +27,8 @@ public class StorageExtensionsTest
             .Setup(s => s.OpenLibraryFileReadAsync(It.IsAny<LibraryId>(), It.IsNotNull<string>(), CancellationToken.None))
             .Returns<LibraryId, string, CancellationToken>((id, fileName, _) =>
             {
-                var name = "{0}/{1}".FormatWith(id, fileName);
-                Stream result = null;
+                var name = $"{id}/{fileName}";
+                Stream? result = null;
                 if (fileContentByName.TryGetValue(name, out var content))
                 {
                     result = new MemoryStream(content);
@@ -40,7 +41,7 @@ public class StorageExtensionsTest
             .Setup(s => s.WriteLibraryFileAsync(It.IsAny<LibraryId>(), It.IsNotNull<string>(), It.IsNotNull<byte[]>(), CancellationToken.None))
             .Returns<LibraryId, string, byte[], CancellationToken>((id, fileName, content, _) =>
             {
-                var name = "{0}/{1}".FormatWith(id, fileName);
+                var name = $"{id}/{fileName}";
                 fileContentByName[name] = content;
                 return Task.CompletedTask;
             });
@@ -49,7 +50,7 @@ public class StorageExtensionsTest
             .Setup(s => s.OpenRootFileReadAsync(It.IsNotNull<string>(), CancellationToken.None))
             .Returns<string, CancellationToken>((fileName, _) =>
             {
-                Stream result = null;
+                Stream? result = null;
                 if (fileContentByName.TryGetValue(fileName, out var content))
                 {
                     result = new MemoryStream(content);
@@ -70,7 +71,7 @@ public class StorageExtensionsTest
             .Setup(s => s.OpenConfigurationFileReadAsync(It.IsNotNull<string>(), CancellationToken.None))
             .Returns<string, CancellationToken>((fileName, _) =>
             {
-                Stream result = null;
+                Stream? result = null;
                 if (fileContentByName.TryGetValue("configuration/" + fileName, out var content))
                 {
                     result = new MemoryStream(content);
@@ -106,7 +107,7 @@ public class StorageExtensionsTest
 
         using (var stream = await _storage.Object.OpenLibraryFileReadAsync(id, StorageExtensions.IndexFileName, CancellationToken.None).ConfigureAwait(false))
         {
-            Console.WriteLine(new StreamReader(stream).ReadToEnd());
+            Console.WriteLine(new StreamReader(stream!).ReadToEnd());
         }
 
         actual.ShouldNotBeNull();
@@ -164,6 +165,8 @@ public class StorageExtensionsTest
         await _storage.Object.WriteRootReadMeAsync(context, CancellationToken.None).ConfigureAwait(false);
 
         var stream = await _storage.Object.OpenRootFileReadAsync(StorageExtensions.ReadMeFileName, CancellationToken.None).ConfigureAwait(false);
+        stream.ShouldNotBeNull();
+
         var content = (await stream.ToArrayAsync(CancellationToken.None).ConfigureAwait(false)).AsText();
         Console.WriteLine(content);
         content.ShouldContain("Licenses");
@@ -180,6 +183,8 @@ public class StorageExtensionsTest
         await _storage.Object.WriteRootReadMeAsync(new RootReadMeContext(), CancellationToken.None).ConfigureAwait(false);
 
         var stream = await _storage.Object.OpenRootFileReadAsync(StorageExtensions.ReadMeFileName, CancellationToken.None).ConfigureAwait(false);
+        stream.ShouldNotBeNull();
+
         var content = (await stream.ToArrayAsync(CancellationToken.None).ConfigureAwait(false)).AsText();
 
         content.ShouldBe("this is a template");

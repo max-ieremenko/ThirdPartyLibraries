@@ -3,7 +3,7 @@ NuGet.Versioning [6.6.1](https://www.nuget.org/packages/NuGet.Versioning/6.6.1)
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net6.0, net7.0, netcoreapp3.1, netstandard2.1
+Target frameworks: netstandard2.1
 
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 

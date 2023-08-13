@@ -4,7 +4,6 @@ using System.IO;
 using DotLiquid;
 using DotLiquid.NamingConventions;
 using ThirdPartyLibraries.Repository.Template;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Repository;
 
@@ -32,10 +31,6 @@ public static class DotLiquidTemplate
 
     public static void RenderTo(Stream stream, string templateSource, object context)
     {
-        stream.AssertNotNull(nameof(stream));
-        templateSource.AssertNotNull(nameof(templateSource));
-        context.AssertNotNull(nameof(context));
-
         var template = DotLiquid.Template.Parse(templateSource);
         var templateParameters = new RenderParameters(CultureInfo.InvariantCulture)
         {
@@ -73,7 +68,7 @@ public static class DotLiquidTemplate
         {
             if (source == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(fileName), "Template [{0}] not found.".FormatWith(fileName));
+                throw new ArgumentOutOfRangeException(nameof(fileName), $"Template [{fileName}] not found.");
             }
 
             using (var dest = new MemoryStream())

@@ -7,21 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Storage\*.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
-    <PackageReference Include="RichardSzalay.MockHttp" />
-    <PackageReference Include="Shouldly" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ThirdPartyLibraries.Repository\ThirdPartyLibraries.Repository.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Storage\*.*" />
   </ItemGroup>
 
 </Project>

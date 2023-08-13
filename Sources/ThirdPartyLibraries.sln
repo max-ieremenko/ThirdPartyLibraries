@@ -43,7 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.PowerSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.PowerShell.IntegrationTest", "ThirdPartyLibraries.PowerShell.IntegrationTest\ThirdPartyLibraries.PowerShell.IntegrationTest.csproj", "{6FE90161-982E-4745-8A8E-C04DCD3B3BB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyLibraries.PowerShell.Test", "ThirdPartyLibraries.PowerShell.Test\ThirdPartyLibraries.PowerShell.Test.csproj", "{1802B72B-59EB-4722-8DC1-3E098780D4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.PowerShell.Test", "ThirdPartyLibraries.PowerShell.Test\ThirdPartyLibraries.PowerShell.Test.csproj", "{1802B72B-59EB-4722-8DC1-3E098780D4DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyLibraries.Domain", "ThirdPartyLibraries.Domain\ThirdPartyLibraries.Domain.csproj", "{E311B6D4-6518-4B36-A7EE-B085BB8FE2E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyLibraries.Domain.Test", "ThirdPartyLibraries.Domain.Test\ThirdPartyLibraries.Domain.Test.csproj", "{CA0E9957-5D23-4E32-807B-6170288DF655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +135,14 @@ Global
 		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1802B72B-59EB-4722-8DC1-3E098780D4DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E311B6D4-6518-4B36-A7EE-B085BB8FE2E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E311B6D4-6518-4B36-A7EE-B085BB8FE2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E311B6D4-6518-4B36-A7EE-B085BB8FE2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E311B6D4-6518-4B36-A7EE-B085BB8FE2E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA0E9957-5D23-4E32-807B-6170288DF655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0E9957-5D23-4E32-807B-6170288DF655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0E9957-5D23-4E32-807B-6170288DF655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0E9957-5D23-4E32-807B-6170288DF655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +159,7 @@ Global
 		{C8A4B45A-EFA6-4552-B892-3A61FBA68039} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{6FE90161-982E-4745-8A8E-C04DCD3B3BB1} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 		{1802B72B-59EB-4722-8DC1-3E098780D4DB} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
+		{CA0E9957-5D23-4E32-807B-6170288DF655} = {FCE72A3D-3EB6-44A7-B8B1-5CD8497DB167}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {373FE374-9ABB-4005-8104-E0EF52D12B1E}

@@ -2,9 +2,9 @@
 
 public sealed class LibraryReadMeDependencyContext
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string Version { get; set; }
+    public string Version { get; set; } = null!;
 
-    public string LocalHRef { get; set; }
+    public string LocalHRef { get; set; } = null!;
 }

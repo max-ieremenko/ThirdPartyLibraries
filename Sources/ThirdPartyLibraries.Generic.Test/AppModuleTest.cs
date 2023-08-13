@@ -1,47 +1,51 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Shouldly;
-using ThirdPartyLibraries.Shared;
+using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Generic.Internal;
 
 namespace ThirdPartyLibraries.Generic;
 
 [TestFixture]
 public class AppModuleTest
 {
-    private IServiceProvider _sut;
+    private ServiceProvider _serviceProvider = null!;
 
     [SetUp]
     public void BeforeEachTest()
     {
         var services = new ServiceCollection();
-        services.AddSingleton<Func<HttpClient>>(() => new HttpClient());
-        AppModule.ConfigureServices(services);
+        var configuration = new ConfigurationBuilder().Build();
 
-        _sut = services.BuildServiceProvider();
+        services.AddSingleton<Func<HttpClient>>(() => throw new NotSupportedException());
+
+        AppModule.ConfigureServices(services, configuration);
+
+        _serviceProvider = services.BuildServiceProvider();
+    }
+
+    [TearDown]
+    public void AfterEachTest()
+    {
+        _serviceProvider?.Dispose();
     }
 
     [Test]
-    public void OpenSourceOrgApiIsSingleton()
+    public void ResolveOpenSourceLicenseLoader()
     {
-        var host1 = _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.OpenSourceOrg).ShouldBeOfType<OpenSourceOrgApi>();
-        var host2 = _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.OpenSourceOrgApi).ShouldBeOfType<OpenSourceOrgApi>();
+        var byUrlLoaders = _serviceProvider.GetServices<ILicenseByUrlLoader>().OfType<OpenSourceLicenseLoader>().ToArray();
+        byUrlLoaders.Length.ShouldBe(1);
 
-        ReferenceEquals(host1, host2).ShouldBeTrue();
-    }
+        var byCodeLoaders = _serviceProvider.GetServices<ILicenseByCodeLoader>().OfType<OpenSourceLicenseLoader>().ToArray();
+        byCodeLoaders.Length.ShouldBe(1);
 
-    [Test]
-    public void ResolveCodeProjectApi()
-    {
-        _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.CodeProject).ShouldBeOfType<CodeProjectApi>();
-        _sut.GetRequiredKeyedService<IFullLicenseSource>(CodeProjectApi.LicenseCode).ShouldBeOfType<CodeProjectApi>();
-    }
+        var loader = _serviceProvider.GetRequiredService<OpenSourceLicenseLoader>();
 
-    [Test]
-    public void ResolveSpdxOrgApi()
-    {
-        _sut.GetRequiredKeyedService<ILicenseCodeSource>(KnownHosts.SpdxOrg.ToUpperInvariant()).ShouldBeOfType<SpdxOrgApi>();
-        _sut.GetRequiredService<IFullLicenseSource>().ShouldBeOfType<SpdxOrgApi>();
+        ReferenceEquals(byUrlLoaders[0], loader).ShouldBeTrue();
+        ReferenceEquals(byCodeLoaders[0], loader).ShouldBeTrue();
     }
 }

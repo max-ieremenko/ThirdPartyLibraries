@@ -6,11 +6,11 @@ namespace ThirdPartyLibraries.Repository.Template;
 public sealed class LibraryIndexJson
 {
     [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-    public string Source { get; set; }
+    public string? Source { get; set; }
 
-    public LicenseConclusion License { get; } = new LicenseConclusion();
+    public LicenseConclusion License { get; } = new();
 
-    public IList<Application> UsedBy { get; } = new List<Application>();
+    public List<Application> UsedBy { get; } = new();
 
-    public IList<LibraryLicense> Licenses { get; } = new List<LibraryLicense>();
+    public List<LibraryLicense> Licenses { get; } = new();
 }

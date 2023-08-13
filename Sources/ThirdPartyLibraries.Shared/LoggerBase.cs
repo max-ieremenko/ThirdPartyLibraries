@@ -4,7 +4,7 @@ namespace ThirdPartyLibraries.Shared;
 
 public abstract class LoggerBase : ILogger
 {
-    private string _indentation;
+    private string? _indentation;
 
     public void Info(string message)
     {
@@ -29,7 +29,7 @@ public abstract class LoggerBase : ILogger
         });
     }
 
-    protected string GetIndentation() => _indentation;
+    protected string? GetIndentation() => _indentation;
 
     protected abstract void OnInfo(string message);
 

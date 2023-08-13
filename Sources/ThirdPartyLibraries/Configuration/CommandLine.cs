@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using ThirdPartyLibraries.Shared;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ThirdPartyLibraries.Configuration;
 
 internal sealed class CommandLine
 {
-    public string Command { get; set; }
+    public string? Command { get; set; }
 
     public IList<CommandOption> Options { get; } = new List<CommandOption>();
 
     public static CommandLine Parse(params string[] args)
     {
         var result = new CommandLine();
-        if (args.IsNullOrEmpty())
+        if (args.Length == 0)
         {
             return result;
         }
 
-        string lastOption = null;
+        string? lastOption = null;
 
         foreach (var arg in args)
         {
@@ -46,7 +46,7 @@ internal sealed class CommandLine
 
             if (lastOption == null)
             {
-                throw new InvalidOperationException("Invalid option [{0}].".FormatWith(arg));
+                throw new InvalidOperationException($"Invalid option [{arg}].");
             }
 
             result.Options.Add(new CommandOption(lastOption, arg));
@@ -76,7 +76,7 @@ internal sealed class CommandLine
         return result;
     }
 
-    private static bool TryOption(string value, out string option)
+    private static bool TryOption(string value, [NotNullWhen(true)] out string? option)
     {
         if (value.StartsWith("-", StringComparison.Ordinal) && value.Length > 1)
         {

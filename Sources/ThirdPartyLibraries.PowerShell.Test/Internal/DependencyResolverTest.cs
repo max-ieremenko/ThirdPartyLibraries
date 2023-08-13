@@ -10,8 +10,8 @@ namespace ThirdPartyLibraries.PowerShell.Internal;
 [TestFixture]
 public class DependencyResolverTest
 {
-    private DependencyResolver _sut;
-    private Assembly[] _assembliesBefore;
+    private DependencyResolver _sut = null!;
+    private Assembly[] _assembliesBefore = null!;
 
     [SetUp]
     public void BeforeEachTest()
@@ -29,7 +29,7 @@ public class DependencyResolverTest
             .CurrentDomain
             .GetAssemblies()
             .Except(_assembliesBefore)
-            .Where(i => i.GetName().Name.Contains("ThirdPartyLibraries", StringComparison.OrdinalIgnoreCase))
+            .Where(i => i.GetName().Name!.Contains("ThirdPartyLibraries", StringComparison.OrdinalIgnoreCase))
             .ToArray();
 
         assemblies.ShouldAllBe(i => AssemblyLoadContext.Default != AssemblyLoadContext.GetLoadContext(i));

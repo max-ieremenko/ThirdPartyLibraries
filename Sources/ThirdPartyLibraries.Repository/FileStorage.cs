@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ThirdPartyLibraries.Shared;
+using ThirdPartyLibraries.Domain;
 
 namespace ThirdPartyLibraries.Repository;
 
@@ -21,31 +21,29 @@ internal sealed class FileStorage : IStorage
 
     public FileStorage(string location)
     {
-        location.AssertNotNull(nameof(location));
+        Location = location;
 
         _root = new FileSystem<string>(_ => Location, FileMode.Create);
         _configuration = new FileSystem<string>(_ => Path.Combine(Location, FolderConfiguration), FileMode.Create);
         _packages = new FileSystem<LibraryId>(GetPackageLocation, FileMode.Create);
         _licenses = new FileSystem<string>(GetLicenseLocation, FileMode.CreateNew);
-
-        Location = location;
     }
 
     public string Location { get; }
 
     string IStorage.ConnectionString => Location;
 
-    public Task<IList<LibraryId>> GetAllLibrariesAsync(CancellationToken token)
+    public Task<List<LibraryId>> GetAllLibrariesAsync(CancellationToken token)
     {
         var root = Path.Combine(Location, FolderPackages);
         if (!Directory.Exists(root))
         {
-            return Task.FromResult((IList<LibraryId>)Array.Empty<LibraryId>());
+            return Task.FromResult(new List<LibraryId>(0));
         }
 
         var indexes = Directory.GetFiles(root, StorageExtensions.IndexFileName, SearchOption.AllDirectories);
 
-        IList<LibraryId> result = new List<LibraryId>(indexes.Length);
+        var result = new List<LibraryId>(indexes.Length);
         foreach (var fileName in indexes)
         {
             var fullName = fileName.AsSpan().Slice(root.Length + 1);
@@ -63,6 +61,7 @@ internal sealed class FileStorage : IStorage
             result.Add(new LibraryId(source, name, version));
         }
 
+        result.Sort();
         return Task.FromResult(result);
     }
 
@@ -81,8 +80,6 @@ internal sealed class FileStorage : IStorage
 
     public string GetLicenseLocalHRef(string licenseCode, LibraryId? relativeTo = null)
     {
-        licenseCode.AssertNotNull(nameof(licenseCode));
-
         var connectionString = string.Empty;
         if (relativeTo != null)
         {
@@ -94,27 +91,27 @@ internal sealed class FileStorage : IStorage
         return href.Replace('\\', '/');
     }
 
-    public Task<Stream> OpenRootFileReadAsync(string fileName, CancellationToken token)
+    public Task<Stream?> OpenRootFileReadAsync(string fileName, CancellationToken token)
     {
-        return _root.OpenFileReadAsync(null, fileName, token);
+        return _root.OpenFileReadAsync(null!, fileName, token);
     }
 
     public Task WriteRootFileAsync(string fileName, byte[] content, CancellationToken token)
     {
-        return _root.WriteFileAsync(null, fileName, content, token);
+        return _root.WriteFileAsync(null!, fileName, content, token);
     }
 
-    public Task<Stream> OpenConfigurationFileReadAsync(string fileName, CancellationToken token)
+    public Task<Stream?> OpenConfigurationFileReadAsync(string fileName, CancellationToken token)
     {
-        return _configuration.OpenFileReadAsync(null, fileName, token);
+        return _configuration.OpenFileReadAsync(null!, fileName, token);
     }
 
     public Task CreateConfigurationFileAsync(string fileName, byte[] content, CancellationToken token)
     {
-        return _configuration.WriteFileAsync(null, fileName, content, token);
+        return _configuration.WriteFileAsync(null!, fileName, content, token);
     }
 
-    public Task<Stream> OpenLibraryFileReadAsync(LibraryId id, string fileName, CancellationToken token)
+    public Task<Stream?> OpenLibraryFileReadAsync(LibraryId id, string fileName, CancellationToken token)
     {
         return _packages.OpenFileReadAsync(id, fileName, token);
     }
@@ -148,17 +145,18 @@ internal sealed class FileStorage : IStorage
         return Task.CompletedTask;
     }
 
-    public Task<Stream> OpenLicenseFileReadAsync(string licenseCode, string fileName, CancellationToken token)
+    public Task RemoveLibraryFileAsync(LibraryId id, string fileName, CancellationToken token)
     {
-        licenseCode.AssertNotNull(nameof(licenseCode));
+        return _packages.RemoveFileAsync(id, fileName, token);
+    }
 
+    public Task<Stream?> OpenLicenseFileReadAsync(string licenseCode, string fileName, CancellationToken token)
+    {
         return _licenses.OpenFileReadAsync(licenseCode, fileName, token);
     }
 
     public Task CreateLicenseFileAsync(string licenseCode, string fileName, byte[] content, CancellationToken token)
     {
-        licenseCode.AssertNotNull(nameof(licenseCode));
-
         return _licenses.WriteFileAsync(licenseCode, fileName, content, token);
     }
 
@@ -171,8 +169,6 @@ internal sealed class FileStorage : IStorage
 
     private static string GetLicenseLocation(string connectionString, string code)
     {
-        code.AssertNotNull(nameof(code));
-
         return Path.Combine(connectionString, FolderLicenses, code.ToLowerInvariant());
     }
 
