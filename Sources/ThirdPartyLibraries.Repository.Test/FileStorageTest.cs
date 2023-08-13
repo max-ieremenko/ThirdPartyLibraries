@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
 
@@ -12,8 +13,8 @@ namespace ThirdPartyLibraries.Repository;
 [TestFixture]
 public class FileStorageTest
 {
-    private TempFolder _location;
-    private FileStorage _sut;
+    private TempFolder _location = null!;
+    private FileStorage _sut = null!;
 
     [SetUp]
     public void BeforeEachTests()
@@ -37,10 +38,10 @@ public class FileStorageTest
     }
 
     [Test]
-    [TestCase(PackageSources.NuGet, "newtonsoft.json", "12.0.2", null, null, null)]
-    [TestCase(PackageSources.Npm, "@types/angular", "1.6.51", null, null, null)]
-    [TestCase(PackageSources.Npm, "angular", "1.7.5", PackageSources.Npm, "@types/angular", "1.6.51")]
-    [TestCase(PackageSources.Npm, "@types/angular", "1.6.51", PackageSources.Npm, "angular", "1.7.5")]
+    [TestCase("nuget.org", "newtonsoft.json", "12.0.2", null, null, null)]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51", null, null, null)]
+    [TestCase("npmjs.com", "angular", "1.7.5", "npmjs.com", "@types/angular", "1.6.51")]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51", "npmjs.com", "angular", "1.7.5")]
     public void GetPackageLocalHRef(string librarySourceCode, string libraryName, string libraryVersion, string relativeSourceCode, string relativeName, string relativeVersion)
     {
         var currentLocation = _location.Location;
@@ -65,9 +66,9 @@ public class FileStorageTest
 
     [Test]
     [TestCase("MIT", null, null, null)]
-    [TestCase("MIT", PackageSources.NuGet, "newtonsoft.json", "12.0.2")]
-    [TestCase("MIT", PackageSources.Npm, "@types/angular", "1.6.51")]
-    [TestCase("MIT", PackageSources.Npm, "angular", "1.7.5")]
+    [TestCase("MIT", "nuget.org", "newtonsoft.json", "12.0.2")]
+    [TestCase("MIT", "npmjs.com", "@types/angular", "1.6.51")]
+    [TestCase("MIT", "npmjs.com", "angular", "1.7.5")]
     public void GetLicenseLocalHRef(string licenseCode, string librarySourceCode, string libraryName, string libraryVersion)
     {
         var currentLocation = _location.Location;
@@ -240,14 +241,14 @@ public class FileStorageTest
         targetName = targetName.Replace('\\', Path.DirectorySeparatorChar);
 
         var fileName = Path.Combine(_location.Location, targetName);
-        Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+        Directory.CreateDirectory(Path.GetDirectoryName(fileName)!);
 
         resourceName = GetType().Namespace + ".Storage." + resourceName;
 
         using (var dest = new FileStream(fileName, FileMode.CreateNew, FileAccess.ReadWrite))
         using (var source = GetType().Assembly.GetManifestResourceStream(resourceName))
         {
-            source.CopyTo(dest);
+            source!.CopyTo(dest);
         }
     }
 }
