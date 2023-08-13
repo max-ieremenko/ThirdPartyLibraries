@@ -5,21 +5,25 @@ using System.Runtime.InteropServices;
 using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Configuration;
-using ThirdPartyLibraries.Suite.Commands;
+using ThirdPartyLibraries.Suite.Generate;
+using ThirdPartyLibraries.Suite.Refresh;
+using ThirdPartyLibraries.Suite.Remove;
+using ThirdPartyLibraries.Suite.Update;
+using ThirdPartyLibraries.Suite.Validate;
 
 namespace ThirdPartyLibraries;
 
 [TestFixture]
 public class CommandFactoryTest
 {
-    private CommandLine _line;
-    private Dictionary<string, string> _configuration;
+    private CommandLine _line = null!;
+    private Dictionary<string, string?> _configuration = null!;
 
     [SetUp]
     public void BeforeEachTest()
     {
         _line = new CommandLine();
-        _configuration = new Dictionary<string, string>();
+        _configuration = new Dictionary<string, string?>();
     }
 
     [Test]
@@ -41,7 +45,7 @@ public class CommandFactoryTest
 
         var ex = Assert.Throws<InvalidOperationException>(() => CommandFactory.Create(_line, _configuration, out _));
 
-        ex.Message.ShouldContain("unknown command");
+        ex!.Message.ShouldContain("unknown command");
     }
 
     [Test]
