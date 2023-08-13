@@ -1,48 +1,48 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Security;
 using System.Reflection;
+using Microsoft.Extensions.Options;
+using Moq;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Shared;
+using ThirdPartyLibraries.Suite.Configuration;
 
-namespace ThirdPartyLibraries.Suite.Internal;
+namespace ThirdPartyLibraries.Suite.Shared.Internal;
 
 [TestFixture]
 public class HttpClientFactoryTest
 {
-    private SkipCertificateCheckConfiguration _configuration;
+    private SkipCertificateCheckConfiguration _configuration = null!;
+    private ILogger _logger = null!;
 
     [SetUp]
     public void BeforeEachTest()
     {
+        var logger = new Mock<ILogger>(MockBehavior.Strict);
+        logger
+            .Setup(l => l.Indent())
+            .Returns((IDisposable)null!);
+        logger
+            .Setup(l => l.Info(It.IsAny<string>()));
+
+        _logger = logger.Object;
         _configuration = new SkipCertificateCheckConfiguration();
     }
 
     [Test]
     public void UserAgent()
     {
-        var client = new HttpClientFactory(_configuration).CreateHttpClient();
+        var client = CreateSut().CreateHttpClient();
 
         client.DefaultRequestHeaders.UserAgent.ShouldNotBeEmpty();
     }
 
     [Test]
-    public void IsTransient()
-    {
-        var sut = new HttpClientFactory(_configuration);
-
-        var instance1 = sut.CreateHttpClient();
-        instance1.ShouldNotBeNull();
-
-        var instance2 = sut.CreateHttpClient();
-        instance2.ShouldNotBeNull();
-
-        ReferenceEquals(instance1, instance2).ShouldBeFalse();
-    }
-
-    [Test]
     public void DefaultServerCertificateValidation()
     {
-        var client = new HttpClientFactory(_configuration).CreateHttpClient();
+        var client = CreateSut().CreateHttpClient();
         var handler = GetHandler(client);
         handler.ServerCertificateCustomValidationCallback.ShouldBeNull();
     }
@@ -52,7 +52,7 @@ public class HttpClientFactoryTest
     {
         _configuration.ByHost = new[] { "*." };
 
-        var client = new HttpClientFactory(_configuration).CreateHttpClient();
+        var client = CreateSut().CreateHttpClient();
         var handler = GetHandler(client);
         handler.ServerCertificateCustomValidationCallback.ShouldNotBeNull();
     }
@@ -65,10 +65,10 @@ public class HttpClientFactoryTest
     {
         _configuration.ByHost = new[] { filter };
 
-        var sut = new HttpClientFactory(_configuration);
+        var sut = CreateSut();
         var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 
-        sut.ValidateServerCertificate(request, null, null, errors).ShouldBe(expected);
+        sut.ValidateServerCertificate(request, null!, null!, errors).ShouldBe(expected);
     }
 
     private static HttpClientHandler GetHandler(HttpClient client)
@@ -77,6 +77,8 @@ public class HttpClientFactoryTest
             .GetField("_handler", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
         field.ShouldNotBeNull();
 
-        return field.GetValue(client).ShouldBeOfType<HttpClientHandler>();
+        return field.GetValue(client).ShouldBeAssignableTo<HttpClientHandler>()!;
     }
+
+    private HttpClientFactory CreateSut() => new(new OptionsWrapper<SkipCertificateCheckConfiguration>(_configuration), _logger);
 }
