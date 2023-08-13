@@ -3,21 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>$(SupportedFrameworks)</TargetFrameworks>
     <RootNamespace>ThirdPartyLibraries.GitHub</RootNamespace>
-    <NoWarn>1701;1702;8002</NoWarn>
     <OutputPath>..\bin\test</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="*.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
-    <PackageReference Include="RichardSzalay.MockHttp" />
-    <PackageReference Include="Shouldly" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,4 +16,7 @@
     <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Internal\*.json" />
+  </ItemGroup>
 </Project>
