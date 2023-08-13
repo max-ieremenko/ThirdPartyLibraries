@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters;
+namespace ThirdPartyLibraries.Npm.Configuration;
 
-internal sealed class NpmIgnoreFilterConfiguration
+public sealed class NpmIgnoreFilterConfiguration
 {
     public string[] ByName { get; set; } = Array.Empty<string>();
 

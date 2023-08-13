@@ -2,31 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ThirdPartyLibraries.Npm;
-using ThirdPartyLibraries.Repository;
+using Microsoft.Extensions.Options;
+using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Npm.Configuration;
 using ThirdPartyLibraries.Shared;
-using ThirdPartyLibraries.Suite.Internal.GenericAdapters;
 
-namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters;
+namespace ThirdPartyLibraries.Npm.Internal;
 
-internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvider
+internal sealed class NpmPackageReferenceProvider : IPackageReferenceProvider
 {
-    private string _npmRoot;
+    private readonly NpmConfiguration _configuration;
+    private string? _npmRoot;
 
-    public NpmSourceCodeReferenceProvider(INpmApi api, NpmConfiguration configuration)
+    public NpmPackageReferenceProvider(IOptions<NpmConfiguration> configuration)
     {
-        Api = api;
-        Configuration = configuration;
+        _configuration = configuration.Value;
     }
 
-    public INpmApi Api { get; }
-
-    public NpmConfiguration Configuration { get; }
-
-    public void AddReferencesFrom(string path, IList<LibraryReference> references, ICollection<LibraryId> notFound)
+    public void AddReferencesFrom(string path, List<IPackageReference> references, HashSet<LibraryId> notFound)
     {
         if (File.Exists(path)
-            && PackageJsonParser.FileName.EqualsIgnoreCase(Path.GetFileName(path)))
+            && NpmPackage.SpecFileName.Equals(Path.GetFileName(path), StringComparison.OrdinalIgnoreCase))
         {
             AddReferencesFromFile(path, references, notFound);
         }
@@ -43,7 +39,7 @@ internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvi
 
     private static IEnumerable<string> FindAllPackageJson(string path)
     {
-        var fileName = Path.Combine(path, PackageJsonParser.FileName);
+        var fileName = Path.Combine(path, NpmPackage.SpecFileName);
         if (File.Exists(fileName))
         {
             // project root
@@ -53,15 +49,15 @@ internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvi
         return Directory.GetDirectories(path).SelectMany(FindAllPackageJson);
     }
 
-    private LibraryReference ReadFromNodeModules(
-        NpmPackageId dependency,
+    private NpmPackageReference? ReadFromNodeModules(
+        LibraryId dependency,
         string nodeModulesDirectoryName,
         bool isInternal)
     {
-        var fileName = Path.Combine(nodeModulesDirectoryName, dependency.Name, PackageJsonParser.FileName);
+        var fileName = Path.Combine(nodeModulesDirectoryName, dependency.Name, NpmPackage.SpecFileName);
         if (!File.Exists(fileName))
         {
-            fileName = Path.Combine(GetNpmRoot(), dependency.Name, PackageJsonParser.FileName);
+            fileName = Path.Combine(GetNpmRoot(), dependency.Name, NpmPackage.SpecFileName);
             if (!File.Exists(fileName))
             {
                 // throw new FileNotFoundException("File {0} not found.".FormatWith(fileName));
@@ -69,43 +65,41 @@ internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvi
             }
         }
 
-        var parser = PackageJsonParser.FromFile(fileName);
+        var spec = NpmPackageSpec.FromFile(fileName);
 
-        return new LibraryReference(
-            new LibraryId(PackageSources.Npm, parser.GetName(), parser.GetVersion()),
-            Array.Empty<string>(),
-            Array.Empty<LibraryId>(),
+        return new NpmPackageReference(
+            NpmLibraryId.New(spec.GetName(), spec.GetVersion()),
             isInternal);
     }
 
     private void AddReferencesFromFile(
         string fileName,
-        IList<LibraryReference> references,
-        ICollection<LibraryId> notFound)
+        List<IPackageReference> references,
+        HashSet<LibraryId> notFound)
     {
         var folderName = Path.GetFileName(Path.GetDirectoryName(fileName));
-        if (new IgnoreFilter(Configuration.IgnorePackages.ByFolderName).Filter(folderName))
+        if (new IgnoreFilter(_configuration.IgnorePackages.ByFolderName).Filter(folderName!))
         {
             return;
         }
 
-        var nodeModulesDirectoryName = Path.Combine(Path.GetDirectoryName(fileName), PackageJsonParser.NodeModules);
+        var nodeModulesDirectoryName = Path.Combine(Path.GetDirectoryName(fileName)!, NpmRoot.NodeModules);
         if (!Directory.Exists(nodeModulesDirectoryName))
         {
-            throw new DirectoryNotFoundException("Directory {0} not found. Did you run \"npm restore\"?".FormatWith(nodeModulesDirectoryName));
+            throw new DirectoryNotFoundException($"Directory {nodeModulesDirectoryName} not found. Did you run \"npm install\"?");
         }
 
-        var parser = PackageJsonParser.FromFile(fileName);
-        var ignoreByName = new IgnoreFilter(Configuration.IgnorePackages.ByName);
+        var spec = NpmPackageSpec.FromFile(fileName);
+        var ignoreByName = new IgnoreFilter(_configuration.IgnorePackages.ByName);
 
-        foreach (var dependency in parser.GetDependencies())
+        foreach (var dependency in spec.GetDependencies())
         {
             if (!ignoreByName.Filter(dependency.Name))
             {
                 var reference = ReadFromNodeModules(dependency, nodeModulesDirectoryName, false);
                 if (reference == null)
                 {
-                    notFound.Add(new LibraryId(PackageSources.Npm, dependency.Name, dependency.Version));
+                    notFound.Add(dependency);
                 }
                 else
                 {
@@ -114,14 +108,14 @@ internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvi
             }
         }
 
-        foreach (var dependency in parser.GetDevDependencies())
+        foreach (var dependency in spec.GetDevDependencies())
         {
             if (!ignoreByName.Filter(dependency.Name))
             {
                 var reference = ReadFromNodeModules(dependency, nodeModulesDirectoryName, true);
                 if (reference == null)
                 {
-                    notFound.Add(new LibraryId(PackageSources.Npm, dependency.Name, dependency.Version));
+                    notFound.Add(NpmLibraryId.New(dependency.Name, dependency.Version));
                 }
                 else
                 {
@@ -135,7 +129,7 @@ internal sealed class NpmSourceCodeReferenceProvider : ISourceCodeReferenceProvi
     {
         if (_npmRoot == null)
         {
-            _npmRoot = Api.ResolveNpmRoot();
+            _npmRoot = NpmRoot.Resolve();
         }
 
         return _npmRoot;

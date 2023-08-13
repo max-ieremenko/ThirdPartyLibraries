@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Shouldly;
-using ThirdPartyLibraries.Shared;
+using ThirdPartyLibraries.Npm.Internal;
 
-namespace ThirdPartyLibraries.Suite.Internal.NpmAdapters;
+namespace ThirdPartyLibraries.Npm.Configuration;
 
 [TestFixture]
 public class NpmConfigurationTest
 {
-    private IConfigurationRoot _configuration;
-    private NpmConfiguration _sut;
+    private IConfigurationRoot _configuration = null!;
+    private NpmConfiguration _sut = null!;
 
     [SetUp]
     public void BeforeEachTest()
@@ -21,7 +21,7 @@ public class NpmConfigurationTest
     [Test]
     public void Bind()
     {
-        _configuration.GetSection(PackageSources.Npm).Bind(_sut);
+        _configuration.GetSection(NpmLibraryId.PackageSource).Bind(_sut);
 
         _sut.DownloadPackageIntoRepository.ShouldBeTrue();
 
