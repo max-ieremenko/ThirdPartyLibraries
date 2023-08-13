@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace ThirdPartyLibraries.Shared;
 
@@ -12,28 +12,23 @@ public static class HttpClientExtensions
 {
     public static async Task AssertStatusCodeOk(this HttpResponseMessage response)
     {
-        response.AssertNotNull(nameof(response));
-
         if (response.StatusCode == HttpStatusCode.OK)
         {
             return;
         }
 
-        string responseContent = null;
+        string? responseContent = null;
 
-        if (response.Content != null)
+        try
         {
-            try
-            {
-                responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            }
-            catch
-            {
-            }
+            responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        }
+        catch
+        {
         }
 
         var error = new StringBuilder()
-            .AppendFormat("Unable to access {0}: {1} - {2}", response.RequestMessage.RequestUri, response.StatusCode, response.ReasonPhrase);
+            .AppendFormat("Unable to access {0}: {1} - {2}", response.RequestMessage?.RequestUri, response.StatusCode, response.ReasonPhrase);
 
         if (!string.IsNullOrWhiteSpace(responseContent))
         {
@@ -46,26 +41,20 @@ public static class HttpClientExtensions
         throw new HttpRequestException(error.ToString());
     }
 
-    public static async Task<HttpResponseMessage> InvokeGetAsync([NotNull] this HttpClient client, [NotNull] string requestUri, CancellationToken token)
+    public static async Task<HttpResponseMessage> InvokeGetAsync(this HttpClient client, string requestUri, CancellationToken token)
     {
-        client.AssertNotNull(nameof(client));
-        requestUri.AssertNotNull(nameof(requestUri));
-
         try
         {
             return await client.GetAsync(requestUri, token).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            throw new HttpRequestException("Unable to access {0}: {1}".FormatWith(requestUri, ex.Message), ex);
+            throw new HttpRequestException($"Unable to access {requestUri}: {ex.Message}", ex);
         }
     }
 
-    public static async Task<TResult> GetAsJsonAsync<TResult>([NotNull] this HttpClient client, [NotNull] string requestUri, CancellationToken token)
+    public static async Task<TResult?> GetAsJsonAsync<TResult>(this HttpClient client, string requestUri, CancellationToken token)
     {
-        client.AssertNotNull(nameof(client));
-        requestUri.AssertNotNull(nameof(requestUri));
-
         using (var response = await client.InvokeGetAsync(requestUri, token).ConfigureAwait(false))
         {
             if (response.StatusCode == HttpStatusCode.NotFound)
@@ -80,5 +69,39 @@ public static class HttpClientExtensions
                 return stream.JsonDeserialize<TResult>();
             }
         }
+    }
+
+    public static async Task<(string Extension, byte[] Content)?> GetFileAsync(this HttpClient client, string requestUri, CancellationToken token)
+    {
+        string mediaType;
+        byte[] content;
+
+        using (var response = await client.InvokeGetAsync(requestUri, token).ConfigureAwait(false))
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            mediaType = response.Content.Headers.ContentType.MediaType;
+            content = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+        }
+
+        return (ResolveExtension(mediaType), content);
+    }
+
+    private static string ResolveExtension(string mediaType)
+    {
+        if (MediaTypeNames.Text.Html.Equals(mediaType, StringComparison.OrdinalIgnoreCase))
+        {
+            return ".html";
+        }
+
+        if (MediaTypeNames.Text.RichText.Equals(mediaType, StringComparison.OrdinalIgnoreCase))
+        {
+            return ".rtf";
+        }
+
+        return ".txt";
     }
 }

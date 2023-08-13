@@ -13,7 +13,7 @@ namespace ThirdPartyLibraries.Shared;
 [TestFixture]
 public class HttpClientExtensionsTest
 {
-    private MockHttpMessageHandler _mockHttp;
+    private MockHttpMessageHandler _mockHttp = null!;
 
     [SetUp]
     public void BeforeEachTest()
@@ -50,6 +50,7 @@ public class HttpClientExtensionsTest
         {
             var ex = Assert.ThrowsAsync<HttpRequestException>(() => response.AssertStatusCodeOk());
 
+            ex.ShouldNotBeNull();
             ex.Message.ShouldContain("https://host.com");
             ex.Message.ShouldContain("NotFound");
             ex.Message.ShouldContain("some content");
@@ -83,6 +84,7 @@ public class HttpClientExtensionsTest
         {
             var ex = Assert.ThrowsAsync<HttpRequestException>(() => client.InvokeGetAsync("https://host.com", CancellationToken.None));
 
+            ex.ShouldNotBeNull();
             ex.Message.ShouldContain("https://host.com");
             ex.Message.ShouldContain("oops!");
             ex.InnerException.ShouldBeOfType<NotSupportedException>();
