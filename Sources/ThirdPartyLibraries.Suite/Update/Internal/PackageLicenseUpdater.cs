@@ -11,13 +11,19 @@ namespace ThirdPartyLibraries.Suite.Update.Internal;
 internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
 {
     private readonly IStorage _storage;
-    private readonly ILicenseByUrlResolver _licenseResolver;
+    private readonly ILicenseByUrlResolver _licenseByUrlResolver;
+    private readonly ILicenseByContentResolver _licenseByContentResolver;
     private readonly IStorageLicenseUpdater _storageLicense;
 
-    public PackageLicenseUpdater(IStorage storage, ILicenseByUrlResolver licenseResolver, IStorageLicenseUpdater storageLicense)
+    public PackageLicenseUpdater(
+        IStorage storage,
+        ILicenseByUrlResolver licenseByUrlResolver,
+        ILicenseByContentResolver licenseByContentResolver,
+        IStorageLicenseUpdater storageLicense)
     {
         _storage = storage;
-        _licenseResolver = licenseResolver;
+        _licenseByUrlResolver = licenseByUrlResolver;
+        _licenseByContentResolver = licenseByContentResolver;
         _storageLicense = storageLicense;
     }
 
@@ -124,8 +130,12 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
             // conclusion is not done
             if (string.IsNullOrEmpty(license.Code))
             {
-                // TODO: try resolve code by file content
                 await TryResolveByHRefAsync(id, license, token).ConfigureAwait(false);
+            }
+
+            if (string.IsNullOrEmpty(license.Code) && PackageSpecLicense.SubjectPackage.Equals(license.Subject))
+            {
+                await TryResolveByContentAsync(id, license, token).ConfigureAwait(false);
             }
         }
     }
@@ -137,7 +147,7 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
             return;
         }
 
-        var spec = await _licenseResolver.TryResolveAsync(license.HRef, token).ConfigureAwait(false);
+        var spec = await _licenseByUrlResolver.TryResolveAsync(license.HRef, token).ConfigureAwait(false);
         if (spec == null)
         {
             license.Description = null;
@@ -170,6 +180,16 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
         }
 
         await _storage.WriteLibraryFileAsync(id, fileName, spec.FileContent, token).ConfigureAwait(false);
+    }
+
+    private async Task TryResolveByContentAsync(LibraryId id, LibraryLicense license, CancellationToken token)
+    {
+        var file = await _licenseByContentResolver.TryResolveAsync(id, token).ConfigureAwait(false);
+        if (file != null)
+        {
+            license.Code = file.LicenseCode;
+            license.Description = file.Description;
+        }
     }
 
     private async Task<bool> SaveLibraryIndexJsonAsync(LibraryId id, LibraryIndexJson index, CancellationToken token)

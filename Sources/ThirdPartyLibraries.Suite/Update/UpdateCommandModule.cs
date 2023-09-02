@@ -9,6 +9,7 @@ internal static class UpdateCommandModule
     {
         services.AddSingleton<ILicenseByCodeResolver, LicenseByCodeResolver>();
         services.AddSingleton<ILicenseByUrlResolver, LicenseByUrlResolver>();
+        services.AddSingleton<ILicenseByContentResolver, LicenseByContentResolver>();
         services.AddSingleton<IPackageContentUpdater, PackageContentUpdater>();
         services.AddSingleton<IPackageLicenseUpdater, PackageLicenseUpdater>();
         services.AddSingleton<IStorageLicenseUpdater, StorageLicenseUpdater>();
