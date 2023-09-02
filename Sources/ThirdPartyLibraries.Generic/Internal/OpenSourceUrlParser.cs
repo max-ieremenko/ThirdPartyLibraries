@@ -29,7 +29,25 @@ internal static class OpenSourceUrlParser
             return false;
         }
 
-        code = directory2;
-        return true;
+        code = RemoveEnding(directory2);
+        return code.Length > 0;
+    }
+
+    private static ReadOnlySpan<char> RemoveEnding(ReadOnlySpan<char> code)
+    {
+        const string Ending1 = "-license.php";
+        const string Ending2 = "-license";
+        
+        if (code.EndsWith(Ending1, StringComparison.OrdinalIgnoreCase))
+        {
+            return code.Slice(0, code.Length - Ending1.Length);
+        }
+
+        if (code.EndsWith(Ending2, StringComparison.OrdinalIgnoreCase))
+        {
+            return code.Slice(0, code.Length - Ending2.Length);
+        }
+
+        return code;
     }
 }
