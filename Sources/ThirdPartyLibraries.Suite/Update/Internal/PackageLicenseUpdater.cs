@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Domain;
@@ -123,6 +124,7 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
             return;
         }
 
+        LibraryLicense? packageLicense = null;
         for (var i = 0; i < index.Licenses.Count; i++)
         {
             var license = index.Licenses[i];
@@ -133,9 +135,19 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
                 await TryResolveByHRefAsync(id, license, token).ConfigureAwait(false);
             }
 
-            if (string.IsNullOrEmpty(license.Code) && PackageSpecLicense.SubjectPackage.Equals(license.Subject))
+            if (PackageSpecLicense.SubjectPackage.Equals(license.Subject))
             {
-                await TryResolveByContentAsync(id, license, token).ConfigureAwait(false);
+                packageLicense = license;
+            }
+        }
+
+        if (packageLicense != null && string.IsNullOrEmpty(packageLicense.Code))
+        {
+            var file = await _licenseByContentResolver.TryResolveAsync(id, index.Licenses, token).ConfigureAwait(false);
+            if (file != null)
+            {
+                packageLicense.Code = file.LicenseCode;
+                packageLicense.Description = file.Description;
             }
         }
     }
@@ -180,16 +192,6 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
         }
 
         await _storage.WriteLibraryFileAsync(id, fileName, spec.FileContent, token).ConfigureAwait(false);
-    }
-
-    private async Task TryResolveByContentAsync(LibraryId id, LibraryLicense license, CancellationToken token)
-    {
-        var file = await _licenseByContentResolver.TryResolveAsync(id, token).ConfigureAwait(false);
-        if (file != null)
-        {
-            license.Code = file.LicenseCode;
-            license.Description = file.Description;
-        }
     }
 
     private async Task<bool> SaveLibraryIndexJsonAsync(LibraryId id, LibraryIndexJson index, CancellationToken token)
