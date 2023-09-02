@@ -61,7 +61,26 @@ public sealed class RefreshCommand : ICommand
 
     private static async Task AddLicensesAsync(IStorage storage, RootReadMeContext rootContext, CancellationToken token)
     {
-        var licenseByCode = new Dictionary<string, RootReadMeLicenseContext?>(StringComparer.OrdinalIgnoreCase);
+        var allCodes = await storage.GetAllLicenseCodesAsync(token).ConfigureAwait(false);
+        var licenseByCode = new Dictionary<string, RootReadMeLicenseContext>(allCodes.Count, StringComparer.OrdinalIgnoreCase);
+
+        for (var i = 0; i < allCodes.Count; i++)
+        {
+            var code = allCodes[i];
+
+            var index = await storage.ReadLicenseIndexJsonAsync(code, token).ConfigureAwait(false);
+            if (index != null)
+            {
+                var context = new RootReadMeLicenseContext
+                {
+                    Code = index.Code,
+                    RequiresApproval = index.RequiresApproval,
+                    RequiresThirdPartyNotices = index.RequiresThirdPartyNotices,
+                    LocalHRef = storage.GetLicenseLocalHRef(index.Code)
+                };
+                licenseByCode.Add(code, context);
+            }
+        }
 
         for (var i = 0; i < rootContext.Packages.Count; i++)
         {
@@ -70,25 +89,7 @@ public sealed class RefreshCommand : ICommand
             {
                 var code = codes.Codes[j];
 
-                if (!licenseByCode.TryGetValue(code, out var context))
-                {
-                    context = null;
-                    var index = await storage.ReadLicenseIndexJsonAsync(code, token).ConfigureAwait(false);
-                    if (index != null)
-                    {
-                        context = new RootReadMeLicenseContext
-                        {
-                            Code = index.Code,
-                            RequiresApproval = index.RequiresApproval,
-                            RequiresThirdPartyNotices = index.RequiresThirdPartyNotices,
-                            LocalHRef = storage.GetLicenseLocalHRef(index.Code)
-                        };
-                    }
-
-                    licenseByCode.Add(code, context);
-                }
-
-                if (context != null)
+                if (licenseByCode.TryGetValue(code, out var context))
                 {
                     context.PackagesCount++;
                 }
@@ -97,7 +98,6 @@ public sealed class RefreshCommand : ICommand
 
         var licenses = licenseByCode
             .Values
-            .Where(i => i != null)
             .OrderBy(i => i!.Code);
 
         foreach (var license in licenses)
