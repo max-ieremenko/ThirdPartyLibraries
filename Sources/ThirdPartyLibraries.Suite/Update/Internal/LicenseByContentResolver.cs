@@ -22,7 +22,7 @@ internal sealed class LicenseByContentResolver : ILicenseByContentResolver
         _storageLicenseByCode = new Dictionary<string, StorageLicenseFile?>(StringComparer.OrdinalIgnoreCase);
     }
 
-    public async Task<IdenticalLicenseFile?> TryResolveAsync(LibraryId library, CancellationToken token)
+    public async Task<IdenticalLicenseFile?> TryResolveAsync(LibraryId library, List<LibraryLicense> libraryLicenses, CancellationToken token)
     {
         var (_, hash) = await _hashBuilder.GetHashAsync(library, PackageSpecLicense.SubjectPackage, token).ConfigureAwait(false);
 
@@ -32,13 +32,38 @@ internal sealed class LicenseByContentResolver : ILicenseByContentResolver
             return null;
         }
 
-        var result = await LookAtOtherVersionsAsync(library, hash.Value, token).ConfigureAwait(false);
+        var result = await LookAtOtherSubjectsAsync(library, hash.Value, libraryLicenses, token).ConfigureAwait(false);
+        if (result == null)
+        {
+            result = await LookAtOtherVersionsAsync(library, hash.Value, token).ConfigureAwait(false);
+        }
+
         if (result == null)
         {
             result = await LookAtLicensesAsync(hash.Value, token).ConfigureAwait(false);
         }
 
         return result;
+    }
+
+    private async Task<IdenticalLicenseFile?> LookAtOtherSubjectsAsync(LibraryId library, ArrayHash hash, List<LibraryLicense> libraryLicenses, CancellationToken token)
+    {
+        for (var i = 0; i < libraryLicenses.Count; i++)
+        {
+            var license = libraryLicenses[i];
+            if (string.IsNullOrEmpty(license.Code) || license.Subject.Equals(PackageSpecLicense.SubjectPackage, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            var (_, otherHash) = await _hashBuilder.GetHashAsync(library, license.Subject, token).ConfigureAwait(false);
+            if (otherHash.HasValue && otherHash.Value.Equals(hash))
+            {
+                return new IdenticalLicenseFile(license.Code, $"The license file is identical to the {license.Subject} license file.");
+            }
+        }
+
+        return null;
     }
 
     private async Task<IdenticalLicenseFile?> LookAtOtherVersionsAsync(LibraryId library, ArrayHash hash, CancellationToken token)
