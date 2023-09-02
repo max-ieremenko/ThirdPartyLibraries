@@ -88,6 +88,34 @@ internal sealed class FileStorage : IStorage
         return Task.FromResult(result);
     }
 
+    public Task<List<LibraryId>> GetAllLibraryVersionsAsync(string sourceCode, string name, CancellationToken token)
+    {
+        var result = new List<LibraryId>(0);
+        var root = GetPackageLocation(Location, sourceCode, name, null);
+        if (!Directory.Exists(root))
+        {
+            return Task.FromResult(result);
+        }
+
+        var versionFolders = Directory.GetDirectories(root);
+        result.Capacity = versionFolders.Length;
+
+        for (var i = 0; i < versionFolders.Length; i++)
+        {
+            var indexFileName = Path.Combine(versionFolders[i], StorageExtensions.IndexFileName);
+            if (!File.Exists(indexFileName))
+            {
+                continue;
+            }
+
+            var version = Path.GetFileName(versionFolders[i]);
+            result.Add(new LibraryId(sourceCode, name, version));
+        }
+
+        result.Sort();
+        return Task.FromResult(result);
+    }
+
     public string GetPackageLocalHRef(LibraryId id, LibraryId? relativeTo = null)
     {
         var connectionString = string.Empty;
@@ -97,7 +125,7 @@ internal sealed class FileStorage : IStorage
             connectionString = string.Join(string.Empty, Enumerable.Repeat(@".." + Path.DirectorySeparatorChar, depth + 4));
         }
 
-        var href = GetPackageLocation(connectionString, id);
+        var href = GetPackageLocation(connectionString, id.SourceCode, id.Name, id.Version);
         return href.Replace('\\', '/');
     }
 
@@ -183,11 +211,17 @@ internal sealed class FileStorage : IStorage
         return _licenses.WriteFileAsync(licenseCode, fileName, content, token);
     }
 
-    internal string GetPackageLocation(LibraryId id) => GetPackageLocation(Location, id);
+    internal string GetPackageLocation(LibraryId id) => GetPackageLocation(Location, id.SourceCode, id.Name, id.Version);
 
-    private static string GetPackageLocation(string connectionString, LibraryId id)
+    private static string GetPackageLocation(string connectionString, string sourceCode, string name, string? version)
     {
-        return Path.Combine(connectionString, FolderPackages, id.SourceCode.ToLowerInvariant(), id.Name.ToLowerInvariant(), id.Version.ToLowerInvariant());
+        var root = Path.Combine(connectionString, FolderPackages, sourceCode.ToLowerInvariant(), name.ToLowerInvariant());
+        if (version == null)
+        {
+            return root;
+        }
+
+        return Path.Combine(root, version.ToLowerInvariant());
     }
 
     private static string GetLicenseLocation(string connectionString, string code)

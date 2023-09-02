@@ -105,6 +105,24 @@ public class FileStorageTest
     }
 
     [Test]
+    [TestCase("nuget.org", "Newtonsoft.Json", "12.0.2")]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51")]
+    [TestCase("npmjs.com", "angular-unknown", null)]
+    public async Task GetAllLibraryVersionsAsync(string sourceCode, string name, string? expected)
+    {
+        var actual = await _sut.GetAllLibraryVersionsAsync(sourceCode, name, default).ConfigureAwait(false);
+        
+        if (expected == null)
+        {
+            actual.ShouldBeEmpty();
+        }
+        else
+        {
+            actual.ShouldBe(new[] { new LibraryId(sourceCode, name, expected) });
+        }
+    }
+
+    [Test]
     public async Task GetAllLicenseCodes()
     {
         var actual = await _sut.GetAllLicenseCodesAsync(default).ConfigureAwait(false);
