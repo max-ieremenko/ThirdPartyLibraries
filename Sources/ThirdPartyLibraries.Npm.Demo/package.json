@@ -7,9 +7,9 @@
   "author": "Max Ieremenko",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.4.1"
+    "bootstrap": "4.6.1"
   },
   "devDependencies": {
-    "jasmine": "^3.5.0"
+    "jasmine": "3.10.0"
   }
 }
