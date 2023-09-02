@@ -1,4 +1,5 @@
 ﻿using System;
+using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Generate.Internal;
 

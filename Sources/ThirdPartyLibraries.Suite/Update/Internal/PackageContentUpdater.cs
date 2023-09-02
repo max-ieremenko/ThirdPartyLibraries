@@ -16,11 +16,13 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
     private const string DefaultLicenseFilePattern = "LICENSE";
 
     private readonly IStorage _storage;
+    private readonly ILicenseHashBuilder _hashBuilder;
     private readonly IPackageLoaderFactory[] _loaderFactories;
 
-    public PackageContentUpdater(IStorage storage, IEnumerable<IPackageLoaderFactory> loaderFactories)
+    public PackageContentUpdater(IStorage storage, ILicenseHashBuilder hashBuilder, IEnumerable<IPackageLoaderFactory> loaderFactories)
     {
         _storage = storage;
+        _hashBuilder = hashBuilder;
         _loaderFactories = loaderFactories.ToArray();
     }
 
@@ -195,10 +197,8 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
         IPackageLoader loader,
         CancellationToken token)
     {
-        var fileNames = await _storage
-            .FindLibraryFilesAsync(id, PackageStorageLicenseFile.GetMask(license.Subject), token)
-            .ConfigureAwait(false);
-        if (fileNames.Length != 0)
+        var file = await _hashBuilder.GetHashAsync(id, license.Subject, token).ConfigureAwait(false);
+        if (file.Hash != null)
         {
             return;
         }

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+namespace ThirdPartyLibraries.Suite.Shared.Internal;
 
 internal static class ArrayHashBuilder
 {

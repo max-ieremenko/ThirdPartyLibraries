@@ -1,4 +1,4 @@
-﻿namespace ThirdPartyLibraries.Suite.Generate.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Shared.Internal;
 
 internal partial class LicenseTextEncoder
 {

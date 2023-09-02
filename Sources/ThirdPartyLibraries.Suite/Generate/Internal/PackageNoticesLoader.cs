@@ -15,12 +15,18 @@ internal sealed class PackageNoticesLoader : IPackageNoticesLoader
 {
     private readonly IStorage _storage;
     private readonly IPackageSpecLoader _specLoader;
+    private readonly ILicenseHashBuilder _hashBuilder;
     private readonly IRepositoryNameParser[] _repositoryNameParsers;
 
-    public PackageNoticesLoader(IStorage storage, IPackageSpecLoader specLoader, IEnumerable<IRepositoryNameParser> repositoryNameParsers)
+    public PackageNoticesLoader(
+        IStorage storage,
+        IPackageSpecLoader specLoader,
+        ILicenseHashBuilder hashBuilder,
+        IEnumerable<IRepositoryNameParser> repositoryNameParsers)
     {
         _storage = storage;
         _specLoader = specLoader;
+        _hashBuilder = hashBuilder;
         _repositoryNameParsers = repositoryNameParsers.ToArray();
     }
 
@@ -149,23 +155,13 @@ internal sealed class PackageNoticesLoader : IPackageNoticesLoader
 
     private async Task<PackageLicenseFile?> TryLoadFileAsync(LibraryId id, string licenseCode, LibraryLicense license, CancellationToken token)
     {
-        var fileNames = await _storage
-            .FindLibraryFilesAsync(id, PackageStorageLicenseFile.GetMask(license.Subject), token)
-            .ConfigureAwait(false);
-        if (fileNames.Length == 0)
+        var file = await _hashBuilder.GetHashAsync(id, license.Subject, token).ConfigureAwait(false);
+        if (file.Hash == null)
         {
             return null;
         }
 
-        using var stream = await _storage.OpenLibraryFileReadAsync(id, fileNames[0], token).ConfigureAwait(false);
-        var hash = ArrayHashBuilder.FromStream(stream);
-
-        if (!hash.HasValue)
-        {
-            return null;
-        }
-
-        return new PackageLicenseFile(id, licenseCode, fileNames[0], hash.Value);
+        return new PackageLicenseFile(id, licenseCode, file.FileName!, file.Hash.Value);
     }
 
     private void SetRepository(Uri url, PackageLicenseFile file)

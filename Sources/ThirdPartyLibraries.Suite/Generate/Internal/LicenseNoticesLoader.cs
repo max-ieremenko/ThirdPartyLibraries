@@ -3,16 +3,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository;
+using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Generate.Internal;
 
 internal sealed class LicenseNoticesLoader : ILicenseNoticesLoader
 {
     private readonly IStorage _storage;
+    private readonly ILicenseHashBuilder _hashBuilder;
 
-    public LicenseNoticesLoader(IStorage storage)
+    public LicenseNoticesLoader(IStorage storage, ILicenseHashBuilder hashBuilder)
     {
         _storage = storage;
+        _hashBuilder = hashBuilder;
     }
 
     public async Task<LicenseNotices> LoadAsync(LicenseCode code, CancellationToken token)
@@ -61,8 +64,7 @@ internal sealed class LicenseNoticesLoader : ILicenseNoticesLoader
 
     private async Task<LicenseFile?> TryLoadFileAsync(string code, string fileName, CancellationToken token)
     {
-        using var stream = await _storage.OpenLicenseFileReadAsync(code, fileName, token).ConfigureAwait(false);
-        var hash = ArrayHashBuilder.FromStream(stream);
+        var hash = await _hashBuilder.GetHashAsync(code, fileName, token).ConfigureAwait(false);
 
         if (!hash.HasValue)
         {

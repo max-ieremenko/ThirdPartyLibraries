@@ -1,4 +1,6 @@
-﻿namespace ThirdPartyLibraries.Suite.Generate.Internal;
+﻿using ThirdPartyLibraries.Suite.Shared;
+
+namespace ThirdPartyLibraries.Suite.Generate.Internal;
 
 internal interface ILicenseFileNameResolver
 {
