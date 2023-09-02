@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Generate.Internal;
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
+using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Generate.Internal;
 

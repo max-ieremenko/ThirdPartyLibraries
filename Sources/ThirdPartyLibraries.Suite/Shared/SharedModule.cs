@@ -14,5 +14,7 @@ internal sealed class SharedModule
 
         services.AddSingleton<HttpClientFactory>();
         services.AddSingleton<Func<HttpClient>>(provider => provider.GetRequiredService<HttpClientFactory>().CreateHttpClient);
+
+        services.AddTransient<ILicenseHashBuilder, LicenseHashBuilder>();
     }
 }

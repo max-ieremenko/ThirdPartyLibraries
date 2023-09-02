@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Generate.Internal;
 

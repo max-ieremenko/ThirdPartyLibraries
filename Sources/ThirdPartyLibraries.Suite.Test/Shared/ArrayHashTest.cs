@@ -3,7 +3,7 @@ using System.Text;
 using NUnit.Framework;
 using Shouldly;
 
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+namespace ThirdPartyLibraries.Suite.Shared;
 
 [TestFixture]
 public class ArrayHashTest
@@ -21,7 +21,7 @@ public class ArrayHashTest
         var sut = new ArrayHash(
             BitConverter.ToInt32(new byte[] { 0, 1, 2, 3 }),
             BitConverter.ToInt32(new byte[] { 4, 5, 6, 7 }));
-        
+
         var actual = new StringBuilder();
         sut.ToString(actual, bytesCount);
 

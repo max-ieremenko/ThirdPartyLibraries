@@ -4,7 +4,7 @@ using System.IO;
 using NUnit.Framework;
 using Shouldly;
 
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+namespace ThirdPartyLibraries.Suite.Shared.Internal;
 
 [TestFixture]
 internal class LicenseTextEncoderTest

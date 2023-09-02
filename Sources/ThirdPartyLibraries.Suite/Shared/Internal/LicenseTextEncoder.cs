@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+namespace ThirdPartyLibraries.Suite.Shared.Internal;
 
 internal sealed partial class LicenseTextEncoder : IDisposable
 {

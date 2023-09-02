@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Generate.Internal;
 

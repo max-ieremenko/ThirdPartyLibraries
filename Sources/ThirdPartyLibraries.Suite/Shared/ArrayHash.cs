@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+namespace ThirdPartyLibraries.Suite.Shared;
 
 internal readonly struct ArrayHash : IEquatable<ArrayHash>, IComparable<ArrayHash>
 {
