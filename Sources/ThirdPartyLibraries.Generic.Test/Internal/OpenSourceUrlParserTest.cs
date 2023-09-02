@@ -14,7 +14,7 @@ public class OpenSourceUrlParserTest
     {
         OpenSourceUrlParser.TryParseLicenseCode(new Uri(url), host, directory, out var actual).ShouldBe(expected != null);
 
-        actual.Equals(expected.AsSpan(), StringComparison.Ordinal).ShouldBeTrue();
+        actual.ToString().ShouldBe(expected ?? string.Empty);
     }
 
     private static IEnumerable<TestCaseData> GetTryParseLicenseCodeCases()
@@ -34,9 +34,14 @@ public class OpenSourceUrlParserTest
             TestName = "opensource.org/license/MIT"
         };
 
-        yield return new TestCaseData("https://opensource.org/licenses/MIT", "opensource.org", "licenses", "MIT")
+        yield return new TestCaseData("http://opensource.org/licenses/mit-license.php", "opensource.org", "licenses", "mit")
         {
-            TestName = "opensource.org/licenses/MIT"
+            TestName = "opensource.org/licenses/MIT-license.php"
+        };
+
+        yield return new TestCaseData("http://opensource.org/licenses/mit-license", "opensource.org", "licenses", "mit")
+        {
+            TestName = "opensource.org/licenses/MIT-license"
         };
 
         yield return new TestCaseData("https://spdx.org/licenses/MIT.html", "spdx.org", "licenses", "MIT.html")
