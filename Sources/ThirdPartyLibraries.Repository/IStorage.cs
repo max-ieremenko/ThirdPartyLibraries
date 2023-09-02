@@ -12,6 +12,8 @@ public interface IStorage
 
     Task<List<LibraryId>> GetAllLibrariesAsync(CancellationToken token);
 
+    Task<List<string>> GetAllLicenseCodesAsync(CancellationToken token);
+
     string GetPackageLocalHRef(LibraryId id, LibraryId? relativeTo = null);
 
     string GetLicenseLocalHRef(string licenseCode, LibraryId? relativeTo = null);

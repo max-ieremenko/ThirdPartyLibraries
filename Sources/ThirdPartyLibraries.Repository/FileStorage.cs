@@ -35,15 +35,16 @@ internal sealed class FileStorage : IStorage
 
     public Task<List<LibraryId>> GetAllLibrariesAsync(CancellationToken token)
     {
+        var result = new List<LibraryId>(0);
         var root = Path.Combine(Location, FolderPackages);
         if (!Directory.Exists(root))
         {
-            return Task.FromResult(new List<LibraryId>(0));
+            return Task.FromResult(result);
         }
 
         var indexes = Directory.GetFiles(root, StorageExtensions.IndexFileName, SearchOption.AllDirectories);
 
-        var result = new List<LibraryId>(indexes.Length);
+        result.Capacity = indexes.Length;
         foreach (var fileName in indexes)
         {
             var fullName = fileName.AsSpan().Slice(root.Length + 1);
@@ -59,6 +60,28 @@ internal sealed class FileStorage : IStorage
             var name = fullName.Slice(0, index).ToString().Replace('\\', '/');
 
             result.Add(new LibraryId(source, name, version));
+        }
+
+        result.Sort();
+        return Task.FromResult(result);
+    }
+
+    public Task<List<string>> GetAllLicenseCodesAsync(CancellationToken token)
+    {
+        var result = new List<string>(0);
+        var root = Path.Combine(Location, FolderLicenses);
+        if (!Directory.Exists(root))
+        {
+            return Task.FromResult(result);
+        }
+
+        var directories = Directory.GetDirectories(root);
+
+        result.Capacity = directories.Length;
+        foreach (var directoryName in directories)
+        {
+            var code = Path.GetFileName(directoryName);
+            result.Add(code);
         }
 
         result.Sort();
