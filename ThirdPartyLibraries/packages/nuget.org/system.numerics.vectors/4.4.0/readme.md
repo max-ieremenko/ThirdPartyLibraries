@@ -1,7 +1,7 @@
 System.Numerics.Vectors [4.4.0](https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)
 --------------------
 
-Used by: ThirdPartyLibraries internal
+Used by: ThirdPartyLibraries
 
 Target frameworks: netstandard2.1
 

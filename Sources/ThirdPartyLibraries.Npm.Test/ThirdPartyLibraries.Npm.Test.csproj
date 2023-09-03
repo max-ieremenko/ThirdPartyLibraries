@@ -3,29 +3,25 @@
   <PropertyGroup>
     <TargetFrameworks>$(SupportedFrameworks)</TargetFrameworks>
     <RootNamespace>ThirdPartyLibraries.Npm</RootNamespace>
-    <NoWarn>1701;1702;8002</NoWarn>
     <OutputPath>..\bin\test</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="NpmApiTest.TypesAngular.1.6.56.tgz" />
-    <EmbeddedResource Include="NpmApiTest.TypesAngular.get.json" />
-    <EmbeddedResource Include="NpmApiTest.TypesAngular.package.json" />
-    <EmbeddedResource Include="PackageJsonParserTest.TypesAngular.package.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
-    <PackageReference Include="RichardSzalay.MockHttp" />
-    <PackageReference Include="Shouldly" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ThirdPartyLibraries.Npm\ThirdPartyLibraries.Npm.csproj" />
     <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Configuration\*.json" />
+    <EmbeddedResource Include="Internal\*.json" />
+    <EmbeddedResource Include="Internal\*.tgz" />
   </ItemGroup>
 
 </Project>

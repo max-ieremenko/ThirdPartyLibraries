@@ -46,7 +46,7 @@ public static class Program
     {
         var commandLine = CommandLine.Parse(commandName, commandOptions);
 
-        var configuration = new Dictionary<string, string>();
+        var configuration = new Dictionary<string, string?>();
         var command = CommandFactory.Create(commandLine, configuration, out var repository);
 
         var serviceProvider = await ConfigureServices(new EventLogger(infoLogger, warnLogger), repository, configuration, token).ConfigureAwait(false);
@@ -59,9 +59,9 @@ public static class Program
 
     private static async Task<int> RunConsoleAsync(CommandLine commandLine, ConsoleLogger logger, CancellationToken token)
     {
-        var configuration = new Dictionary<string, string>();
+        var configuration = new Dictionary<string, string?>();
         ICommand command;
-        string repository;
+        string? repository;
         try
         {
             command = CommandFactory.Create(commandLine, configuration, out repository);
@@ -96,7 +96,7 @@ public static class Program
         return ExitCodeOk;
     }
 
-    private static int HandleConsoleError(Exception ex, string messageFormat, ConsoleLogger logger, int defaultExistCode)
+    private static int HandleConsoleError(Exception ex, string? messageFormat, ConsoleLogger logger, int defaultExistCode)
     {
         if (ex is OperationCanceledException)
         {
@@ -117,7 +117,7 @@ public static class Program
         }
         else
         {
-            logger.Error(messageFormat.FormatWith(ex.Message));
+            logger.Error(string.Format(messageFormat, ex.Message));
         }
 
         return defaultExistCode;
@@ -125,25 +125,20 @@ public static class Program
 
     private static async Task<ServiceProvider> ConfigureServices(
         ILogger logger,
-        string repository,
-        Dictionary<string, string> commandLine,
+        string? repository,
+        Dictionary<string, string?> commandLine,
         CancellationToken token)
     {
         var services = new ServiceCollection();
-
-        if (!string.IsNullOrEmpty(repository))
-        {
-            await AppModule.AddConfigurationAsync(services, repository, commandLine, token).ConfigureAwait(false);
-        }
-
         services.AddSingleton(logger);
 
-        AppModule.ConfigureServices(services);
-        Suite.AppModule.ConfigureServices(services);
-        NuGet.AppModule.ConfigureServices(services);
-        Npm.AppModule.ConfigureServices(services);
-        GitHub.AppModule.ConfigureServices(services);
-        Generic.AppModule.ConfigureServices(services);
+        var configuration = await ConfigurationFactory.CreateAsync(services, repository, commandLine, token).ConfigureAwait(false);
+
+        Generic.AppModule.ConfigureServices(services, configuration);
+        GitHub.AppModule.ConfigureServices(services, configuration);
+        Suite.AppModule.ConfigureServices(services, configuration);
+        NuGet.AppModule.ConfigureServices(services, configuration);
+        Npm.AppModule.ConfigureServices(services, configuration);
 
         return services.BuildServiceProvider(true);
     }

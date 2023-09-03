@@ -2,7 +2,17 @@
 
 public sealed class LicenseConclusion
 {
-    public string Code { get; set; }
+    public LicenseConclusion()
+    {
+    }
 
-    public string Status { get; set; }
+    public LicenseConclusion(string? code, string? status)
+    {
+        Code = code;
+        Status = status;
+    }
+
+    public string? Code { get; set; }
+
+    public string? Status { get; set; }
 }

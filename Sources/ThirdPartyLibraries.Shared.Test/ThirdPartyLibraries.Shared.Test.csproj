@@ -7,16 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
-    <PackageReference Include="Shouldly" />
-    <PackageReference Include="RichardSzalay.MockHttp" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Test.Api\ThirdPartyLibraries.Test.Api.csproj" />
   </ItemGroup>
 
 </Project>

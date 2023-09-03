@@ -35,7 +35,7 @@ Table of Contents
 Requirements <a name="requirements"></a>
 ----------------------------------------
 
-- tool can be installed on SDKs .NET 7.0, .NET 6.0, .NET 5.0, .NET Core 3.1
+- tool can be installed on SDKs .NET 7.0, .NET 6.0, .NET Core 3.1
 - PowerShell module is compatible with Powershell Core 7.0+
 - supported project format: [SDK-style](https://docs.microsoft.com/en-us/nuget/resources/check-project-format)
 - supported project references: [NuGet](https://www.nuget.org/) and [npm](https://www.npmjs.com) packages
@@ -233,7 +233,8 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
     ]
   },
   "skipCertificateCheck": {
-    "byHost": [ "localhost" ]
+    "byHost": [ "localhost" ],
+    "logRequest": true
   }
 }
 ```
@@ -267,6 +268,7 @@ setup well-know licenses
 ### skipCertificateCheck
 
 - `byHost`: regex expressions array. Ignore server certificate validation for specific hosts
+- `logRequest`: *true* or *false* (default) flag to log any HTTP request
 
 [Back to ToC](#table-of-contents)
 

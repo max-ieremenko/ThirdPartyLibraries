@@ -1,16 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;$(SupportedFrameworks)</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <OutputPath>..\bin\app</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="nuget.org.ReadMeTemplate.txt" />
-    <None Remove="Root.ReadMeTemplate.txt" />
-    <None Remove="Template\appsettings.json" />
-    <None Remove="Template\npmjs.com.ReadMeTemplate.txt" />
-    <None Remove="ThirdPartyNotices.Template.txt" />
+    <PackageReference Include="DotLiquid" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdPartyLibraries.Domain\ThirdPartyLibraries.Domain.csproj" />
+    <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,15 +23,6 @@
     <EmbeddedResource Include="Template\nuget.org.ReadMeTemplate.txt" />
     <EmbeddedResource Include="Template\ThirdPartyNotices.Template.txt" />
     <EmbeddedResource Include="Template\Root.ReadMeTemplate.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DotLiquid" />
-    <PackageReference Include="Newtonsoft.Json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ThirdPartyLibraries.Shared\ThirdPartyLibraries.Shared.csproj" />
   </ItemGroup>
 
 </Project>

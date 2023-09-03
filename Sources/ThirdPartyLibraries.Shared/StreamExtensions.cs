@@ -8,8 +8,6 @@ public static class StreamExtensions
 {
     public static async Task<byte[]> ToArrayAsync(this Stream stream, CancellationToken token)
     {
-        stream.AssertNotNull(nameof(stream));
-
         if (stream is MemoryStream m)
         {
             return m.ToArray();

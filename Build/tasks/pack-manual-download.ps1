@@ -10,7 +10,7 @@ param(
     $Version,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("netcoreapp3.1", "net5.0", "net6.0", "net7.0")] 
+    [ValidateSet("netcoreapp3.1", "net6.0", "net7.0")] 
     [string]
     $Framework,
 

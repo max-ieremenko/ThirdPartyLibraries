@@ -1,11 +1,12 @@
 <Project>
   <PropertyGroup>
-    <SupportedFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</SupportedFrameworks>
+    <SupportedFrameworks>netcoreapp3.1;net6.0;net7.0</SupportedFrameworks>
     <OutputType>Library</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
 
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
@@ -13,11 +14,12 @@
     <CodeAnalysisRuleSet>..\StyleCope.ruleset</CodeAnalysisRuleSet>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageVersion>3.3.0</DefaultPackageVersion>
+    <DefaultPackageVersion>3.4.0</DefaultPackageVersion>
 
     <Version>$(DefaultPackageVersion)</Version>
     <AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>

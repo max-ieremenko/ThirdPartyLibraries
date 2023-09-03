@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 
@@ -6,7 +7,7 @@ namespace ThirdPartyLibraries.Shared;
 
 public static class HttpHeadersExtensions
 {
-    public static bool TryGetValue(this HttpHeaders headers, string name, out string value)
+    public static bool TryGetValue(this HttpHeaders headers, string name, [NotNullWhen(true)] out string? value)
     {
         value = null;
         if (!headers.TryGetValues(name, out var values))

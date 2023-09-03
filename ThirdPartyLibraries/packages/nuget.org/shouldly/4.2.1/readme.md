@@ -3,7 +3,7 @@ Shouldly [4.2.1](https://www.nuget.org/packages/Shouldly/4.2.1)
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net5.0, net6.0, net7.0, netcoreapp3.1, netstandard2.1
+Target frameworks: netstandard2.1
 
 License: [BSD-2-Clause](../../../../licenses/bsd-2-clause) 
 

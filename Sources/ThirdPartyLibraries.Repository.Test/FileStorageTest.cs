@@ -1,19 +1,18 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Shouldly;
+using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository.Template;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Repository;
 
 [TestFixture]
 public class FileStorageTest
 {
-    private TempFolder _location;
-    private FileStorage _sut;
+    private TempFolder _location = null!;
+    private FileStorage _sut = null!;
 
     [SetUp]
     public void BeforeEachTests()
@@ -37,10 +36,10 @@ public class FileStorageTest
     }
 
     [Test]
-    [TestCase(PackageSources.NuGet, "newtonsoft.json", "12.0.2", null, null, null)]
-    [TestCase(PackageSources.Npm, "@types/angular", "1.6.51", null, null, null)]
-    [TestCase(PackageSources.Npm, "angular", "1.7.5", PackageSources.Npm, "@types/angular", "1.6.51")]
-    [TestCase(PackageSources.Npm, "@types/angular", "1.6.51", PackageSources.Npm, "angular", "1.7.5")]
+    [TestCase("nuget.org", "newtonsoft.json", "12.0.2", null, null, null)]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51", null, null, null)]
+    [TestCase("npmjs.com", "angular", "1.7.5", "npmjs.com", "@types/angular", "1.6.51")]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51", "npmjs.com", "angular", "1.7.5")]
     public void GetPackageLocalHRef(string librarySourceCode, string libraryName, string libraryVersion, string relativeSourceCode, string relativeName, string relativeVersion)
     {
         var currentLocation = _location.Location;
@@ -65,9 +64,9 @@ public class FileStorageTest
 
     [Test]
     [TestCase("MIT", null, null, null)]
-    [TestCase("MIT", PackageSources.NuGet, "newtonsoft.json", "12.0.2")]
-    [TestCase("MIT", PackageSources.Npm, "@types/angular", "1.6.51")]
-    [TestCase("MIT", PackageSources.Npm, "angular", "1.7.5")]
+    [TestCase("MIT", "nuget.org", "newtonsoft.json", "12.0.2")]
+    [TestCase("MIT", "npmjs.com", "@types/angular", "1.6.51")]
+    [TestCase("MIT", "npmjs.com", "angular", "1.7.5")]
     public void GetLicenseLocalHRef(string licenseCode, string librarySourceCode, string libraryName, string libraryVersion)
     {
         var currentLocation = _location.Location;
@@ -93,7 +92,7 @@ public class FileStorageTest
     [Test]
     public async Task GetAllLibraries()
     {
-        var actual = await _sut.GetAllLibrariesAsync(CancellationToken.None).ConfigureAwait(false);
+        var actual = await _sut.GetAllLibrariesAsync(default).ConfigureAwait(false);
 
         actual.ShouldBe(
             new[]
@@ -106,11 +105,37 @@ public class FileStorageTest
     }
 
     [Test]
+    [TestCase("nuget.org", "Newtonsoft.Json", "12.0.2")]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51")]
+    [TestCase("npmjs.com", "angular-unknown", null)]
+    public async Task GetAllLibraryVersionsAsync(string sourceCode, string name, string? expected)
+    {
+        var actual = await _sut.GetAllLibraryVersionsAsync(sourceCode, name, default).ConfigureAwait(false);
+        
+        if (expected == null)
+        {
+            actual.ShouldBeEmpty();
+        }
+        else
+        {
+            actual.ShouldBe(new[] { new LibraryId(sourceCode, name, expected) });
+        }
+    }
+
+    [Test]
+    public async Task GetAllLicenseCodes()
+    {
+        var actual = await _sut.GetAllLicenseCodesAsync(default).ConfigureAwait(false);
+
+        actual.ShouldBe(new[] { "mit" });
+    }
+
+    [Test]
     public async Task OpenLibraryFileRead()
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-        var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", CancellationToken.None).ConfigureAwait(false);
+        var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
         using (actual)
@@ -125,7 +150,7 @@ public class FileStorageTest
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-        var actual = await _sut.OpenLibraryFileReadAsync(id, "package1.nuspec", CancellationToken.None).ConfigureAwait(false);
+        var actual = await _sut.OpenLibraryFileReadAsync(id, "package1.nuspec", default).ConfigureAwait(false);
 
         actual.ShouldBeNull();
     }
@@ -135,8 +160,8 @@ public class FileStorageTest
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "1.0.0");
 
-        await _sut.WriteLibraryFileAsync(id, "readme.md", "some text".AsBytes(), CancellationToken.None).ConfigureAwait(false);
-        var actual = await _sut.OpenLibraryFileReadAsync(id, "readme.md", CancellationToken.None).ConfigureAwait(false);
+        await _sut.WriteLibraryFileAsync(id, "readme.md", "some text".AsBytes(), default).ConfigureAwait(false);
+        var actual = await _sut.OpenLibraryFileReadAsync(id, "readme.md", default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
         using (actual)
@@ -150,8 +175,8 @@ public class FileStorageTest
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-        await _sut.WriteLibraryFileAsync(id, "package.nuspec", "some text".AsBytes(), CancellationToken.None).ConfigureAwait(false);
-        var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", CancellationToken.None).ConfigureAwait(false);
+        await _sut.WriteLibraryFileAsync(id, "package.nuspec", "some text".AsBytes(), default).ConfigureAwait(false);
+        var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
         using (actual)
@@ -163,7 +188,7 @@ public class FileStorageTest
     [Test]
     public async Task LoadUnknownLicense()
     {
-        var actual = await _sut.ReadLicenseIndexJsonAsync("some code", CancellationToken.None).ConfigureAwait(false);
+        var actual = await _sut.ReadLicenseIndexJsonAsync("some code", default).ConfigureAwait(false);
 
         actual.ShouldBeNull();
     }
@@ -178,7 +203,7 @@ public class FileStorageTest
             HRef = "link"
         };
 
-        Assert.ThrowsAsync<NotSupportedException>(() => _sut.CreateLicenseIndexJsonAsync(model, CancellationToken.None));
+        Assert.ThrowsAsync<NotSupportedException>(() => _sut.CreateLicenseIndexJsonAsync(model, default));
     }
 
     [Test]
@@ -192,8 +217,8 @@ public class FileStorageTest
             FileName = "file name.md"
         };
 
-        await _sut.CreateLicenseIndexJsonAsync(model, CancellationToken.None).ConfigureAwait(false);
-        var actual = await _sut.ReadLicenseIndexJsonAsync(model.Code, CancellationToken.None).ConfigureAwait(false);
+        await _sut.CreateLicenseIndexJsonAsync(model, default).ConfigureAwait(false);
+        var actual = await _sut.ReadLicenseIndexJsonAsync(model.Code, default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
         actual.Code.ShouldBe(model.Code);
@@ -208,7 +233,7 @@ public class FileStorageTest
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
         DirectoryAssert.Exists(_sut.GetPackageLocation(id));
 
-        await _sut.RemoveLibraryAsync(id, CancellationToken.None).ConfigureAwait(false);
+        await _sut.RemoveLibraryAsync(id, default).ConfigureAwait(false);
 
         DirectoryAssert.DoesNotExist(Path.GetDirectoryName(_sut.GetPackageLocation(id)));
     }
@@ -218,7 +243,7 @@ public class FileStorageTest
     {
         var id = new LibraryId("nuget.org", "some name", "version");
 
-        await _sut.RemoveLibraryAsync(id, CancellationToken.None).ConfigureAwait(false);
+        await _sut.RemoveLibraryAsync(id, default).ConfigureAwait(false);
     }
 
     [Test]
@@ -230,7 +255,7 @@ public class FileStorageTest
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
 
-        var actual = await _sut.FindLibraryFilesAsync(id, searchPattern, CancellationToken.None).ConfigureAwait(false);
+        var actual = await _sut.FindLibraryFilesAsync(id, searchPattern, default).ConfigureAwait(false);
 
         actual.ShouldBe(expected, ignoreOrder: true);
     }
@@ -240,14 +265,14 @@ public class FileStorageTest
         targetName = targetName.Replace('\\', Path.DirectorySeparatorChar);
 
         var fileName = Path.Combine(_location.Location, targetName);
-        Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+        Directory.CreateDirectory(Path.GetDirectoryName(fileName)!);
 
         resourceName = GetType().Namespace + ".Storage." + resourceName;
 
         using (var dest = new FileStream(fileName, FileMode.CreateNew, FileAccess.ReadWrite))
         using (var source = GetType().Assembly.GetManifestResourceStream(resourceName))
         {
-            source.CopyTo(dest);
+            source!.CopyTo(dest);
         }
     }
 }

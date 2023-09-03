@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using ThirdPartyLibraries.Configuration;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite;
-using ThirdPartyLibraries.Suite.Commands;
+using ThirdPartyLibraries.Suite.Generate;
+using ThirdPartyLibraries.Suite.Refresh;
+using ThirdPartyLibraries.Suite.Remove;
+using ThirdPartyLibraries.Suite.Update;
+using ThirdPartyLibraries.Suite.Validate;
 
 namespace ThirdPartyLibraries;
 
 internal static class CommandFactory
 {
-    public static ICommand Create(CommandLine line, Dictionary<string, string> configuration, out string repository)
+    public static ICommand Create(CommandLine line, Dictionary<string, string?> configuration, out string? repository)
     {
         repository = null;
         if (string.IsNullOrEmpty(line.Command))
@@ -17,7 +21,7 @@ internal static class CommandFactory
             return CreateHelp(null);
         }
 
-        if (CommandOptions.CommandUpdate.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandUpdate.Equals(line.Command, StringComparison.OrdinalIgnoreCase))
         {
             if (IsHelp(line.Options))
             {
@@ -28,7 +32,7 @@ internal static class CommandFactory
             return new CommandChain(update, new RefreshCommand());
         }
             
-        if (CommandOptions.CommandRefresh.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandRefresh.Equals(line.Command, StringComparison.OrdinalIgnoreCase))
         {
             if (IsHelp(line.Options))
             {
@@ -38,7 +42,7 @@ internal static class CommandFactory
             return CreateRefreshCommand(line.Options, out repository);
         }
             
-        if (CommandOptions.CommandValidate.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandValidate.Equals(line.Command, StringComparison.OrdinalIgnoreCase))
         {
             if (IsHelp(line.Options))
             {
@@ -48,7 +52,7 @@ internal static class CommandFactory
             return CreateValidateCommand(line.Options, out repository);
         }
             
-        if (CommandOptions.CommandGenerate.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandGenerate.Equals(line.Command, StringComparison.OrdinalIgnoreCase))
         {
             if (IsHelp(line.Options))
             {
@@ -58,7 +62,7 @@ internal static class CommandFactory
             return CreateGenerateCommand(line.Options, out repository);
         }
 
-        if (CommandOptions.CommandRemove.EqualsIgnoreCase(line.Command))
+        if (CommandOptions.CommandRemove.Equals(line.Command, StringComparison.OrdinalIgnoreCase))
         {
             if (IsHelp(line.Options))
             {
@@ -69,7 +73,7 @@ internal static class CommandFactory
             return new CommandChain(remove, new RefreshCommand());
         }
 
-        throw new InvalidOperationException("Unknown command [{0}].".FormatWith(line.Command));
+        throw new InvalidOperationException($"Unknown command [{line.Command}].");
     }
 
     private static bool IsHelp(IList<CommandOption> options)
@@ -77,12 +81,9 @@ internal static class CommandFactory
         return options.Count == 0 || (options.Count == 1 && CommandOptions.OptionHelp.Equals(options[0].Name));
     }
 
-    private static ICommand CreateHelp(string command)
-    {
-        return new HelpCommand(command);
-    }
+    private static ICommand CreateHelp(string? command) => new HelpCommand(command);
 
-    private static UpdateCommand CreateUpdateCommand(IList<CommandOption> options, Dictionary<string, string> configuration, out string repository)
+    private static UpdateCommand CreateUpdateCommand(IList<CommandOption> options, Dictionary<string, string?> configuration, out string? repository)
     {
         var result = new UpdateCommand();
         repository = null;
@@ -126,7 +127,7 @@ internal static class CommandFactory
     private static RefreshCommand CreateRefreshCommand(IList<CommandOption> options, out string repository)
     {
         var result = new RefreshCommand();
-        repository = null;
+        repository = null!;
 
         for (var i = 0; i < options.Count; i++)
         {
@@ -151,7 +152,7 @@ internal static class CommandFactory
     private static ValidateCommand CreateValidateCommand(IList<CommandOption> options, out string repository)
     {
         var result = new ValidateCommand();
-        repository = null;
+        repository = null!;
 
         for (var i = 0; i < options.Count; i++)
         {
@@ -187,7 +188,7 @@ internal static class CommandFactory
     private static GenerateCommand CreateGenerateCommand(IList<CommandOption> options, out string repository)
     {
         var result = new GenerateCommand();
-        repository = null;
+        repository = null!;
 
         for (var i = 0; i < options.Count; i++)
         {
@@ -235,7 +236,7 @@ internal static class CommandFactory
         return result;
     }
 
-    private static RemoveCommand CreateRemoveCommand(IList<CommandOption> options, out string repository)
+    private static RemoveCommand CreateRemoveCommand(IList<CommandOption> options, out string? repository)
     {
         var result = new RemoveCommand();
         repository = null;
@@ -250,7 +251,7 @@ internal static class CommandFactory
             }
             else if (option.IsRepository(out value))
             {
-                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !repository.IsNullOrEmpty());
+                CommandOptions.AssertDuplicated(CommandOptions.OptionRepository, !string.IsNullOrEmpty(repository));
                 repository = value;
             }
             else
@@ -260,7 +261,7 @@ internal static class CommandFactory
         }
 
         CommandOptions.AssertMissing(CommandOptions.OptionAppName, result.AppNames.Count == 0);
-        CommandOptions.AssertMissing(CommandOptions.OptionRepository, repository.IsNullOrEmpty());
+        CommandOptions.AssertMissing(CommandOptions.OptionRepository, string.IsNullOrEmpty(repository));
 
         return result;
     }
