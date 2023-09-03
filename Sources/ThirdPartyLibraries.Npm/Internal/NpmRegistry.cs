@@ -36,8 +36,6 @@ internal sealed class NpmRegistry : INpmRegistry
         // https://registry.npmjs.org/@types/angular/-/angular-1.6.55.tgz
         var packageUrl = new Uri(versionEntry.Value<JObject>("dist")!.Value<string>("tarball")!);
 
-        var fileName = packageUrl.LocalPath.Substring(packageUrl.LocalPath.LastIndexOf('/') + 1);
-
         using (var client = _httpClientFactory())
         using (var stream = await client.GetStreamAsync(packageUrl).ConfigureAwait(false))
         {
