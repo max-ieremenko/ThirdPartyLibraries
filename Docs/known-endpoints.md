@@ -36,7 +36,7 @@ The endpoint is used only for downloading [The Code Project Open License (CPOL) 
 microsoft.com
 -------------
 
-By default configuration section `staticLicenseUrls` in the [appsettings.json](ThirdPartyLibraries/configuration/appsettings.json) contains
+By default configuration section `staticLicenseUrls` in the [appsettings.json](../ThirdPartyLibraries/configuration/appsettings.json) contains
 
 `MICROSOFT .NET LIBRARY` with following hardcoded URLS:
 - https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm
@@ -52,7 +52,7 @@ By default configuration section `staticLicenseUrls` in the [appsettings.json](T
 www.apache.org
 --------------
 
-By default configuration section `staticLicenseUrls` in the [appsettings.json](ThirdPartyLibraries/configuration/appsettings.json) contains
+By default configuration section `staticLicenseUrls` in the [appsettings.json](../ThirdPartyLibraries/configuration/appsettings.json) contains
 
 `Apache-2.0` with following hardcoded URLS:
 - http://www.apache.org/licenses/LICENSE-2.0
