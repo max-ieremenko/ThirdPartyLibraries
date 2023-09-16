@@ -25,9 +25,19 @@ public static class StorageExtensions
     public static async Task<LicenseIndexJson?> ReadLicenseIndexJsonAsync(this IStorage storage, string licenseCode, CancellationToken token)
     {
         var content = await storage.OpenLicenseFileReadAsync(licenseCode, IndexFileName, token).ConfigureAwait(false);
-        using (content)
+        try
         {
             return content?.JsonDeserialize<LicenseIndexJson>();
+        }
+        catch (Exception ex) when (!token.IsCancellationRequested)
+        {
+            throw new InvalidOperationException(
+                $"Failed to deserialize contents of {IndexFileName} of license {licenseCode}.",
+                ex);
+        }
+        finally
+        {
+            content?.Dispose();
         }
     }
 
@@ -41,16 +51,26 @@ public static class StorageExtensions
         }
         catch (IOException ex)
         {
-            throw new NotSupportedException("License cannot be updated.", ex);
+            throw new NotSupportedException($"License {model.Code} cannot be updated.", ex);
         }
     }
 
     public static async Task<TModel?> ReadLibraryIndexJsonAsync<TModel>(this IStorage storage, LibraryId id, CancellationToken token)
     {
         var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
-        using (content)
+        try
         {
             return content == null ? default : content.JsonDeserialize<TModel>();
+        }
+        catch (Exception ex) when (!token.IsCancellationRequested)
+        {
+            throw new InvalidOperationException(
+                $"Failed to deserialize contents of {IndexFileName} of package {id.SourceCode}/{id.Name}/{id.Version}.",
+                ex);
+        }
+        finally
+        {
+            content?.Dispose();
         }
     }
 
