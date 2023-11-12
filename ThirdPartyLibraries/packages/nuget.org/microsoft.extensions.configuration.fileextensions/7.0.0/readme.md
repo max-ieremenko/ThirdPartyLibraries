@@ -3,7 +3,7 @@ Microsoft.Extensions.Configuration.FileExtensions [7.0.0](https://www.nuget.org/
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net6.0, net7.0, netcoreapp3.1, netstandard2.1
+Target frameworks: net6.0, net7.0, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 

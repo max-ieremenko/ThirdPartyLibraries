@@ -9,7 +9,6 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netcoreapp3.1",
         "net6.0",
         "net7.0",
         "netstandard2.1"
@@ -20,14 +19,12 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://licenses.nuget.org/MIT",
-      "Description": null
+      "HRef": "https://licenses.nuget.org/MIT"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/DotNetAnalyzers/StyleCopAnalyzers",
-      "Description": null
+      "HRef": "https://github.com/DotNetAnalyzers/StyleCopAnalyzers"
     }
   ]
 }

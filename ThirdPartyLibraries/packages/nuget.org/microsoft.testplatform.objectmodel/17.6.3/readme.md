@@ -3,7 +3,7 @@ Microsoft.TestPlatform.ObjectModel [17.6.3](https://www.nuget.org/packages/Micro
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net7.0, netcoreapp3.1
+Target frameworks: net6.0, net7.0
 
 License: [ms-net-library](../../../../licenses/ms-net-library) 
 
