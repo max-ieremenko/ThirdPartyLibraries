@@ -9,7 +9,6 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": false,
       "TargetFrameworks": [
-        "netcoreapp3.1",
         "net6.0",
         "net7.0",
         "netstandard2.1"
@@ -20,8 +19,7 @@
     {
       "Subject": "package",
       "Code": "Apache-2.0",
-      "HRef": "https://licenses.nuget.org/Apache-2.0",
-      "Description": null
+      "HRef": "https://licenses.nuget.org/Apache-2.0"
     },
     {
       "Subject": "repository",
