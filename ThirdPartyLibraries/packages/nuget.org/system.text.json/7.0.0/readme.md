@@ -3,7 +3,7 @@ System.Text.Json [7.0.0](https://www.nuget.org/packages/System.Text.Json/7.0.0)
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net6.0, net7.0, netcoreapp3.1, netstandard2.1
+Target frameworks: net6.0, net7.0, net8.0, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
@@ -22,12 +22,11 @@ Remarks
 no remarks
 
 
-Dependencies 3
+Dependencies 2
 -----------
 
 |Name|Version|
 |----------|:----|
-|[Microsoft.Bcl.AsyncInterfaces](../../../../packages/nuget.org/microsoft.bcl.asyncinterfaces/7.0.0)|7.0.0|
 |[System.Runtime.CompilerServices.Unsafe](../../../../packages/nuget.org/system.runtime.compilerservices.unsafe/6.0.0)|6.0.0|
 |[System.Text.Encodings.Web](../../../../packages/nuget.org/system.text.encodings.web/7.0.0)|7.0.0|
 

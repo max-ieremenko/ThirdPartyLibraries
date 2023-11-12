@@ -3,7 +3,7 @@ NUnit3TestAdapter [4.5.0](https://www.nuget.org/packages/NUnit3TestAdapter/4.5.0
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net7.0, netcoreapp3.1
+Target frameworks: net6.0, net7.0, net8.0
 
 License: [MIT](../../../../licenses/mit) 
 

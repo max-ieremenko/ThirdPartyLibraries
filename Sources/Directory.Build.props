@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <SupportedFrameworks>netcoreapp3.1;net6.0;net7.0</SupportedFrameworks>
+    <SupportedFrameworks>net6.0;net7.0;net8.0</SupportedFrameworks>
     <OutputType>Library</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageVersion>3.4.1</DefaultPackageVersion>
+    <DefaultPackageVersion>3.5.0</DefaultPackageVersion>
 
     <Version>$(DefaultPackageVersion)</Version>
     <AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>

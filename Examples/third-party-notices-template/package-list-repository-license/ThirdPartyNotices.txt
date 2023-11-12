@@ -96,12 +96,12 @@ Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
     Copyright: Copyright © James Newton-King 2008
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
-NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.6.1)
+NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.7.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
-NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.6.1)
+NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.7.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://spdx.org/licenses/Apache-2.0 or in Licenses/Apache-2.0-license.txt

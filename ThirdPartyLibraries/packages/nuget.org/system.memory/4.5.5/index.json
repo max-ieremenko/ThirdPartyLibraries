@@ -9,9 +9,9 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": false,
       "TargetFrameworks": [
-        "netcoreapp3.1",
         "net6.0",
         "net7.0",
+        "net8.0",
         "netstandard2.1"
       ],
       "Dependencies": [
@@ -24,12 +24,12 @@
           "Version": "4.5.0"
         },
         {
-          "Name": "System.Runtime.CompilerServices.Unsafe",
-          "Version": "6.0.0"
-        },
-        {
           "Name": "System.Numerics.Vectors",
           "Version": "4.4.0"
+        },
+        {
+          "Name": "System.Runtime.CompilerServices.Unsafe",
+          "Version": "6.0.0"
         },
         {
           "Name": "System.Runtime.CompilerServices.Unsafe",
@@ -42,8 +42,7 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
-      "Description": null
+      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT"
     },
     {
       "Subject": "project",
