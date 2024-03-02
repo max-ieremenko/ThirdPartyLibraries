@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageVersion>3.5.0</DefaultPackageVersion>
+    <DefaultPackageVersion>3.5.1</DefaultPackageVersion>
 
     <Version>$(DefaultPackageVersion)</Version>
     <AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
