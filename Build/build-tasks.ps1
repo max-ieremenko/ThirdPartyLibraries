@@ -126,10 +126,13 @@ task PsCoreTest {
         , "mcr.microsoft.com/powershell:7.2.0-ubuntu-20.04"
         , "mcr.microsoft.com/powershell:7.2.1-ubuntu-20.04"
         , "mcr.microsoft.com/powershell:7.2.2-ubuntu-20.04"
-        , "mcr.microsoft.com/powershell:7.3-ubuntu-20.04")
+        , "mcr.microsoft.com/powershell:7.3-ubuntu-20.04"
+        , "mcr.microsoft.com/powershell:7.4-ubuntu-20.04")
 
     $builds = @()
     foreach ($image in $images) {
+        exec { docker pull --quiet $image }
+        
         $builds += @{
             File           = "tasks/test-ps-module.ps1"
             PowerShellPath = (Join-Path $settings.output "pwsh.zip")
