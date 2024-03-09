@@ -11,82 +11,82 @@ DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.692)
     Authors: Tim Jones, Alessandro Petrelli
     License: Apache License 2.0, full text can be found at http://www.apache.org/licenses/LICENSE-2.0 or in Licenses/dotliquid.txt
 
-Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/7.0.0)
+Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration (https://www.nuget.org/packages/Microsoft.Extensions.Configuration/7.0.0)
+Microsoft.Extensions.Configuration (https://www.nuget.org/packages/Microsoft.Extensions.Configuration/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions/7.0.0)
+Microsoft.Extensions.Configuration.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.Binder (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/7.0.4)
+Microsoft.Extensions.Configuration.Binder (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/8.0.1)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.EnvironmentVariables (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.EnvironmentVariables/7.0.0)
+Microsoft.Extensions.Configuration.EnvironmentVariables (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.EnvironmentVariables/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.FileExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/7.0.0)
+Microsoft.Extensions.Configuration.FileExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.Json (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/7.0.0)
+Microsoft.Extensions.Configuration.Json (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.UserSecrets (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/7.0.0)
+Microsoft.Extensions.Configuration.UserSecrets (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.DependencyInjection (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/7.0.0)
+Microsoft.Extensions.DependencyInjection (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.DependencyInjection.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0)
+Microsoft.Extensions.DependencyInjection.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.FileProviders.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/7.0.0)
+Microsoft.Extensions.FileProviders.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.FileProviders.Physical (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/7.0.0)
+Microsoft.Extensions.FileProviders.Physical (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.FileSystemGlobbing (https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/7.0.0)
+Microsoft.Extensions.FileSystemGlobbing (https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Options (https://www.nuget.org/packages/Microsoft.Extensions.Options/7.0.0)
+Microsoft.Extensions.Options (https://www.nuget.org/packages/Microsoft.Extensions.Options/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Options.ConfigurationExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/7.0.0)
+Microsoft.Extensions.Options.ConfigurationExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/7.0.0)
+Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
@@ -96,12 +96,12 @@ Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
     Copyright: Copyright © James Newton-King 2008
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/newtonsoft.json.md
 
-NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.7.0)
+NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.9.1)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
-NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.7.0)
+NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.9.1)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
@@ -121,17 +121,17 @@ System.Buffers (https://www.nuget.org/packages/System.Buffers/4.5.1)
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://github.com/dotnet/corefx/blob/master/LICENSE.TXT or in Licenses/dotnet.txt
 
+System.ComponentModel.Annotations (https://www.nuget.org/packages/System.ComponentModel.Annotations/5.0.0)
+    Authors: Microsoft
+    Copyright: © Microsoft Corporation. All rights reserved.
+    License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
+
 System.Memory (https://www.nuget.org/packages/System.Memory/4.5.5)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://github.com/dotnet/corefx/blob/master/LICENSE.TXT or in Licenses/dotnet.txt
 
 System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)
-    Authors: Microsoft
-    Copyright: © Microsoft Corporation.  All rights reserved.
-    License: MIT License, full text can be found at https://github.com/dotnet/corefx/blob/master/LICENSE.TXT or in Licenses/dotnet.txt
-
-System.Numerics.Vectors (https://www.nuget.org/packages/System.Numerics.Vectors/4.5.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation.  All rights reserved.
     License: MIT License, full text can be found at https://github.com/dotnet/corefx/blob/master/LICENSE.TXT or in Licenses/dotnet.txt
@@ -146,12 +146,12 @@ System.Runtime.Loader (https://www.nuget.org/packages/System.Runtime.Loader/4.3.
     Copyright: © Microsoft Corporation.  All rights reserved.
     License: MICROSOFT .NET LIBRARY, full text can be found at http://go.microsoft.com/fwlink/?LinkId=329770 or in Licenses/system.runtime.loader.txt
 
-System.Text.Encodings.Web (https://www.nuget.org/packages/System.Text.Encodings.Web/7.0.0)
+System.Text.Encodings.Web (https://www.nuget.org/packages/System.Text.Encodings.Web/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-System.Text.Json (https://www.nuget.org/packages/System.Text.Json/7.0.0)
+System.Text.Json (https://www.nuget.org/packages/System.Text.Json/8.0.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
