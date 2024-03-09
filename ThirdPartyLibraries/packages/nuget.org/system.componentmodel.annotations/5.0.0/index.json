@@ -9,9 +9,6 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": false,
       "TargetFrameworks": [
-        "net6.0",
-        "net7.0",
-        "net8.0",
         "netstandard2.1"
       ]
     }
@@ -20,13 +17,17 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT"
+      "HRef": "https://licenses.nuget.org/MIT"
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "git://github.com/dotnet/runtime"
     },
     {
       "Subject": "project",
-      "Code": null,
-      "HRef": "https://dot.net/",
-      "Description": "License should be verified on https://dot.net/"
+      "Code": "MIT",
+      "HRef": "https://github.com/dotnet/runtime"
     }
   ]
 }

@@ -16,20 +16,20 @@
       ],
       "Dependencies": [
         {
-          "Name": "System.Buffers",
-          "Version": "4.5.1"
+          "Name": "Microsoft.Extensions.Configuration.Abstractions",
+          "Version": "8.0.0"
         },
         {
-          "Name": "System.Numerics.Vectors",
-          "Version": "4.4.0"
+          "Name": "Microsoft.Extensions.Configuration.Json",
+          "Version": "8.0.0"
         },
         {
-          "Name": "System.Runtime.CompilerServices.Unsafe",
-          "Version": "6.0.0"
+          "Name": "Microsoft.Extensions.FileProviders.Abstractions",
+          "Version": "8.0.0"
         },
         {
-          "Name": "System.Runtime.CompilerServices.Unsafe",
-          "Version": "4.5.3"
+          "Name": "Microsoft.Extensions.FileProviders.Physical",
+          "Version": "8.0.0"
         }
       ]
     }
@@ -38,13 +38,17 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT"
+      "HRef": "https://licenses.nuget.org/MIT"
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/dotnet/runtime"
     },
     {
       "Subject": "project",
       "Code": null,
-      "HRef": "https://dot.net/",
-      "Description": "License should be verified on https://dot.net/"
+      "HRef": "https://dot.net/"
     }
   ]
 }

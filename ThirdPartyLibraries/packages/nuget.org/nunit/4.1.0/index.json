@@ -7,12 +7,15 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false,
+      "InternalOnly": true,
       "TargetFrameworks": [
-        "net6.0",
-        "net7.0",
-        "net8.0",
         "netstandard2.1"
+      ],
+      "Dependencies": [
+        {
+          "Name": "System.Threading.Tasks.Extensions",
+          "Version": "4.5.4"
+        }
       ]
     }
   ],
@@ -20,13 +23,17 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT"
+      "HRef": "https://licenses.nuget.org/MIT"
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/nunit/nunit"
     },
     {
       "Subject": "project",
       "Code": null,
-      "HRef": "https://dot.net/",
-      "Description": "License should be verified on https://dot.net/"
+      "HRef": "https://nunit.org/"
     }
   ]
 }
