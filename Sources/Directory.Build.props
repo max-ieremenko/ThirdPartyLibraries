@@ -30,7 +30,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases/tag/$(DefaultPackageVersion)</PackageReleaseNotes>
     <PackageTags>licenses third-party-notice third-party-libraries nuget-references</PackageTags>
     <Description>This command line tool helps to manage third party libraries and their licenses in .net applications.</Description>
   </PropertyGroup>
