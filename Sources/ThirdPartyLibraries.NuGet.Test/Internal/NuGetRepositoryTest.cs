@@ -54,7 +54,7 @@ public class NuGetRepositoryTest
                 version)
             .ToLowerInvariant();
         Console.WriteLine(path);
-        DirectoryAssert.Exists(path);
+        Assert.That(path, Does.Exist.IgnoreFiles);
 
         var file = await _sut.TryGetPackageFromCacheAsync("Newtonsoft.Json", version, default).ConfigureAwait(false);
 

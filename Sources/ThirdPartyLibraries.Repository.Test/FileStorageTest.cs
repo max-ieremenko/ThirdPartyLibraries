@@ -40,7 +40,7 @@ public class FileStorageTest
     [TestCase("npmjs.com", "@types/angular", "1.6.51", null, null, null)]
     [TestCase("npmjs.com", "angular", "1.7.5", "npmjs.com", "@types/angular", "1.6.51")]
     [TestCase("npmjs.com", "@types/angular", "1.6.51", "npmjs.com", "angular", "1.7.5")]
-    public void GetPackageLocalHRef(string librarySourceCode, string libraryName, string libraryVersion, string relativeSourceCode, string relativeName, string relativeVersion)
+    public void GetPackageLocalHRef(string librarySourceCode, string libraryName, string libraryVersion, string? relativeSourceCode, string relativeName, string relativeVersion)
     {
         var currentLocation = _location.Location;
         LibraryId? relativeTo = null;
@@ -50,7 +50,7 @@ public class FileStorageTest
             currentLocation = Path.Combine(currentLocation, "packages", relativeSourceCode, relativeName, relativeVersion);
         }
 
-        DirectoryAssert.Exists(currentLocation);
+        Assert.That(currentLocation, Does.Exist.IgnoreFiles);
 
         var actual = _sut.GetPackageLocalHRef(new LibraryId(librarySourceCode, libraryName, libraryVersion), relativeTo);
         Console.WriteLine(actual);
@@ -58,8 +58,8 @@ public class FileStorageTest
         actual.ShouldBe(actual.ToLowerInvariant());
 
         var packageLocation = Path.Combine(currentLocation, actual);
-        DirectoryAssert.Exists(packageLocation);
-        FileAssert.Exists(Path.Combine(packageLocation, "index.json"));
+        Assert.That(packageLocation, Does.Exist.IgnoreFiles);
+        Assert.That(Path.Combine(packageLocation, "index.json"), Does.Exist.IgnoreDirectories);
     }
 
     [Test]
@@ -67,7 +67,7 @@ public class FileStorageTest
     [TestCase("MIT", "nuget.org", "newtonsoft.json", "12.0.2")]
     [TestCase("MIT", "npmjs.com", "@types/angular", "1.6.51")]
     [TestCase("MIT", "npmjs.com", "angular", "1.7.5")]
-    public void GetLicenseLocalHRef(string licenseCode, string librarySourceCode, string libraryName, string libraryVersion)
+    public void GetLicenseLocalHRef(string licenseCode, string? librarySourceCode, string libraryName, string libraryVersion)
     {
         var currentLocation = _location.Location;
         LibraryId? relativeTo = null;
@@ -77,7 +77,7 @@ public class FileStorageTest
             currentLocation = Path.Combine(currentLocation, "packages", librarySourceCode, libraryName, libraryVersion);
         }
 
-        DirectoryAssert.Exists(currentLocation);
+        Assert.That(currentLocation, Does.Exist.IgnoreFiles);
 
         var actual = _sut.GetLicenseLocalHRef(licenseCode, relativeTo);
         Console.WriteLine(actual);
@@ -85,8 +85,8 @@ public class FileStorageTest
         actual.ShouldBe(actual.ToLowerInvariant());
 
         var licenseLocation = Path.Combine(currentLocation, actual);
-        DirectoryAssert.Exists(licenseLocation);
-        FileAssert.Exists(Path.Combine(licenseLocation, "index.json"));
+        Assert.That(licenseLocation, Does.Exist.IgnoreFiles);
+        Assert.That(Path.Combine(licenseLocation, "index.json"), Does.Exist.IgnoreDirectories);
     }
 
     [Test]
@@ -231,11 +231,11 @@ public class FileStorageTest
     public async Task RemoveLibrary()
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
-        DirectoryAssert.Exists(_sut.GetPackageLocation(id));
+        Assert.That(_sut.GetPackageLocation(id), Does.Exist.IgnoreFiles);
 
         await _sut.RemoveLibraryAsync(id, default).ConfigureAwait(false);
 
-        DirectoryAssert.DoesNotExist(Path.GetDirectoryName(_sut.GetPackageLocation(id)));
+        Assert.That(Path.GetDirectoryName(_sut.GetPackageLocation(id)), Does.Not.Exist);
     }
 
     [Test]
