@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -36,30 +35,18 @@ internal sealed class FileStorage : IStorage
     public Task<List<LibraryId>> GetAllLibrariesAsync(CancellationToken token)
     {
         var result = new List<LibraryId>(0);
-        var root = Path.Combine(Location, FolderPackages);
-        if (!Directory.Exists(root))
+        var root = new LibraryPath(Path.Combine(Location, FolderPackages));
+        if (!root.Exists)
         {
             return Task.FromResult(result);
         }
 
-        var indexes = Directory.GetFiles(root, StorageExtensions.IndexFileName, SearchOption.AllDirectories);
+        var indexes = root.GetFiles(StorageExtensions.IndexFileName);
 
         result.Capacity = indexes.Length;
-        foreach (var fileName in indexes)
+        foreach (var file in indexes)
         {
-            var fullName = fileName.AsSpan().Slice(root.Length + 1);
-            fullName = fullName.Slice(0, fullName.Length - StorageExtensions.IndexFileName.Length - 1);
-
-            var index = fullName.IndexOf(Path.DirectorySeparatorChar);
-            var source = fullName.Slice(0, index).ToString();
-
-            fullName = fullName.Slice(index + 1);
-            index = fullName.LastIndexOf(Path.DirectorySeparatorChar);
-            var version = fullName.Slice(index + 1).ToString();
-
-            var name = fullName.Slice(0, index).ToString().Replace('\\', '/');
-
-            result.Add(new LibraryId(source, name, version));
+            result.Add(root.AsLibraryId(file.Directory!));
         }
 
         result.Sort();
@@ -122,7 +109,7 @@ internal sealed class FileStorage : IStorage
         if (relativeTo != null)
         {
             var depth = relativeTo.Value.Name.Count(i => i == '/');
-            connectionString = string.Join(string.Empty, Enumerable.Repeat(@".." + Path.DirectorySeparatorChar, depth + 4));
+            connectionString = string.Join(string.Empty, Enumerable.Repeat(".." + Path.DirectorySeparatorChar, depth + 4));
         }
 
         var href = GetPackageLocation(connectionString, id.SourceCode, id.Name, id.Version);
@@ -179,20 +166,13 @@ internal sealed class FileStorage : IStorage
 
     public Task RemoveLibraryAsync(LibraryId id, CancellationToken token)
     {
-        var location = GetPackageLocation(id);
-        if (!Directory.Exists(location))
+        var child = new DirectoryInfo(GetPackageLocation(id));
+        if (!child.Exists)
         {
             return Task.CompletedTask;
         }
 
-        Directory.Delete(location, true);
-            
-        var parent = Path.GetDirectoryName(location);
-        if (Directory.GetDirectories(parent).Length == 0)
-        {
-            Directory.Delete(parent, true);
-        }
-
+        new LibraryPath(Path.Combine(Location, FolderPackages)).RemoveLibrary(child);
         return Task.CompletedTask;
     }
 
