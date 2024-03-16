@@ -3,9 +3,8 @@ Third party libraries
 
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 
-bootstrap (https://www.npmjs.com/package/bootstrap/v/4.6.1)
-    Authors: The Bootstrap Authors
-    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/bootstrap
+chalk (https://www.npmjs.com/package/chalk/v/5.3.0)
+    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/chalk
 
 DotLiquid (https://www.nuget.org/packages/DotLiquid/2.2.692)
     Authors: Tim Jones, Alessandro Petrelli
