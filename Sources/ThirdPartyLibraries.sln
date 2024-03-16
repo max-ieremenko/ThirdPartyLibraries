@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyLibraries.Domain.Test", "ThirdPartyLibraries.Domain.Test\ThirdPartyLibraries.Domain.Test.csproj", "{CA0E9957-5D23-4E32-807B-6170288DF655}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ThirdPartyLibraries.Npm.Demo", "ThirdPartyLibraries.Npm.Demo\ThirdPartyLibraries.Npm.Demo.njsproj", "{BD381C7B-E6E5-4135-8E44-84685C3E6B7B}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ThirdPartyLibraries.Npm.Demo", "ThirdPartyLibraries.Npm.Demo\ThirdPartyLibraries.Npm.Demo.esproj", "{42A196BF-823E-4691-BB5B-42BA2254184D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,10 +145,12 @@ Global
 		{CA0E9957-5D23-4E32-807B-6170288DF655}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA0E9957-5D23-4E32-807B-6170288DF655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA0E9957-5D23-4E32-807B-6170288DF655}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD381C7B-E6E5-4135-8E44-84685C3E6B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD381C7B-E6E5-4135-8E44-84685C3E6B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD381C7B-E6E5-4135-8E44-84685C3E6B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD381C7B-E6E5-4135-8E44-84685C3E6B7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A196BF-823E-4691-BB5B-42BA2254184D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A196BF-823E-4691-BB5B-42BA2254184D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A196BF-823E-4691-BB5B-42BA2254184D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{42A196BF-823E-4691-BB5B-42BA2254184D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A196BF-823E-4691-BB5B-42BA2254184D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A196BF-823E-4691-BB5B-42BA2254184D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
