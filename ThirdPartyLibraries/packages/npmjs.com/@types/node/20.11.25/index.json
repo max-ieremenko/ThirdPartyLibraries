@@ -6,27 +6,26 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false
+      "InternalOnly": true
     }
   ],
   "Licenses": [
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": null,
-      "Description": null
+      "HRef": "LICENSE"
     },
     {
       "Subject": "repository",
-      "Code": "MIT",
-      "HRef": "https://github.com/twbs/bootstrap.git",
-      "Description": null
+      "Code": null,
+      "HRef": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+      "Description": "License code NOASSERTION"
     },
     {
       "Subject": "homepage",
       "Code": null,
-      "HRef": "https://getbootstrap.com/",
-      "Description": "License should be verified on https://getbootstrap.com/"
+      "HRef": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "Description": "License code NOASSERTION"
     }
   ]
 }

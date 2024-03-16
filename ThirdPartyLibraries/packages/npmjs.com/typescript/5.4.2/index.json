@@ -1,0 +1,29 @@
+{
+  "License": {
+    "Code": "Apache-2.0",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "Apache-2.0",
+      "HRef": "LICENSE.txt"
+    },
+    {
+      "Subject": "repository",
+      "Code": "Apache-2.0",
+      "HRef": "https://github.com/Microsoft/TypeScript.git"
+    },
+    {
+      "Subject": "homepage",
+      "Code": null,
+      "HRef": "https://www.typescriptlang.org/"
+    }
+  ]
+}
