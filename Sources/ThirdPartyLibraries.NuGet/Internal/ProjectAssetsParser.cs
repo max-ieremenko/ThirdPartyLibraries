@@ -94,6 +94,25 @@ internal readonly struct ProjectAssetsParser
         return dependenciesByPackage.Select(i => (i.Key, i.Value));
     }
 
+    public List<Uri> GetPackageSources()
+    {
+        var result = new List<Uri>();
+
+        var sources = Content.Value<JObject>("project")!.Value<JObject>("restore")!.Value<JObject>("sources");
+        if (sources != null)
+        {
+            foreach (var property in sources.Properties())
+            {
+                if (Uri.TryCreate(property.Name, UriKind.Absolute, out var path))
+                {
+                    result.Add(path);
+                }
+            }
+        }
+
+        return result;
+    }
+
     internal static string MapTargetFrameworkProjFormatToNuGetFormat(string projFormat)
     {
         var framework = NuGetFramework.Parse(projFormat);

@@ -10,15 +10,15 @@ namespace ThirdPartyLibraries.NuGet.Internal;
 
 internal sealed class NuGetPackageLoader : IPackageLoader
 {
-    private readonly LibraryId _libraryId;
+    private readonly NuGetPackageReference _nuget;
     private readonly NuGetConfiguration _configuration;
     private readonly INuGetRepository _repository;
 
     private byte[]? _packageContentCache;
 
-    public NuGetPackageLoader(LibraryId libraryId, NuGetConfiguration configuration, INuGetRepository repository)
+    public NuGetPackageLoader(NuGetPackageReference nuget, NuGetConfiguration configuration, INuGetRepository repository)
     {
-        _libraryId = libraryId;
+        _nuget = nuget;
         _configuration = configuration;
         _repository = repository;
     }
@@ -39,7 +39,7 @@ internal sealed class NuGetPackageLoader : IPackageLoader
         if (_configuration.AllowToUseLocalCache)
         {
             // the fast way to get the content, skip caching
-            var content = await _repository.TryGetPackageFromCacheAsync(_libraryId.Name, _libraryId.Version, token).ConfigureAwait(false);
+            var content = await _repository.TryGetPackageFromCacheAsync(_nuget.Id.Name, _nuget.Id.Version, _nuget.Sources, token).ConfigureAwait(false);
             if (content != null)
             {
                 return content;
@@ -48,12 +48,12 @@ internal sealed class NuGetPackageLoader : IPackageLoader
 
         if (_packageContentCache == null)
         {
-            _packageContentCache = await _repository.TryDownloadPackageAsync(_libraryId.Name, _libraryId.Version, token).ConfigureAwait(false);
+            _packageContentCache = await _repository.TryDownloadPackageAsync(_nuget.Id.Name, _nuget.Id.Version, token).ConfigureAwait(false);
         }
 
         if (_packageContentCache == null)
         {
-            throw new InvalidOperationException($"The nuget package {_libraryId.Name} {_libraryId.Version} not found.");
+            throw new InvalidOperationException($"The nuget package {_nuget.Id.Name} {_nuget.Id.Version} not found.");
         }
 
         return _packageContentCache;
@@ -62,13 +62,13 @@ internal sealed class NuGetPackageLoader : IPackageLoader
     public async Task<byte[]> GetSpecContentAsync(CancellationToken token)
     {
         var packageContent = await DownloadPackageAsync(token).ConfigureAwait(false);
-        var result = await NuGetPackage.ExtractSpecAsync(_libraryId.Name, packageContent, token).ConfigureAwait(false);
+        var result = await NuGetPackage.ExtractSpecAsync(_nuget.Id.Name, packageContent, token).ConfigureAwait(false);
         return result;
     }
 
     public string? ResolvePackageSource()
     {
-        return _repository.ResolvePackageSource(_libraryId.Name, _libraryId.Version);
+        return _repository.ResolvePackageSource(_nuget.Id.Name, _nuget.Id.Version, _nuget.Sources);
     }
 
     public List<PackageSpecLicense> GetLicenses(Stream specContent)

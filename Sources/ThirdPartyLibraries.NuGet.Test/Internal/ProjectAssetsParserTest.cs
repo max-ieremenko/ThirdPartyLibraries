@@ -2,7 +2,6 @@
 using System.Linq;
 using NUnit.Framework;
 using Shouldly;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
 
@@ -91,6 +90,22 @@ public class ProjectAssetsParserTest
     public void MapTargetFrameworkProjFormatToNuGetFormat(string projFormat, string expected)
     {
         ProjectAssetsParser.MapTargetFrameworkProjFormatToNuGetFormat(projFormat).ShouldBe(expected);
+    }
+
+    [Test]
+    public void GetPackageSources()
+    {
+        CreateSut("project").GetPackageSources().ShouldBe(
+        [
+            new Uri(@"C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\", UriKind.Absolute),
+            new Uri(@"https://api.nuget.org/v3/index.json", UriKind.Absolute)
+        ]);
+    }
+
+    [Test]
+    public void GetPackageSourcesNotFound()
+    {
+        CreateSut("invalid-project").GetPackageSources().ShouldBeEmpty();
     }
 
     private static ProjectAssetsParser CreateSut(string fileName)
