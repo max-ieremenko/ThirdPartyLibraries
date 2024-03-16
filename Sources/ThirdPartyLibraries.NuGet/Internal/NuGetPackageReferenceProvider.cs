@@ -40,6 +40,7 @@ internal sealed class NuGetPackageReferenceProvider : IPackageReferenceProvider
         var parser = ProjectAssetsParser.FromFile(fileName);
 
         var targetFrameworks = parser.GetTargetFrameworks();
+        var sources = parser.GetPackageSources();
 
         var internalFilterByName = new IgnoreFilter(_configuration.InternalPackages.ByName);
         var isInternalByProject = new IgnoreFilter(_configuration.InternalPackages.ByProjectName).Filter(parser.GetProjectName());
@@ -52,7 +53,8 @@ internal sealed class NuGetPackageReferenceProvider : IPackageReferenceProvider
                 NuGetLibraryId.New(entry.Package.Name, entry.Package.Version),
                 targetFrameworks,
                 entry.Dependencies,
-                isInternal);
+                isInternal,
+                sources);
             references.Add(reference);
         }
     }

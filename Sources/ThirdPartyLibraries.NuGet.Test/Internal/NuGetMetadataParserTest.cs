@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Shouldly;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
@@ -11,10 +12,9 @@ public class NuGetMetadataParserTest
     {
         using var stream = TempFile.OpenResource(GetType(), "NuGetMetadataParserTest.metadata2.json");
 
-        var actual = NuGetMetadataParser.Parse(stream);
+        NuGetMetadataParser.TryGetSource(stream, out var actual).ShouldBeTrue();
 
-        actual.Version.ShouldBe(2);
-        actual.Source.ShouldBe("https://nuget.pkg.github.com/organization/index.json");
+        actual.ShouldBe(new Uri("https://nuget.pkg.github.com/organization/index.json", UriKind.Absolute));
     }
 
     [Test]
@@ -22,9 +22,8 @@ public class NuGetMetadataParserTest
     {
         using var stream = TempFile.OpenResource(GetType(), "NuGetMetadataParserTest.metadata1.json");
 
-        var actual = NuGetMetadataParser.Parse(stream);
+        NuGetMetadataParser.TryGetSource(stream, out var actual).ShouldBeFalse();
 
-        actual.Version.ShouldBe(1);
-        actual.Source.ShouldBeNull();
+        actual.ShouldBeNull();
     }
 }

@@ -19,7 +19,7 @@ internal sealed class NuGetPackageLoaderFactory : IPackageLoaderFactory
     {
         if (reference is NuGetPackageReference nuget)
         {
-            return new NuGetPackageLoader(nuget.Id, _configuration, _repository);
+            return new NuGetPackageLoader(nuget, _configuration, _repository);
         }
 
         return null;

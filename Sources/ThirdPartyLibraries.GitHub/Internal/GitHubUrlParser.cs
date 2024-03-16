@@ -112,8 +112,7 @@ internal static class GitHubUrlParser
 
     private static bool KnownScheme(Uri url)
     {
-        return Uri.UriSchemeHttp.Equals(url.Scheme, StringComparison.OrdinalIgnoreCase)
-               || Uri.UriSchemeHttps.Equals(url.Scheme, StringComparison.OrdinalIgnoreCase)
+        return url.IsHttpOrHttps()
                || "git".Equals(url.Scheme, StringComparison.OrdinalIgnoreCase);
     }
 }

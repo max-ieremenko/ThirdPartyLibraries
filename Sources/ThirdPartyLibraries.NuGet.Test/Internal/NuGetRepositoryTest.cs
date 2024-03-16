@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -8,7 +9,6 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using Shouldly;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
 
@@ -56,7 +56,7 @@ public class NuGetRepositoryTest
         Console.WriteLine(path);
         Assert.That(path, Does.Exist.IgnoreFiles);
 
-        var file = await _sut.TryGetPackageFromCacheAsync("Newtonsoft.Json", version, default).ConfigureAwait(false);
+        var file = await _sut.TryGetPackageFromCacheAsync("Newtonsoft.Json", version, new List<Uri>(), default).ConfigureAwait(false);
 
         file.ShouldNotBeNull();
     }

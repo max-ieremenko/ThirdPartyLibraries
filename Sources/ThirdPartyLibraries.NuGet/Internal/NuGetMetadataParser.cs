@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.Shared;
 
@@ -6,10 +8,18 @@ namespace ThirdPartyLibraries.NuGet.Internal;
 
 internal static class NuGetMetadataParser
 {
-    public static NuGetMetadata Parse(Stream stream)
+    public static bool TryGetSource(string fileName, [NotNullWhen(true)] out Uri? source)
+    {
+        using (var stream = File.OpenRead(fileName))
+        {
+            return TryGetSource(stream, out source);
+        }
+    }
+
+    public static bool TryGetSource(Stream stream, [NotNullWhen(true)] out Uri? source)
     {
         var content = stream.JsonDeserialize<JObject>();
-
-        return new NuGetMetadata(content.Value<int>("version")!, content.Value<string>("source")!);
+        var path = content.Value<string>("source");
+        return Uri.TryCreate(path, UriKind.Absolute, out source);
     }
 }
