@@ -26,7 +26,7 @@
     <PackageVersion Include="Shouldly" Version="4.2.1" />
     <PackageVersion Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(UsingMicrosoftNETSdk)' == 'true'">
     <PackageReference Include="StyleCop.Analyzers.Unstable" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
     <PackageReference Include="ConfigureAwaitChecker.Analyzer" PrivateAssets="all" />

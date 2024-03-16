@@ -7,7 +7,6 @@ node_modules/
 launchSettings.json
 *.sln.DotSettings.user
 *.csproj.user
-
-package-lock.json
+*.esproj.user
 
 todo.txt
