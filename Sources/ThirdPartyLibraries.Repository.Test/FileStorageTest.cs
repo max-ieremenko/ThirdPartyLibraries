@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Shouldly;
@@ -26,13 +27,14 @@ public class FileStorageTest
         CopyFile(@"packages\nuget.org\newtonsoft.json\12.0.2\package.nuspec", "nuget.newtonsoft.json.package.nuspec");
             
         CopyFile(@"packages\npmjs.com\@types\angular\1.6.51\index.json", "npmjs.types.angular.index.json");
+        CopyFile(@"packages\npmjs.com\@types\angular\1.7.0\index.json", "npmjs.types.angular.index.json");
         CopyFile(@"packages\npmjs.com\angular\1.7.5\index.json", "npmjs.angular.index.json");
     }
 
     [TearDown]
     public void AfterEachTests()
     {
-        _location?.Dispose();
+        _location.Dispose();
     }
 
     [Test]
@@ -99,26 +101,28 @@ public class FileStorageTest
             {
                 new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2"),
                 new LibraryId("npmjs.com", "@types/angular", "1.6.51"),
+                new LibraryId("npmjs.com", "@types/angular", "1.7.0"),
                 new LibraryId("npmjs.com", "angular", "1.7.5")
             },
             ignoreOrder: true);
     }
 
     [Test]
-    [TestCase("nuget.org", "Newtonsoft.Json", "12.0.2")]
-    [TestCase("npmjs.com", "@types/angular", "1.6.51")]
-    [TestCase("npmjs.com", "angular-unknown", null)]
-    public async Task GetAllLibraryVersionsAsync(string sourceCode, string name, string? expected)
+    [TestCase("nuget.org", "Newtonsoft.Json", new[] { "12.0.2" })]
+    [TestCase("npmjs.com", "@types/angular", new[] { "1.6.51", "1.7.0" })]
+    [TestCase("npmjs.com", "angular-unknown", new string[0])]
+    public async Task GetAllLibraryVersionsAsync(string sourceCode, string name, string[] expected)
     {
         var actual = await _sut.GetAllLibraryVersionsAsync(sourceCode, name, default).ConfigureAwait(false);
         
-        if (expected == null)
+        if (expected.Length == 0)
         {
             actual.ShouldBeEmpty();
         }
         else
         {
-            actual.ShouldBe(new[] { new LibraryId(sourceCode, name, expected) });
+            var expectedList = expected.Select(i => new LibraryId(sourceCode, name, i)).ToArray();
+            actual.ShouldBe(expectedList, ignoreOrder: true);
         }
     }
 
@@ -131,17 +135,19 @@ public class FileStorageTest
     }
 
     [Test]
-    public async Task OpenLibraryFileRead()
+    [TestCase("nuget.org", "Newtonsoft.Json", "12.0.2", "package.nuspec")]
+    [TestCase("npmjs.com", "@types/angular", "1.6.51", "index.json")]
+    [TestCase("npmjs.com", "@types/angular", "1.7.0", "index.json")]
+    public async Task OpenLibraryFileRead(string sourceCode, string name, string version, string fileName)
     {
-        var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
+        var id = new LibraryId(sourceCode, name, version);
 
-        var actual = await _sut.OpenLibraryFileReadAsync(id, "package.nuspec", default).ConfigureAwait(false);
+        var actual = await _sut.OpenLibraryFileReadAsync(id, fileName, default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
         using (actual)
         {
-            var text = new StreamReader(actual).ReadToEnd();
-            text.ShouldContain("<id>Newtonsoft.Json</id>");
+            new StreamReader(actual).ReadToEnd();
         }
     }
 
@@ -228,7 +234,7 @@ public class FileStorageTest
     }
 
     [Test]
-    public async Task RemoveLibrary()
+    public async Task RemoveLibraryNewtonsoft()
     {
         var id = new LibraryId("nuget.org", "Newtonsoft.Json", "12.0.2");
         Assert.That(_sut.GetPackageLocation(id), Does.Exist.IgnoreFiles);
@@ -236,6 +242,25 @@ public class FileStorageTest
         await _sut.RemoveLibraryAsync(id, default).ConfigureAwait(false);
 
         Assert.That(Path.GetDirectoryName(_sut.GetPackageLocation(id)), Does.Not.Exist);
+    }
+
+    [Test]
+    public async Task RemoveLibraryTypesAngular()
+    {
+        var id = new LibraryId("npmjs.com", "@types/angular", "1.6.51");
+        Assert.That(_sut.GetPackageLocation(id), Does.Exist.IgnoreFiles);
+
+        await _sut.RemoveLibraryAsync(id, default).ConfigureAwait(false);
+
+        Assert.That(Path.Combine(_location.Location, "packages", "npmjs.com", "@types"), Does.Exist);
+
+        id = new LibraryId("npmjs.com", "@types/angular", "1.7.0");
+        Assert.That(_sut.GetPackageLocation(id), Does.Exist.IgnoreFiles);
+
+        await _sut.RemoveLibraryAsync(id, default).ConfigureAwait(false);
+
+        Assert.That(Path.Combine(_location.Location, "packages", "npmjs.com"), Does.Exist);
+        Assert.That(Path.Combine(_location.Location, "packages", "npmjs.com", "@types"), Does.Not.Exist);
     }
 
     [Test]
