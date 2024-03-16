@@ -24,7 +24,7 @@ public sealed class UriSimpleComparer : IEqualityComparer<Uri>
             || QueriesEqual(subSet, superSet);
     }
 
-    public static bool HttpAndHostsEqual(Uri url, string host) => IsHttp(url.Scheme) && HostsEqual(url.Host, host);
+    public static bool HttpAndHostsEqual(Uri url, string host) => url.IsHttpOrHttps() && HostsEqual(url.Host, host);
 
     public static bool GetDirectoryName(ReadOnlySpan<char> path, out ReadOnlySpan<char> directory, out ReadOnlySpan<char> rest)
     {
@@ -71,7 +71,7 @@ public sealed class UriSimpleComparer : IEqualityComparer<Uri>
     private static bool SchemesEqual(Uri x, Uri y)
     {
         return x.Scheme.Equals(y.Scheme, StringComparison.OrdinalIgnoreCase)
-            || (IsHttp(x.Scheme) && IsHttp(y.Scheme));
+            || (x.IsHttpOrHttps() && y.IsHttpOrHttps());
     }
 
     private static bool HostsEqual(string x, string y) => x.Equals(y, StringComparison.OrdinalIgnoreCase);
@@ -79,9 +79,6 @@ public sealed class UriSimpleComparer : IEqualityComparer<Uri>
     private static bool PathsEqual(Uri x, Uri y) => Equal(x.AbsolutePath, y.AbsolutePath);
 
     private static bool QueriesEqual(Uri x, Uri y) => Equal(x.Query, y.Query);
-
-    private static bool IsHttp(string scheme)
-        => Uri.UriSchemeHttp.Equals(scheme, StringComparison.OrdinalIgnoreCase) || Uri.UriSchemeHttps.Equals(scheme, StringComparison.OrdinalIgnoreCase);
 
     private static ReadOnlySpan<char> Trim(in ReadOnlySpan<char> value) => value.Trim('/').TrimStart('?');
 
