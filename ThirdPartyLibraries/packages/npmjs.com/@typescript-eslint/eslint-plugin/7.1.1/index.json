@@ -1,0 +1,25 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "MIT",
+      "HRef": "LICENSE"
+    },
+    {
+      "Subject": "repository",
+      "Code": null,
+      "HRef": "https://github.com/typescript-eslint/typescript-eslint.git",
+      "Description": "License code NOASSERTION"
+    }
+  ]
+}

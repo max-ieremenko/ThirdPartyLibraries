@@ -1,5 +1,5 @@
 "Name","Version","Package Url","License","License Url","Authors","Copyright"
-"bootstrap","4.6.1","https://www.npmjs.com/package/bootstrap/v/4.6.1","MIT License","https://spdx.org/licenses/MIT","The Bootstrap Authors",""
+"chalk","5.3.0","https://www.npmjs.com/package/chalk/v/5.3.0","MIT License","https://spdx.org/licenses/MIT","",""
 "DotLiquid","2.2.692","https://www.nuget.org/packages/DotLiquid/2.2.692","Apache License 2.0","https://spdx.org/licenses/Apache-2.0","Tim Jones, Alessandro Petrelli",""
 "Microsoft.Bcl.AsyncInterfaces","8.0.0","https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/8.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "Microsoft.Extensions.Configuration","8.0.0","https://www.nuget.org/packages/Microsoft.Extensions.Configuration/8.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
