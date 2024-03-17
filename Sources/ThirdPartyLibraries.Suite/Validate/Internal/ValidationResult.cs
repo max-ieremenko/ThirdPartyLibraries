@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Suite.Validate.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Validate.Internal;
 
 [Flags]
 internal enum ValidationResult

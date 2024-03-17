@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.IO;
 using System.Management.Automation;
 using System.Runtime.InteropServices;
 using ThirdPartyLibraries.PowerShell.Internal;

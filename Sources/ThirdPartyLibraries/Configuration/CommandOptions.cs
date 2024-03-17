@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using ThirdPartyLibraries.Shared;
+﻿using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Configuration;
 

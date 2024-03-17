@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace ThirdPartyLibraries.Repository.Template;
+﻿namespace ThirdPartyLibraries.Repository.Template;
 
 [DebuggerDisplay("{Name}")]
 public sealed class RootReadMePackageContext

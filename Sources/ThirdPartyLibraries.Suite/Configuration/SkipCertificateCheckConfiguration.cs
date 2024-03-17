@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Suite.Configuration;
+﻿namespace ThirdPartyLibraries.Suite.Configuration;
 
 public sealed class SkipCertificateCheckConfiguration
 {

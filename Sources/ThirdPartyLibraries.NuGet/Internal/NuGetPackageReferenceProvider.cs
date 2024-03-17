@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.NuGet.Configuration;
 using ThirdPartyLibraries.Shared;

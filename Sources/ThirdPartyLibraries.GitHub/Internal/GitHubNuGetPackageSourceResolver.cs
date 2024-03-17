@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using ThirdPartyLibraries.Domain;
-using ThirdPartyLibraries.Shared;
+﻿using ThirdPartyLibraries.Domain;
 
 namespace ThirdPartyLibraries.GitHub.Internal;
 

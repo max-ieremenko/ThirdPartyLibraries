@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ThirdPartyLibraries.Domain;
+﻿namespace ThirdPartyLibraries.Domain;
 
 public interface IPackageReferenceProvider
 {

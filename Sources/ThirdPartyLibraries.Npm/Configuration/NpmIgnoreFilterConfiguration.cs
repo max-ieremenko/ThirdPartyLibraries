@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Npm.Configuration;
+﻿namespace ThirdPartyLibraries.Npm.Configuration;
 
 public sealed class NpmIgnoreFilterConfiguration
 {

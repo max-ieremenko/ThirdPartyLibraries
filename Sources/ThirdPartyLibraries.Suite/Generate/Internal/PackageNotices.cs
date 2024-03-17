@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Generate.Internal;
 
 [DebuggerDisplay("{Name} {Version}")]
 internal sealed class PackageNotices

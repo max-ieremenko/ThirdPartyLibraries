@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Net.Http.Headers;
 
 namespace ThirdPartyLibraries.Shared;

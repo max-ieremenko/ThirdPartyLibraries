@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using RunAsync = System.Func<string, System.Collections.Generic.IList<(string Name, string Value)>, System.Action<string>, System.Action<string>, System.Threading.CancellationToken, System.Threading.Tasks.Task>;
 
 namespace ThirdPartyLibraries.PowerShell.Internal;

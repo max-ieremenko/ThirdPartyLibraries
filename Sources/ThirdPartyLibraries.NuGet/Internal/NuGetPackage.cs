@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet.Internal;

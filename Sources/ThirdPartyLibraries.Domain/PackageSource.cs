@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Domain;
+﻿namespace ThirdPartyLibraries.Domain;
 
 public readonly struct PackageSource
 {

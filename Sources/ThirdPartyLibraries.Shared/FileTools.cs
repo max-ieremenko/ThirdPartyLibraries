@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace ThirdPartyLibraries.Shared;
+﻿namespace ThirdPartyLibraries.Shared;
 
 public static class FileTools
 {

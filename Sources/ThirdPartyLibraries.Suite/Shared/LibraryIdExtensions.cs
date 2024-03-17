@@ -1,5 +1,4 @@
-﻿using System;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
 
 namespace ThirdPartyLibraries.Suite.Shared;
 

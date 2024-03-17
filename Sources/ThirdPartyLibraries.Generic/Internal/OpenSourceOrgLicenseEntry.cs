@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ThirdPartyLibraries.Shared;
+﻿using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Generic.Internal;
 

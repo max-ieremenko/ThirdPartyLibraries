@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
