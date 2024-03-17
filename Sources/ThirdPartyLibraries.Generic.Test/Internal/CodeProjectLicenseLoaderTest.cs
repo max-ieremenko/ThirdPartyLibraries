@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Mime;
-using System.Threading.Tasks;
+﻿using System.Net.Mime;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using Shouldly;

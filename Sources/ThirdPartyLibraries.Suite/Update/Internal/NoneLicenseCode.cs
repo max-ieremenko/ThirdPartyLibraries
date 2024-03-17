@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Suite.Update.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Update.Internal;
 
 internal static class NoneLicenseCode
 {

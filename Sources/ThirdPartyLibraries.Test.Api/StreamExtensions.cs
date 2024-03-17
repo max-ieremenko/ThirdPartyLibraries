@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Text;
-
-namespace ThirdPartyLibraries;
+﻿namespace ThirdPartyLibraries;
 
 public static class StreamExtensions
 {

@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-
-namespace ThirdPartyLibraries.Npm.Internal;
+﻿namespace ThirdPartyLibraries.Npm.Internal;
 
 internal interface INpmRegistry
 {

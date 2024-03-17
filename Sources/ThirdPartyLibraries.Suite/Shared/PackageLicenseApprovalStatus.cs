@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Suite.Shared;
+﻿namespace ThirdPartyLibraries.Suite.Shared;
 
 internal static class PackageLicenseApprovalStatus
 {

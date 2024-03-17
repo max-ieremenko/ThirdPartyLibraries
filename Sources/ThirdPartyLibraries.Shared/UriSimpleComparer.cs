@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ThirdPartyLibraries.Shared;
+﻿namespace ThirdPartyLibraries.Shared;
 
 public sealed class UriSimpleComparer : IEqualityComparer<Uri>
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Generate.Internal;
 
 internal static class LicenseFileNameResolverTools
 {

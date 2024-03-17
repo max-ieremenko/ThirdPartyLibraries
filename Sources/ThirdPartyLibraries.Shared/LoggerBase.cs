@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Shared;
+﻿namespace ThirdPartyLibraries.Shared;
 
 public abstract class LoggerBase : ILogger
 {

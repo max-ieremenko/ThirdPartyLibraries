@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using ThirdPartyLibraries.Domain;
-using ThirdPartyLibraries.Shared;
+﻿using ThirdPartyLibraries.Domain;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
 

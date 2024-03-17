@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.Repository.Template;
+﻿namespace ThirdPartyLibraries.Repository.Template;
 
 public sealed class LicenseIndexJson
 {

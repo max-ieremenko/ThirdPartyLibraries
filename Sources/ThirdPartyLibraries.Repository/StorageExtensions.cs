@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using ThirdPartyLibraries.Domain.Internal;
+﻿using ThirdPartyLibraries.Domain.Internal;
 
 namespace ThirdPartyLibraries.Domain;
 

@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace ThirdPartyLibraries.Domain;
+﻿namespace ThirdPartyLibraries.Domain;
 
 public interface IPackageSpecParser
 {

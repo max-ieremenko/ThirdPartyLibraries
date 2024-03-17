@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
 
 namespace ThirdPartyLibraries.Suite.Shared;
 

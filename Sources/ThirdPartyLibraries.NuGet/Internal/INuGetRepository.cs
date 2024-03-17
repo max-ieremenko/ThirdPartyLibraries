@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace ThirdPartyLibraries.NuGet.Internal;
+﻿namespace ThirdPartyLibraries.NuGet.Internal;
 
 internal interface INuGetRepository
 {
