@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-
-namespace ThirdPartyLibraries.PowerShell.Internal;
+﻿namespace ThirdPartyLibraries.PowerShell.Internal;
 
 internal sealed class ProgramRunAdapter
 {

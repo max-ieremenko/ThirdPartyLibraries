@@ -1,10 +1,6 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using ThirdPartyLibraries.Shared;
 using ThirdPartyLibraries.Suite.Configuration;

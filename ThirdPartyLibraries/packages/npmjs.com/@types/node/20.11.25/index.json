@@ -1,0 +1,31 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "MIT",
+      "HRef": "LICENSE"
+    },
+    {
+      "Subject": "repository",
+      "Code": null,
+      "HRef": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+      "Description": "License code NOASSERTION"
+    },
+    {
+      "Subject": "homepage",
+      "Code": null,
+      "HRef": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "Description": "License code NOASSERTION"
+    }
+  ]
+}

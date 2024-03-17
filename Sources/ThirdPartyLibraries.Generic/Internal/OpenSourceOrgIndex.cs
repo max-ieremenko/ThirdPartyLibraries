@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-namespace ThirdPartyLibraries.Generic.Internal;
+﻿namespace ThirdPartyLibraries.Generic.Internal;
 
 internal sealed class OpenSourceOrgIndex
 {

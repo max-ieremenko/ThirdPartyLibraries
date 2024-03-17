@@ -1,0 +1,29 @@
+{
+  "License": {
+    "Code": "MIT",
+    "Status": "AutomaticallyApproved"
+  },
+  "UsedBy": [
+    {
+      "Name": "ThirdPartyLibraries",
+      "InternalOnly": true
+    }
+  ],
+  "Licenses": [
+    {
+      "Subject": "package",
+      "Code": "MIT",
+      "HRef": "LICENSE"
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/eslint/eslint"
+    },
+    {
+      "Subject": "homepage",
+      "Code": null,
+      "HRef": "https://eslint.org"
+    }
+  ]
+}

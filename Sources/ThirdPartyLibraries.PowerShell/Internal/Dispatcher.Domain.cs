@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.PowerShell.Internal;
+﻿namespace ThirdPartyLibraries.PowerShell.Internal;
 
 internal partial class Dispatcher
 {

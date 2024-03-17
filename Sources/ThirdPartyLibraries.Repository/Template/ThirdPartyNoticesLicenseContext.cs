@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace ThirdPartyLibraries.Repository.Template;
+﻿namespace ThirdPartyLibraries.Repository.Template;
 
 [DebuggerDisplay("{FullName}")]
 public sealed class ThirdPartyNoticesLicenseContext

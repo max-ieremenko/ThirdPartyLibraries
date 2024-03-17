@@ -1,5 +1,4 @@
-﻿using System;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository.Template;
 
 namespace ThirdPartyLibraries.Suite.Update.Internal;

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
-using System.Net.Mime;
-using System.Threading.Tasks;
+﻿using System.Net.Mime;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using Shouldly;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
 
@@ -54,9 +48,9 @@ public class NuGetRepositoryTest
                 version)
             .ToLowerInvariant();
         Console.WriteLine(path);
-        DirectoryAssert.Exists(path);
+        Assert.That(path, Does.Exist.IgnoreFiles);
 
-        var file = await _sut.TryGetPackageFromCacheAsync("Newtonsoft.Json", version, default).ConfigureAwait(false);
+        var file = await _sut.TryGetPackageFromCacheAsync("Newtonsoft.Json", version, new List<Uri>(), default).ConfigureAwait(false);
 
         file.ShouldNotBeNull();
     }

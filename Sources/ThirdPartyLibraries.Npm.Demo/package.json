@@ -1,15 +1,35 @@
 {
-  "name": "thirdpartylibraries.npm.demo",
+  "name": "third-party-libraries.npm.demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "author": "Max Ieremenko",
+  "description": "ThirdPartyLibraries.Npm.Demo",
+  "type": "module",
+  "main": "app.js",
+  "author": {
+    "name": "Max Ieremenko"
+  },
   "license": "MIT",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
   "dependencies": {
-    "bootstrap": "4.6.1"
+    "chalk": "5.3.0"
   },
   "devDependencies": {
-    "jasmine": "3.10.0"
+    "@types/node": "20.11.25",
+    "@typescript-eslint/eslint-plugin": "7.1.1",
+    "@typescript-eslint/parser": "7.1.1",
+    "eslint": "8.57.0",
+    "typescript": "5.4.2"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ]
   }
 }

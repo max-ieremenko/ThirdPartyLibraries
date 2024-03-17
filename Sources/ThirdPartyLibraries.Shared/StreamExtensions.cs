@@ -1,8 +1,4 @@
-﻿using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace ThirdPartyLibraries.Shared;
+﻿namespace ThirdPartyLibraries.Shared;
 
 public static class StreamExtensions
 {

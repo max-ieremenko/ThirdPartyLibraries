@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 
 namespace ThirdPartyLibraries.Npm.Internal;
@@ -16,10 +14,7 @@ public class NpmRootTest
         Console.WriteLine(actual);
         actual.ShouldNotBeNull();
 
-        if (!Directory.Exists(actual))
-        {
-            Path.GetDirectoryName(actual).ShouldNotBeNullOrWhiteSpace();
-            DirectoryAssert.Exists(Path.GetDirectoryName(actual));
-        }
+        Path.GetDirectoryName(actual).ShouldNotBeNullOrWhiteSpace();
+        Assert.That(Path.GetDirectoryName(actual), Does.Exist.IgnoreFiles);
     }
 }

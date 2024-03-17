@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using System.Threading;
+﻿using System.Management.Automation;
 using ThirdPartyLibraries.PowerShell.Internal;
 
 namespace ThirdPartyLibraries.PowerShell;

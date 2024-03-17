@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-
-namespace ThirdPartyLibraries.Suite.Shared.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Shared.Internal;
 
 internal sealed partial class LicenseTextEncoder : IDisposable
 {

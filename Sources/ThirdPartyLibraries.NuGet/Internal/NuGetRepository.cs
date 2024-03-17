@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
@@ -20,22 +14,24 @@ internal sealed class NuGetRepository : INuGetRepository
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<byte[]?> TryGetPackageFromCacheAsync(string packageName, string version, CancellationToken token)
+    public Task<byte[]?> TryGetPackageFromCacheAsync(string packageName, string version, List<Uri> sources, CancellationToken token)
     {
-        var path = GetLocalCachePath(packageName, version);
-        if (path == null)
+        var cache = new NuGetPackageCache(packageName, version);
+        var fileName = cache.GetPackageFileName();
+
+        if (!cache.TryFindFile(cache.GetDefaultCachePath(), fileName, out var path))
         {
-            return null;
+            for (var i = 0; i < sources.Count; i++)
+            {
+                var source = sources[i];
+                if (source.IsFile() && cache.TryFindFile(source.OriginalString, fileName, out path))
+                {
+                    break;
+                }
+            }
         }
 
-        var fileName = Path.Combine(path, $"{packageName}.{version}.nupkg".ToLowerInvariant());
-
-        if (!File.Exists(fileName))
-        {
-            return null;
-        }
-
-        return await File.ReadAllBytesAsync(fileName, token).ConfigureAwait(false);
+        return path == null ? Task.FromResult((byte[]?)null) : File.ReadAllBytesAsync(path, token);
     }
 
     public async Task<byte[]?> TryDownloadPackageAsync(string packageName, string version, CancellationToken token)
@@ -59,50 +55,39 @@ internal sealed class NuGetRepository : INuGetRepository
         }
     }
 
-    public string? ResolvePackageSource(string packageName, string version)
+    public string? ResolvePackageSource(string packageName, string version, List<Uri> sources)
     {
-        var cachePath = GetLocalCachePath(packageName, version);
-        if (cachePath == null)
+        var cache = new NuGetPackageCache(packageName, version);
+        var fileName = cache.GetMetadataFileName();
+
+        var candidates = new List<Uri>();
+        if (cache.TryFindFile(cache.GetDefaultCachePath(), fileName, out var path)
+            && NuGetMetadataParser.TryGetSource(path, out var candidate))
+        {
+            candidates.Add(candidate);
+        }
+
+        for (var i = 0; i < sources.Count; i++)
+        {
+            var source = sources[i];
+            if (source.IsFile()
+                && cache.TryFindFile(source.OriginalString, fileName, out path)
+                && NuGetMetadataParser.TryGetSource(path, out candidate))
+            {
+                candidates.Add(candidate);
+            }
+        }
+
+        if (candidates.Count == 0)
         {
             return null;
         }
 
-        var fileName = Path.Combine(cachePath, ".nupkg.metadata");
-        if (!File.Exists(fileName))
-        {
-            return null;
-        }
+        var result = candidates.Find(i => i.IsHttpOrHttps() && i.Host.Contains(NuGetHosts.Api, StringComparison.OrdinalIgnoreCase))
+            ?? candidates.Find(UriExtensions.IsHttpOrHttps)
+            ?? candidates[0];
 
-        string result;
-        using (var stream = File.OpenRead(fileName))
-        {
-            result = NuGetMetadataParser.Parse(stream).Source;
-        }
-
-        return string.IsNullOrWhiteSpace(result) ? null : result;
-    }
-
-    private static string? GetLocalCachePath(string packageName, string version)
-    {
-        string path;
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            path = Path.Combine(
-                Environment.GetEnvironmentVariable("USERPROFILE")!,
-                @".nuget\packages",
-                packageName,
-                version);
-        }
-        else
-        {
-            path = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                @".nuget/packages",
-                packageName.ToLowerInvariant(),
-                version.ToLowerInvariant());
-        }
-
-        return Directory.Exists(path) ? path : null;
+        return result.OriginalString;
     }
 
     private static Uri GetPackageUri(string packageName, string version)

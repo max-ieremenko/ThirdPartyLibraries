@@ -15,8 +15,8 @@ $ErrorActionPreference = "Stop"
 
 if (-not $List -or (".net" -in $List)) {
     $install = Join-Path $PSScriptRoot "scripts/Install-DotNet.ps1"
-    & $install "6.0.403"
-    & $install "7.0.100"
+    & $install "6.0.418"
+    & $install "7.0.405"
     & $install (Get-Content -Raw (Join-Path $PSScriptRoot "../Sources/global.json") | ConvertFrom-Json).sdk.version
 }
 

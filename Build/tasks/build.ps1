@@ -6,7 +6,7 @@ param(
     $SourcesPath
 )
 
-task Default DotnetRestore, DotnetBuild, NpmInstall
+task Default DotnetRestore, DotnetBuild
 
 task DotnetRestore {
     exec { dotnet restore $SourcesPath }
@@ -21,11 +21,4 @@ task DotnetBuild {
             -p:ContinuousIntegrationBuild=true `
             -p:EmbedUntrackedSources=true
     }
-}
-
-task NpmInstall {
-    $currentLocation = Get-Location
-    Set-Location  (Join-Path $SourcesPath "ThirdPartyLibraries.Npm.Demo")
-    exec { npm install }
-    Set-Location $currentLocation
 }

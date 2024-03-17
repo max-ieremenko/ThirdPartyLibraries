@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.GitHub.Internal;
+﻿namespace ThirdPartyLibraries.GitHub.Internal;
 
 internal readonly struct RepositoryId : IEquatable<RepositoryId>
 {

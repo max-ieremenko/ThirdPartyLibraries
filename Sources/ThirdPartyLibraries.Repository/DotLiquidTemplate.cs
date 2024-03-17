@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using DotLiquid;
 using DotLiquid.NamingConventions;
 using ThirdPartyLibraries.Repository.Template;

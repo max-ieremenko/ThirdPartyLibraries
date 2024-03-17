@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
 
 internal sealed class NuGetPackageReference : IPackageReference
 {
-    public NuGetPackageReference(LibraryId id, string[] targetFrameworks, List<LibraryId> dependencies, bool isInternal)
+    public NuGetPackageReference(
+        LibraryId id,
+        string[] targetFrameworks,
+        List<LibraryId> dependencies,
+        bool isInternal,
+        List<Uri> sources)
     {
         Id = id;
         TargetFrameworks = targetFrameworks;
         Dependencies = dependencies;
         IsInternal = isInternal;
+        Sources = sources;
     }
 
     public LibraryId Id { get; }
@@ -23,9 +26,11 @@ internal sealed class NuGetPackageReference : IPackageReference
 
     public bool IsInternal { get; }
 
+    public List<Uri> Sources { get; }
+
     public IPackageReference UnionWith(IPackageReference other)
     {
-        if (other is not NuGetPackageReference || !other.Id.Equals(Id))
+        if (other is not NuGetPackageReference otherReference || !other.Id.Equals(Id))
         {
             throw new ArgumentOutOfRangeException(nameof(other));
         }
@@ -38,7 +43,12 @@ internal sealed class NuGetPackageReference : IPackageReference
             var targetFrameworks = shouldCombineFrameworks ? TargetFrameworks.Union(other.TargetFrameworks, StringComparer.OrdinalIgnoreCase).ToArray() : TargetFrameworks;
             var isInternal = IsInternal && other.IsInternal;
 
-            return new NuGetPackageReference(Id, targetFrameworks, Dependencies.Union(other.Dependencies).ToList(), isInternal);
+            return new NuGetPackageReference(
+                Id,
+                targetFrameworks,
+                Dependencies.Union(other.Dependencies).ToList(),
+                isInternal,
+                Sources.Union(otherReference.Sources).ToList());
         }
 
         return this;

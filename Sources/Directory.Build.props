@@ -7,6 +7,7 @@
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
 
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ThirdPartyLibraries.snk</AssemblyOriginatorKeyFile>
@@ -19,19 +20,25 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageVersion>3.5.0</DefaultPackageVersion>
+    <DefaultPackageVersion>3.5.1</DefaultPackageVersion>
 
     <Version>$(DefaultPackageVersion)</Version>
     <AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
     <FileVersion>$(DefaultPackageVersion).0</FileVersion>
     <Product>Third Party Libraries</Product>
     <Authors>Max Ieremenko</Authors>
-    <Copyright>(C) 2019-2023 Max Ieremenko.</Copyright>
+    <Copyright>(C) 2019-2024 Max Ieremenko.</Copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/max-ieremenko/ThirdPartyLibraries/releases/tag/$(DefaultPackageVersion)</PackageReleaseNotes>
     <PackageTags>licenses third-party-notice third-party-libraries nuget-references</PackageTags>
     <Description>This command line tool helps to manage third party libraries and their licenses in .net applications.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.Text" />
+    <Using Include="System.Diagnostics" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+  </ItemGroup>
 </Project>

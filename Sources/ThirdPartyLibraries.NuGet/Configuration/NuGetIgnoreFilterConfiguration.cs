@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ThirdPartyLibraries.NuGet.Configuration;
+﻿namespace ThirdPartyLibraries.NuGet.Configuration;
 
 public sealed class NuGetIgnoreFilterConfiguration
 {

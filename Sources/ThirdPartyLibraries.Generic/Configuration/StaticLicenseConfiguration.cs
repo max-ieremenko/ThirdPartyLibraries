@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ThirdPartyLibraries.Generic.Configuration;
+﻿namespace ThirdPartyLibraries.Generic.Configuration;
 
 public sealed class StaticLicenseConfiguration
 {

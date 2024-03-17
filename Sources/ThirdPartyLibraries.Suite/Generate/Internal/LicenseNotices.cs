@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ThirdPartyLibraries.Suite.Generate.Internal;
+﻿namespace ThirdPartyLibraries.Suite.Generate.Internal;
 
 internal sealed class LicenseNotices
 {
