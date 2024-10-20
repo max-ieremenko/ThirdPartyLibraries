@@ -11,8 +11,8 @@ param(
     $OutPath
 )
 
-task Default {
-    $projectFile = Join-Path $SourcesPath "ThirdPartyLibraries/ThirdPartyLibraries.csproj"
+task . {
+    $projectFile = Join-Path $SourcesPath 'ThirdPartyLibraries/ThirdPartyLibraries.csproj'
 
     exec {
         dotnet pack `

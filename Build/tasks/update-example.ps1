@@ -25,14 +25,14 @@ param(
     $ToFileName
 )
 
-task Default {
+task . {
     exec { 
         dotnet $AppPath `
             generate `
             -appName ThirdPartyLibraries `
             -repository $RepositoryPath `
             -to $ExamplePath `
-            -title "Third party libraries" `
+            -title 'Third party libraries' `
             -template $TemplatePath `
             -toFileName $ToFileName
     }
