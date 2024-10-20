@@ -17,7 +17,7 @@ Enter-Build {
         bin        = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Sources/bin'))
         repository = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../ThirdPartyLibraries'))
         examples   = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Examples'))
-        frameworks = 'net6.0', 'net8.0'
+        frameworks = 'net6.0', 'net8.0', 'net9.0'
         version    = $(
             $buildProps = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Sources/Directory.Build.props'))
             $packageVersion = (Select-Xml -Path $buildProps -XPath 'Project/PropertyGroup/DefaultPackageVersion').Node.InnerText
