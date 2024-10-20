@@ -3,7 +3,7 @@ Microsoft.NET.Test.Sdk [17.9.0](https://www.nuget.org/packages/Microsoft.NET.Tes
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net7.0, net8.0
+Target frameworks: net6.0, net8.0
 
 License: [MIT](../../../../licenses/mit) 
 

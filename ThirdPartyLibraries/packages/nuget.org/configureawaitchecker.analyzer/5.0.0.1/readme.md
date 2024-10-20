@@ -3,7 +3,7 @@ ConfigureAwaitChecker.Analyzer [5.0.0.1](https://www.nuget.org/packages/Configur
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net7.0, net8.0, netstandard2.1
+Target frameworks: net6.0, net8.0, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
