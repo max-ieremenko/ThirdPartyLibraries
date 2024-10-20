@@ -3,7 +3,7 @@ StyleCop.Analyzers.Unstable [1.2.0.556](https://www.nuget.org/packages/StyleCop.
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net8.0, netstandard2.1
+Target frameworks: net6.0, net8.0, net9.0, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
