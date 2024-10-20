@@ -7,22 +7,15 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false,
+      "InternalOnly": true,
       "TargetFrameworks": [
-        "netstandard2.1"
+        "net6.0",
+        "net8.0"
       ],
       "Dependencies": [
         {
-          "Name": "Microsoft.Extensions.DependencyInjection.Abstractions",
-          "Version": "8.0.2"
-        },
-        {
-          "Name": "Microsoft.Extensions.Primitives",
-          "Version": "8.0.0"
-        },
-        {
-          "Name": "System.ComponentModel.Annotations",
-          "Version": "5.0.0"
+          "Name": "System.Reflection.Metadata",
+          "Version": "1.6.0"
         }
       ]
     }
@@ -36,12 +29,12 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/runtime"
+      "HRef": "https://github.com/microsoft/vstest"
     },
     {
       "Subject": "project",
-      "Code": null,
-      "HRef": "https://dot.net/"
+      "Code": "MIT",
+      "HRef": "https://github.com/microsoft/vstest"
     }
   ]
 }
