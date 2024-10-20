@@ -28,12 +28,12 @@ param(
     $GithubToken
 )
 
-task Default Update, Validate, Generate, CopyLicense
+task . Update, Validate, Generate, CopyLicense
 
 task Update {
     $runArgs = $()
     if ($GithubToken) {
-        $runArgs = "-github.com:personalAccessToken", $GithubToken
+        $runArgs = '-github.com:personalAccessToken', $GithubToken
     }
 
     exec { dotnet $AppPath update -appName ThirdPartyLibraries -source $SourcesPath -repository $RepositoryPath $runArgs }
@@ -48,5 +48,5 @@ task Generate {
 }
 
 task CopyLicense {
-    Copy-Item -Path (Join-Path $SourcesPath "../LICENSE") -Destination $OutPath
+    Copy-Item -Path (Join-Path $SourcesPath '../LICENSE') -Destination $OutPath
 }

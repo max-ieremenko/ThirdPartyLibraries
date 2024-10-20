@@ -6,14 +6,14 @@ param(
     $SourcesPath
 )
 
-task Default DotnetRestore, DotnetBuild
+task . DotnetRestore, DotnetBuild
 
 task DotnetRestore {
     exec { dotnet restore $SourcesPath }
 }
 
 task DotnetBuild {
-    $sln = Join-Path $SourcesPath "ThirdPartyLibraries.sln"
+    $sln = Join-Path $SourcesPath 'ThirdPartyLibraries.sln'
     exec {
         dotnet build $sln `
             -t:Rebuild `

@@ -15,25 +15,25 @@ param (
     $ImageName
 )
 
-task Default {
-    $nugetLocal = Join-Path $Env:USERPROFILE ".nuget\packages"
-    $userSecrets = Join-Path $Env:APPDATA "Microsoft\UserSecrets"
+task . {
+    $nugetLocal = Join-Path $Env:USERPROFILE '.nuget\packages'
+    $userSecrets = Join-Path $Env:APPDATA 'Microsoft\UserSecrets'
 
     $runArgs = $(
-        "run"
-        , "--rm"
-        , "-v", "$($nugetLocal):/root/.nuget/packages:ro"
-        , "-v", "$($PowerShellPath):/pwsh.zip:ro"
-        , "-v", "$($TestPath):/sources:ro"
+        'run'
+        , '--rm'
+        , '-v', "$($nugetLocal):/root/.nuget/packages:ro"
+        , '-v', "$($PowerShellPath):/pwsh.zip:ro"
+        , '-v', "$($TestPath):/sources:ro"
     )
 
     if (Test-Path $userSecrets) {
-        $runArgs += $("-v", "$($userSecrets):/root/.microsoft/usersecrets:ro")
+        $runArgs += $('-v', "$($userSecrets):/root/.microsoft/usersecrets:ro")
     }
 
     $runArgs += $(
         $ImageName
-        , "pwsh", "-Command", "/sources/Test-App.ps1"
+        , 'pwsh', '-Command', '/sources/Test-App.ps1'
     )
 
     exec { docker $runArgs }

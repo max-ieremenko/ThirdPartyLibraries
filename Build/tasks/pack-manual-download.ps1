@@ -10,7 +10,7 @@ param(
     $Version,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("net6.0", "net8.0")] 
+    [ValidateSet('net6.0', 'net8.0')] 
     [string]
     $Framework,
 
@@ -20,8 +20,8 @@ param(
     $OutPath
 )
 
-task Default {
-    $lic = Join-Path $OutPath "ThirdNotices/*"
+task . {
+    $lic = Join-Path $OutPath 'ThirdNotices/*'
     $destination = Join-Path $OutPath "ThirdPartyLibraries.$Version-$Framework.zip"
     $source = Join-Path $BinPath "app/$Framework/publish/*"
 

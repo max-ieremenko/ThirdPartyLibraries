@@ -8,8 +8,8 @@ param (
     $GithubToken
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$file = Join-Path $PSScriptRoot "build-tasks.ps1"
+$file = Join-Path $PSScriptRoot 'build-tasks.ps1'
 Invoke-Build -File $file -Task CiBuild -GithubToken $GithubToken

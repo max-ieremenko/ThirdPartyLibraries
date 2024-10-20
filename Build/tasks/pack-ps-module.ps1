@@ -15,10 +15,10 @@ param(
     $OutPath
 )
 
-task Default Copy, Clean, SetVersion, Zip
+task . Copy, Clean, SetVersion, Zip
 
 Enter-Build {
-    $temp = Join-Path $OutPath "pwsh"
+    $temp = Join-Path $OutPath 'pwsh'
 }
 
 Exit-Build {
@@ -26,7 +26,7 @@ Exit-Build {
 }
 
 task Copy {
-    Copy-Item -Path (Join-Path $BinPath "pwsh") -Destination $temp -Recurse    
+    Copy-Item -Path (Join-Path $BinPath 'pwsh') -Destination $temp -Recurse    
 }
 
 task Clean {
@@ -35,13 +35,13 @@ task Clean {
 
 task SetVersion {
     # .psd1 set module version
-    $psdFile = Join-Path $temp "ThirdPartyLibraries.psd1"
+    $psdFile = Join-Path $temp 'ThirdPartyLibraries.psd1'
     $content = Get-Content -Path $psdFile -Raw
-    $content = $content -replace "3.2.1", $Version
+    $content = $content -replace '3.2.1', $Version
     Set-Content -Path $psdFile -Value $content
 }
 
 task Zip {
-    $lic = Join-Path $OutPath "ThirdNotices/*"
-    Compress-Archive -Path "$temp/*", $lic -DestinationPath (Join-Path $OutPath "pwsh.zip")
+    $lic = Join-Path $OutPath 'ThirdNotices/*'
+    Compress-Archive -Path "$temp/*", $lic -DestinationPath (Join-Path $OutPath 'pwsh.zip')
 }
