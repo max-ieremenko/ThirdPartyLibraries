@@ -26,8 +26,8 @@ Dependencies 5
 |Name|Version|
 |----------|:----|
 |[Microsoft.Extensions.Configuration.Abstractions](../../../../packages/nuget.org/microsoft.extensions.configuration.abstractions/8.0.0)|8.0.0|
-|[Microsoft.Extensions.Configuration.Binder](../../../../packages/nuget.org/microsoft.extensions.configuration.binder/8.0.1)|8.0.1|
-|[Microsoft.Extensions.DependencyInjection.Abstractions](../../../../packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/8.0.0)|8.0.0|
+|[Microsoft.Extensions.Configuration.Binder](../../../../packages/nuget.org/microsoft.extensions.configuration.binder/8.0.2)|8.0.2|
+|[Microsoft.Extensions.DependencyInjection.Abstractions](../../../../packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/8.0.2)|8.0.2|
 |[Microsoft.Extensions.Options](../../../../packages/nuget.org/microsoft.extensions.options/8.0.0)|8.0.0|
 |[Microsoft.Extensions.Primitives](../../../../packages/nuget.org/microsoft.extensions.primitives/8.0.0)|8.0.0|
 

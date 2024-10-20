@@ -15,14 +15,6 @@
         {
           "Name": "Microsoft.Extensions.DependencyInjection.Abstractions",
           "Version": "8.0.2"
-        },
-        {
-          "Name": "Microsoft.Extensions.Primitives",
-          "Version": "8.0.0"
-        },
-        {
-          "Name": "System.ComponentModel.Annotations",
-          "Version": "5.0.0"
         }
       ]
     }
