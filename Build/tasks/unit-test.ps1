@@ -6,7 +6,7 @@ param (
     $BinPath,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet('net6.0', 'net8.0')] 
+    [ValidateSet('net6.0', 'net8.0', 'net9.0')] 
     [string]
     $Framework
 )

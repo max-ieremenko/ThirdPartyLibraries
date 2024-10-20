@@ -3,7 +3,7 @@ Microsoft.TestPlatform.TestHost [17.11.1](https://www.nuget.org/packages/Microso
 
 Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net8.0
+Target frameworks: net6.0, net8.0, net9.0
 
 License: [MIT](../../../../licenses/mit) 
 

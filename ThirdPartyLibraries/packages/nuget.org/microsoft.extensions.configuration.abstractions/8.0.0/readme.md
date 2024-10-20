@@ -3,7 +3,7 @@ Microsoft.Extensions.Configuration.Abstractions [8.0.0](https://www.nuget.org/pa
 
 Used by: ThirdPartyLibraries
 
-Target frameworks: net6.0, net8.0, netstandard2.1
+Target frameworks: net6.0, net8.0, net9.0, netstandard2.1
 
 License: [MIT](../../../../licenses/mit) 
 
