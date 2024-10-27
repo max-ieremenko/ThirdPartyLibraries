@@ -6,17 +6,7 @@ public sealed class Application
 
     public bool InternalOnly { get; set; }
 
-    public string[] TargetFrameworks { get; set; } = Array.Empty<string>();
+    public string[]? TargetFrameworks { get; set; }
 
-    public List<LibraryDependency> Dependencies { get; } = new();
-
-    public bool ShouldSerializeTargetFrameworks()
-    {
-        return TargetFrameworks?.Length > 0;
-    }
-
-    public bool ShouldSerializeDependencies()
-    {
-        return Dependencies.Count > 0;
-    }
+    public LibraryDependency[]? Dependencies { get; set; }
 }

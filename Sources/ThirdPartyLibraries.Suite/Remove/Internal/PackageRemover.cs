@@ -31,7 +31,7 @@ internal sealed class PackageRemover : IPackageRemover
             throw new InvalidOperationException($"Library {id} is readonly.");
         }
 
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
         if (index == null)
         {
             return RemoveResult.None;

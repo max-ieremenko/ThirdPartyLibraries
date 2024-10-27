@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Shared;
 
@@ -17,7 +16,7 @@ public class NpmPackageTest
             jsonContent = NpmPackage.ExtractPackageJson(await content.ToArrayAsync(CancellationToken.None).ConfigureAwait(false));
         }
 
-        new NpmPackageSpec(jsonContent.JsonDeserialize<JObject>()).GetName().ShouldBe("@types/angular");
+        NpmPackageSpec.FromStream(new MemoryStream(jsonContent)).GetName().ShouldBe("@types/angular");
     }
 
     [Test]

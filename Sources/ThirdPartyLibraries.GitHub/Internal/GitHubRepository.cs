@@ -1,9 +1,10 @@
 ﻿using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization.Metadata;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 using ThirdPartyLibraries.GitHub.Configuration;
+using ThirdPartyLibraries.GitHub.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.GitHub.Internal;
@@ -19,7 +20,7 @@ internal class GitHubRepository : IGitHubRepository
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<JObject?> GetAsJsonAsync(string url, CancellationToken token)
+    public async Task<T?> GetAsJsonAsync<T>(string url, JsonTypeInfo<T> jsonTypeInfo, CancellationToken token)
     {
         var client = _httpClientFactory();
         if (!string.IsNullOrWhiteSpace(_configuration.PersonalAccessToken))
@@ -27,14 +28,14 @@ internal class GitHubRepository : IGitHubRepository
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", _configuration.PersonalAccessToken);
         }
 
-        JObject result;
+        T? result;
 
         using (client)
         using (var response = await client.InvokeGetAsync(url, token).ConfigureAwait(false))
         {
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                return null;
+                return default;
             }
 
             if (response.StatusCode == HttpStatusCode.Forbidden)
@@ -46,20 +47,19 @@ internal class GitHubRepository : IGitHubRepository
                 }
             }
 
-            if (response.StatusCode != HttpStatusCode.Unauthorized)
-            {
-                await response.AssertStatusCodeOk().ConfigureAwait(false);
-            }
-
-            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-            {
-                result = stream.JsonDeserialize<JObject>();
-            }
-
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                var message = result.Value<string>("message");
-                throw new InvalidOperationException($"GitHub personal access token is invalid: {message}");
+                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                {
+                    var error = await stream.JsonDeserializeAsync(DomainJsonSerializerContext.Default.GitHubError, token).ConfigureAwait(false);
+                    throw new InvalidOperationException($"GitHub personal access token is invalid: {error?.Message}");
+                }
+            }
+
+            await response.AssertStatusCodeOk().ConfigureAwait(false);
+            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+            {
+                result = await stream.JsonDeserializeAsync(jsonTypeInfo, token).ConfigureAwait(false);
             }
         }
 

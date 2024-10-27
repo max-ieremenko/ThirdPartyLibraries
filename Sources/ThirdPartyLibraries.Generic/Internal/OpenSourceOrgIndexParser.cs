@@ -1,48 +1,47 @@
-﻿using Newtonsoft.Json.Linq;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Generic.Internal.Domain;
 
 namespace ThirdPartyLibraries.Generic.Internal;
 
 internal static class OpenSourceOrgIndexParser
 {
-    public static OpenSourceOrgIndex Parse(JArray licenses)
+    public static OpenSourceOrgIndex Parse(OpenSourceOrgLicense[] licenses)
     {
-        var result = new OpenSourceOrgIndex(licenses.Count);
-        foreach (var license in licenses.OfType<JObject>())
+        var result = new OpenSourceOrgIndex(licenses.Length);
+        foreach (var license in licenses)
         {
-            var id = license.Value<string>("id");
-            if (!LicenseCode.IsSingleCode(id) || result.TryGetEntry(id, out _))
+            if (!LicenseCode.IsSingleCode(license.Id) || result.TryGetEntry(license.Id, out _))
             {
                 continue;
             }
 
-            var entry = new OpenSourceOrgLicenseEntry(id, license.Value<string>("name"));
+            var entry = new OpenSourceOrgLicenseEntry(license.Id, license.Name);
 
-            if (TryGetArray(license, "links", out var links))
+            if (license.Links?.Length > 0)
             {
-                ParseLinks(links, entry.Urls);
+                ParseLinks(license.Links, entry.Urls);
             }
 
-            if (TryGetArray(license, "text", out var text))
+            if (license.Text?.Length > 0)
             {
-                entry.DownloadUrl = ParseText(text, entry.Urls);
+                entry.DownloadUrl = ParseText(license.Text, entry.Urls);
             }
 
             // add after Urls are populated
             result.Add(entry);
 
-            if (TryGetArray(license, "identifiers", out var identifiers))
+            if (license.Identifiers?.Length > 0)
             {
-                foreach (var identifier in identifiers)
+                foreach (var identifier in license.Identifiers)
                 {
-                    var code = identifier.Value<string>("identifier");
+                    var code = identifier.Identifier;
                     if (!LicenseCode.IsSingleCode(code))
                     {
                         continue;
                     }
 
                     result.TryAdd(code, entry);
-                    if ("SPDX".Equals(identifier.Value<string>("scheme"), StringComparison.OrdinalIgnoreCase))
+                    if ("SPDX".Equals(identifier.Scheme, StringComparison.OrdinalIgnoreCase))
                     {
                         entry.Code = code;
                     }
@@ -53,12 +52,12 @@ internal static class OpenSourceOrgIndexParser
         return result;
     }
 
-    private static void ParseLinks(JArray links, HashSet<Uri> urls)
+    private static void ParseLinks(OpenSourceOrgLicenseLink[] links, HashSet<Uri> urls)
     {
-        urls.EnsureCapacity(urls.Count + links.Count);
+        urls.EnsureCapacity(urls.Count + links.Length);
         foreach (var link in links)
         {
-            var url = link.Value<string>("url");
+            var url = link.Url;
             if (!string.IsNullOrEmpty(url) && Uri.TryCreate(url, UriKind.Absolute, out var uri))
             {
                 urls.Add(uri);
@@ -66,15 +65,15 @@ internal static class OpenSourceOrgIndexParser
         }
     }
 
-    private static Uri? ParseText(JArray text, HashSet<Uri> urls)
+    private static Uri? ParseText(OpenSourceOrgLicenseText[] text, HashSet<Uri> urls)
     {
         Uri? downloadUrl = null;
         string? downloadUrlMediaType = null;
 
-        urls.EnsureCapacity(urls.Count + text.Count);
+        urls.EnsureCapacity(urls.Count + text.Length);
         foreach (var link in text)
         {
-            var url = link.Value<string>("url");
+            var url = link.Url;
             if (string.IsNullOrEmpty(url) || !Uri.TryCreate(url, UriKind.Absolute, out var uri))
             {
                 continue;
@@ -82,7 +81,7 @@ internal static class OpenSourceOrgIndexParser
 
             urls.Add(uri);
 
-            var mediaType = link.Value<string>("media_type");
+            var mediaType = link.MediaType;
             if (SetDownloadUrl(downloadUrl, downloadUrlMediaType, mediaType))
             {
                 downloadUrl = uri;
@@ -91,20 +90,6 @@ internal static class OpenSourceOrgIndexParser
         }
 
         return downloadUrl;
-    }
-
-    private static bool TryGetArray(JObject license, string propertyName, [NotNullWhen(true)] out JArray? array)
-    {
-        if (!license.TryGetValue(propertyName, out var test)
-            || test is not JArray result
-            || result.Count == 0)
-        {
-            array = null;
-            return false;
-        }
-
-        array = result;
-        return true;
     }
 
     private static bool SetDownloadUrl(Uri? current, string? currentMediaType, string? candidateMediaType)

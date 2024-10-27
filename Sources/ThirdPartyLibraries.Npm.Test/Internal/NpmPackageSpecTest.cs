@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Domain;
-using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Npm.Internal;
 
@@ -75,12 +73,12 @@ public class NpmPackageSpecTest
         const string testName = "License";
         yield return CreateTypesAngular(testName, PackageSpecLicenseType.Expression, "MIT");
 
-        yield return CreateFromJson(testName, "simple", "{license: '(ISC OR GPL-3.0)'}", PackageSpecLicenseType.Expression, "(ISC OR GPL-3.0)");
-        yield return CreateFromJson(testName, "file", "{license: 'SEE LICENSE IN license.txt'}", PackageSpecLicenseType.File, "license.txt");
-        yield return CreateFromJson(testName, "no license", "{license: 'UNLICENSED'}", PackageSpecLicenseType.NotDefined, null);
-        yield return CreateFromJson(testName, "object", "{license: { type: 'ISC' }}", PackageSpecLicenseType.Expression, "ISC");
-        yield return CreateFromJson(testName, "array-1", "{licenses: [{ type: 'MIT' }]}", PackageSpecLicenseType.Expression, "MIT");
-        yield return CreateFromJson(testName, "array-2", "{licenses: [{ type: 'MIT' }, { type: 'Apache-2.0' }]}", PackageSpecLicenseType.Expression, "(MIT OR Apache-2.0)");
+        yield return CreateFromJson(testName, "simple", "{\"license\": \"(ISC OR GPL-3.0)\"}", PackageSpecLicenseType.Expression, "(ISC OR GPL-3.0)");
+        yield return CreateFromJson(testName, "file", "{\"license\": \"SEE LICENSE IN license.txt\"}", PackageSpecLicenseType.File, "license.txt");
+        yield return CreateFromJson(testName, "no license", "{\"license\": \"UNLICENSED\"}", PackageSpecLicenseType.NotDefined, null);
+        yield return CreateFromJson(testName, "object", "{\"license\": { \"type\": \"ISC\" }}", PackageSpecLicenseType.Expression, "ISC");
+        yield return CreateFromJson(testName, "array-1", "{\"licenses\": [{ \"type\": \"MIT\" }]}", PackageSpecLicenseType.Expression, "MIT");
+        yield return CreateFromJson(testName, "array-2", "{\"licenses\": [{ \"type\": \"MIT\" }, { \"type\": \"Apache-2.0\" }]}", PackageSpecLicenseType.Expression, "(MIT OR Apache-2.0)");
     }
 
     private static IEnumerable<TestCaseData> GetRepositoryUrlCases()
@@ -88,14 +86,14 @@ public class NpmPackageSpecTest
         const string testName = "RepositoryUrl";
         yield return CreateTypesAngular(testName, "https://github.com/DefinitelyTyped/DefinitelyTyped.git");
 
-        yield return CreateFromJson(testName, "simple", "{repository: 'https://github.com'}", "https://github.com/");
-        yield return CreateFromJson(testName, "with type", "{repository: { type: 'git', url: 'https://github.com'} }", "https://github.com/");
-        yield return CreateFromJson(testName, "with prefix", "{repository: { type: 'git', url: 'git+https://github.com'} }", "https://github.com/");
-        yield return CreateFromJson(testName, "short github", "{repository: 'github:user/repo'}", "https://github.com/user/repo");
-        yield return CreateFromJson(testName, "short gitlab", "{repository: 'gitlab:user/repo'}", "https://gitlab.com/user/repo");
-        yield return CreateFromJson(testName, "short bitbucket", "{repository: 'bitbucket:user/repo'}", "https://bitbucket.org/user/repo");
-        yield return CreateFromJson(testName, "npm", "{repository: 'npm/npm'}", "https://github.com/npm/npm");
-        yield return CreateFromJson(testName, "git schema", "{repository: 'git://github.com/pillarjs/hbs.git'}", "https://github.com/pillarjs/hbs.git");
+        yield return CreateFromJson(testName, "simple", "{\"repository\": \"https://github.com\"}", "https://github.com/");
+        yield return CreateFromJson(testName, "with type", "{\"repository\": { \"type\": \"git\", \"url\": \"https://github.com\"} }", "https://github.com/");
+        yield return CreateFromJson(testName, "with prefix", "{\"repository\": { \"type\": \"git\", \"url\": \"git+https://github.com\"} }", "https://github.com/");
+        yield return CreateFromJson(testName, "short github", "{\"repository\": \"github:user/repo\"}", "https://github.com/user/repo");
+        yield return CreateFromJson(testName, "short gitlab", "{\"repository\": \"gitlab:user/repo\"}", "https://gitlab.com/user/repo");
+        yield return CreateFromJson(testName, "short bitbucket", "{\"repository\": \"bitbucket:user/repo\"}", "https://bitbucket.org/user/repo");
+        yield return CreateFromJson(testName, "npm", "{\"repository\": \"npm/npm\"}", "https://github.com/npm/npm");
+        yield return CreateFromJson(testName, "git schema", "{\"repository\": \"git://github.com/pillarjs/hbs.git\"}", "https://github.com/pillarjs/hbs.git");
         yield return CreateFromJson(testName, "not defined", "{ }", (object?)null);
     }
 
@@ -116,38 +114,38 @@ public class NpmPackageSpecTest
             testName,
             "person object",
             @"
-{
-author: {
-    name: 'Barney Rubble',
-    email: 'b@rubble.com',
-    url: 'http://barnyrubble.tumblr.com'
-}
-}'",
+        {
+        ""author"": {
+            ""name"": ""Barney Rubble"",
+            ""email"": ""b@rubble.com"",
+            ""url"": ""http://barnyrubble.tumblr.com""
+        }
+        }",
             "Barney Rubble");
 
         yield return CreateFromJson(
             testName,
             "single string",
             @"
-{
-author: 'Barney Rubble <b@rubble.com> (http://barnyrubble.tumblr.com/)'
-}'",
+        {
+        ""author"": ""Barney Rubble <b@rubble.com> (http://barnyrubble.tumblr.com/)""
+        }",
             "Barney Rubble");
 
         yield return CreateFromJson(
             testName,
             "array",
             @"
-{
-author: [
-    {
-        name: 'name 1'
-    },
-    {
-        name: 'name 2'
-    },
-]
-}'",
+        {
+        ""author"": [
+            {
+                ""name"": ""name 1""
+            },
+            {
+                ""name"": ""name 2""
+            },
+        ]
+        }",
             "name 1, name 2");
 
         yield return CreateFromJson(testName, "not defined", "{ }", (object?)null);
@@ -203,7 +201,7 @@ author: [
 
     private static TestCaseData CreateFromJson(string testName, string jsonName, string json, params object?[] args)
     {
-        var spec = new NpmPackageSpec(Encoding.UTF8.GetBytes(json).JsonDeserialize<JObject>());
+        var spec = NpmPackageSpec.FromStream(json.AsStream());
 
         var testArgs = new object?[args.Length + 1];
         testArgs[0] = spec;

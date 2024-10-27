@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Generic.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Generic.Internal;
@@ -67,23 +67,22 @@ internal sealed class SpdxOrgRepository
     {
         var href = "https://" + Host + "/licenses/" + code;
 
-        JObject? content;
+        SpdxOrgLicense? content;
         using (var client = _httpClientFactory())
         {
-            content = await client.GetAsJsonAsync<JObject>(href + ".json", token).ConfigureAwait(false);
+            content = await client.GetAsJsonAsync(href + ".json", DomainJsonSerializerContext.Default.SpdxOrgLicense, token).ConfigureAwait(false);
         }
 
-        if (content == null)
+        if (string.IsNullOrEmpty(content?.LicenseId))
         {
             return null;
         }
 
-        var licenseId = content.Value<string>("licenseId")!;
-        return new LicenseSpec(LicenseSpecSource.Shared, licenseId)
+        return new LicenseSpec(LicenseSpecSource.Shared, content.LicenseId)
         {
-            FullName = content.Value<string>("name")!,
+            FullName = content.Name,
             FileExtension = ".txt",
-            FileContent = Encoding.UTF8.GetBytes(content.Value<string>("licenseText")!),
+            FileContent = Encoding.UTF8.GetBytes(content.LicenseText),
             HRef = href
         };
     }

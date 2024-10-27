@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Newtonsoft.Json.Linq;
+﻿using ThirdPartyLibraries.Npm.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Npm.Internal;
@@ -18,19 +17,19 @@ internal sealed class NpmRegistry : INpmRegistry
     public async Task<byte[]?> DownloadPackageAsync(string packageName, string version, CancellationToken token)
     {
         var index = await GetPackageIndexAsync(packageName, token).ConfigureAwait(false);
-        if (index == null)
+        if (index?.Versions == null)
         {
             return null;
         }
 
-        var versionEntry = index.Value<JObject>("versions")!.Value<JObject>(version);
-        if (versionEntry == null)
+        if (!index.Versions.TryGetValue(version, out var versionEntry)
+            || string.IsNullOrEmpty(versionEntry.Dist?.Tarball))
         {
             return null;
         }
 
         // https://registry.npmjs.org/@types/angular/-/angular-1.6.55.tgz
-        var packageUrl = new Uri(versionEntry.Value<JObject>("dist")!.Value<string>("tarball")!);
+        var packageUrl = new Uri(versionEntry.Dist.Tarball);
 
         using (var client = _httpClientFactory())
         using (var stream = await client.GetStreamAsync(packageUrl).ConfigureAwait(false))
@@ -40,28 +39,14 @@ internal sealed class NpmRegistry : INpmRegistry
         }
     }
 
-    private async Task<JObject?> GetPackageIndexAsync(string packageName, CancellationToken token)
+    private async Task<NpmPackageIndex?> GetPackageIndexAsync(string packageName, CancellationToken token)
     {
         // does not work: https://registry.npmjs.org/@types%2Fangular/1.6.55
         var url = new Uri(new Uri(Host), Uri.EscapeDataString(packageName));
 
-        JObject? index;
         using (var client = _httpClientFactory())
-        using (var response = await client.GetAsync(url, token).ConfigureAwait(false))
         {
-            if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                return null;
-            }
-
-            await response.AssertStatusCodeOk().ConfigureAwait(false);
-
-            using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-            {
-                index = stream.JsonDeserialize<JObject>();
-            }
+            return await client.GetAsJsonAsync(url.ToString(), DomainJsonSerializerContext.Default.NpmPackageIndex, token).ConfigureAwait(false);
         }
-
-        return index;
     }
 }

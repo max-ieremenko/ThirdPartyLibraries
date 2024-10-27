@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Generic.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Generic.Internal;
@@ -26,11 +26,11 @@ internal sealed class OpenSourceOrgRepository
             return;
         }
 
-        JArray? licenses;
+        OpenSourceOrgLicense[]? licenses;
         using (var client = _httpClientFactory())
         {
             const string requestUri = "https://" + ApiHost + "/licenses/";
-            licenses = await client.GetAsJsonAsync<JArray>(requestUri, token).ConfigureAwait(false);
+            licenses = await client.GetAsJsonAsync(requestUri, DomainJsonSerializerContext.Default.OpenSourceOrgLicenseArray, token).ConfigureAwait(false);
         }
 
         Index = licenses == null ? new OpenSourceOrgIndex(0) : OpenSourceOrgIndexParser.Parse(licenses);

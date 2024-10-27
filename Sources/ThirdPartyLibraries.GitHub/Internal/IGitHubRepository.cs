@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Serialization.Metadata;
 
 namespace ThirdPartyLibraries.GitHub.Internal;
 
 internal interface IGitHubRepository
 {
-    Task<JObject?> GetAsJsonAsync(string url, CancellationToken token);
+    Task<T?> GetAsJsonAsync<T>(string url, JsonTypeInfo<T> jsonTypeInfo, CancellationToken token);
 }

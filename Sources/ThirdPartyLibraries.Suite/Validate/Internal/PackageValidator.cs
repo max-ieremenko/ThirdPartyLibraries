@@ -18,7 +18,7 @@ internal sealed class PackageValidator : IPackageValidator
 
     public async Task<ValidationResult> ValidateReferenceAsync(IPackageReference reference, string appName, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(reference.Id, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(reference.Id, token).ConfigureAwait(false);
         if (index == null)
         {
             return ValidationResult.IndexNotFound;
@@ -66,7 +66,7 @@ internal sealed class PackageValidator : IPackageValidator
 
     public async Task<ValidationResult> ValidateLibraryAsync(LibraryId id, string appName, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
         if (index == null)
         {
             return ValidationResult.IndexNotFound;

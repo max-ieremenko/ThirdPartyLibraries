@@ -1,6 +1,5 @@
 ﻿using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository;
-using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Update.Internal;
@@ -32,7 +31,7 @@ internal sealed class CustomPackageUpdater : ICustomPackageUpdater
             throw new ArgumentOutOfRangeException(nameof(library));
         }
 
-        var index = await _storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(library, token).ConfigureAwait(false);
+        var index = await _storage.ReadCustomLibraryIndexJsonAsync(library, token).ConfigureAwait(false);
         if (index == null)
         {
             return;

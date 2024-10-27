@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Text.Json;
+using NUnit.Framework;
 using Shouldly;
 
 namespace ThirdPartyLibraries.Repository.Template;
@@ -15,7 +16,7 @@ public class ApplicationTest
             InternalOnly = false
         };
 
-        var json = app.ToJsonString();
+        var json = JsonSerializer.Serialize(app, DomainJsonSerializerContext.Default.Application);
         Console.WriteLine(json);
 
         json.ShouldNotContain(nameof(Application.TargetFrameworks));
@@ -29,11 +30,11 @@ public class ApplicationTest
         {
             Name = "app name",
             InternalOnly = false,
-            TargetFrameworks = new[] { "f1" },
-            Dependencies = { new LibraryDependency() }
+            TargetFrameworks = ["f1"],
+            Dependencies = [new LibraryDependency { Name = "name", Version = "version" }]
         };
 
-        var json = app.ToJsonString();
+        var json = JsonSerializer.Serialize(app, DomainJsonSerializerContext.Default.Application);
         Console.WriteLine(json);
 
         json.ShouldContain(nameof(Application.TargetFrameworks));
