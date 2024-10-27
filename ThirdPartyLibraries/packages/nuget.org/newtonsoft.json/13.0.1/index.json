@@ -7,12 +7,11 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false,
+      "InternalOnly": true,
       "TargetFrameworks": [
         "net6.0",
         "net8.0",
-        "net9.0",
-        "netstandard2.1"
+        "net9.0"
       ]
     }
   ],
@@ -29,9 +28,7 @@
     },
     {
       "Subject": "project",
-      "Code": null,
-      "HRef": "https://www.newtonsoft.com/json",
-      "Description": "License should be verified on https://www.newtonsoft.com/json"
+      "HRef": "https://www.newtonsoft.com/json"
     }
   ]
 }

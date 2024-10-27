@@ -1,15 +1,15 @@
-Newtonsoft.Json [13.0.3](https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
+Newtonsoft.Json [13.0.1](https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)
 --------------------
 
-Used by: ThirdPartyLibraries
+Used by: ThirdPartyLibraries internal
 
-Target frameworks: net6.0, net8.0, net9.0, netstandard2.1
+Target frameworks: net6.0, net8.0, net9.0
 
 License: [MIT](../../../../licenses/mit) 
 
 - package license: [MIT](https://licenses.nuget.org/MIT) 
 - repository license: [MIT](https://github.com/JamesNK/Newtonsoft.Json) 
-- project license: [Unknown](https://www.newtonsoft.com/json) , License should be verified on https://www.newtonsoft.com/json
+- project license: [Unknown](https://www.newtonsoft.com/json) 
 
 Description
 -----------

@@ -26,10 +26,6 @@
         {
           "Name": "System.Runtime.CompilerServices.Unsafe",
           "Version": "6.0.0"
-        },
-        {
-          "Name": "System.Runtime.CompilerServices.Unsafe",
-          "Version": "4.5.3"
         }
       ]
     }
@@ -42,7 +38,6 @@
     },
     {
       "Subject": "project",
-      "Code": null,
       "HRef": "https://dot.net/",
       "Description": "License should be verified on https://dot.net/"
     }
