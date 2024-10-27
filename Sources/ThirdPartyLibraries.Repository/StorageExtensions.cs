@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository.Template;
 using ThirdPartyLibraries.Shared;
@@ -23,7 +24,7 @@ public static class StorageExtensions
         var content = await storage.OpenLicenseFileReadAsync(licenseCode, IndexFileName, token).ConfigureAwait(false);
         try
         {
-            return content?.JsonDeserialize<LicenseIndexJson>();
+            return content?.JsonDeserialize(DomainJsonSerializerContext.Default.LicenseIndexJson);
         }
         catch (Exception ex) when (!token.IsCancellationRequested)
         {
@@ -39,7 +40,7 @@ public static class StorageExtensions
 
     public static async Task CreateLicenseIndexJsonAsync(this IStorage storage, LicenseIndexJson model, CancellationToken token)
     {
-        var content = JsonSerialize(model);
+        var content = JsonSerialize(model, DomainJsonSerializerContext.Default.LicenseIndexJson);
 
         try
         {
@@ -51,12 +52,12 @@ public static class StorageExtensions
         }
     }
 
-    public static async Task<TModel?> ReadLibraryIndexJsonAsync<TModel>(this IStorage storage, LibraryId id, CancellationToken token)
+    public static async Task<LibraryIndexJson?> ReadLibraryIndexJsonAsync(this IStorage storage, LibraryId id, CancellationToken token)
     {
-        var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
+        using var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
         try
         {
-            return content == null ? default : content.JsonDeserialize<TModel>();
+            return content?.JsonDeserialize(DomainJsonSerializerContext.Default.LibraryIndexJson);
         }
         catch (Exception ex) when (!token.IsCancellationRequested)
         {
@@ -64,9 +65,20 @@ public static class StorageExtensions
                 $"Failed to deserialize contents of {IndexFileName} of package {id.SourceCode}/{id.Name}/{id.Version}.",
                 ex);
         }
-        finally
+    }
+
+    public static async Task<CustomLibraryIndexJson?> ReadCustomLibraryIndexJsonAsync(this IStorage storage, LibraryId id, CancellationToken token)
+    {
+        using var content = await storage.OpenLibraryFileReadAsync(id, IndexFileName, token).ConfigureAwait(false);
+        try
         {
-            content?.Dispose();
+            return content?.JsonDeserialize(DomainJsonSerializerContext.Default.CustomLibraryIndexJson);
+        }
+        catch (Exception ex) when (!token.IsCancellationRequested)
+        {
+            throw new InvalidOperationException(
+                $"Failed to deserialize contents of {IndexFileName} of package {id.SourceCode}/{id.Name}/{id.Version}.",
+                ex);
         }
     }
 
@@ -79,10 +91,10 @@ public static class StorageExtensions
         }
     }
 
-    public static async Task WriteLibraryIndexJsonAsync<TModel>(this IStorage storage, LibraryId id, TModel model, CancellationToken token)
+    public static Task WriteLibraryIndexJsonAsync(this IStorage storage, LibraryId id, LibraryIndexJson model, CancellationToken token)
     {
-        var content = JsonSerialize(model!);
-        await storage.WriteLibraryFileAsync(id, IndexFileName, content, token).ConfigureAwait(false);
+        var content = JsonSerialize(model, DomainJsonSerializerContext.Default.LibraryIndexJson);
+        return storage.WriteLibraryFileAsync(id, IndexFileName, content, token);
     }
 
     public static async Task WriteLibraryReadMeAsync(this IStorage storage, LibraryId id, object context, CancellationToken token)
@@ -157,6 +169,30 @@ public static class StorageExtensions
         return CreateLibraryEmptyFileAsync(storage, id, ThirdPartyNoticesFileName, token);
     }
 
+    internal static byte[] FixLineEnding(MemoryStream stream)
+    {
+        const byte r = 13;
+        const byte n = 10;
+
+        var buffer = stream.GetBuffer();
+        var result = new MemoryStream((int)stream.Length);
+        for (var i = 0; i < stream.Length; i++)
+        {
+            var value = buffer[i];
+            
+            if (value != n || (i > 0 && buffer[i - 1] == r))
+            {
+                result.WriteByte(value);
+                continue;
+            }
+
+            result.WriteByte(r);
+            result.WriteByte(n);
+        }
+
+        return result.ToArray();
+    }
+
     private static async Task<Stream> GetOrCreateConfigurationFileAsync(IStorage storage, string fileName, Func<byte[]> getContent, CancellationToken token)
     {
         var stream = await storage.OpenConfigurationFileReadAsync(fileName, token).ConfigureAwait(false);
@@ -180,21 +216,11 @@ public static class StorageExtensions
         }
     }
 
-    private static byte[] JsonSerialize(object content)
+    private static byte[] JsonSerialize<T>(T content, JsonTypeInfo<T> jsonTypeInfo)
     {
-        using (var stream = new MemoryStream())
-        {
-            using (var writer = new StreamWriter(stream, null, -1, true))
-            using (var jsonWriter = new JsonTextWriter(writer))
-            {
-                writer.NewLine = "\r\n";
-
-                jsonWriter.Formatting = Formatting.Indented;
-                new JsonSerializer().Serialize(jsonWriter, content);
-            }
-
-            return stream.ToArray();
-        }
+        using var stream = new MemoryStream();
+        JsonSerializer.Serialize(stream, content, jsonTypeInfo);
+        return Environment.NewLine.Length == 1 ? FixLineEnding(stream) : stream.ToArray();
     }
 
     private static async Task<string?> ReadLibraryTextFileAsync(IStorage storage, LibraryId id, string fileName, CancellationToken token)

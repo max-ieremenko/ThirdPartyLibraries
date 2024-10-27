@@ -26,7 +26,7 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
 
     public async Task<bool> UpdateAsync(LibraryId library, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(library, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(library, token).ConfigureAwait(false);
         if (index == null)
         {
             throw new InvalidOperationException($"The index must already be created by {nameof(PackageContentUpdater)}.");
@@ -192,7 +192,7 @@ internal sealed class PackageLicenseUpdater : IPackageLicenseUpdater
 
     private async Task<bool> SaveLibraryIndexJsonAsync(LibraryId id, LibraryIndexJson index, CancellationToken token)
     {
-        var original = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
+        var original = await _storage.ReadLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
 
         if (LibraryIndexJsonChangeTracker.IsChanged(original, index))
         {

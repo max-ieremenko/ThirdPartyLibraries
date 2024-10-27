@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Text.Json;
 using NuGet.Frameworks;
 using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.NuGet.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.NuGet.Internal;
@@ -9,18 +10,17 @@ internal readonly struct ProjectAssetsParser
 {
     public const string FileName = "project.assets.json";
 
-    public ProjectAssetsParser(JObject content)
+    public ProjectAssetsParser(ProjectAssetsJson content)
     {
-        var version = content.Value<string>("version");
-        if (version != "3")
+        if (content.Version != 3)
         {
-            throw new NotSupportedException($"{FileName} version {version} is not supported");
+            throw new NotSupportedException($"{FileName} version {content.Version} is not supported");
         }
 
         Content = content;
     }
 
-    public JObject Content { get; }
+    public ProjectAssetsJson Content { get; }
 
     public static ProjectAssetsParser FromFile(string fileName)
     {
@@ -32,50 +32,47 @@ internal readonly struct ProjectAssetsParser
 
     public static ProjectAssetsParser FromStream(Stream stream)
     {
-        var content = stream.JsonDeserialize<JObject>();
+        var content = stream.JsonDeserialize(DomainJsonSerializerContext.Default.ProjectAssetsJson);
         return new ProjectAssetsParser(content);
     }
 
-    public string GetProjectName() => Content.Value<JObject>("project")!.Value<JObject>("restore")!.Value<string>("projectName")!;
+    public string GetProjectName() => Content.Project.Restore.ProjectName;
 
     public string[] GetTargetFrameworks()
     {
-        var frameworks = Content.Value<JObject>("project")!.Value<JObject>("frameworks")!;
-
-        return frameworks.Properties().Select(i => i.Name).ToArray();
+        var frameworks = Content.Project.Frameworks;
+        return frameworks.EnumerateObject().Select(i => i.Name).ToArray();
     }
 
     public IEnumerable<(LibraryId Package, List<LibraryId> Dependencies)> GetReferences(string targetFramework)
     {
         var framework = MapTargetFrameworkProjFormatToNuGetFormat(targetFramework);
 
-        var projectFrameworks = Content.Value<JObject>("project")!.Value<JObject>("frameworks")!;
-        var projectFramework = projectFrameworks.Value<JObject>(targetFramework);
-        if (projectFramework == null)
+        var projectFrameworks = Content.Project.Frameworks;
+        if (!projectFrameworks.TryGetProperty(targetFramework, out var projectFramework))
         {
-            var frameworks = projectFrameworks.Properties().Select(i => i.Name);
+            var frameworks = projectFrameworks.EnumerateObject().Select(i => i.Name);
             var frameworksText = string.Join(", ", frameworks);
             throw new InvalidOperationException($"project/frameworks/{targetFramework} not found in {frameworksText}.");
         }
 
-        var projectDependencies = projectFramework.Value<JObject>("dependencies");
-        if (projectDependencies == null)
+        if (!projectFramework.TryGetProperty("dependencies", out var projectDependencies))
         {
-            return Enumerable.Empty<(LibraryId, List<LibraryId>)>();
+            return [];
         }
 
         var targetPackageByName = ParseTarget(framework);
-        foreach (var row in projectDependencies)
+        foreach (var row in projectDependencies.EnumerateObject())
         {
-            var targetName = row.Value!.Value<string>("target");
+            var targetName = row.Value.GetProperty("target").GetString();
             if (!"package".Equals(targetName, StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
-            if (!targetPackageByName.TryGetValue(row.Key, out var target))
+            if (!targetPackageByName.TryGetValue(row.Name, out var target))
             {
-                throw new InvalidOperationException($"The project {GetProjectName()} contains invalid reference to a package {row.Key}.");
+                throw new InvalidOperationException($"The project {GetProjectName()} contains invalid reference to a package {row.Name}.");
             }
 
             target.IsRoot = true;
@@ -94,10 +91,10 @@ internal readonly struct ProjectAssetsParser
     {
         var result = new List<Uri>();
 
-        var sources = Content.Value<JObject>("project")!.Value<JObject>("restore")!.Value<JObject>("sources");
-        if (sources != null)
+        var sources = Content.Project.Restore.Sources;
+        if (sources.ValueKind == JsonValueKind.Object)
         {
-            foreach (var property in sources.Properties())
+            foreach (var property in sources.EnumerateObject())
             {
                 if (Uri.TryCreate(property.Name, UriKind.Absolute, out var path))
                 {
@@ -143,23 +140,23 @@ internal readonly struct ProjectAssetsParser
 
     private IDictionary<string, TargetPackage> ParseTarget(string frameworkName)
     {
-        var targets = Content.Value<JObject>("targets");
-        var target = (JObject)targets!.GetValue(frameworkName, StringComparison.OrdinalIgnoreCase)!;
-        if (target == null)
+        var targets = Content.Targets;
+        var target = targets.EnumerateObject().FirstOrDefault(i => i.Name.Equals(frameworkName, StringComparison.OrdinalIgnoreCase));
+        if (target.Value.ValueKind != JsonValueKind.Object)
         {
-            var frameworks = targets.Properties().Select(i => i.Name);
+            var frameworks = targets.EnumerateObject().Select(i => i.Name);
             var frameworksText = string.Join(", ", frameworks);
             throw new InvalidOperationException($"Target {frameworkName} not found in {frameworksText}.");
         }
 
         var result = new Dictionary<string, TargetPackage>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var row in target)
+        foreach (var row in target.Value.EnumerateObject())
         {
-            var type = row.Value!.Value<string>("type");
+            var type = row.Value.GetProperty("type").GetString();
             if ("package".Equals(type, StringComparison.OrdinalIgnoreCase))
             {
-                var targetPackage = new TargetPackage(row.Key, (JObject)row.Value);
+                var targetPackage = new TargetPackage(row.Name, row.Value);
                 result.Add(targetPackage.Id.Name, targetPackage);
             }
         }
@@ -169,17 +166,17 @@ internal readonly struct ProjectAssetsParser
 
     private sealed class TargetPackage
     {
-        private readonly JObject _content;
+        private readonly JsonElement _content;
         private readonly bool _ignoreByRuntime;
 
-        public TargetPackage(string fullName, JObject content)
+        public TargetPackage(string fullName, JsonElement content)
         {
             _content = content;
             var index = fullName.IndexOf('/');
             Id = NuGetLibraryId.New(fullName.Substring(0, index), fullName.Substring(index + 1));
 
-            var runtime = content.Value<JObject>("runtime");
-            _ignoreByRuntime = runtime == null || runtime.Properties().All(i => i.Name.EndsWith("/_._", StringComparison.OrdinalIgnoreCase));
+            _ignoreByRuntime = !content.TryGetProperty("runtime", out var runtime)
+                               || runtime.EnumerateObject().All(i => i.Name.EndsWith("/_._", StringComparison.OrdinalIgnoreCase));
         }
 
         public LibraryId Id { get; }
@@ -190,13 +187,12 @@ internal readonly struct ProjectAssetsParser
 
         public IEnumerable<string> GetDependencies()
         {
-            var dependenciesSource = _content.Value<JObject>("dependencies");
-            if (dependenciesSource == null)
+            if (!_content.TryGetProperty("dependencies", out var dependenciesSource))
             {
-                return Enumerable.Empty<string>();
+                return [];
             }
 
-            return dependenciesSource.Properties().Select(i => i.Name);
+            return dependenciesSource.EnumerateObject().Select(i => i.Name);
         }
     }
 }

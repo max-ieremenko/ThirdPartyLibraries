@@ -1,5 +1,4 @@
 ﻿using System.Net.Mime;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using Shouldly;
@@ -35,22 +34,22 @@ public class NuGetRepositoryTest
     }
 
     [Test]
-    public async Task DownloadPackageNewtonsoftJsonFromLocalCache()
+    public async Task DownloadPackageNunitFromLocalCache()
     {
-        var fileVersion = FileVersionInfo.GetVersionInfo(typeof(JsonSerializer).Assembly.Location);
+        var fileVersion = FileVersionInfo.GetVersionInfo(typeof(TestAttribute).Assembly.Location);
         var version = $"{fileVersion.FileMajorPart}.{fileVersion.FileMinorPart}.{fileVersion.FileBuildPart}";
 
         var path = Path
             .Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                 @".nuget/packages",
-                "Newtonsoft.Json",
+                "nunit",
                 version)
             .ToLowerInvariant();
         Console.WriteLine(path);
         Assert.That(path, Does.Exist.IgnoreFiles);
 
-        var file = await _sut.TryGetPackageFromCacheAsync("Newtonsoft.Json", version, new List<Uri>(), default).ConfigureAwait(false);
+        var file = await _sut.TryGetPackageFromCacheAsync("NUnit", version, new List<Uri>(), default).ConfigureAwait(false);
 
         file.ShouldNotBeNull();
     }

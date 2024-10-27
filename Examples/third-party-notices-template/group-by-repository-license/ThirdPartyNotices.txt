@@ -68,9 +68,6 @@ License MIT License, full text can be found at https://spdx.org/licenses/MIT or 
     Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/8.0.0)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.
-    Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
-        Authors: James Newton-King
-        Copyright: Copyright © James Newton-King 2008
     PowerShellStandard.Library (https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.

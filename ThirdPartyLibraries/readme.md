@@ -8,12 +8,12 @@ Licenses
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
 |[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
-|[MIT](licenses/mit)|no|no|50|
+|[MIT](licenses/mit)|no|no|49|
 |[ms-net-library](licenses/ms-net-library)|no|no|1|
 
 
 
-Packages 60
+Packages 59
 --------
 
 |Name|Version|Source|License|Used by|
@@ -52,7 +52,7 @@ Packages 60
 |[Microsoft.TestPlatform.ObjectModel](packages/nuget.org/microsoft.testplatform.objectmodel/17.11.1)|17.11.1|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/17.11.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.TestPlatform.TestHost](packages/nuget.org/microsoft.testplatform.testhost/17.11.1)|17.11.1|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/17.11.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Moq](packages/nuget.org/moq/4.20.72)|4.20.72|[nuget.org](https://www.nuget.org/packages/Moq/4.20.72)|[BSD-3-Clause](licenses/bsd-3-clause)|ThirdPartyLibraries internal|
-|[Newtonsoft.Json](packages/nuget.org/newtonsoft.json/13.0.3)|13.0.3|[nuget.org](https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Newtonsoft.Json](packages/nuget.org/newtonsoft.json/13.0.1)|13.0.1|[nuget.org](https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[NuGet.Frameworks](packages/nuget.org/nuget.frameworks/6.11.1)|6.11.1|[nuget.org](https://www.nuget.org/packages/NuGet.Frameworks/6.11.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[NuGet.Versioning](packages/nuget.org/nuget.versioning/6.11.1)|6.11.1|[nuget.org](https://www.nuget.org/packages/NuGet.Versioning/6.11.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
 |[NUnit](packages/nuget.org/nunit/4.2.2)|4.2.2|[nuget.org](https://www.nuget.org/packages/NUnit/4.2.2)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
@@ -70,7 +70,6 @@ Packages 60
 |[System.Memory](packages/nuget.org/system.memory/4.5.5)|4.5.5|[nuget.org](https://www.nuget.org/packages/System.Memory/4.5.5)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Numerics.Vectors](packages/nuget.org/system.numerics.vectors/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Reflection.Metadata](packages/nuget.org/system.reflection.metadata/1.6.0)|1.6.0|[nuget.org](https://www.nuget.org/packages/System.Reflection.Metadata/1.6.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[System.Runtime.CompilerServices.Unsafe](packages/nuget.org/system.runtime.compilerservices.unsafe/4.5.3)|4.5.3|[nuget.org](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/4.5.3)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[System.Runtime.CompilerServices.Unsafe](packages/nuget.org/system.runtime.compilerservices.unsafe/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Runtime.Loader](packages/nuget.org/system.runtime.loader/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.Runtime.Loader/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries|
 |[System.Security.Principal.Windows](packages/nuget.org/system.security.principal.windows/4.7.0)|4.7.0|[nuget.org](https://www.nuget.org/packages/System.Security.Principal.Windows/4.7.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|

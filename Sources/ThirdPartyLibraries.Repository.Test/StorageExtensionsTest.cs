@@ -94,11 +94,38 @@ public class StorageExtensionsTest
             {
                 Code = "MIT",
                 Status = "HasToBeApproved"
+            },
+            Licenses =
+            {
+                new LibraryLicense
+                {
+                    Subject = "subject",
+                    Code = "MIT",
+                    HRef = "href",
+                    Description = "description"
+                }
+            },
+            UsedBy =
+            {
+                new Application
+                {
+                    Name = "app",
+                    InternalOnly = true,
+                    TargetFrameworks = ["1", "2"],
+                    Dependencies =
+                    [
+                        new LibraryDependency
+                        {
+                            Name = "name",
+                            Version = "version"
+                        }
+                    ]
+                }
             }
         };
 
         await _storage.Object.WriteLibraryIndexJsonAsync(id, model, CancellationToken.None).ConfigureAwait(false);
-        var actual = await _storage.Object.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, CancellationToken.None).ConfigureAwait(false);
+        var actual = await _storage.Object.ReadLibraryIndexJsonAsync(id, CancellationToken.None).ConfigureAwait(false);
 
         using (var stream = await _storage.Object.OpenLibraryFileReadAsync(id, StorageExtensions.IndexFileName, CancellationToken.None).ConfigureAwait(false))
         {
@@ -108,6 +135,38 @@ public class StorageExtensionsTest
         actual.ShouldNotBeNull();
         actual.License.Code.ShouldBe("MIT");
         actual.License.Status.ShouldBe("HasToBeApproved");
+        
+        actual.Licenses.Count.ShouldBe(1);
+        actual.Licenses[0].Subject.ShouldBe("subject");
+        actual.Licenses[0].Code.ShouldBe("MIT");
+        actual.Licenses[0].HRef.ShouldBe("href");
+        actual.Licenses[0].Description.ShouldBe("description");
+
+        actual.UsedBy.Count.ShouldBe(1);
+        actual.UsedBy[0].Name.ShouldBe("app");
+        actual.UsedBy[0].InternalOnly.ShouldBeTrue();
+        actual.UsedBy[0].TargetFrameworks.ShouldBe(["1", "2"]);
+
+        actual.UsedBy[0].Dependencies?.Length.ShouldBe(1);
+        actual.UsedBy[0].Dependencies![0].Name.ShouldBe("name");
+        actual.UsedBy[0].Dependencies![0].Version.ShouldBe("version");
+    }
+
+    [Test]
+    public void FixLineEnding()
+    {
+        var data = @"
+line 1
+
+line 2
+".Replace("\r\n", "\n");
+
+        var actual1 = StorageExtensions.FixLineEnding(data.AsStream());
+        var actual2 = StorageExtensions.FixLineEnding(data.Replace("\n", "\r\n").AsStream());
+        actual1.ShouldBe(actual2);
+
+        var text = Encoding.UTF8.GetString(actual1);
+        text.ShouldBe(data.Replace("\n", "\r\n"));
     }
 
     [Test]

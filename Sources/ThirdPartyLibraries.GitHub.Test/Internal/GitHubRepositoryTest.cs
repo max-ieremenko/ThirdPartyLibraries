@@ -11,9 +11,6 @@ namespace ThirdPartyLibraries.GitHub.Internal;
 [TestFixture]
 public class GitHubRepositoryTest
 {
-    private const string DummyUri = "https://github.com/dummy";
-    private const string DummyResponse = "{ foo:1 }";
-
     private GitHubConfiguration _configuration = null!;
     private MockHttpMessageHandler _mockHttp = null!;
     private GitHubRepository _sut = null!;
@@ -33,7 +30,7 @@ public class GitHubRepositoryTest
     public async Task NoAuthorization()
     {
         _mockHttp
-            .When(HttpMethod.Get, DummyUri)
+            .When(HttpMethod.Get, DummyResponse.Uri)
             .With(request =>
             {
                 request.Headers.Authorization.ShouldBeNull();
@@ -41,12 +38,12 @@ public class GitHubRepositoryTest
             })
             .Respond(
                 MediaTypeNames.Application.Json,
-                DummyResponse.AsStream());
+                DummyResponse.Content.AsStream());
 
-        var actual = await _sut.GetAsJsonAsync(DummyUri, default).ConfigureAwait(false);
+        var actual = await _sut.GetAsJsonAsync(DummyResponse.Uri, DummyJsonSerializerContext.Default.DummyResponse, default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
-        actual.Value<int>("foo").ShouldBe(1);
+        actual.Foo.ShouldBe(1);
     }
 
     [Test]
@@ -55,26 +52,26 @@ public class GitHubRepositoryTest
         _configuration.PersonalAccessToken = "tokenValue";
 
         _mockHttp
-            .When(HttpMethod.Get, DummyUri)
+            .When(HttpMethod.Get, DummyResponse.Uri)
             .WithHeaders("Authorization", "Token tokenValue")
             .Respond(
                 MediaTypeNames.Application.Json,
-                DummyResponse.AsStream());
+                DummyResponse.Content.AsStream());
 
-        var actual = await _sut.GetAsJsonAsync(DummyUri, default).ConfigureAwait(false);
+        var actual = await _sut.GetAsJsonAsync(DummyResponse.Uri, DummyJsonSerializerContext.Default.DummyResponse, default).ConfigureAwait(false);
 
         actual.ShouldNotBeNull();
-        actual.Value<int>("foo").ShouldBe(1);
+        actual.Foo.ShouldBe(1);
     }
 
     [Test]
     public async Task NotFound()
     {
         _mockHttp
-            .When(HttpMethod.Get, DummyUri)
+            .When(HttpMethod.Get, DummyResponse.Uri)
             .Respond(HttpStatusCode.NotFound);
 
-        var actual = await _sut.GetAsJsonAsync(DummyUri, default).ConfigureAwait(false);
+        var actual = await _sut.GetAsJsonAsync(DummyResponse.Uri, DummyJsonSerializerContext.Default.DummyResponse, default).ConfigureAwait(false);
 
         actual.ShouldBeNull();
     }
@@ -83,13 +80,13 @@ public class GitHubRepositoryTest
     public void Unauthorized()
     {
         _mockHttp
-            .When(HttpMethod.Get, DummyUri)
+            .When(HttpMethod.Get, DummyResponse.Uri)
             .Respond(
                 HttpStatusCode.Unauthorized,
                 MediaTypeNames.Application.Json,
                 TempFile.OpenResource(GetType(), "GitHubRepositoryTest.Unauthorized.json"));
 
-        var ex = Assert.ThrowsAsync<InvalidOperationException>(() => _sut.GetAsJsonAsync(DummyUri, default));
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(() => _sut.GetAsJsonAsync(DummyResponse.Uri, DummyJsonSerializerContext.Default.DummyResponse, default));
 
         ex.ShouldNotBeNull();
         ex.Message.ShouldContain("Bad credentials");
@@ -110,10 +107,10 @@ public class GitHubRepositoryTest
             MediaTypeNames.Application.Json);
 
         _mockHttp
-            .When(HttpMethod.Get, DummyUri)
+            .When(HttpMethod.Get, DummyResponse.Uri)
             .Respond(HttpStatusCode.Forbidden, headers, content);
 
-        var actual = Assert.ThrowsAsync<ApiRateLimitExceededException>(() => _sut.GetAsJsonAsync(DummyUri, default));
+        var actual = Assert.ThrowsAsync<ApiRateLimitExceededException>(() => _sut.GetAsJsonAsync(DummyResponse.Uri, DummyJsonSerializerContext.Default.DummyResponse, default));
 
         Console.WriteLine(actual);
 

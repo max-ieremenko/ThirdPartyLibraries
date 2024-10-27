@@ -28,7 +28,6 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <ItemGroup>
       <FilesToDelete Include="$(OutDir)JetBrains*.*" />
-      <FilesToDelete Include="$(OutDir)Microsoft.Bcl.AsyncInterfaces.dll" />
       <FilesToDelete Include="$(OutDir)System.Memory.dll" />
       <FilesToDelete Include="$(OutDir)System.Numerics.Vectors.dll" />
       <FilesToDelete Include="$(OutDir)System.Runtime.Loader.dll" />
