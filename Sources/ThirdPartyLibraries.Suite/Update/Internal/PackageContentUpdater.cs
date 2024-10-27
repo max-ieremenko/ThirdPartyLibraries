@@ -32,7 +32,7 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
         await EnsurePackageExistsAsync(reference.Id, loader, token).ConfigureAwait(false);
         await EnsureSpecExistsAsync(reference.Id, loader, token).ConfigureAwait(false);
 
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(reference.Id, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(reference.Id, token).ConfigureAwait(false);
         if (index == null)
         {
             index = new LibraryIndexJson();
@@ -62,11 +62,20 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
         }
 
         app.InternalOnly = reference.IsInternal;
-        app.TargetFrameworks = reference.TargetFrameworks;
-        app.Dependencies.Clear();
-        foreach (var dependency in reference.Dependencies)
+        app.TargetFrameworks = reference.TargetFrameworks.Length > 0 ? reference.TargetFrameworks : null;
+        
+        if (reference.Dependencies.Count > 0)
         {
-            app.Dependencies.Add(new LibraryDependency { Name = dependency.Name, Version = dependency.Version });
+            app.Dependencies = new LibraryDependency[reference.Dependencies.Count];
+            for (var i = 0; i < reference.Dependencies.Count; i++)
+            {
+                var dependency = reference.Dependencies[i];
+                app.Dependencies[i] = new LibraryDependency { Name = dependency.Name, Version = dependency.Version };
+            }
+        }
+        else
+        {
+            app.Dependencies = null;
         }
     }
 
@@ -230,7 +239,7 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
 
     private async Task<UpdateResult> SaveLibraryIndexJsonAsync(LibraryId id, LibraryIndexJson index, CancellationToken token)
     {
-        var original = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
+        var original = await _storage.ReadLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
 
         var result = UpdateResult.None;
         if (LibraryIndexJsonChangeTracker.IsChanged(original, index))

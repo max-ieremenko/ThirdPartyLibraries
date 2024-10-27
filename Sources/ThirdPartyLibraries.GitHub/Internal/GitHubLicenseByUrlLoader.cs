@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using ThirdPartyLibraries.Domain;
+﻿using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.GitHub.Internal.Domain;
 
 namespace ThirdPartyLibraries.GitHub.Internal;
 
@@ -48,27 +48,25 @@ internal sealed class GitHubLicenseByUrlLoader : ILicenseByUrlLoader
 
     private async Task<LicenseSpec?> LoadRepositoryLicenseAsync(string url, CancellationToken token)
     {
-        var content = await _repository.GetAsJsonAsync(url, token).ConfigureAwait(false);
-        if (content == null)
+        var license = await _repository.GetAsJsonAsync(url, DomainJsonSerializerContext.Default.GitHubRepositoryLicense, token).ConfigureAwait(false);
+        if (string.IsNullOrEmpty(license?.License?.SpdxId))
         {
             return null;
         }
 
-        var encoding = content.Value<string>("encoding");
-        if (!"base64".Equals(encoding, StringComparison.OrdinalIgnoreCase))
+        if (!"base64".Equals(license.Encoding, StringComparison.OrdinalIgnoreCase))
         {
-            throw new NotSupportedException($"GitHub encoding {encoding} is not supported.");
+            throw new NotSupportedException($"GitHub encoding {license.Encoding} is not supported.");
         }
 
-        var license = content.Value<JObject>("license")!;
-        var spdxId = license.Value<string>("spdx_id");
-        var fileName = content.Value<string>("name");
+        var spdxId = license.License.SpdxId;
+        var fileName = license.Name;
 
-        return new LicenseSpec(LicenseSpecSource.UserDefined, spdxId!)
+        return new LicenseSpec(LicenseSpecSource.UserDefined, spdxId)
         {
             HRef = url,
-            FullName = "NOASSERTION".Equals(spdxId, StringComparison.OrdinalIgnoreCase) ? null : license.Value<string>("name")!,
-            FileContent = Convert.FromBase64String(content.Value<string>("content")!),
+            FullName = "NOASSERTION".Equals(spdxId, StringComparison.OrdinalIgnoreCase) ? null : license.License.Name,
+            FileContent = Convert.FromBase64String(license.Content!),
             FileName = fileName,
             FileExtension = Path.GetExtension(fileName)
         };
@@ -91,17 +89,17 @@ internal sealed class GitHubLicenseByUrlLoader : ILicenseByUrlLoader
 
     private async Task<LicenseSpec?> LoadLicenseCodeAsync(string url, CancellationToken token)
     {
-        var content = await _repository.GetAsJsonAsync(url, token).ConfigureAwait(false);
-        if (content == null)
+        var content = await _repository.GetAsJsonAsync(url, DomainJsonSerializerContext.Default.GitHubLicense, token).ConfigureAwait(false);
+        if (string.IsNullOrEmpty(content?.SpdxId))
         {
             return null;
         }
 
-        return new LicenseSpec(LicenseSpecSource.Shared, content.Value<string>("spdx_id")!)
+        return new LicenseSpec(LicenseSpecSource.Shared, content.SpdxId)
         {
             HRef = url,
-            FullName = content.Value<string>("name")!,
-            FileContent = Encoding.UTF8.GetBytes(content.Value<string>("body")!),
+            FullName = content.Name,
+            FileContent = Encoding.UTF8.GetBytes(content.Body!),
             FileExtension = ".txt"
         };
     }

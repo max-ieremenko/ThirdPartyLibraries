@@ -79,7 +79,7 @@ internal sealed class LicenseByContentResolver : ILicenseByContentResolver
                 continue;
             }
 
-            var otherIndex = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(other, token).ConfigureAwait(false);
+            var otherIndex = await _storage.ReadLibraryIndexJsonAsync(other, token).ConfigureAwait(false);
             if (string.IsNullOrEmpty(otherIndex?.License.Code))
             {
                 continue;

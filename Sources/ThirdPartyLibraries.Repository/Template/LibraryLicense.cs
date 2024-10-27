@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace ThirdPartyLibraries.Repository.Template;
+﻿namespace ThirdPartyLibraries.Repository.Template;
 
 public sealed class LibraryLicense
 {
@@ -10,7 +8,6 @@ public sealed class LibraryLicense
 
     public string? HRef { get; set; }
 
-    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
     public string? Description { get; set; }
 
     public LibraryLicense Clone() => (LibraryLicense)MemberwiseClone();

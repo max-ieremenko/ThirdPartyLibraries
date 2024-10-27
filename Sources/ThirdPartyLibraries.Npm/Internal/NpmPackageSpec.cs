@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Text.Json;
 using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.Npm.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Npm.Internal;
@@ -9,9 +10,9 @@ internal sealed class NpmPackageSpec : IPackageSpec
     private const string Unlicensed = "UNLICENSED";
     private const string FileLicense = "SEE LICENSE IN ";
     
-    private readonly JObject _content;
+    private readonly NpmPackageJson _content;
 
-    public NpmPackageSpec(JObject content)
+    public NpmPackageSpec(NpmPackageJson content)
     {
         _content = content;
     }
@@ -26,53 +27,42 @@ internal sealed class NpmPackageSpec : IPackageSpec
 
     public static NpmPackageSpec FromStream(Stream stream)
     {
-        var content = stream.JsonDeserialize<JObject>();
+        var content = stream.JsonDeserialize(DomainJsonSerializerContext.Default.NpmPackageJson);
         return new NpmPackageSpec(content);
     }
 
-    public string GetName()
-    {
-        return _content.Value<string>("name")!;
-    }
+    public string GetName() => _content.Name!;
 
-    public string GetVersion()
-    {
-        return _content.Value<string>("version")!;
-    }
+    public string GetVersion() => _content.Version!;
 
-    public string? GetDescription()
-    {
-        return _content.Value<string>("description");
-    }
+    public string? GetDescription() => _content.Description;
 
     public (PackageSpecLicenseType Type, string? Value) GetLicense()
     {
-        var license = _content.GetValue("license");
-        if (license != null)
+        static string? GetCode(JsonElement json)
         {
-            if (license is JObject obj)
+            if (json.ValueKind == JsonValueKind.String)
             {
-                license = obj.GetValue("type");
+                return json.GetString();
             }
 
-            if (license is JValue value)
+            if (json.ValueKind == JsonValueKind.Object && json.TryGetProperty("type", out var type) && type.ValueKind == JsonValueKind.String)
             {
-                return ParseLicenseAsExpression(value.Value as string);
+                return type.GetString();
             }
 
-            return (PackageSpecLicenseType.NotDefined, null);
+            return null;
         }
 
-        string? code = null;
-        if (_content.GetValue("licenses") is JArray licenses)
+        if (_content.Licenses != null)
         {
-            var codes = licenses
-                .OfType<JObject>()
-                .Select(i => (i.GetValue("type") as JValue)?.Value as string)
-                .Where(i => !string.IsNullOrEmpty(i))
+            var codes = _content
+                .Licenses
+                .Select(GetCode)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
+            string? code = null;
             if (codes.Count == 1)
             {
                 code = codes[0];
@@ -81,23 +71,25 @@ internal sealed class NpmPackageSpec : IPackageSpec
             {
                 code = "(" + string.Join(" OR ", codes) + ")";
             }
+
+            return (code == null ? PackageSpecLicenseType.NotDefined : PackageSpecLicenseType.Expression, code);
         }
 
-        return (code == null ? PackageSpecLicenseType.NotDefined : PackageSpecLicenseType.Expression, code);
+        return ParseLicenseAsExpression(GetCode(_content.License));
     }
 
     public string? GetRepositoryUrl()
     {
         string? repositoryUrl = null;
 
-        var repository = _content.GetValue("repository");
-        if (repository is JObject obj)
+        if (_content.Repository.ValueKind == JsonValueKind.Object && _content.Repository.TryGetProperty("url", out var url))
         {
-            repositoryUrl = obj.Value<string>("url");
+            repositoryUrl = url.GetString();
         }
-        else if (repository is JValue url)
+
+        if (_content.Repository.ValueKind == JsonValueKind.String)
         {
-            repositoryUrl = url.Value as string;
+            repositoryUrl = _content.Repository.GetString();
         }
 
         if (string.IsNullOrWhiteSpace(repositoryUrl))
@@ -147,25 +139,22 @@ internal sealed class NpmPackageSpec : IPackageSpec
         return builder.Uri.ToString();
     }
 
-    public string? GetHomePage()
-    {
-        return _content.Value<string>("homepage");
-    }
+    public string? GetHomePage() => _content.HomePage;
 
     public string? GetCopyright() => null;
 
     public string? GetAuthor()
     {
-        var author = _content.GetValue("author") ?? _content.GetValue("contributors");
+        var author = _content.Author ?? _content.Contributors;
         if (author == null)
         {
             return null;
         }
 
-        if (author is JArray array)
+        if (author.Value.ValueKind == JsonValueKind.Array)
         {
             var result = new StringBuilder();
-            foreach (var item in array)
+            foreach (var item in author.Value.EnumerateArray())
             {
                 var name = ParseAuthorName(item);
                 if (string.IsNullOrWhiteSpace(name))
@@ -184,24 +173,24 @@ internal sealed class NpmPackageSpec : IPackageSpec
             return result.Length == 0 ? null : result.ToString();
         }
 
-        return ParseAuthorName(author);
+        return ParseAuthorName(author.Value);
     }
 
-    public IEnumerable<LibraryId> GetDependencies() => ParseDependencies((JObject?)_content.GetValue("dependencies"));
+    public IEnumerable<LibraryId> GetDependencies() => ParseDependencies(_content.Dependencies);
 
-    public IEnumerable<LibraryId> GetDevDependencies() => ParseDependencies((JObject?)_content.GetValue("devDependencies"));
+    public IEnumerable<LibraryId> GetDevDependencies() => ParseDependencies(_content.DevDependencies);
 
-    private static IEnumerable<LibraryId> ParseDependencies(JObject? root)
+    private static IEnumerable<LibraryId> ParseDependencies(JsonElement root)
     {
-        if (root == null)
+        if (root.ValueKind != JsonValueKind.Object)
         {
             return Array.Empty<LibraryId>();
         }
 
         var result = new List<LibraryId>();
-        foreach (var property in root.Properties())
+        foreach (var property in root.EnumerateObject())
         {
-            var version = (string?)property.Value;
+            var version = property.Value.GetString();
             if (string.IsNullOrWhiteSpace(version))
             {
                 version = "*";
@@ -230,19 +219,19 @@ internal sealed class NpmPackageSpec : IPackageSpec
         return (type, value);
     }
 
-    private static string? ParseAuthorName(JToken value)
+    private static string? ParseAuthorName(JsonElement value)
     {
-        if (value is JObject obj)
+        if (value.ValueKind == JsonValueKind.Object)
         {
-            return obj.Value<string>("name");
+            return value.TryGetProperty("name", out var name) && name.ValueKind == JsonValueKind.String ? name.GetString() : null;
         }
 
-        if (value is not JValue name)
+        if (value.ValueKind != JsonValueKind.String)
         {
             return null;
         }
 
-        var singleString = ((string?)name.Value).AsSpan().Trim();
+        var singleString = value.GetString().AsSpan().Trim();
         if (singleString.IsEmpty)
         {
             return null;

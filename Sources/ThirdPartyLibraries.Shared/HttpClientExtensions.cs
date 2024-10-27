@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mime;
+using System.Text.Json.Serialization.Metadata;
 
 namespace ThirdPartyLibraries.Shared;
 
@@ -48,7 +49,7 @@ public static class HttpClientExtensions
         }
     }
 
-    public static async Task<TResult?> GetAsJsonAsync<TResult>(this HttpClient client, string requestUri, CancellationToken token)
+    public static async Task<TResult?> GetAsJsonAsync<TResult>(this HttpClient client, string requestUri, JsonTypeInfo<TResult> jsonTypeInfo, CancellationToken token)
     {
         using (var response = await client.InvokeGetAsync(requestUri, token).ConfigureAwait(false))
         {
@@ -61,7 +62,7 @@ public static class HttpClientExtensions
 
             using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
             {
-                return stream.JsonDeserialize<TResult>();
+                return await stream.JsonDeserializeAsync(jsonTypeInfo, token).ConfigureAwait(false);
             }
         }
     }

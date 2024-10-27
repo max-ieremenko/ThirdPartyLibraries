@@ -71,7 +71,7 @@ internal sealed class PackageNoticesLoader : IPackageNoticesLoader
 
     private async Task<PackageNotices?> LoadCustomAsync(LibraryId id, List<string> appNames, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, token).ConfigureAwait(false);
+        var index = await _storage.ReadCustomLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
         if (index == null || !UsePackage(appNames, index.UsedBy))
         {
             return null;
@@ -98,7 +98,7 @@ internal sealed class PackageNoticesLoader : IPackageNoticesLoader
 
     private async Task<PackageNotices?> LoadOtherAsync(LibraryId id, List<string> appNames, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
         if (index == null || string.IsNullOrEmpty(index.License.Code) || !UsePackage(appNames, index.UsedBy))
         {
             return null;

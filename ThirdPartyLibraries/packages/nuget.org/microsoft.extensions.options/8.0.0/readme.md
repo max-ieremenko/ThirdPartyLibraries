@@ -25,7 +25,7 @@ Dependencies 3
 
 |Name|Version|
 |----------|:----|
-|[Microsoft.Extensions.DependencyInjection.Abstractions](../../../../packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/8.0.0)|8.0.0|
+|[Microsoft.Extensions.DependencyInjection.Abstractions](../../../../packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/8.0.2)|8.0.2|
 |[Microsoft.Extensions.Primitives](../../../../packages/nuget.org/microsoft.extensions.primitives/8.0.0)|8.0.0|
 |[System.ComponentModel.Annotations](../../../../packages/nuget.org/system.componentmodel.annotations/5.0.0)|5.0.0|
 

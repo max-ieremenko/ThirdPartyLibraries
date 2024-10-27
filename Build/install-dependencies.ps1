@@ -3,25 +3,25 @@
 [CmdletBinding()]
 param (
     [Parameter()]
-    [ValidateSet(".net", "InvokeBuild")] 
+    [ValidateSet('.net', 'InvokeBuild')] 
     [string[]]
     $List
 )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
 
-. (Join-Path $PSScriptRoot "scripts" "Get-ModuleVersion.ps1")
+. (Join-Path $PSScriptRoot 'scripts' 'Get-ModuleVersion.ps1')
 
-if (-not $List -or (".net" -in $List)) {
-    $install = Join-Path $PSScriptRoot "scripts/Install-DotNet.ps1"
-    & $install "6.0.418"
-    & $install "7.0.405"
-    & $install (Get-Content -Raw (Join-Path $PSScriptRoot "../Sources/global.json") | ConvertFrom-Json).sdk.version
+if (-not $List -or ('.net' -in $List)) {
+    $install = Join-Path $PSScriptRoot 'scripts/Install-DotNet.ps1'
+    & $install '6.0.418'
+    & $install '9.0.100-rc.2.24474.11'
+    & $install (Get-Content -Raw (Join-Path $PSScriptRoot '../Sources/global.json') | ConvertFrom-Json).sdk.version
 }
 
-if (-not $List -or ("InvokeBuild" -in $List)) {
-    $install = Join-Path $PSScriptRoot "scripts/Install-Module.ps1"
-    $version = Get-ModuleVersion "InvokeBuild"
-    & $install "InvokeBuild" $version
+if (-not $List -or ('InvokeBuild' -in $List)) {
+    $install = Join-Path $PSScriptRoot 'scripts/Install-Module.ps1'
+    $version = Get-ModuleVersion 'InvokeBuild'
+    & $install 'InvokeBuild' $version
 }

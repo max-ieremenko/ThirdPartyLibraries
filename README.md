@@ -35,7 +35,7 @@ Table of Contents
 Requirements <a name="requirements"></a>
 ----------------------------------------
 
-- tool can be installed on SDKs .NET 8.0, .NET 7.0, .NET 6.0
+- tool can be installed on SDKs .NET 9.0, .NET 8.0, .NET 6.0
 - PowerShell module is compatible with Powershell Core 7.0+
 - supported project format: [SDK-style](https://docs.microsoft.com/en-us/nuget/resources/check-project-format)
 - supported project references: [NuGet](https://www.nuget.org/) and [npm](https://www.npmjs.com) packages

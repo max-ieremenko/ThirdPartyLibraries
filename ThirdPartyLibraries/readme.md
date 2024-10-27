@@ -8,12 +8,12 @@ Licenses
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|1|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
 |[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
-|[MIT](licenses/mit)|no|no|50|
+|[MIT](licenses/mit)|no|no|49|
 |[ms-net-library](licenses/ms-net-library)|no|no|1|
 
 
 
-Packages 60
+Packages 59
 --------
 
 |Name|Version|Source|License|Used by|
@@ -30,33 +30,33 @@ Packages 60
 |[eslint](packages/npmjs.com/eslint/8.57.0)|8.57.0|[npmjs.com](https://www.npmjs.com/package/eslint/v/8.57.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](http://www.famfamfam.com/)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
 |[Microsoft.Bcl.AsyncInterfaces](packages/nuget.org/microsoft.bcl.asyncinterfaces/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/17.9.0)|17.9.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/17.9.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[Microsoft.CodeCoverage](packages/nuget.org/microsoft.codecoverage/17.11.1)|17.11.1|[nuget.org](https://www.nuget.org/packages/Microsoft.CodeCoverage/17.11.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.CSharp](packages/nuget.org/microsoft.csharp/4.7.0)|4.7.0|[nuget.org](https://www.nuget.org/packages/Microsoft.CSharp/4.7.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.Extensions.Configuration](packages/nuget.org/microsoft.extensions.configuration/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Configuration.Abstractions](packages/nuget.org/microsoft.extensions.configuration.abstractions/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.Extensions.Configuration.Binder](packages/nuget.org/microsoft.extensions.configuration.binder/8.0.1)|8.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/8.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.Configuration.Binder](packages/nuget.org/microsoft.extensions.configuration.binder/8.0.2)|8.0.2|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/8.0.2)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Configuration.EnvironmentVariables](packages/nuget.org/microsoft.extensions.configuration.environmentvariables/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.EnvironmentVariables/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.Extensions.Configuration.FileExtensions](packages/nuget.org/microsoft.extensions.configuration.fileextensions/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.Extensions.Configuration.Json](packages/nuget.org/microsoft.extensions.configuration.json/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.Extensions.Configuration.UserSecrets](packages/nuget.org/microsoft.extensions.configuration.usersecrets/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.Extensions.DependencyInjection](packages/nuget.org/microsoft.extensions.dependencyinjection/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.Extensions.DependencyInjection.Abstractions](packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.Configuration.FileExtensions](packages/nuget.org/microsoft.extensions.configuration.fileextensions/8.0.1)|8.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/8.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.Configuration.Json](packages/nuget.org/microsoft.extensions.configuration.json/8.0.1)|8.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/8.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.Configuration.UserSecrets](packages/nuget.org/microsoft.extensions.configuration.usersecrets/8.0.1)|8.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/8.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.DependencyInjection](packages/nuget.org/microsoft.extensions.dependencyinjection/8.0.1)|8.0.1|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/8.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[Microsoft.Extensions.DependencyInjection.Abstractions](packages/nuget.org/microsoft.extensions.dependencyinjection.abstractions/8.0.2)|8.0.2|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.FileProviders.Abstractions](packages/nuget.org/microsoft.extensions.fileproviders.abstractions/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.FileProviders.Physical](packages/nuget.org/microsoft.extensions.fileproviders.physical/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.FileSystemGlobbing](packages/nuget.org/microsoft.extensions.filesystemglobbing/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Options](packages/nuget.org/microsoft.extensions.options/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Options/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Options.ConfigurationExtensions](packages/nuget.org/microsoft.extensions.options.configurationextensions/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[Microsoft.Extensions.Primitives](packages/nuget.org/microsoft.extensions.primitives/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.Extensions.Primitives/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[Microsoft.NET.Test.Sdk](packages/nuget.org/microsoft.net.test.sdk/17.9.0)|17.9.0|[nuget.org](https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.9.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[Microsoft.NET.Test.Sdk](packages/nuget.org/microsoft.net.test.sdk/17.11.1)|17.11.1|[nuget.org](https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.11.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.SourceLink.GitHub](packages/nuget.org/microsoft.sourcelink.github/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/Microsoft.SourceLink.GitHub/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[Microsoft.TestPlatform.ObjectModel](packages/nuget.org/microsoft.testplatform.objectmodel/17.9.0)|17.9.0|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/17.9.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[Microsoft.TestPlatform.TestHost](packages/nuget.org/microsoft.testplatform.testhost/17.9.0)|17.9.0|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/17.9.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[Moq](packages/nuget.org/moq/4.20.70)|4.20.70|[nuget.org](https://www.nuget.org/packages/Moq/4.20.70)|[BSD-3-Clause](licenses/bsd-3-clause)|ThirdPartyLibraries internal|
-|[Newtonsoft.Json](packages/nuget.org/newtonsoft.json/13.0.3)|13.0.3|[nuget.org](https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[NuGet.Frameworks](packages/nuget.org/nuget.frameworks/6.9.1)|6.9.1|[nuget.org](https://www.nuget.org/packages/NuGet.Frameworks/6.9.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
-|[NuGet.Versioning](packages/nuget.org/nuget.versioning/6.9.1)|6.9.1|[nuget.org](https://www.nuget.org/packages/NuGet.Versioning/6.9.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
-|[NUnit](packages/nuget.org/nunit/4.1.0)|4.1.0|[nuget.org](https://www.nuget.org/packages/NUnit/4.1.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[NUnit3TestAdapter](packages/nuget.org/nunit3testadapter/4.5.0)|4.5.0|[nuget.org](https://www.nuget.org/packages/NUnit3TestAdapter/4.5.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[Microsoft.TestPlatform.ObjectModel](packages/nuget.org/microsoft.testplatform.objectmodel/17.11.1)|17.11.1|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.ObjectModel/17.11.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[Microsoft.TestPlatform.TestHost](packages/nuget.org/microsoft.testplatform.testhost/17.11.1)|17.11.1|[nuget.org](https://www.nuget.org/packages/Microsoft.TestPlatform.TestHost/17.11.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[Moq](packages/nuget.org/moq/4.20.72)|4.20.72|[nuget.org](https://www.nuget.org/packages/Moq/4.20.72)|[BSD-3-Clause](licenses/bsd-3-clause)|ThirdPartyLibraries internal|
+|[Newtonsoft.Json](packages/nuget.org/newtonsoft.json/13.0.1)|13.0.1|[nuget.org](https://www.nuget.org/packages/Newtonsoft.Json/13.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[NuGet.Frameworks](packages/nuget.org/nuget.frameworks/6.11.1)|6.11.1|[nuget.org](https://www.nuget.org/packages/NuGet.Frameworks/6.11.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
+|[NuGet.Versioning](packages/nuget.org/nuget.versioning/6.11.1)|6.11.1|[nuget.org](https://www.nuget.org/packages/NuGet.Versioning/6.11.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries|
+|[NUnit](packages/nuget.org/nunit/4.2.2)|4.2.2|[nuget.org](https://www.nuget.org/packages/NUnit/4.2.2)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[NUnit3TestAdapter](packages/nuget.org/nunit3testadapter/4.6.0)|4.6.0|[nuget.org](https://www.nuget.org/packages/NUnit3TestAdapter/4.6.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[PowerShellStandard.Library](packages/nuget.org/powershellstandard.library/5.1.1)|5.1.1|[nuget.org](https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[RichardSzalay.MockHttp](packages/nuget.org/richardszalay.mockhttp/7.0.0)|7.0.0|[nuget.org](https://www.nuget.org/packages/RichardSzalay.MockHttp/7.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[SharpZipLib](packages/nuget.org/sharpziplib/1.4.2)|1.4.2|[nuget.org](https://www.nuget.org/packages/SharpZipLib/1.4.2)|[MIT](licenses/mit)|ThirdPartyLibraries|
@@ -70,12 +70,11 @@ Packages 60
 |[System.Memory](packages/nuget.org/system.memory/4.5.5)|4.5.5|[nuget.org](https://www.nuget.org/packages/System.Memory/4.5.5)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Numerics.Vectors](packages/nuget.org/system.numerics.vectors/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/System.Numerics.Vectors/4.4.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Reflection.Metadata](packages/nuget.org/system.reflection.metadata/1.6.0)|1.6.0|[nuget.org](https://www.nuget.org/packages/System.Reflection.Metadata/1.6.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[System.Runtime.CompilerServices.Unsafe](packages/nuget.org/system.runtime.compilerservices.unsafe/4.5.3)|4.5.3|[nuget.org](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/4.5.3)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[System.Runtime.CompilerServices.Unsafe](packages/nuget.org/system.runtime.compilerservices.unsafe/6.0.0)|6.0.0|[nuget.org](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Runtime.Loader](packages/nuget.org/system.runtime.loader/4.3.0)|4.3.0|[nuget.org](https://www.nuget.org/packages/System.Runtime.Loader/4.3.0)|[ms-net-library](licenses/ms-net-library)|ThirdPartyLibraries|
 |[System.Security.Principal.Windows](packages/nuget.org/system.security.principal.windows/4.7.0)|4.7.0|[nuget.org](https://www.nuget.org/packages/System.Security.Principal.Windows/4.7.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[System.Text.Encodings.Web](packages/nuget.org/system.text.encodings.web/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/System.Text.Encodings.Web/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[System.Text.Json](packages/nuget.org/system.text.json/8.0.0)|8.0.0|[nuget.org](https://www.nuget.org/packages/System.Text.Json/8.0.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[System.Text.Json](packages/nuget.org/system.text.json/8.0.5)|8.0.5|[nuget.org](https://www.nuget.org/packages/System.Text.Json/8.0.5)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Threading.Tasks.Extensions](packages/nuget.org/system.threading.tasks.extensions/4.5.4)|4.5.4|[nuget.org](https://www.nuget.org/packages/System.Threading.Tasks.Extensions/4.5.4)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[typescript](packages/npmjs.com/typescript/5.4.2)|5.4.2|[npmjs.com](https://www.npmjs.com/package/typescript/v/5.4.2)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 

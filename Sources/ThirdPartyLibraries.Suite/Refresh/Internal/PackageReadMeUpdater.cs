@@ -38,7 +38,7 @@ internal sealed class PackageReadMeUpdater : IPackageReadMeUpdater
     private static string JoinTargetFrameworks(IEnumerable<Application> applications)
     {
         var list = applications
-            .SelectMany(i => i.TargetFrameworks)
+            .SelectMany(i => i.TargetFrameworks ?? [])
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(i => i, StringComparer.OrdinalIgnoreCase);
         return string.Join(", ", list);
@@ -66,7 +66,7 @@ internal sealed class PackageReadMeUpdater : IPackageReadMeUpdater
 
     private async Task<RootReadMePackageContext?> UpdateCustomAsync(LibraryId id, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<CustomLibraryIndexJson>(id, token).ConfigureAwait(false);
+        var index = await _storage.ReadCustomLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
         if (index == null)
         {
             return null;
@@ -89,7 +89,7 @@ internal sealed class PackageReadMeUpdater : IPackageReadMeUpdater
 
     private async Task<RootReadMePackageContext?> UpdateOtherAsync(LibraryId id, CancellationToken token)
     {
-        var index = await _storage.ReadLibraryIndexJsonAsync<LibraryIndexJson>(id, token).ConfigureAwait(false);
+        var index = await _storage.ReadLibraryIndexJsonAsync(id, token).ConfigureAwait(false);
         var spec = await _specLoader.LoadAsync(id, token).ConfigureAwait(false);
         
         if (index == null || spec == null)
@@ -141,7 +141,7 @@ internal sealed class PackageReadMeUpdater : IPackageReadMeUpdater
     private void AddDependencies(LibraryId id, IEnumerable<Application> applications, IList<LibraryReadMeDependencyContext> dependencies)
     {
         var list = applications
-            .SelectMany(i => i.Dependencies)
+            .SelectMany(i => i.Dependencies ?? [])
             .Select(i => new LibraryId(id.SourceCode, i.Name, i.Version))
             .Distinct()
             .OrderBy(i => i.Name, StringComparer.OrdinalIgnoreCase)

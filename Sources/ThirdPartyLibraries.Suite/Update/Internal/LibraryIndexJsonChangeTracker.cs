@@ -16,9 +16,9 @@ internal static class LibraryIndexJsonChangeTracker
             return true;
         }
 
-        if (!StringComparer.OrdinalIgnoreCase.Equals(original.Source, index.Source)
-            || !StringComparer.OrdinalIgnoreCase.Equals(original.License.Code, index.License.Code)
-            || !StringComparer.OrdinalIgnoreCase.Equals(original.License.Status, index.License.Status)
+        if (!AreIdentical(original.Source, index.Source)
+            || !AreIdentical(original.License.Code, index.License.Code)
+            || !AreIdentical(original.License.Status, index.License.Status)
             || original.UsedBy.Count != index.UsedBy.Count
             || original.Licenses.Count != index.Licenses.Count)
         {
@@ -28,23 +28,8 @@ internal static class LibraryIndexJsonChangeTracker
         SortValues(original);
         SortValues(index);
 
-        for (var i = 0; i < original.UsedBy.Count; i++)
-        {
-            if (IsChanged(original.UsedBy[i], index.UsedBy[i]))
-            {
-                return true;
-            }
-        }
-
-        for (var i = 0; i < original.Licenses.Count; i++)
-        {
-            if (IsChanged(original.Licenses[i], index.Licenses[i]))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return !AreIdentical(original.UsedBy, index.UsedBy, AreIdentical)
+               || !AreIdentical(original.Licenses, index.Licenses, AreIdentical);
     }
 
     public static void SortValues(LibraryIndexJson index)
@@ -55,8 +40,15 @@ internal static class LibraryIndexJsonChangeTracker
         for (var i = 0; i < index.UsedBy.Count; i++)
         {
             var app = index.UsedBy[i];
-            Array.Sort(app.TargetFrameworks, StringComparer.Ordinal);
-            app.Dependencies.Sort(CompareDependency);
+            if (app.TargetFrameworks?.Length > 1)
+            {
+                Array.Sort(app.TargetFrameworks, StringComparer.Ordinal);
+            }
+
+            if (app.Dependencies?.Length > 0)
+            {
+                Array.Sort(app.Dependencies, CompareDependency);
+            }
         }
     }
 
@@ -96,43 +88,38 @@ internal static class LibraryIndexJsonChangeTracker
         return false;
     }
 
-    private static bool IsChanged(Application original, Application index)
+    private static bool AreIdentical(Application original, Application index) =>
+        AreIdentical(original.Name, index.Name)
+        && original.InternalOnly == index.InternalOnly
+        && AreIdentical(original.TargetFrameworks, index.TargetFrameworks, StringComparer.OrdinalIgnoreCase.Equals)
+        && AreIdentical(original.Dependencies, index.Dependencies, AreIdentical);
+
+    private static bool AreIdentical(LibraryLicense original, LibraryLicense index) =>
+        AreIdentical(original.Subject, index.Subject)
+        && AreIdentical(original.Code, index.Code)
+        && AreIdentical(original.HRef, index.HRef)
+        && AreIdentical(original.Description, index.Description);
+
+    private static bool AreIdentical(LibraryDependency x, LibraryDependency y) => AreIdentical(x.Name, y.Name) && AreIdentical(x.Version, y.Version);
+
+    private static bool AreIdentical(string? original, string? index) => StringComparer.OrdinalIgnoreCase.Equals(original ?? string.Empty, index ?? string.Empty);
+
+    private static bool AreIdentical<T>(IList<T>? original, IList<T>? index, Func<T, T, bool> comparer)
     {
-        if (!StringComparer.OrdinalIgnoreCase.Equals(original.Name, index.Name)
-            || original.InternalOnly != index.InternalOnly
-            || original.TargetFrameworks.Length != index.TargetFrameworks.Length
-            || original.Dependencies.Count != index.Dependencies.Count)
+        var count = original?.Count ?? 0;
+        if (count != (index?.Count ?? 0))
         {
-            return true;
+            return false;
         }
 
-        for (var i = 0; i < original.TargetFrameworks.Length; i++)
+        for (var i = 0; i < count; i++)
         {
-            if (!StringComparer.OrdinalIgnoreCase.Equals(original.TargetFrameworks[i], index.TargetFrameworks[i]))
+            if (!comparer(original![i], index![i]))
             {
-                return true;
+                return false;
             }
         }
 
-        for (var i = 0; i < original.Dependencies.Count; i++)
-        {
-            var x = original.Dependencies[i];
-            var y = index.Dependencies[i];
-            if (!StringComparer.OrdinalIgnoreCase.Equals(x.Name, y.Name)
-                || !StringComparer.OrdinalIgnoreCase.Equals(x.Version, y.Version))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool IsChanged(LibraryLicense original, LibraryLicense index)
-    {
-        return !StringComparer.OrdinalIgnoreCase.Equals(original.Subject, index.Subject)
-            || !StringComparer.OrdinalIgnoreCase.Equals(original.Code, index.Code)
-            || !StringComparer.OrdinalIgnoreCase.Equals(original.HRef, index.HRef)
-            || !StringComparer.OrdinalIgnoreCase.Equals(original.Description, index.Description);
+        return true;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Moq;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Shouldly;
 using ThirdPartyLibraries.Domain;
+using ThirdPartyLibraries.GitHub.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.GitHub.Internal;
@@ -24,8 +24,8 @@ public class GitHubLicenseByUrlLoaderTest
     public async Task DownloadNewtonsoftAsync()
     {
         _repository
-            .Setup(r => r.GetAsJsonAsync("https://api.github.com/repos/JamesNK/Newtonsoft.Json/license", default))
-            .ReturnsAsync(TempFile.OpenResource(GetType(), "GitHubLicenseByUrlLoaderTest.License.Newtonsoft.json").JsonDeserialize<JObject>());
+            .Setup(r => r.GetAsJsonAsync("https://api.github.com/repos/JamesNK/Newtonsoft.Json/license", DomainJsonSerializerContext.Default.GitHubRepositoryLicense, default))
+            .ReturnsAsync(TempFile.OpenResource(GetType(), "GitHubLicenseByUrlLoaderTest.License.Newtonsoft.json").JsonDeserialize(DomainJsonSerializerContext.Default.GitHubRepositoryLicense));
 
         var actual = await _sut.TryDownloadAsync(new Uri("https://github.com/JamesNK/Newtonsoft.Json"), default).ConfigureAwait(false);
 
@@ -43,8 +43,8 @@ public class GitHubLicenseByUrlLoaderTest
     public async Task DownloadShouldlyAsync()
     {
         _repository
-            .Setup(r => r.GetAsJsonAsync("https://api.github.com/repos/shouldly/shouldly/license", default))
-            .ReturnsAsync(TempFile.OpenResource(GetType(), "GitHubLicenseByUrlLoaderTest.License.Shouldly.json").JsonDeserialize<JObject>());
+            .Setup(r => r.GetAsJsonAsync("https://api.github.com/repos/shouldly/shouldly/license", DomainJsonSerializerContext.Default.GitHubRepositoryLicense, default))
+            .ReturnsAsync(TempFile.OpenResource(GetType(), "GitHubLicenseByUrlLoaderTest.License.Shouldly.json").JsonDeserialize(DomainJsonSerializerContext.Default.GitHubRepositoryLicense));
 
         var actual = await _sut.TryDownloadAsync(new Uri("https://github.com/shouldly/shouldly"), default).ConfigureAwait(false);
 
@@ -63,8 +63,8 @@ public class GitHubLicenseByUrlLoaderTest
     public async Task DownloadMitLicenseAsync()
     {
         _repository
-            .Setup(r => r.GetAsJsonAsync("https://api.github.com/licenses/mit", default))
-            .ReturnsAsync(TempFile.OpenResource(GetType(), "GitHubLicenseByUrlLoaderTest.License.MIT.json").JsonDeserialize<JObject>());
+            .Setup(r => r.GetAsJsonAsync("https://api.github.com/licenses/mit", DomainJsonSerializerContext.Default.GitHubLicense, default))
+            .ReturnsAsync(TempFile.OpenResource(GetType(), "GitHubLicenseByUrlLoaderTest.License.MIT.json").JsonDeserialize(DomainJsonSerializerContext.Default.GitHubLicense));
 
         var actual = await _sut.TryDownloadAsync(new Uri("https://api.github.com/licenses/mit"), default).ConfigureAwait(false);
 
