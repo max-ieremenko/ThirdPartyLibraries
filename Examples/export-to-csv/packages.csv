@@ -17,7 +17,6 @@
 "Microsoft.Extensions.Options","8.0.0","https://www.nuget.org/packages/Microsoft.Extensions.Options/8.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "Microsoft.Extensions.Options.ConfigurationExtensions","8.0.0","https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/8.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
 "Microsoft.Extensions.Primitives","8.0.0","https://www.nuget.org/packages/Microsoft.Extensions.Primitives/8.0.0","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."
-"Newtonsoft.Json","13.0.3","https://www.nuget.org/packages/Newtonsoft.Json/13.0.3","MIT License","https://spdx.org/licenses/MIT","James Newton-King","Copyright © James Newton-King 2008"
 "NuGet.Frameworks","6.11.1","https://www.nuget.org/packages/NuGet.Frameworks/6.11.1","Apache License 2.0","https://spdx.org/licenses/Apache-2.0","Microsoft","© Microsoft Corporation. All rights reserved."
 "NuGet.Versioning","6.11.1","https://www.nuget.org/packages/NuGet.Versioning/6.11.1","Apache License 2.0","https://spdx.org/licenses/Apache-2.0","Microsoft","© Microsoft Corporation. All rights reserved."
 "PowerShellStandard.Library","5.1.1","https://www.nuget.org/packages/PowerShellStandard.Library/5.1.1","MIT License","https://spdx.org/licenses/MIT","Microsoft","© Microsoft Corporation. All rights reserved."

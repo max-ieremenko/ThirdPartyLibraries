@@ -90,11 +90,6 @@ Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extens
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
 
-Newtonsoft.Json (https://www.nuget.org/packages/Newtonsoft.Json/13.0.3)
-    Authors: James Newton-King
-    Copyright: Copyright © James Newton-King 2008
-    License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
-
 NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.11.1)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
