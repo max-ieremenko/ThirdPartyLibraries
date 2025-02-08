@@ -17,7 +17,7 @@ Enter-Build {
         bin        = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Sources/bin'))
         repository = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../ThirdPartyLibraries'))
         examples   = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Examples'))
-        frameworks = 'net6.0', 'net8.0', 'net9.0'
+        frameworks = 'net8.0', 'net9.0'
         version    = $(
             $buildProps = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Sources/Directory.Build.props'))
             $packageVersion = (Select-Xml -Path $buildProps -XPath 'Project/PropertyGroup/DefaultPackageVersion').Node.InnerText
@@ -52,7 +52,7 @@ task Build {
 task ThirdPartyNotices {
     Invoke-Build `
         -File 'tasks/third-party-notices.ps1' `
-        -AppPath (Join-Path $settings.bin 'app/net6.0/ThirdPartyLibraries.dll') `
+        -AppPath (Join-Path $settings.bin 'app/net8.0/ThirdPartyLibraries.dll') `
         -Version $settings.version `
         -SourcesPath $settings.sources `
         -RepositoryPath $settings.repository `
@@ -146,7 +146,7 @@ task PsCoreTest {
 }
 
 task UpdateExamples {
-    $appPath = Join-Path $settings.bin 'app/net6.0/ThirdPartyLibraries.dll'
+    $appPath = Join-Path $settings.bin 'app/net8.0/ThirdPartyLibraries.dll'
     $builds = @()
 
     $examples = Get-ChildItem -Path (Join-Path $settings.examples 'third-party-notices-template') -Directory
