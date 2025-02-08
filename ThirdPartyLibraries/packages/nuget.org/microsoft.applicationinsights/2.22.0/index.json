@@ -9,12 +9,13 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netstandard2.1"
+        "net8.0",
+        "net9.0"
       ],
       "Dependencies": [
         {
-          "Name": "System.Memory",
-          "Version": "4.6.0"
+          "Name": "System.Diagnostics.DiagnosticSource",
+          "Version": "5.0.0"
         }
       ]
     }
@@ -28,12 +29,11 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/Microsoft/ApplicationInsights-dotnet"
     },
     {
       "Subject": "project",
-      "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://go.microsoft.com/fwlink/?LinkId=392727"
     }
   ]
 }

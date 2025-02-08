@@ -9,13 +9,8 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netstandard2.1"
-      ],
-      "Dependencies": [
-        {
-          "Name": "System.Memory",
-          "Version": "4.6.0"
-        }
+        "net8.0",
+        "net9.0"
       ]
     }
   ],
@@ -28,12 +23,12 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "git://github.com/dotnet/runtime"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://github.com/dotnet/runtime"
     }
   ]
 }

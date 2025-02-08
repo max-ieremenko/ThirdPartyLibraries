@@ -9,12 +9,17 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netstandard2.1"
+        "net8.0",
+        "net9.0"
       ],
       "Dependencies": [
         {
-          "Name": "System.Memory",
-          "Version": "4.6.0"
+          "Name": "Microsoft.TestPlatform.ObjectModel",
+          "Version": "17.12.0"
+        },
+        {
+          "Name": "Newtonsoft.Json",
+          "Version": "13.0.1"
         }
       ]
     }
@@ -28,12 +33,12 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/microsoft/vstest"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://github.com/microsoft/vstest"
     }
   ]
 }

@@ -13,8 +13,16 @@
       ],
       "Dependencies": [
         {
-          "Name": "System.Memory",
+          "Name": "System.Buffers",
           "Version": "4.6.0"
+        },
+        {
+          "Name": "System.Numerics.Vectors",
+          "Version": "4.6.0"
+        },
+        {
+          "Name": "System.Runtime.CompilerServices.Unsafe",
+          "Version": "6.1.0"
         }
       ]
     }
@@ -28,12 +36,12 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/dotnet/maintenance-packages"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://github.com/dotnet/maintenance-packages"
     }
   ]
 }

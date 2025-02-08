@@ -15,6 +15,10 @@
         {
           "Name": "System.Memory",
           "Version": "4.6.0"
+        },
+        {
+          "Name": "System.Threading.Tasks.Extensions",
+          "Version": "4.5.4"
         }
       ]
     }
@@ -28,12 +32,11 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/nunit/nunit"
     },
     {
       "Subject": "project",
-      "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://nunit.org/"
     }
   ]
 }

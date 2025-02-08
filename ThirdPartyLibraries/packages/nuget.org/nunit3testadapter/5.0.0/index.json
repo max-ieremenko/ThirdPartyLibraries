@@ -9,12 +9,17 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netstandard2.1"
+        "net8.0",
+        "net9.0"
       ],
       "Dependencies": [
         {
-          "Name": "System.Memory",
-          "Version": "4.6.0"
+          "Name": "Microsoft.Testing.Extensions.VSTestBridge",
+          "Version": "1.5.3"
+        },
+        {
+          "Name": "Microsoft.Testing.Platform.MSBuild",
+          "Version": "1.5.3"
         }
       ]
     }
@@ -28,12 +33,11 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/nunit/nunit3-vs-adapter"
     },
     {
       "Subject": "project",
-      "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://docs.nunit.org/articles/vs-test-adapter/Index.html"
     }
   ]
 }
