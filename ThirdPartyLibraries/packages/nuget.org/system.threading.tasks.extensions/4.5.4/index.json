@@ -17,6 +17,10 @@
         {
           "Name": "System.Runtime.CompilerServices.Unsafe",
           "Version": "6.0.0"
+        },
+        {
+          "Name": "System.Runtime.CompilerServices.Unsafe",
+          "Version": "6.1.0"
         }
       ]
     }
