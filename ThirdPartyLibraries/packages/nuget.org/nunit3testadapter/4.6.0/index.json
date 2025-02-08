@@ -9,7 +9,6 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "net6.0",
         "net8.0",
         "net9.0"
       ]
@@ -28,7 +27,6 @@
     },
     {
       "Subject": "project",
-      "Code": null,
       "HRef": "https://docs.nunit.org/articles/vs-test-adapter/Index.html"
     }
   ]
