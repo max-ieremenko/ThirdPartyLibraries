@@ -17,7 +17,7 @@ Enter-Build {
         bin        = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Sources/bin'))
         repository = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../ThirdPartyLibraries'))
         examples   = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Examples'))
-        frameworks = 'net6.0', 'net8.0', 'net9.0'
+        frameworks = 'net8.0', 'net9.0'
         version    = $(
             $buildProps = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../Sources/Directory.Build.props'))
             $packageVersion = (Select-Xml -Path $buildProps -XPath 'Project/PropertyGroup/DefaultPackageVersion').Node.InnerText
@@ -52,7 +52,7 @@ task Build {
 task ThirdPartyNotices {
     Invoke-Build `
         -File 'tasks/third-party-notices.ps1' `
-        -AppPath (Join-Path $settings.bin 'app/net6.0/ThirdPartyLibraries.dll') `
+        -AppPath (Join-Path $settings.bin 'app/net8.0/ThirdPartyLibraries.dll') `
         -Version $settings.version `
         -SourcesPath $settings.sources `
         -RepositoryPath $settings.repository `
@@ -113,22 +113,13 @@ task PackTest {
 task PsCoreTest {
     # show-powershell-images.ps1
     $images = $(
-        'mcr.microsoft.com/powershell:7.0.0-ubuntu-18.04'
-        , 'mcr.microsoft.com/powershell:7.0.1-ubuntu-18.04'
-        , 'mcr.microsoft.com/powershell:7.0.2-ubuntu-18.04'
-        , 'mcr.microsoft.com/powershell:7.0.3-ubuntu-18.04'
-        , 'mcr.microsoft.com/powershell:7.1.0-ubuntu-18.04'
-        , 'mcr.microsoft.com/powershell:7.1.1-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.1.2-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.1.3-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.1.4-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.1.5-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.2.0-ubuntu-20.04'
+        'mcr.microsoft.com/powershell:7.2.0-ubuntu-20.04'
         , 'mcr.microsoft.com/powershell:7.2.1-ubuntu-20.04'
         , 'mcr.microsoft.com/powershell:7.2.2-ubuntu-20.04'
         , 'mcr.microsoft.com/powershell:7.3-ubuntu-20.04'
         , 'mcr.microsoft.com/powershell:7.4-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:preview-7.5-ubuntu-20.04')
+        , 'mcr.microsoft.com/powershell:7.5-ubuntu-22.04'
+        , 'mcr.microsoft.com/powershell:preview-7.6-ubuntu-22.04')
 
     $builds = @()
     foreach ($image in $images) {
@@ -146,7 +137,7 @@ task PsCoreTest {
 }
 
 task UpdateExamples {
-    $appPath = Join-Path $settings.bin 'app/net6.0/ThirdPartyLibraries.dll'
+    $appPath = Join-Path $settings.bin 'app/net8.0/ThirdPartyLibraries.dll'
     $builds = @()
 
     $examples = Get-ChildItem -Path (Join-Path $settings.examples 'third-party-notices-template') -Directory

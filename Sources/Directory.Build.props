@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <SupportedFrameworks>net6.0;net8.0;net9.0</SupportedFrameworks>
+    <SupportedFrameworks>net8.0;net9.0</SupportedFrameworks>
     <OutputType>Library</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
@@ -20,14 +20,14 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageVersion>3.6.0</DefaultPackageVersion>
+    <DefaultPackageVersion>3.7.0</DefaultPackageVersion>
 
     <Version>$(DefaultPackageVersion)</Version>
     <AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
     <FileVersion>$(DefaultPackageVersion).0</FileVersion>
     <Product>Third Party Libraries</Product>
     <Authors>Max Ieremenko</Authors>
-    <Copyright>(C) 2019-2024 Max Ieremenko.</Copyright>
+    <Copyright>(C) 2019-2025 Max Ieremenko.</Copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/max-ieremenko/ThirdPartyLibraries</PackageProjectUrl>
