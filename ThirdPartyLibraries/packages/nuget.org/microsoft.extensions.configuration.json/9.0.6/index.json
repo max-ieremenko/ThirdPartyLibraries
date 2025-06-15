@@ -7,31 +7,32 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": true,
+      "InternalOnly": false,
       "TargetFrameworks": [
         "net8.0",
-        "net9.0"
+        "net9.0",
+        "netstandard2.1"
       ],
       "Dependencies": [
         {
-          "Name": "Microsoft.ApplicationInsights",
-          "Version": "2.22.0"
+          "Name": "Microsoft.Extensions.Configuration",
+          "Version": "9.0.6"
         },
         {
-          "Name": "Microsoft.TestPlatform.ObjectModel",
-          "Version": "17.14.1"
+          "Name": "Microsoft.Extensions.Configuration.Abstractions",
+          "Version": "9.0.6"
         },
         {
-          "Name": "Microsoft.Testing.Extensions.Telemetry",
-          "Version": "1.5.3"
+          "Name": "Microsoft.Extensions.Configuration.FileExtensions",
+          "Version": "9.0.6"
         },
         {
-          "Name": "Microsoft.Testing.Extensions.TrxReport.Abstractions",
-          "Version": "1.5.3"
+          "Name": "Microsoft.Extensions.FileProviders.Abstractions",
+          "Version": "9.0.6"
         },
         {
-          "Name": "Microsoft.Testing.Platform",
-          "Version": "1.5.3"
+          "Name": "System.Text.Json",
+          "Version": "9.0.6"
         }
       ]
     }
@@ -45,12 +46,11 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/microsoft/testfx"
+      "HRef": "https://github.com/dotnet/runtime"
     },
     {
       "Subject": "project",
-      "Code": "MIT",
-      "HRef": "https://github.com/microsoft/testfx"
+      "HRef": "https://dot.net/"
     }
   ]
 }
