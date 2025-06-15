@@ -1,0 +1,30 @@
+<Solution>
+  <Folder Name="/Test/">
+    <Project Path="ThirdPartyLibraries.Domain.Test/ThirdPartyLibraries.Domain.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.Generic.Test/ThirdPartyLibraries.Generic.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.GitHub.Test/ThirdPartyLibraries.GitHub.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.Npm.Test/ThirdPartyLibraries.Npm.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.NuGet.Test/ThirdPartyLibraries.NuGet.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.PowerShell.IntegrationTest/ThirdPartyLibraries.PowerShell.IntegrationTest.csproj" />
+    <Project Path="ThirdPartyLibraries.PowerShell.Test/ThirdPartyLibraries.PowerShell.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.Repository.Test/ThirdPartyLibraries.Repository.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.Shared.Test/ThirdPartyLibraries.Shared.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.Suite.Test/ThirdPartyLibraries.Suite.Test.csproj" />
+    <Project Path="ThirdPartyLibraries.Test.Api/ThirdPartyLibraries.Test.Api.csproj" />
+    <Project Path="ThirdPartyLibraries.Test/ThirdPartyLibraries.Test.csproj" />
+  </Folder>
+  <Project Path="ThirdPartyLibraries.Domain/ThirdPartyLibraries.Domain.csproj" />
+  <Project Path="ThirdPartyLibraries.Generic/ThirdPartyLibraries.Generic.csproj" />
+  <Project Path="ThirdPartyLibraries.GitHub/ThirdPartyLibraries.GitHub.csproj" />
+  <Project Path="ThirdPartyLibraries.Npm.Demo/ThirdPartyLibraries.Npm.Demo.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="ThirdPartyLibraries.Npm/ThirdPartyLibraries.Npm.csproj" />
+  <Project Path="ThirdPartyLibraries.NuGet/ThirdPartyLibraries.NuGet.csproj" />
+  <Project Path="ThirdPartyLibraries.PowerShell/ThirdPartyLibraries.PowerShell.csproj" />
+  <Project Path="ThirdPartyLibraries.Repository/ThirdPartyLibraries.Repository.csproj" />
+  <Project Path="ThirdPartyLibraries.Shared/ThirdPartyLibraries.Shared.csproj" />
+  <Project Path="ThirdPartyLibraries.Suite/ThirdPartyLibraries.Suite.csproj" />
+  <Project Path="ThirdPartyLibraries/ThirdPartyLibraries.csproj" />
+</Solution>
