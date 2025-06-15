@@ -13,7 +13,7 @@ task DotnetRestore {
 }
 
 task DotnetBuild {
-    $sln = Join-Path $SourcesPath 'ThirdPartyLibraries.sln'
+    $sln = Join-Path $SourcesPath 'ThirdPartyLibraries.slnx'
     exec {
         dotnet build $sln `
             -t:Rebuild `
