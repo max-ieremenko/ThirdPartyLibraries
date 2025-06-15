@@ -6,96 +6,96 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 chalk (https://www.npmjs.com/package/chalk/v/5.3.0)
     License: MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/chalk
 
-DotLiquid (https://www.nuget.org/packages/DotLiquid/2.3.18)
+DotLiquid (https://www.nuget.org/packages/DotLiquid/2.3.197)
     Authors: Tim Jones, Alessandro Petrelli
-    License: Apache-2.0 OR MS-PL, full text can be found at https://licenses.nuget.org/Apache-2.0 OR MS-PL or in Licenses/dotliquid.txt
+    License: Apache-2.0 OR MS-PL, full text can be found at https://licenses.nuget.org/Apache-2.0 OR MS-PL or in Licenses/Apache-2.0-license.txt Licenses/MS-PL-license.txt
 
-Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/9.0.1)
+Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration (https://www.nuget.org/packages/Microsoft.Extensions.Configuration/9.0.1)
+Microsoft.Extensions.Configuration (https://www.nuget.org/packages/Microsoft.Extensions.Configuration/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions/9.0.1)
+Microsoft.Extensions.Configuration.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.Binder (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/9.0.1)
+Microsoft.Extensions.Configuration.Binder (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Binder/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.EnvironmentVariables (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.EnvironmentVariables/9.0.1)
+Microsoft.Extensions.Configuration.EnvironmentVariables (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.EnvironmentVariables/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.FileExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/9.0.1)
+Microsoft.Extensions.Configuration.FileExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.FileExtensions/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.Json (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/9.0.1)
+Microsoft.Extensions.Configuration.Json (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Json/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Configuration.UserSecrets (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/9.0.1)
+Microsoft.Extensions.Configuration.UserSecrets (https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.DependencyInjection (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/9.0.1)
+Microsoft.Extensions.DependencyInjection (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.DependencyInjection.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/9.0.1)
+Microsoft.Extensions.DependencyInjection.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.FileProviders.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/9.0.1)
+Microsoft.Extensions.FileProviders.Abstractions (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.FileProviders.Physical (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/9.0.1)
+Microsoft.Extensions.FileProviders.Physical (https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Physical/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.FileSystemGlobbing (https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/9.0.1)
+Microsoft.Extensions.FileSystemGlobbing (https://www.nuget.org/packages/Microsoft.Extensions.FileSystemGlobbing/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Options (https://www.nuget.org/packages/Microsoft.Extensions.Options/9.0.1)
+Microsoft.Extensions.Options (https://www.nuget.org/packages/Microsoft.Extensions.Options/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Options.ConfigurationExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/9.0.1)
+Microsoft.Extensions.Options.ConfigurationExtensions (https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/9.0.1)
+Microsoft.Extensions.Primitives (https://www.nuget.org/packages/Microsoft.Extensions.Primitives/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.12.1)
+NuGet.Frameworks (https://www.nuget.org/packages/NuGet.Frameworks/6.14.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
 
-NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.12.1)
+NuGet.Versioning (https://www.nuget.org/packages/NuGet.Versioning/6.14.0)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: Apache License 2.0, full text can be found at https://licenses.nuget.org/Apache-2.0 or in Licenses/Apache-2.0-license.txt
@@ -120,7 +120,7 @@ System.ComponentModel.Annotations (https://www.nuget.org/packages/System.Compone
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-System.IO.Pipelines (https://www.nuget.org/packages/System.IO.Pipelines/9.0.1)
+System.IO.Pipelines (https://www.nuget.org/packages/System.IO.Pipelines/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
@@ -145,12 +145,12 @@ System.Runtime.Loader (https://www.nuget.org/packages/System.Runtime.Loader/4.3.
     Copyright: © Microsoft Corporation.  All rights reserved.
     License: MICROSOFT .NET LIBRARY, full text can be found at http://go.microsoft.com/fwlink/?LinkId=329770 or in Licenses/system.runtime.loader.txt
 
-System.Text.Encodings.Web (https://www.nuget.org/packages/System.Text.Encodings.Web/9.0.1)
+System.Text.Encodings.Web (https://www.nuget.org/packages/System.Text.Encodings.Web/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt
 
-System.Text.Json (https://www.nuget.org/packages/System.Text.Json/9.0.1)
+System.Text.Json (https://www.nuget.org/packages/System.Text.Json/9.0.6)
     Authors: Microsoft
     Copyright: © Microsoft Corporation. All rights reserved.
     License: MIT License, full text can be found at https://licenses.nuget.org/MIT or in Licenses/dotnet.txt

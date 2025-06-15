@@ -14,24 +14,12 @@
       ],
       "Dependencies": [
         {
-          "Name": "Microsoft.ApplicationInsights",
-          "Version": "2.22.0"
-        },
-        {
           "Name": "Microsoft.TestPlatform.ObjectModel",
           "Version": "17.14.1"
         },
         {
-          "Name": "Microsoft.Testing.Extensions.Telemetry",
-          "Version": "1.5.3"
-        },
-        {
-          "Name": "Microsoft.Testing.Extensions.TrxReport.Abstractions",
-          "Version": "1.5.3"
-        },
-        {
-          "Name": "Microsoft.Testing.Platform",
-          "Version": "1.5.3"
+          "Name": "Newtonsoft.Json",
+          "Version": "13.0.3"
         }
       ]
     }
@@ -45,12 +33,12 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/microsoft/testfx"
+      "HRef": "https://github.com/microsoft/vstest"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/microsoft/testfx"
+      "HRef": "https://github.com/microsoft/vstest"
     }
   ]
 }

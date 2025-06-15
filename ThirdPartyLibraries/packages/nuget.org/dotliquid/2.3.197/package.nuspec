@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>DotLiquid</id>
+    <version>2.3.197</version>
+    <title>DotLiquid</title>
+    <authors>Tim Jones, Alessandro Petrelli</authors>
+    <owners>Tim Jones</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">Apache-2.0 OR MS-PL</license>
+    <licenseUrl>https://licenses.nuget.org/Apache-2.0%20OR%20MS-PL</licenseUrl>
+    <icon>images\logo_nuget.png</icon>
+    <projectUrl>https://www.dotliquid.org/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/dotliquid/dotliquid/master/src/DotLiquid/logo_nuget.png</iconUrl>
+    <description>DotLiquid is a templating system ported to the .NET framework from Ruby’s Liquid Markup.</description>
+    <summary>DotLiquid is a templating system ported to the .NET framework from Ruby’s Liquid Markup.</summary>
+    <language>en-US</language>
+    <tags>template templating language liquid markup</tags>
+    <repository type="git" url="https://github.com/dotliquid/dotliquid.git" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETStandard1.3" />
+      <group targetFramework=".NETStandard2.0" />
+      <group targetFramework="net6.0" />
+    </dependencies>
+  </metadata>
+</package>
