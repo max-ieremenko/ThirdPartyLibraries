@@ -1,0 +1,198 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema",
+    "id": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.appsettings.json",
+    "title": "ThirdPartyLibraries Configuration",
+    "description": "appsettings.json configuration file using ThirdPartyLibraries",
+    "type": "object",
+    "properties": {
+        "nuget.org": {
+            "type": "object",
+            "description": "NuGet package source settings.",
+            "properties": {
+                "allowToUseLocalCache": {
+                    "type": "boolean",
+                    "description": "The flag allows getting a package metadata from the NuGet local disk cache.",
+                    "default": true
+                },
+                "downloadPackageIntoRepository": {
+                    "type": "boolean",
+                    "description": "The flag indicates that NuGet package should be copied to the repository.",
+                    "default": false
+                },
+                "ignorePackages": {
+                    "type": "object",
+                    "description": "Package filtering settings.",
+                    "properties": {
+                        "byName": {
+                            "type": "array",
+                            "description": "Regex expressions array. Ignore packages by name.",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "format": "regex"
+                            }
+                        },
+                        "byProjectName": {
+                            "type": "array",
+                            "description": "Regex expressions array. Ignore packages by the name of the project that uses them.",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "format": "regex"
+                            }
+                        }
+                    }
+                },
+                "internalPackages": {
+                    "type": "object",
+                    "description": "Package InternalOnly=true settings.",
+                    "properties": {
+                        "byName": {
+                            "type": "array",
+                            "description": "Regex expressions array. Mark all packages as InternalOnly by their names.",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "format": "regex"
+                            }
+                        },
+                        "byProjectName": {
+                            "type": "array",
+                            "description": "Regex expressions array. Mark all packages as InternalOnly by the name of the project that uses them.",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "format": "regex"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "npmjs.com": {
+            "type": "object",
+            "description": "NPM package source settings.",
+            "properties": {
+                "downloadPackageIntoRepository": {
+                    "type": "boolean",
+                    "description": "The flag indicates that NPM package should be copied to the repository.",
+                    "default": false
+                },
+                "ignorePackages": {
+                    "type": "object",
+                    "description": "Package filtering settings.",
+                    "properties": {
+                        "byName": {
+                            "type": "array",
+                            "description": "Regex expressions array. Ignore packages by name.",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "format": "regex"
+                            }
+                        },
+                        "byProjectName": {
+                            "type": "array",
+                            "description": "Regex expressions array. Ignore packages by the name of the project that uses them.",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "format": "regex"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "github.com": {
+            "type": "object",
+            "description": "github.com API access settings.",
+            "properties": {
+                "personalAccessToken": {
+                    "type": "string",
+                    "description": "github personal access token, see https://github.com/max-ieremenko/ThirdPartyLibraries/tree/master?tab=readme-ov-file#personalAccessToken",
+                    "default": ""
+                }
+            }
+        },
+        "staticLicenseUrls": {
+            "type": "object",
+            "description": "Describes well-know licenses.",
+            "properties": {
+                "byCode": {
+                    "type": "array",
+                    "description": "Array of well-know codes with a link to license url.",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "code",
+                            "fullName",
+                            "downloadUrl"
+                        ],
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "description": "The license code."
+                            },
+                            "fullName": {
+                                "type": "string",
+                                "description": "The license full name."
+                            },
+                            "downloadUrl": {
+                                "type": "string",
+                                "description": "The link to the license content.",
+                                "format": "uri"
+                            }
+                        }
+                    }
+                },
+                "byUrl": {
+                    "type": "array",
+                    "description": "Array of well-know license urls.",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "code",
+                            "urls"
+                        ],
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "description": "The license code."
+                            },
+                            "urls": {
+                                "type": "array",
+                                "description": "Well-know license url.",
+                                "minItems": 1,
+                                "items": {
+                                    "type": "string",
+                                    "format": "uri"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "skipCertificateCheck": {
+            "type": "object",
+            "description": "Ignoring invalid HTTPS server certificate validation.",
+            "properties": {
+                "byHost": {
+                    "type": "array",
+                    "description": "Regex expressions array. Ignore certificate validation errors by target host name.",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "format": "regex"
+                    }
+                },
+                "logRequest": {
+                    "type": "boolean",
+                    "description": "The flag indicates that any HTTP request should be logged.",
+                    "default": false
+                }
+            }
+        }
+    }
+}

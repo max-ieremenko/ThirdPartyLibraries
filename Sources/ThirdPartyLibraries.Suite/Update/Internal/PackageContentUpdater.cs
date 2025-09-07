@@ -43,6 +43,11 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
             index.Source = loader.ResolvePackageSource();
         }
 
+        if (string.IsNullOrEmpty(index.Schema))
+        {
+            index.Schema = LibraryIndexJson.DefaultSchema;
+        }
+
         UpdateApp(index, appName, reference);
         await UpdateLicensesAsync(reference.Id, index, loader, token).ConfigureAwait(false);
 

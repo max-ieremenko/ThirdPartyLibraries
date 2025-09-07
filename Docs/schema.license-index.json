@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema",
+    "id": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.license-index.json",
+    "title": "License index file",
+    "description": "License description file.",
+    "type": "object",
+    "required": [
+        "Code",
+        "FullName",
+        "HRef",
+        "FileName"
+    ],
+    "properties": {
+        "Code": {
+            "type": "string",
+            "description": "The license code, for some web api is case sensitive."
+        },
+        "FullName": {
+            "type": "string",
+            "description": "The license full name."
+        },
+        "RequiresApproval": {
+            "type": "boolean",
+            "description": "The flag allows marking a package with this license as AutomaticallyApproved.",
+            "default": false
+        },
+        "RequiresThirdPartyNotices": {
+            "type": "boolean",
+            "description": "The flag indicates that a package with this license should contain extra text in ThirdPartyNotices.txt",
+            "default": false
+        },
+        "HRef": {
+            "type": "string",
+            "format": "uri",
+            "description": "The link to the license content."
+        },
+        "FileName": {
+            "type": "string",
+            "description": "The name of the file in this folder, a copy of the license content, is used to generate third-party notices."
+        },
+        "Dependencies": {
+            "type": "array",
+            "description": "An array of license codes on which the license depends.",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

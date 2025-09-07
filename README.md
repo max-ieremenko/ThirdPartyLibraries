@@ -28,7 +28,7 @@ Table of Contents
 - [Manage NuGet packages](#nuget.org)
 - [Manage npm packages](#npmjs.com)
 - [Manage custom packages](#custom)
-- [License](#license)
+- [License](#license)  
 
 <!-- tocstop -->
 
@@ -122,7 +122,7 @@ Refresh or update .md files in a libraries repository <a name="refresh"></a>
 -------------------------------------------------
 
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
-- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
+- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
 
 You can change templates and test your changes by running the the tool
 
@@ -187,10 +187,11 @@ Other examples third-party-notices-template are [here](Examples).
 Configuration <a name="configuration"></a>
 ---------------------------------------------
 
-The configuration file [appsettings.json](ThirdPartyLibraries/configuration/appsettings.json) is located in the repository configuration folder
+The configuration file [appsettings.json](ThirdPartyLibraries/configuration/appsettings.json) is located in the repository configuration folder, see also [schema.appsettings.json](Docs/schema.appsettings.json)
 
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.appsettings.json",
   "nuget.org": {
     "allowToUseLocalCache": true,
     "downloadPackageIntoRepository": false,
@@ -241,34 +242,34 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
 
 ### section nuget.org
 
-- `allowToUseLocalCache`: *true* or *false* (default) flag to allow get a package metadata from NuGet local [disk cache](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders)|
-- `downloadPackageIntoRepository`: *true* or *false* (default) flag to download package into a repository
-- `ignorePackages/byName`: regex expressions array. Ignore all packages by name
-- `ignorePackages/byProjectName`: regex expressions array. Ignore all packages by project name
-- `internalPackages/byName`: regex expressions array. Mark all packages by name as InternalOnly=true
-- `internalPackages/byProjectName`: regex expressions array. Mark all packages by project name as InternalOnly=true
+- `allowToUseLocalCache`: *true* or *false* (default). The flag allows getting a package metadata from the NuGet local [disk cache](https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders).
+- `downloadPackageIntoRepository`: *true* or *false* (default). The flag indicates that NuGet package should be copied to the repository.
+- `ignorePackages/byName`: regex expressions array. Ignore packages by name.
+- `ignorePackages/byProjectName`: regex expressions array. Ignore packages by the name of the project that uses them.
+- `internalPackages/byName`: regex expressions array. Mark all packages as InternalOnly by their names.
+- `internalPackages/byProjectName`: regex expressions array. Mark all packages as InternalOnly by the name of the project that uses them.
 
 ### section npmjs.com
 
-- `downloadPackageIntoRepository`: *true* or *false* (default) flag to download package into a repository
-- `ignorePackages/byName`: regex expressions array. Ignore all packages by name
-- `ignorePackages/byFolderName`: regex expressions array. Ignore all packages by folder name
+- `downloadPackageIntoRepository`: *true* or *false* (default). The flag indicates that NPM package should be copied to the repository.
+- `ignorePackages/byName`: regex expressions array. Ignore packages by name.
+- `ignorePackages/byFolderName`: regex expressions array. Ignore packages by the name of the project that uses them.
 
 ### section github.com
 
-- `personalAccessToken`: see [GitHub personal access token](#personalAccessToken) for more details
+- `personalAccessToken`: see [GitHub personal access token](#personalAccessToken) for more details.
 
 ### staticLicenseUrls
 
 setup well-know licenses
 
 - `byCode`: array of well-know codes with a link to license url
-- `byUrl`: array of well-know license urls
+- `byUrl`: array of well-know license urls.
 
 ### skipCertificateCheck
 
-- `byHost`: regex expressions array. Ignore server certificate validation for specific hosts
-- `logRequest`: *true* or *false* (default) flag to log any HTTP request
+- `byHost`: regex expressions array. Ignore certificate validation errors by target host name.
+- `logRequest`: *true* or *false* (default). The flag indicates that any HTTP request should be logged.
 
 [Back to ToC](#table-of-contents)
 
@@ -312,6 +313,7 @@ File *index.json* contains a metadata for the tool:
 
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.license-index.json",
   "Code": "MIT",
   "FullName": "MIT License",
   "RequiresApproval": true,
@@ -326,11 +328,11 @@ File *index.json* contains a metadata for the tool:
 |:--|:----------|
 |Code|license code, for some web api is case sensitive|
 |FullName|full license name, is used to generate third party notices|
-|RequiresApproval|*true* (default) or *false* flag to indicate the package can be marked by the tool as AutomaticallyApproved|
-|RequiresThirdPartyNotices|*true* or *false* (default) flag to indicate the package must contain extra text in ThirdPartyNotices.txt|
-|HRef|public link to the license information, is used to generate third party notices|
-|FileName|name of the file in this folder with a copy of the license text, is used to generate third party notices|
-|Dependencies|array of license codes, to copy license file, is used to generate third party notices|
+|RequiresApproval|*true* (default) or *false*. The flag allows marking a package with this license as AutomaticallyApproved|
+|RequiresThirdPartyNotices|*true* or *false* (default). The flag indicates that a package with this license should contain extra text in ThirdPartyNotices.txt|
+|HRef|the link to the license content, is used to generate third party notices|
+|FileName|the name of the file in this folder, a copy of the license content, is used to generate third-party notices|
+|Dependencies|an array of license codes on which the license depends|
 
 Such license information can be created either automatically by the tool or manually.
 Once created, the folder becomes read-only for the tool.
@@ -347,12 +349,13 @@ Manage NuGet packages <a name="nuget.org"></a>
 ---------------------------------------------
 
 Each package from [nuget.org](https://www.nuget.org/) is located in the sub-folder *packages/nuget.org/[id]/[version]* where [id] is a package id and [version] is a package version in lowercase.
-For instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3).
+For instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json).
 
 File *index.json* contains a metadata for the tool:
 
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.package-index.json",
   "License": {
     "Code": "MIT",
     "Status": "HasToBeApproved | Approved | AutomaticallyApproved"
@@ -390,13 +393,14 @@ Manage npm packages <a name="npmjs.com"></a>
 ---------------------------------------------
 
 Each package from [npmjs.com](https://www.npmjs.com/) is located in the sub-folder *packages/npmjs.com/[name]/[version]* where [name] is a package name and [version] is a package version in lowercase.
-For instance [bootstrap/4.4.1](ThirdPartyLibraries/packages/npmjs.com/bootstrap/4.4.1).
+For instance [typescript](ThirdPartyLibraries/packages/npmjs.com/typescript).
 
 
 File *index.json* contains a metadata for the tool:
 
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.package-index.json",
   "License": {
     "Code": "MIT",
     "Status": "HasToBeApproved | Approved | AutomaticallyApproved"
@@ -442,6 +446,7 @@ File *index.json* contains a metadata for the tool:
 
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.custom-package-index.json",
   "Name": "FAMFAMFAM",
   "Version": "1.3",
   "LicenseCode": "CC-BY-2.5 OR CC-BY-3.0",
