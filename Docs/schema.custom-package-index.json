@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema",
+    "id": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.custom-package-index.json",
+    "title": "Custom package reference index file",
+    "type": "object",
+    "required": [
+        "Name",
+        "Version",
+        "LicenseCode",
+        "HRef",
+        "Author",
+        "Copyright",
+        "UsedBy"
+    ],
+    "properties": {
+        "Name": {
+            "type": "string",
+            "description": "The full package name."
+        },
+        "Version": {
+            "type": "string",
+            "description": "The package version."
+        },
+        "LicenseCode": {
+            "type": "string",
+            "description": "The license code."
+        },
+        "HRef": {
+            "type": "string",
+            "format": "uri",
+            "description": "The link to the package source."
+        },
+        "Author": {
+            "type": "string",
+            "description": "The package author(s)."
+        },
+        "Copyright": {
+            "type": "string",
+            "description": "The author(s) copyright text."
+        },
+        "UsedBy": {
+            "type": "array",
+            "description": "List of applications that use this package.",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": [
+                    "Name"
+                ],
+                "properties": {
+                    "Name": {
+                        "type": "string",
+                        "description": "The name of the application."
+                    },
+                    "InternalOnly": {
+                        "type": "boolean",
+                        "description": "The flag indicates that the package is internal reference and will not be listed in third-party notices."
+                    }
+                }
+            }
+        }
+    }
+}
