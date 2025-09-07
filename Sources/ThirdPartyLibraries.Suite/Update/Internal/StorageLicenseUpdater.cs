@@ -45,6 +45,7 @@ internal sealed class StorageLicenseUpdater : IStorageLicenseUpdater
 
         index = new LicenseIndexJson
         {
+            Schema = LicenseIndexJson.DefaultSchema,
             Code = spec?.Code ?? licenseCode,
             FullName = spec?.FullName,
             HRef = spec?.HRef,

@@ -1,7 +1,14 @@
-﻿namespace ThirdPartyLibraries.Repository.Template;
+﻿using System.Text.Json.Serialization;
+
+namespace ThirdPartyLibraries.Repository.Template;
 
 public sealed class CustomLibraryIndexJson
 {
+    public const string DefaultSchema = "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.custom-package-index.json";
+
+    [JsonPropertyName("$schema")]
+    public string? Schema { get; set; }
+
     public string Name { get; set; } = null!;
 
     public string Version { get; set; } = null!;
