@@ -8,16 +8,15 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false,
+      "InternalOnly": true,
       "TargetFrameworks": [
         "net8.0",
-        "net9.0",
-        "netstandard2.1"
+        "net9.0"
       ],
       "Dependencies": [
         {
-          "Name": "System.Runtime.CompilerServices.Unsafe",
-          "Version": "6.0.0"
+          "Name": "Microsoft.Testing.Platform",
+          "Version": "1.7.3"
         }
       ]
     }
@@ -26,12 +25,17 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT"
+      "HRef": "https://licenses.nuget.org/MIT"
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/microsoft/testfx"
     },
     {
       "Subject": "project",
-      "HRef": "https://dot.net/",
-      "Description": "License should be verified on https://dot.net/"
+      "Code": "MIT",
+      "HRef": "https://github.com/microsoft/testfx"
     }
   ]
 }
