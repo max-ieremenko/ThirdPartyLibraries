@@ -57,6 +57,35 @@ public class DotLiquidTemplateTest
         line.ShouldBe("package name (package ref)");
     }
 
+    [Test]
+    public void RenderNuGetReadme()
+    {
+        var context = new LibraryReadMeContext
+        {
+            Name = "DotLiquid",
+            Version = "2.3.197",
+            Description = "DotLiquid is a templating system ported to the .NET framework from Ruby’s Liquid Markup.",
+            HRef = "https://www.nuget.org/packages/DotLiquid/2.3.197",
+            LicenseCode = "Apache-2.0 OR MS-PL",
+            LicenseMarkdownExpression = "[Apache-2.0](../../../../licenses/apache-2.0) OR [MS-PL](../../../../licenses/ms-pl)",
+            UsedBy = "ThirdPartyLibraries",
+            TargetFrameworks = "netstandard2.1",
+            Remarks = "some remarks",
+            ThirdPartyNotices = "some notices",
+            Dependencies =
+            {
+                new()
+                {
+                    Name = "dependency",
+                    Version = "1.0",
+                    LocalHRef = "../"
+                }
+            }
+        };
+
+        using var actual = Render(DotLiquidTemplate.GetLibraryReadMeTemplate("nuget.org"), context);
+    }
+
     private static StreamReader Render(byte[] templateSource, object context)
     {
         var template = new StreamReader(new MemoryStream(templateSource)).ReadToEnd();

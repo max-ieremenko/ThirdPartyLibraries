@@ -193,6 +193,23 @@
                     "default": false
                 }
             }
+        },
+        "repository": {
+            "type": "object",
+            "description": "Repository settings.",
+            "properties": {
+                "remarks.md": {
+                    "type": "object",
+                    "description": "remarks.md file setting.",
+                    "properties": {
+                        "keepEmptyFile": {
+                            "type": "boolean",
+                            "description": "The flag indicates that empty remarks.md will be automatically created for each package in the repository, otherwise remarks.md will be deleted if empty.",
+                            "default": true
+                        }
+                    }
+                }
+            }
         }
     }
 }
