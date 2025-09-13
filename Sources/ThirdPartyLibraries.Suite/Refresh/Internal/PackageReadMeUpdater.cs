@@ -126,11 +126,6 @@ internal sealed class PackageReadMeUpdater : IPackageReadMeUpdater
         AddLicenses(index.Licenses, context.Licenses);
 
         context.Remarks = await _storage.ReadRemarksFileAsync(id, token).ConfigureAwait(false);
-        if (string.IsNullOrEmpty(context.Remarks))
-        {
-            context.Remarks = "no remarks";
-        }
-
         context.ThirdPartyNotices = await _storage.ReadThirdPartyNoticesFileAsync(id, token).ConfigureAwait(false);
 
         await _storage.WriteLibraryReadMeAsync(id, context, token).ConfigureAwait(false);
