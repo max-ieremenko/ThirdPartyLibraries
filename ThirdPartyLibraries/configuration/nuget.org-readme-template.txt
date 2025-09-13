@@ -27,10 +27,10 @@ Third party notices
 {{ThirdPartyNotices}}
 
 {%- endif -%}
+{%- if DependenciesCount > 0 -%}
 Dependencies {{DependenciesCount}}
 -----------
 
-{%- if DependenciesCount > 0 -%}
 |Name|Version|
 |----------|:----|
 {%- for dependency in Dependencies -%}
