@@ -15,11 +15,6 @@ Description
 -----------
 File provider for physical files for Microsoft.Extensions.FileProviders.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 3
 -----------
 

@@ -20,11 +20,6 @@ Microsoft.Extensions.FileProviders.IDirectoryContents
 Microsoft.Extensions.FileProviders.IFileInfo
 Microsoft.Extensions.FileProviders.IFileProvider
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 

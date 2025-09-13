@@ -15,11 +15,6 @@ Description
 -----------
 Provides additional configuration specific functionality related to Options.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 5
 -----------
 

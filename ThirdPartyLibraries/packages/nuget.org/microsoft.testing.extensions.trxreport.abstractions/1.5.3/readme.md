@@ -15,11 +15,6 @@ Description
 -----------
 Package Description
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 

@@ -17,11 +17,6 @@ This package provides a low-level .NET (ECMA-335) metadata reader and writer. It
 
 The System.Reflection.Metadata library is built-in as part of the shared framework in .NET Runtime. The package can be installed when you need to use it in other target frameworks.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 

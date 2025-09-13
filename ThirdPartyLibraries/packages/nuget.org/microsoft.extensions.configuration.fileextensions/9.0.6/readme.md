@@ -15,11 +15,6 @@ Description
 -----------
 Provides a base class for file-based configuration providers used with Microsoft.Extensions.Configuration and extension methods for configuring them.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 5
 -----------
 

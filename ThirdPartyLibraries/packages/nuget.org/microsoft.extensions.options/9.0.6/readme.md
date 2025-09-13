@@ -15,11 +15,6 @@ Description
 -----------
 Provides a strongly typed way of specifying and accessing settings using dependency injection.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 3
 -----------
 

@@ -15,11 +15,6 @@ Description
 -----------
 Environment variables configuration provider implementation for Microsoft.Extensions.Configuration. This package enables you to read configuration parameters from environment variables. You can use EnvironmentVariablesExtensions.AddEnvironmentVariables extension method on IConfigurationBuilder to add the environment variables configuration provider to the configuration builder.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 2
 -----------
 

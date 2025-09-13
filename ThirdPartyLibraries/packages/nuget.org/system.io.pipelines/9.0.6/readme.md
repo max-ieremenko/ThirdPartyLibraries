@@ -20,11 +20,6 @@ System.IO.Pipelines.Pipe
 System.IO.Pipelines.PipeWriter
 System.IO.Pipelines.PipeReader
 
-Remarks
------------
-no remarks
-
-
 Dependencies 3
 -----------
 

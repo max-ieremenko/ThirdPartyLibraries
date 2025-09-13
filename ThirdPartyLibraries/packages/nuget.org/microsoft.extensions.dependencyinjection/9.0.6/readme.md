@@ -15,11 +15,6 @@ Description
 -----------
 Default implementation of dependency injection for Microsoft.Extensions.DependencyInjection.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 

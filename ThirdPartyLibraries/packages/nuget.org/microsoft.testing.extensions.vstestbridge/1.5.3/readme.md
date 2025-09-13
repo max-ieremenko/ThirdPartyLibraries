@@ -17,11 +17,6 @@ Microsoft Testing is a set of platform, framework and protocol intended to make 
 
 This package provides a bridge integration for test adapters wanting to target both VSTest and Microsoft.Testing.Platform test platforms.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 5
 -----------
 

@@ -27,11 +27,6 @@ NUnit is a unit-testing framework for all .NET languages.
             - .NET 6.0+
             - .NET 8.0+
 
-Remarks
------------
-no remarks
-
-
 Dependencies 2
 -----------
 

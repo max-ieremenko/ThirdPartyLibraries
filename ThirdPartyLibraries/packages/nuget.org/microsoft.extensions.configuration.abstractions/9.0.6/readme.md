@@ -15,11 +15,6 @@ Description
 -----------
 Provides abstractions of key-value pair based configuration. Interfaces defined in this package are implemented by classes in Microsoft.Extensions.Configuration and other configuration packages.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 
