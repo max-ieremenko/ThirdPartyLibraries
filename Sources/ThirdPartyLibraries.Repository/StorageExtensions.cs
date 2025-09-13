@@ -164,6 +164,9 @@ public static class StorageExtensions
         return CreateLibraryEmptyFileAsync(storage, id, RemarksFileName, token);
     }
 
+    public static Task RemoveRemarksFileAsync(this IStorage storage, LibraryId id, CancellationToken token) =>
+        storage.RemoveLibraryFileAsync(id, RemarksFileName, token);
+
     public static Task CreateDefaultThirdPartyNoticesFileAsync(this IStorage storage, LibraryId id, CancellationToken token)
     {
         return CreateLibraryEmptyFileAsync(storage, id, ThirdPartyNoticesFileName, token);

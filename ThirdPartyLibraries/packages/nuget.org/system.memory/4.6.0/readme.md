@@ -15,11 +15,6 @@ Description
 -----------
 System.Memory
 
-Remarks
------------
-no remarks
-
-
 Dependencies 3
 -----------
 

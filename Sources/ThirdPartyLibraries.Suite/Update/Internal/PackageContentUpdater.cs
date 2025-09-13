@@ -1,6 +1,8 @@
-﻿using ThirdPartyLibraries.Domain;
+﻿using Microsoft.Extensions.Options;
+using ThirdPartyLibraries.Domain;
 using ThirdPartyLibraries.Repository;
 using ThirdPartyLibraries.Repository.Template;
+using ThirdPartyLibraries.Suite.Configuration;
 using ThirdPartyLibraries.Suite.Shared;
 
 namespace ThirdPartyLibraries.Suite.Update.Internal;
@@ -12,12 +14,18 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
     private readonly IStorage _storage;
     private readonly ILicenseHashBuilder _hashBuilder;
     private readonly IPackageLoaderFactory[] _loaderFactories;
+    private readonly RemarksConfiguration _remarksConfiguration;
 
-    public PackageContentUpdater(IStorage storage, ILicenseHashBuilder hashBuilder, IEnumerable<IPackageLoaderFactory> loaderFactories)
+    public PackageContentUpdater(
+        IStorage storage,
+        ILicenseHashBuilder hashBuilder,
+        IEnumerable<IPackageLoaderFactory> loaderFactories,
+        IOptions<RemarksConfiguration> remarksConfiguration)
     {
         _storage = storage;
         _hashBuilder = hashBuilder;
         _loaderFactories = loaderFactories.ToArray();
+        _remarksConfiguration = remarksConfiguration.Value;
     }
 
     public async Task<UpdateResult> UpdateAsync(IPackageReference reference, string appName, CancellationToken token)
@@ -51,7 +59,7 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
         UpdateApp(index, appName, reference);
         await UpdateLicensesAsync(reference.Id, index, loader, token).ConfigureAwait(false);
 
-        await _storage.CreateDefaultRemarksFileAsync(reference.Id, token).ConfigureAwait(false);
+        await EnsureRemarksFileExistsAsync(reference.Id, token).ConfigureAwait(false);
         await _storage.CreateDefaultThirdPartyNoticesFileAsync(reference.Id, token).ConfigureAwait(false);
 
         return await SaveLibraryIndexJsonAsync(reference.Id, index, token).ConfigureAwait(false);
@@ -129,20 +137,30 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
     {
         var exists = await _storage.LibraryFileExistsAsync(id, loader.RepositoryPackageFileName, token).ConfigureAwait(false);
 
-        if ((exists && loader.DownloadPackageIntoRepository)
-            || (!exists && !loader.DownloadPackageIntoRepository))
-        {
-            return;
-        }
-
-        if (exists)
-        {
-            await _storage.RemoveLibraryFileAsync(id, loader.RepositoryPackageFileName, token).ConfigureAwait(false);
-        }
-        else
+        if (loader.DownloadPackageIntoRepository && !exists)
         {
             var content = await loader.DownloadPackageAsync(token).ConfigureAwait(false);
             await _storage.WriteLibraryFileAsync(id, loader.RepositoryPackageFileName, content, token).ConfigureAwait(false);
+        }
+
+        if (!loader.DownloadPackageIntoRepository && exists)
+        {
+            await _storage.RemoveLibraryFileAsync(id, loader.RepositoryPackageFileName, token).ConfigureAwait(false);
+        }
+    }
+
+    private async Task EnsureRemarksFileExistsAsync(LibraryId id, CancellationToken token)
+    {
+        if (_remarksConfiguration.KeepEmptyFile)
+        {
+            await _storage.CreateDefaultRemarksFileAsync(id, token).ConfigureAwait(false);
+            return;
+        }
+
+        var content = await _storage.ReadRemarksFileAsync(id, token).ConfigureAwait(false);
+        if (string.IsNullOrEmpty(content))
+        {
+            await _storage.RemoveRemarksFileAsync(id, token).ConfigureAwait(false);
         }
     }
 

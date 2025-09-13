@@ -15,11 +15,6 @@ Description
 -----------
 User secrets configuration provider implementation for Microsoft.Extensions.Configuration. User secrets mechanism enables you to override application configuration settings with values stored in the local secrets file. You can use UserSecretsConfigurationExtensions.AddUserSecrets extension method on IConfigurationBuilder to add user secrets provider to the configuration builder.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 4
 -----------
 

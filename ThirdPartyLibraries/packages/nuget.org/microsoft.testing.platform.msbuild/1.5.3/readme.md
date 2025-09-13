@@ -17,11 +17,6 @@ Microsoft Testing is a set of platform, framework and protocol intended to make 
 
 This package provides MSBuild integration of the platform, its extensions and configuration files.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 

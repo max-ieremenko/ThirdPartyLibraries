@@ -15,11 +15,6 @@ Description
 -----------
 Implementation of key-value pair based configuration for Microsoft.Extensions.Configuration. Includes the memory configuration provider.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 2
 -----------
 

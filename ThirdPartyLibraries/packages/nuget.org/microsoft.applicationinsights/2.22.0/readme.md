@@ -15,11 +15,6 @@ Description
 -----------
 Application Insights Base API. This package provides core functionality for transmission of all Application Insights Telemetry Types and is a dependent package for all other Application Insights packages. Please install the platform specific package for the best experience. Privacy statement: https://go.microsoft.com/fwlink/?LinkId=512156
 
-Remarks
------------
-no remarks
-
-
 Dependencies 1
 -----------
 

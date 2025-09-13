@@ -15,11 +15,6 @@ Description
 -----------
 JSON configuration provider implementation for Microsoft.Extensions.Configuration. This package enables you to read your application's settings from a JSON file. You can use JsonConfigurationExtensions.AddJsonFile extension method on IConfigurationBuilder to add the JSON configuration provider to the configuration builder.
 
-Remarks
------------
-no remarks
-
-
 Dependencies 5
 -----------
 

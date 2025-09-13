@@ -236,6 +236,11 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
   "skipCertificateCheck": {
     "byHost": [ "localhost" ],
     "logRequest": true
+  },
+  "repository": {
+    "remarks.md": {
+	  "keepEmptyFile": true
+	}
   }
 }
 ```
@@ -270,6 +275,10 @@ setup well-know licenses
 
 - `byHost`: regex expressions array. Ignore certificate validation errors by target host name.
 - `logRequest`: *true* or *false* (default). The flag indicates that any HTTP request should be logged.
+
+### repository/remarks.md
+
+- `keepEmptyFile`: default is true. The flag indicates that empty remarks.md will be automatically created for each package in the repository, otherwise remarks.md will be deleted if empty.
 
 [Back to ToC](#table-of-contents)
 
