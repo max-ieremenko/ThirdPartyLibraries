@@ -122,7 +122,7 @@ Refresh or update .md files in a libraries repository <a name="refresh"></a>
 -------------------------------------------------
 
 - file [configuration/readme-template.txt](ThirdPartyLibraries/configuration/readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/) to generate the main [readme.md](ThirdPartyLibraries/readme.md), context is [RootReadMePackageContext.cs](Sources/ThirdPartyLibraries.Repository/Template/RootReadMePackageContext.cs)
-- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.3/readme.md), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
+- file [configuration/nuget.org-readme-template.txt](ThirdPartyLibraries/configuration/nuget.org-readme-template.txt) contains [DotLiquid template](https://shopify.github.io/liquid/)  to generate [readme.md](ThirdPartyLibraries/readme.md) for NuGet packages, for instance [newtonsoft.json](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json), context is [LibraryReadMeContext.cs](Sources/ThirdPartyLibraries.Repository/Template/LibraryReadMeContext.cs)
 
 You can change templates and test your changes by running the the tool
 
@@ -358,7 +358,7 @@ Manage NuGet packages <a name="nuget.org"></a>
 ---------------------------------------------
 
 Each package from [nuget.org](https://www.nuget.org/) is located in the sub-folder *packages/nuget.org/[id]/[version]* where [id] is a package id and [version] is a package version in lowercase.
-For instance [newtonsoft.json/12.0.3](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json).
+For instance [newtonsoft.json](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json).
 
 File *index.json* contains a metadata for the tool:
 
@@ -388,7 +388,7 @@ File *index.json* contains a metadata for the tool:
 |License/Status|*acceptance status* of this package. HasToBeApproved (TODO), Approved (can be set only manually), AutomaticallyApproved (assigned by the tool according to the license code and license/RequiresApproval)|if value is Approved|
 |UsedBy/Name|a name of application references this package, see [*$ ThirdPartyLibraries update -appName ThirdPartyLibraries*](#update)|no, is always updated according to a configuration|
 |UsedBy/InternalOnly|*true* or *false* (default) flag to indicate is this package is a part of third party notices, see [*$ ThirdPartyLibraries generate -appName ThirdPartyLibraries*](#generate)|no, is always updated according to a configuration|
-|Licenses/...|section with a list of license from [package.nuspec](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json/12.0.2/package.nuspec)|yes if License/Code is not *null*|
+|Licenses/...|section with a list of license from [package.nuspec](ThirdPartyLibraries/packages/nuget.org/newtonsoft.json)|yes if License/Code is not *null*|
 
 - file *package.nuspec* is a NuGet package specification. Once created, is read-only for the tool.
 - file *package.nupkg* is a NuGet package, see [*configuration nuget.org/downloadPackageIntoRepository*](#configuration). Once created, is read-only for the tool.
