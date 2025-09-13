@@ -208,6 +208,21 @@
                             "default": true
                         }
                     }
+                },
+                "third-party-notices.txt": {
+                    "type": "object",
+                    "description": "third-party-notices.txt file setting.",
+                    "properties": {
+                        "keepEmptyFile": {
+                            "enum": [
+                                "Always",
+                                "Never",
+                                "IfRequiredByLicense"
+                            ],
+                            "description": "Always value automatically creates an empty third-party-notices.txt for each package in the repository, IfRequiredByLicense value will deleted empty file if a package license does not require third party notices.",
+                            "default": "Always"
+                        }
+                    }
                 }
             }
         }

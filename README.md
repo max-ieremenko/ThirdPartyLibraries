@@ -240,6 +240,9 @@ The configuration file [appsettings.json](ThirdPartyLibraries/configuration/apps
   "repository": {
     "remarks.md": {
 	  "keepEmptyFile": true
+	},
+    "third-party-notices.txt": {
+	  "keepEmptyFile": "Always"
 	}
   }
 }
@@ -279,6 +282,10 @@ setup well-know licenses
 ### repository/remarks.md
 
 - `keepEmptyFile`: default is true. The flag indicates that empty remarks.md will be automatically created for each package in the repository, otherwise remarks.md will be deleted if empty.
+
+### repository/third-party-notices.txt
+
+- `keepEmptyFile`: default is Always. `Always` value automatically creates an empty third-party-notices.txt for each package in the repository, `IfRequiredByLicense` value will deleted empty file if a package license does not require third party notices.
 
 [Back to ToC](#table-of-contents)
 

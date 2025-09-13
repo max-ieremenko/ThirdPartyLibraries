@@ -15,17 +15,20 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
     private readonly ILicenseHashBuilder _hashBuilder;
     private readonly IPackageLoaderFactory[] _loaderFactories;
     private readonly RemarksConfiguration _remarksConfiguration;
+    private readonly ThirdPartyNoticesConfiguration _thirdPartyNoticesConfiguration;
 
     public PackageContentUpdater(
         IStorage storage,
         ILicenseHashBuilder hashBuilder,
         IEnumerable<IPackageLoaderFactory> loaderFactories,
-        IOptions<RemarksConfiguration> remarksConfiguration)
+        IOptions<RemarksConfiguration> remarksConfiguration,
+        IOptions<ThirdPartyNoticesConfiguration> thirdPartyNoticesConfiguration)
     {
         _storage = storage;
         _hashBuilder = hashBuilder;
         _loaderFactories = loaderFactories.ToArray();
         _remarksConfiguration = remarksConfiguration.Value;
+        _thirdPartyNoticesConfiguration = thirdPartyNoticesConfiguration.Value;
     }
 
     public async Task<UpdateResult> UpdateAsync(IPackageReference reference, string appName, CancellationToken token)
@@ -60,7 +63,7 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
         await UpdateLicensesAsync(reference.Id, index, loader, token).ConfigureAwait(false);
 
         await EnsureRemarksFileExistsAsync(reference.Id, token).ConfigureAwait(false);
-        await _storage.CreateDefaultThirdPartyNoticesFileAsync(reference.Id, token).ConfigureAwait(false);
+        await EnsureThirdPartyNoticesFileExistsAsync(reference.Id, LicenseCode.FromText(index.License.Code), token).ConfigureAwait(false);
 
         return await SaveLibraryIndexJsonAsync(reference.Id, index, token).ConfigureAwait(false);
     }
@@ -174,6 +177,47 @@ internal sealed class PackageContentUpdater : IPackageContentUpdater
 
         var content = await loader.GetSpecContentAsync(token).ConfigureAwait(false);
         await _storage.WriteLibraryFileAsync(id, loader.RepositorySpecFileName, content, token).ConfigureAwait(false);
+    }
+
+    private async Task EnsureThirdPartyNoticesFileExistsAsync(LibraryId id, LicenseCode licenseCode, CancellationToken token)
+    {
+        if (_thirdPartyNoticesConfiguration.KeepEmptyFileAlways())
+        {
+            await _storage.CreateDefaultThirdPartyNoticesFileAsync(id, token).ConfigureAwait(false);
+            return;
+        }
+
+        var content = await _storage.ReadThirdPartyNoticesFileAsync(id, token).ConfigureAwait(false);
+        if (!string.IsNullOrEmpty(content))
+        {
+            return;
+        }
+
+        if (_thirdPartyNoticesConfiguration.KeepEmptyFileNever())
+        {
+            await _storage.RemoveThirdPartyNoticesFileAsync(id, token).ConfigureAwait(false);
+            return;
+        }
+
+        var requiresThirdPartyNotices = false;
+        for (var i = 0; i < licenseCode.Codes.Length; i++)
+        {
+            var licenseIndex = await _storage.ReadLicenseIndexJsonAsync(licenseCode.Codes[i], token).ConfigureAwait(false);
+            if (licenseIndex?.RequiresThirdPartyNotices == true)
+            {
+                requiresThirdPartyNotices = true;
+                break;
+            }
+        }
+
+        if (requiresThirdPartyNotices)
+        {
+            await _storage.CreateDefaultThirdPartyNoticesFileAsync(id, token).ConfigureAwait(false);
+        }
+        else
+        {
+            await _storage.RemoveThirdPartyNoticesFileAsync(id, token).ConfigureAwait(false);
+        }
     }
 
     private async Task<List<PackageSpecLicense>> GetLicensesAsync(LibraryId id, IPackageLoader loader, CancellationToken token)
