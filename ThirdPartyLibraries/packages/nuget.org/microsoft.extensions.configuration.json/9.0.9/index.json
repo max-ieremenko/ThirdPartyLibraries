@@ -8,14 +8,32 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": true,
+      "InternalOnly": false,
       "TargetFrameworks": [
+        "net8.0",
+        "net9.0",
         "netstandard2.1"
       ],
       "Dependencies": [
         {
-          "Name": "System.Memory",
-          "Version": "4.5.5"
+          "Name": "Microsoft.Extensions.Configuration",
+          "Version": "9.0.9"
+        },
+        {
+          "Name": "Microsoft.Extensions.Configuration.Abstractions",
+          "Version": "9.0.9"
+        },
+        {
+          "Name": "Microsoft.Extensions.Configuration.FileExtensions",
+          "Version": "9.0.9"
+        },
+        {
+          "Name": "Microsoft.Extensions.FileProviders.Abstractions",
+          "Version": "9.0.9"
+        },
+        {
+          "Name": "System.Text.Json",
+          "Version": "9.0.9"
         }
       ]
     }
@@ -29,12 +47,11 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/dotnet/runtime"
     },
     {
       "Subject": "project",
-      "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://dot.net/"
     }
   ]
 }

@@ -10,12 +10,29 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
-        "netstandard2.1"
+        "net8.0",
+        "net9.0"
       ],
       "Dependencies": [
         {
-          "Name": "System.Memory",
-          "Version": "4.5.5"
+          "Name": "Microsoft.TestPlatform.AdapterUtilities",
+          "Version": "17.13.0"
+        },
+        {
+          "Name": "Microsoft.TestPlatform.ObjectModel",
+          "Version": "17.14.1"
+        },
+        {
+          "Name": "Microsoft.Testing.Extensions.Telemetry",
+          "Version": "1.7.3"
+        },
+        {
+          "Name": "Microsoft.Testing.Extensions.TrxReport.Abstractions",
+          "Version": "1.7.3"
+        },
+        {
+          "Name": "Microsoft.Testing.Platform",
+          "Version": "1.7.3"
         }
       ]
     }
@@ -29,12 +46,12 @@
     {
       "Subject": "repository",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles.git"
+      "HRef": "https://github.com/microsoft/testfx"
     },
     {
       "Subject": "project",
       "Code": "MIT",
-      "HRef": "https://github.com/SimonCropp/EmptyFiles"
+      "HRef": "https://github.com/microsoft/testfx"
     }
   ]
 }

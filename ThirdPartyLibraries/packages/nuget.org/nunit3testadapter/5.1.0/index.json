@@ -8,16 +8,19 @@
   "UsedBy": [
     {
       "Name": "ThirdPartyLibraries",
-      "InternalOnly": false,
+      "InternalOnly": true,
       "TargetFrameworks": [
         "net8.0",
-        "net9.0",
-        "netstandard2.1"
+        "net9.0"
       ],
       "Dependencies": [
         {
-          "Name": "System.Runtime.CompilerServices.Unsafe",
-          "Version": "6.0.0"
+          "Name": "Microsoft.Testing.Extensions.VSTestBridge",
+          "Version": "1.7.3"
+        },
+        {
+          "Name": "Microsoft.Testing.Platform.MSBuild",
+          "Version": "1.7.3"
         }
       ]
     }
@@ -26,12 +29,16 @@
     {
       "Subject": "package",
       "Code": "MIT",
-      "HRef": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT"
+      "HRef": "https://licenses.nuget.org/MIT"
+    },
+    {
+      "Subject": "repository",
+      "Code": "MIT",
+      "HRef": "https://github.com/nunit/nunit3-vs-adapter"
     },
     {
       "Subject": "project",
-      "HRef": "https://dot.net/",
-      "Description": "License should be verified on https://dot.net/"
+      "HRef": "https://docs.nunit.org/articles/vs-test-adapter/Index.html"
     }
   ]
 }
