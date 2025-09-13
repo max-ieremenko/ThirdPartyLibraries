@@ -74,6 +74,9 @@
   "repository": {
     "remarks.md": {
       "keepEmptyFile": true
+    },
+    "third-party-notices.txt": {
+      "keepEmptyFile": "Always"
     }
   }
 }

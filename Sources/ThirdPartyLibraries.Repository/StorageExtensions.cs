@@ -172,6 +172,9 @@ public static class StorageExtensions
         return CreateLibraryEmptyFileAsync(storage, id, ThirdPartyNoticesFileName, token);
     }
 
+    public static Task RemoveThirdPartyNoticesFileAsync(this IStorage storage, LibraryId id, CancellationToken token) =>
+        storage.RemoveLibraryFileAsync(id, ThirdPartyNoticesFileName, token);
+
     internal static byte[] FixLineEnding(MemoryStream stream)
     {
         const byte r = 13;
