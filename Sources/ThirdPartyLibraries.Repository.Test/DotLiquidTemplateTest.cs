@@ -86,6 +86,32 @@ public class DotLiquidTemplateTest
         using var actual = Render(DotLiquidTemplate.GetLibraryReadMeTemplate("nuget.org"), context);
     }
 
+    [Test]
+    public void GetRootReadMeTemplate()
+    {
+        DotLiquidTemplate.GetRootReadMeTemplate().ShouldNotBeEmpty();
+    }
+
+    [Test]
+    [TestCase("nuget.org")]
+    [TestCase("npmjs.com")]
+    public void GetLibraryReadMeTemplate(string librarySourceCode)
+    {
+        DotLiquidTemplate.GetLibraryReadMeTemplate(librarySourceCode).ShouldNotBeEmpty();
+    }
+
+    [Test]
+    public void GetThirdPartyNoticesTemplate()
+    {
+        DotLiquidTemplate.GetThirdPartyNoticesTemplate().ShouldNotBeEmpty();
+    }
+
+    [Test]
+    public void GetAppSettingsTemplate()
+    {
+        DotLiquidTemplate.GetAppSettingsTemplate().ShouldNotBeEmpty();
+    }
+
     private static StreamReader Render(byte[] templateSource, object context)
     {
         var template = new StreamReader(new MemoryStream(templateSource)).ReadToEnd();
