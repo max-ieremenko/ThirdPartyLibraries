@@ -112,12 +112,9 @@ task PackTest {
 
 task PsCoreTest {
     # show-powershell-images.ps1
+    # https://learn.microsoft.com/en-us/powershell/scripting/install/powershell-support-lifecycle?view=powershell-7.5
     $images = $(
-        'mcr.microsoft.com/powershell:7.2.0-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.2.1-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.2.2-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.3-ubuntu-20.04'
-        , 'mcr.microsoft.com/powershell:7.4-ubuntu-20.04'
+        'mcr.microsoft.com/powershell:7.4-ubuntu-20.04'
         , 'mcr.microsoft.com/powershell:7.5-ubuntu-22.04'
         , 'mcr.microsoft.com/powershell:preview-7.6-ubuntu-22.04')
 
