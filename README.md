@@ -285,7 +285,7 @@ setup well-know licenses
 
 ### repository/third-party-notices.txt
 
-- `keepEmptyFile`: default is Always. `Always` value automatically creates and empty third-party-notices.txt for each package in the repository, `IfRequiredByLicense` value will deleted empty file if a package license does not require third party notices.
+- `keepEmptyFile`: default is Always. `Always` value automatically creates an empty third-party-notices.txt for each package in the repository, `IfRequiredByLicense` value will deleted empty file if a package license does not require third party notices.
 
 [Back to ToC](#table-of-contents)
 
