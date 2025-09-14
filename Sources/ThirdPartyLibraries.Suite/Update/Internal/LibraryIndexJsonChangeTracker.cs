@@ -16,7 +16,8 @@ internal static class LibraryIndexJsonChangeTracker
             return true;
         }
 
-        if (!AreIdentical(original.Source, index.Source)
+        if (!AreIdentical(original.Schema, index.Schema)
+            || !AreIdentical(original.Source, index.Source)
             || !AreIdentical(original.License.Code, index.License.Code)
             || !AreIdentical(original.License.Status, index.License.Status)
             || original.UsedBy.Count != index.UsedBy.Count

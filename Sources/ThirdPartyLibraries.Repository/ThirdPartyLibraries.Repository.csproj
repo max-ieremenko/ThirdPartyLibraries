@@ -16,13 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Template\appsettings.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\npmjs.com.ReadMeTemplate.txt" />
-    <EmbeddedResource Include="Template\nuget.org.ReadMeTemplate.txt" />
-    <EmbeddedResource Include="Template\ThirdPartyNotices.Template.txt" />
-    <EmbeddedResource Include="Template\Root.ReadMeTemplate.txt" />
+    <EmbeddedResource Include="..\..\Docs\default.appsettings.json" Link="Template\appsettings.json" />
+    <EmbeddedResource Include="..\..\Docs\default.npmjs.com.ReadMeTemplate.txt" Link="Template\npmjs.com.ReadMeTemplate.txt" />
+    <EmbeddedResource Include="..\..\Docs\default.nuget.org.ReadMeTemplate.txt" Link="Template\nuget.org.ReadMeTemplate.txt" />
+    <EmbeddedResource Include="..\..\Docs\default.ThirdPartyNotices.Template.txt" Link="Template\ThirdPartyNotices.Template.txt" />
+    <EmbeddedResource Include="..\..\Docs\default.root.ReadMeTemplate.txt" Link="Template\Root.ReadMeTemplate.txt" />
   </ItemGroup>
 
 </Project>

@@ -15,7 +15,9 @@ public static class AppModule
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<SkipCertificateCheckConfiguration>(configuration.GetSection(SkipCertificateCheckConfiguration.SectionName));
-        
+        services.Configure<RemarksConfiguration>(configuration.GetSection(RemarksConfiguration.SectionName));
+        services.Configure<ThirdPartyNoticesConfiguration>(configuration.GetSection(ThirdPartyNoticesConfiguration.SectionName));
+
         SharedModule.ConfigureServices(services);
         RemoveCommandModule.ConfigureServices(services);
         UpdateCommandModule.ConfigureServices(services);

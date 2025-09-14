@@ -1,7 +1,14 @@
-﻿namespace ThirdPartyLibraries.Repository.Template;
+﻿using System.Text.Json.Serialization;
+
+namespace ThirdPartyLibraries.Repository.Template;
 
 public sealed class LicenseIndexJson
 {
+    public const string DefaultSchema = "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.license-index.json";
+
+    [JsonPropertyName("$schema")]
+    public string? Schema { get; set; }
+
     public string Code { get; set; } = null!;
 
     public string? FullName { get; set; }

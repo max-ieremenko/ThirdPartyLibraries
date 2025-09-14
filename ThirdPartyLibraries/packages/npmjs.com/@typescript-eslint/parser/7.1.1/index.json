@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.package-index.json",
   "License": {
     "Code": "BSD-2-Clause",
     "Status": "AutomaticallyApproved"
@@ -17,7 +18,6 @@
     },
     {
       "Subject": "repository",
-      "Code": null,
       "HRef": "https://github.com/typescript-eslint/typescript-eslint.git",
       "Description": "License code NOASSERTION"
     }

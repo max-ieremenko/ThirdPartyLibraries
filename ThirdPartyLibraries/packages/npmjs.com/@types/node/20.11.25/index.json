@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.package-index.json",
   "License": {
     "Code": "MIT",
     "Status": "AutomaticallyApproved"
@@ -17,13 +18,11 @@
     },
     {
       "Subject": "repository",
-      "Code": null,
       "HRef": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
       "Description": "License code NOASSERTION"
     },
     {
       "Subject": "homepage",
-      "Code": null,
       "HRef": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
       "Description": "License code NOASSERTION"
     }
