@@ -7,15 +7,24 @@ namespace ThirdPartyLibraries.Generic.Internal;
 public class OpenSourceUrlParserTest
 {
     [Test]
-    [TestCaseSource(nameof(GetTryParseLicenseCodeCases))]
-    public void TryParseLicenseCode(string url, string host, string directory, string? expected)
+    [TestCaseSource(nameof(GetTryParseLicenseCodeCases1))]
+    public void TryParseLicenseCode1(string url, string host, string directory, string? expected)
     {
         OpenSourceUrlParser.TryParseLicenseCode(new Uri(url), host, directory, out var actual).ShouldBe(expected != null);
 
         actual.ToString().ShouldBe(expected ?? string.Empty);
     }
 
-    private static IEnumerable<TestCaseData> GetTryParseLicenseCodeCases()
+    [Test]
+    [TestCaseSource(nameof(GetTryParseLicenseCodeCases2))]
+    public void TryParseLicenseCode2(string url, string host, string directory1, string directory2, string? expected)
+    {
+        OpenSourceUrlParser.TryParseLicenseCode(new Uri(url), host, directory1, directory2, out var actual).ShouldBe(expected != null);
+
+        actual.ToString().ShouldBe(expected ?? string.Empty);
+    }
+
+    private static IEnumerable<TestCaseData> GetTryParseLicenseCodeCases1()
     {
         yield return new TestCaseData("https://api.opensource.org/license/MIT/", "api.opensource.org", "license", "MIT")
         {
@@ -60,6 +69,19 @@ public class OpenSourceUrlParserTest
         yield return new TestCaseData("https://spdx.org/licenses/MIT/invalid", "spdx.org", "licenses", null)
         {
             TestName = "spdx.org/licenses/MIT/invalid"
+        };
+    }
+
+    private static IEnumerable<TestCaseData> GetTryParseLicenseCodeCases2()
+    {
+        yield return new TestCaseData("https://opensource.org/api/license/MIT/", "opensource.org", "api", "license", "MIT")
+        {
+            TestName = "opensource.org/api/license/MIT"
+        };
+
+        yield return new TestCaseData("https://opensource.org/api/license/MIT/invalid", "opensource.org", "api", "license", null)
+        {
+            TestName = "opensource.org/api/license/MIT/invalid"
         };
     }
 }

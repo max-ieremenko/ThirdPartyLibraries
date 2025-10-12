@@ -52,14 +52,9 @@ internal sealed class OpenSourceLicenseLoader : ILicenseByUrlLoader, ILicenseByC
 
         if (!validCode.Equals(code, StringComparison.Ordinal))
         {
-            result = await _spdxOrg.TryDownloadByCodeAsync(validCode, token).ConfigureAwait(false);
-            if (result != null)
-            {
-                return result;
-            }
+            return await _spdxOrg.TryDownloadByCodeAsync(validCode, token).ConfigureAwait(false);
         }
 
-        result = await _openSourceOrg.TryDownloadByCodeAsync(validCode, token).ConfigureAwait(false);
-        return result;
+        return null;
     }
 }
