@@ -1,4 +1,4 @@
-eslint [8.57.0](https://www.npmjs.com/package/eslint/v/8.57.0)
+eslint [9.37.0](https://www.npmjs.com/package/eslint/v/9.37.0)
 --------------------
 
 Used by: ThirdPartyLibraries internal

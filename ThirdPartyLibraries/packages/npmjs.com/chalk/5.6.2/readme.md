@@ -1,4 +1,4 @@
-chalk [5.3.0](https://www.npmjs.com/package/chalk/v/5.3.0)
+chalk [5.6.2](https://www.npmjs.com/package/chalk/v/5.6.2)
 --------------------
 
 Used by: ThirdPartyLibraries

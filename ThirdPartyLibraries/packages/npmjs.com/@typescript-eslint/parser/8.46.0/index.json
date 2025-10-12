@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.package-index.json",
   "License": {
-    "Code": "Apache-2.0",
+    "Code": "MIT",
     "Status": "AutomaticallyApproved"
   },
   "UsedBy": [
@@ -13,17 +13,17 @@
   "Licenses": [
     {
       "Subject": "package",
-      "Code": "Apache-2.0",
-      "HRef": "LICENSE.txt"
+      "Code": "MIT",
+      "HRef": "LICENSE"
     },
     {
       "Subject": "repository",
-      "Code": "Apache-2.0",
-      "HRef": "https://github.com/Microsoft/TypeScript.git"
+      "Code": "MIT",
+      "HRef": "https://github.com/typescript-eslint/typescript-eslint.git"
     },
     {
       "Subject": "homepage",
-      "HRef": "https://www.typescriptlang.org/"
+      "HRef": "https://typescript-eslint.io/packages/parser"
     }
   ]
 }
