@@ -4,11 +4,11 @@ Licenses
 |Code|Requires approval|Requires third party notices|Packages count|
 |----------|:----|:----|:----|
 |[Apache-2.0](licenses/apache-2.0)|no|no|5|
-|[BSD-2-Clause](licenses/bsd-2-clause)|no|no|1|
+|[BSD-2-Clause](licenses/bsd-2-clause)|no|no|0|
 |[BSD-3-Clause](licenses/bsd-3-clause)|no|no|2|
 |[CC-BY-2.5](licenses/cc-by-2.5)|yes|no|1|
 |[CC-BY-3.0](licenses/cc-by-3.0)|yes|no|1|
-|[MIT](licenses/mit)|no|no|59|
+|[MIT](licenses/mit)|no|no|60|
 |[ms-net-library](licenses/ms-net-library)|no|no|1|
 |[MS-PL](licenses/ms-pl)|no|no|1|
 
@@ -19,16 +19,16 @@ Packages 69
 
 |Name|Version|Source|License|Used by|
 |----------|:----|:----|:----|:----|
-|[@types/node](packages/npmjs.com/@types/node/20.11.25)|20.11.25|[npmjs.com](https://www.npmjs.com/package/%40types%2Fnode/v/20.11.25)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[@typescript-eslint/eslint-plugin](packages/npmjs.com/@typescript-eslint/eslint-plugin/7.1.1)|7.1.1|[npmjs.com](https://www.npmjs.com/package/%40typescript-eslint%2Feslint-plugin/v/7.1.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[@typescript-eslint/parser](packages/npmjs.com/@typescript-eslint/parser/7.1.1)|7.1.1|[npmjs.com](https://www.npmjs.com/package/%40typescript-eslint%2Fparser/v/7.1.1)|[BSD-2-Clause](licenses/bsd-2-clause)|ThirdPartyLibraries internal|
+|[@types/node](packages/npmjs.com/@types/node/24.7.2)|24.7.2|[npmjs.com](https://www.npmjs.com/package/%40types%2Fnode/v/24.7.2)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[@typescript-eslint/eslint-plugin](packages/npmjs.com/@typescript-eslint/eslint-plugin/8.46.0)|8.46.0|[npmjs.com](https://www.npmjs.com/package/%40typescript-eslint%2Feslint-plugin/v/8.46.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[@typescript-eslint/parser](packages/npmjs.com/@typescript-eslint/parser/8.46.0)|8.46.0|[npmjs.com](https://www.npmjs.com/package/%40typescript-eslint%2Fparser/v/8.46.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Castle.Core](packages/nuget.org/castle.core/5.1.1)|5.1.1|[nuget.org](https://www.nuget.org/packages/Castle.Core/5.1.1)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
-|[chalk](packages/npmjs.com/chalk/5.3.0)|5.3.0|[npmjs.com](https://www.npmjs.com/package/chalk/v/5.3.0)|[MIT](licenses/mit)|ThirdPartyLibraries|
+|[chalk](packages/npmjs.com/chalk/5.6.2)|5.6.2|[npmjs.com](https://www.npmjs.com/package/chalk/v/5.6.2)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[ConfigureAwaitChecker.Analyzer](packages/nuget.org/configureawaitchecker.analyzer/5.0.0.1)|5.0.0.1|[nuget.org](https://www.nuget.org/packages/ConfigureAwaitChecker.Analyzer/5.0.0.1)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[DiffEngine](packages/nuget.org/diffengine/11.3.0)|11.3.0|[nuget.org](https://www.nuget.org/packages/DiffEngine/11.3.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[DotLiquid](packages/nuget.org/dotliquid/2.3.197)|2.3.197|[nuget.org](https://www.nuget.org/packages/DotLiquid/2.3.197)|[Apache-2.0](licenses/apache-2.0) OR [MS-PL](licenses/ms-pl)|ThirdPartyLibraries|
 |[EmptyFiles](packages/nuget.org/emptyfiles/4.4.0)|4.4.0|[nuget.org](https://www.nuget.org/packages/EmptyFiles/4.4.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
-|[eslint](packages/npmjs.com/eslint/8.57.0)|8.57.0|[npmjs.com](https://www.npmjs.com/package/eslint/v/8.57.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
+|[eslint](packages/npmjs.com/eslint/9.37.0)|9.37.0|[npmjs.com](https://www.npmjs.com/package/eslint/v/9.37.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[FAMFAMFAM](packages/custom/famfamfam/1.3)|1.3|[custom](http://www.famfamfam.com/)|[CC-BY-2.5](licenses/cc-by-2.5) OR [CC-BY-3.0](licenses/cc-by-3.0)|ThirdPartyLibraries internal|
 |[Microsoft.ApplicationInsights](packages/nuget.org/microsoft.applicationinsights/2.23.0)|2.23.0|[nuget.org](https://www.nuget.org/packages/Microsoft.ApplicationInsights/2.23.0)|[MIT](licenses/mit)|ThirdPartyLibraries internal|
 |[Microsoft.Bcl.AsyncInterfaces](packages/nuget.org/microsoft.bcl.asyncinterfaces/9.0.9)|9.0.9|[nuget.org](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/9.0.9)|[MIT](licenses/mit)|ThirdPartyLibraries|
@@ -87,6 +87,6 @@ Packages 69
 |[System.Text.Encodings.Web](packages/nuget.org/system.text.encodings.web/9.0.9)|9.0.9|[nuget.org](https://www.nuget.org/packages/System.Text.Encodings.Web/9.0.9)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Text.Json](packages/nuget.org/system.text.json/9.0.9)|9.0.9|[nuget.org](https://www.nuget.org/packages/System.Text.Json/9.0.9)|[MIT](licenses/mit)|ThirdPartyLibraries|
 |[System.Threading.Tasks.Extensions](packages/nuget.org/system.threading.tasks.extensions/4.5.4)|4.5.4|[nuget.org](https://www.nuget.org/packages/System.Threading.Tasks.Extensions/4.5.4)|[MIT](licenses/mit)|ThirdPartyLibraries|
-|[typescript](packages/npmjs.com/typescript/5.4.2)|5.4.2|[npmjs.com](https://www.npmjs.com/package/typescript/v/5.4.2)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
+|[typescript](packages/npmjs.com/typescript/5.9.3)|5.9.3|[npmjs.com](https://www.npmjs.com/package/typescript/v/5.9.3)|[Apache-2.0](licenses/apache-2.0)|ThirdPartyLibraries internal|
 
 *This page was generated by a tool.*

@@ -1,14 +1,14 @@
-﻿using ThirdPartyLibraries.Domain;
-using ThirdPartyLibraries.Generic.Internal.Domain;
+﻿using ThirdPartyLibraries.Generic.Internal.Domain;
 using ThirdPartyLibraries.Shared;
 
 namespace ThirdPartyLibraries.Generic.Internal;
 
-// https://github.com/OpenSourceOrg/api/blob/master/doc/endpoints.md
+// https://opensource.org/blog/introducing-the-new-api-for-osi-approved-licenses
+// deprecated: https://github.com/OpenSourceOrg/api/blob/master/doc/endpoints.md
 internal sealed class OpenSourceOrgRepository
 {
     public const string Host = "opensource.org";
-    public const string ApiHost = "api.opensource.org";
+    public const string DeprecatedApiHost = "api.opensource.org";
 
     private readonly Func<HttpClient> _httpClientFactory;
 
@@ -17,7 +17,7 @@ internal sealed class OpenSourceOrgRepository
         _httpClientFactory = httpClientFactory;
     }
 
-    internal OpenSourceOrgIndex? Index { get; set; }
+    internal OsiLicenseIndex? Index { get; set; }
 
     public async Task LoadIndexAsync(CancellationToken token)
     {
@@ -26,84 +26,39 @@ internal sealed class OpenSourceOrgRepository
             return;
         }
 
-        OpenSourceOrgLicense[]? licenses;
+        OsiApprovedLicense[]? licenses;
         using (var client = _httpClientFactory())
         {
-            const string requestUri = "https://" + ApiHost + "/licenses/";
-            licenses = await client.GetAsJsonAsync(requestUri, DomainJsonSerializerContext.Default.OpenSourceOrgLicenseArray, token).ConfigureAwait(false);
+            const string requestUri = $"https://{Host}/api/license/";
+            licenses = await client.GetAsJsonAsync(requestUri, DomainJsonSerializerContext.Default.OsiApprovedLicenseArray, token).ConfigureAwait(false);
         }
 
-        Index = licenses == null ? new OpenSourceOrgIndex(0) : OpenSourceOrgIndexParser.Parse(licenses);
+        Index = licenses == null ? new OsiLicenseIndex(0, 0) : OsiLicenseIndexParser.Parse(licenses);
     }
 
     public bool TryFindLicenseCodeByUrl(Uri url, [NotNullWhen(true)] out string? code)
     {
         var index = SafeIndex();
 
-        if (TryParseLicenseCode(url, out var testCode)
-            && index.TryGetEntry(testCode, out var entry))
+        if (TryParseLicenseCode(url, out var candidate))
         {
-            code = entry.Code;
-            return true;
+            return index.TryGetCode(candidate, out code);
         }
 
-        if (index.TryGetEntry(url, out entry))
-        {
-            code = entry.Code;
-            return true;
-        }
-
-        code = null;
-        return false;
+        return index.TryGetCode(url, out code);
     }
 
-    public bool TryFindLicenseCode(string code, [NotNullWhen(true)] out string? value)
-    {
-        if (SafeIndex().TryGetEntry(code, out var entry))
-        {
-            value = entry.Code;
-            return true;
-        }
-
-        value = null;
-        return false;
-    }
-
-    public async Task<LicenseSpec?> TryDownloadByCodeAsync(string code, CancellationToken token)
-    {
-        if (!SafeIndex().TryGetEntry(code, out var entry))
-        {
-            return null;
-        }
-
-        var result = new LicenseSpec(LicenseSpecSource.Shared, entry.Code) { FullName = entry.FullName };
-        if (entry.DownloadUrl == null)
-        {
-            return result;
-        }
-
-        result.HRef = entry.DownloadUrl.ToString();
-
-        using (var client = _httpClientFactory())
-        {
-            var response = await client.GetFileAsync(result.HRef, token).ConfigureAwait(false);
-
-            if (response.HasValue)
-            {
-                result.FileContent = response.Value.Content;
-                result.FileExtension = response.Value.Extension;
-            }
-        }
-
-        return result;
-    }
+    public bool TryFindLicenseCode(string code, [NotNullWhen(true)] out string? value) =>
+        SafeIndex().TryGetCode(code, out value);
 
     private static bool TryParseLicenseCode(Uri url, [NotNullWhen(true)] out string? code)
     {
         if (!OpenSourceUrlParser.TryParseLicenseCode(url, Host, "license", out var text)
             && !OpenSourceUrlParser.TryParseLicenseCode(url, Host, "licenses", out text)
-            && !OpenSourceUrlParser.TryParseLicenseCode(url, ApiHost, "license", out text)
-            && !OpenSourceUrlParser.TryParseLicenseCode(url, ApiHost, "licenses", out text))
+            && !OpenSourceUrlParser.TryParseLicenseCode(url, DeprecatedApiHost, "license", out text)
+            && !OpenSourceUrlParser.TryParseLicenseCode(url, DeprecatedApiHost, "licenses", out text)
+            && !OpenSourceUrlParser.TryParseLicenseCode(url, Host, "api", "license", out text)
+            && !OpenSourceUrlParser.TryParseLicenseCode(url, Host, "api", "licenses", out text))
         {
             code = null;
             return false;
@@ -113,7 +68,7 @@ internal sealed class OpenSourceOrgRepository
         return true;
     }
 
-    private OpenSourceOrgIndex SafeIndex()
+    private OsiLicenseIndex SafeIndex()
     {
         var result = Index;
         if (result == null)

@@ -1,4 +1,4 @@
-typescript [5.4.2](https://www.npmjs.com/package/typescript/v/5.4.2)
+typescript [5.9.3](https://www.npmjs.com/package/typescript/v/5.9.3)
 --------------------
 
 Used by: ThirdPartyLibraries internal
@@ -6,7 +6,7 @@ Used by: ThirdPartyLibraries internal
 License: [Apache-2.0](../../../../licenses/apache-2.0) 
 
 - package license: [Apache-2.0]() 
-- repository license: [Apache-2.0](https://github.com/Microsoft/TypeScript.git) 
+- repository license: [Apache-2.0](https://github.com/microsoft/TypeScript.git) 
 - homepage license: [Unknown](https://www.typescriptlang.org/) 
 
 Description

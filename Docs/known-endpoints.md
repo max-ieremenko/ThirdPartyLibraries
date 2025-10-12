@@ -4,7 +4,6 @@ Known endpoints
 List of known endpoints to which the tool can send a request:
 
 - [opensource.org](https://opensource.org)
-- [api.opensource.org](https://api.opensource.org)
 - [spdx.org](https://spdx.org)
 - [www.codeproject.com](https://www.codeproject.com)
 - [github.com](https://github.com)
@@ -20,13 +19,6 @@ List of known endpoints to which the tool can send a request:
 - [www.microsoft.com](https://www.microsoft.com)
 - [go.microsoft.com](https://go.microsoft.com)
 - [www.apache.org](https://www.apache.org)
-
-opensource.org
---------------
-
-Depending on the license code the tool can send a request to a URL defined in the corresponding `text` section. Media type preferences: `text/plain`, `text/html`, `any other`.
-
-For example, for the [MIT](https://api.opensource.org/license/MIT) license defined in the [index](https://api.opensource.org/licenses), the content will be downloaded from https://opensource.org/license/mit/, for [GPL-3.0](https://api.opensource.org/license/GPL-3.0) from https://www.gnu.org/licenses/gpl-3.0.txt.
 
 codeproject
 -----------

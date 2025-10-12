@@ -21,7 +21,7 @@ License MICROSOFT .NET LIBRARY, full text can be found at https://www.microsoft.
         Copyright: © Microsoft Corporation.  All rights reserved.
 
 License MIT License, full text can be found at https://spdx.org/licenses/MIT or in Licenses/MIT-license.txt
-    chalk (https://www.npmjs.com/package/chalk/v/5.3.0)
+    chalk (https://www.npmjs.com/package/chalk/v/5.6.2)
     Microsoft.Bcl.AsyncInterfaces (https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/9.0.9)
         Authors: Microsoft
         Copyright: © Microsoft Corporation. All rights reserved.

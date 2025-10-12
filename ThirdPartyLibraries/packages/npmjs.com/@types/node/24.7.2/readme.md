@@ -1,4 +1,4 @@
-@types/node [20.11.25](https://www.npmjs.com/package/%40types%2Fnode/v/20.11.25)
+@types/node [24.7.2](https://www.npmjs.com/package/%40types%2Fnode/v/24.7.2)
 --------------------
 
 Used by: ThirdPartyLibraries internal

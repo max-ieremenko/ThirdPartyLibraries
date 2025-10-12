@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/max-ieremenko/ThirdPartyLibraries/refs/heads/master/Docs/schema.package-index.json",
   "License": {
-    "Code": "MIT",
+    "Code": "Apache-2.0",
     "Status": "AutomaticallyApproved"
   },
   "UsedBy": [
@@ -13,13 +13,17 @@
   "Licenses": [
     {
       "Subject": "package",
-      "Code": "MIT",
-      "HRef": "LICENSE"
+      "Code": "Apache-2.0",
+      "HRef": "LICENSE.txt"
     },
     {
       "Subject": "repository",
-      "HRef": "https://github.com/typescript-eslint/typescript-eslint.git",
-      "Description": "License code NOASSERTION"
+      "Code": "Apache-2.0",
+      "HRef": "https://github.com/microsoft/TypeScript.git"
+    },
+    {
+      "Subject": "homepage",
+      "HRef": "https://www.typescriptlang.org/"
     }
   ]
 }
