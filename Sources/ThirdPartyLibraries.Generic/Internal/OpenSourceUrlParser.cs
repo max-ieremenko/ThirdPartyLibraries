@@ -32,6 +32,41 @@ internal static class OpenSourceUrlParser
         return code.Length > 0;
     }
 
+    public static bool TryParseLicenseCode(
+        Uri url,
+        string host,
+        string directory1,
+        string directory2,
+        out ReadOnlySpan<char> code)
+    {
+        code = default;
+        if (!UriSimpleComparer.HttpAndHostsEqual(url, host))
+        {
+            return false;
+        }
+
+        if (!UriSimpleComparer.GetDirectoryName(url.AbsolutePath, out var actualDirectory1, out var rest)
+            || !actualDirectory1.Equals(directory1, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        if (!UriSimpleComparer.GetDirectoryName(rest, out var actualDirectory2, out rest)
+            || !actualDirectory2.Equals(directory2, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        if (!UriSimpleComparer.GetDirectoryName(rest, out var actualDirectory3, out rest)
+            || !rest.IsEmpty)
+        {
+            return false;
+        }
+
+        code = actualDirectory3;
+        return code.Length > 0;
+    }
+
     private static ReadOnlySpan<char> RemoveEnding(ReadOnlySpan<char> code)
     {
         const string Ending1 = "-license.php";

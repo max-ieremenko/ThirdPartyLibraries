@@ -1,79 +1,63 @@
 [
   {
-    "id": "AAL-test",
-    "identifiers": [
-      {
-        "identifier": "AAL",
-        "scheme": "SPDX"
+    "id": "apache-2-0",
+    "name": "Apache License, Version 2.0",
+    "spdx_id": "Apache-2.0",
+    "version": "2.0",
+    "submission_date": "20040208",
+    "submission_url": "http:\/\/lists.opensource.org\/pipermail\/license-discuss_lists.opensource.org\/2004-February\/007654.html",
+    "submitter_name": "Kevin Coar",
+    "approved": false,
+    "approval_date": "",
+    "license_steward_version": "",
+    "license_steward_url": "https:\/\/www.apache.org\/licenses\/LICENSE-2.0",
+    "board_minutes": "",
+    "stewards": [
+      "apache-software-foundation"
+    ],
+    "keywords": [
+      "popular-strong-community"
+    ],
+    "_links": {
+      "self": {
+        "href": "https:\/\/opensource.org\/api\/license\/apache-2-0"
       },
-      {
-        "identifier": "License :: OSI Approved :: Attribution Assurance License",
-        "scheme": "Trove"
+      "html": {
+        "href": "https:\/\/opensource.org\/license\/apache-2-0"
+      },
+      "collection": {
+        "href": "https:\/\/opensource.org\/api\/licenses"
       }
-    ],
-    "links": [
-      {
-        "note": "OSI Page",
-        "url": "https://opensource.org/licenses/AAL"
-      }
-    ],
-    "name": "Attribution Assurance License",
-    "other_names": [],
-    "superseded_by": null,
-    "keywords": [ "osi-approved", "discouraged", "redundant" ],
-    "text": [
-      {
-        "media_type": "text/html",
-        "title": "HTML",
-        "url": "https://opensource.org/licenses/AAL"
-      }
-    ]
+    }
   },
   {
-    "id": "Apache-2.0",
-    "identifiers": [
-      {
-        "identifier": "Apache-2.0",
-        "scheme": "DEP5"
-      },
-      {
-        "identifier": "Apache-2.0",
-        "scheme": "SPDX"
-      },
-      {
-        "identifier": "License :: OSI Approved :: Apache Software License",
-        "scheme": "Trove"
-      }
+    "id": "bsd-3-clause",
+    "name": "The 3-Clause BSD License",
+    "spdx_id": "BSD-3-Clause",
+    "version": "",
+    "submission_date": "",
+    "submission_url": "",
+    "submitter_name": "",
+    "approved": false,
+    "approval_date": "",
+    "license_steward_version": "",
+    "license_steward_url": "",
+    "board_minutes": "",
+    "stewards": [
     ],
-    "links": [
-      {
-        "note": "tl;dr legal",
-        "url": "https://tldrlegal.com/license/apache-license-2.0-%28apache-2.0%29"
-      },
-      {
-        "note": "Wikipedia page",
-        "url": "https://en.wikipedia.org/wiki/Apache_License"
-      },
-      {
-        "note": "OSI Page",
-        "url": "https://opensource.org/licenses/Apache-2.0"
-      }
+    "keywords": [
+      "popular-strong-community"
     ],
-    "name": "Apache License, Version 2.0",
-    "other_names": [],
-    "superseded_by": null,
-    "keywords": [ "osi-approved", "popular", "permissive" ],
-    "text": [
-      {
-        "media_type": "text/html",
-        "title": "HTML",
-        "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    "_links": {
+      "self": {
+        "href": "https:\/\/opensource.org\/api\/license\/bsd-3-clause"
       },
-      {
-        "media_type": "text/plain",
-        "title": "Plain Text",
-        "url": "https://www.gnu.org/licenses/apache-2.0.txt"
+      "html": {
+        "href": "https:\/\/opensource.org\/license\/bsd-3-clause"
+      },
+      "collection": {
+        "href": "https:\/\/opensource.org\/api\/licenses"
       }
-    ]
+    }
   }
 ]
