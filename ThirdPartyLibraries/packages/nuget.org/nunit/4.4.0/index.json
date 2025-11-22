@@ -11,12 +11,6 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netstandard2.1"
-      ],
-      "Dependencies": [
-        {
-          "Name": "System.Threading.Tasks.Extensions",
-          "Version": "4.5.4"
-        }
       ]
     }
   ],
