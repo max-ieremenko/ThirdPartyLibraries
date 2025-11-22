@@ -5,7 +5,7 @@ param (
     $GithubToken
 )
 
-task LocalBuild Initialize, Clean, CiBuild, PsCoreTest, UpdateExamples
+task LocalBuild Initialize, Clean, CiBuild, PsCoreTest, ToolTest, UpdateExamples
 task CiBuild Build, ThirdPartyNotices, UnitTest, Pack
 
 task Pack PackGlobalTool, PackPowerShellModule, PackManualDownload, PackTest
@@ -160,4 +160,14 @@ task UpdateExamples {
     }
 
     Build-Parallel $builds -ShowParameter ExamplePath -MaximumBuilds 1
+}
+
+task ToolTest {
+    $builds = @()
+    foreach ($framework in $settings.frameworks) {
+        $builds += @{ File = 'tasks/tool-test.ps1'; BinPath = $settings.output; Framework = $framework; ToolType = 'cmd'; ToolVersion = $settings.version }
+        $builds += @{ File = 'tasks/tool-test.ps1'; BinPath = $settings.output; Framework = $framework; ToolType = 'sdk'; ToolVersion = $settings.version }
+    }
+    
+    Build-Parallel $builds -ShowParameter Framework, ToolType -MaximumBuilds 3
 }
