@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <SupportedFrameworks>net8.0;net9.0</SupportedFrameworks>
+    <SupportedFrameworks>net8.0;net9.0;net10.0</SupportedFrameworks>
     <OutputType>Library</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageVersion>3.9.0</DefaultPackageVersion>
+    <DefaultPackageVersion>3.10.0</DefaultPackageVersion>
 
     <Version>$(DefaultPackageVersion)</Version>
     <AssemblyVersion>$(DefaultPackageVersion).0</AssemblyVersion>
