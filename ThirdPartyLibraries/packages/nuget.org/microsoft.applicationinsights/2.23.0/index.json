@@ -10,14 +10,9 @@
       "Name": "ThirdPartyLibraries",
       "InternalOnly": true,
       "TargetFrameworks": [
+        "net10.0",
         "net8.0",
         "net9.0"
-      ],
-      "Dependencies": [
-        {
-          "Name": "System.Diagnostics.DiagnosticSource",
-          "Version": "5.0.0"
-        }
       ]
     }
   ],

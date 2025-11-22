@@ -11,12 +11,6 @@
       "InternalOnly": true,
       "TargetFrameworks": [
         "netstandard2.1"
-      ],
-      "Dependencies": [
-        {
-          "Name": "System.Memory",
-          "Version": "4.5.5"
-        }
       ]
     }
   ],
