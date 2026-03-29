@@ -1,5 +1,5 @@
 #Requires -Version "7.0"
-#Requires -Modules @{ ModuleName="InvokeBuild"; ModuleVersion="5.14.22" }
+#Requires -Modules @{ ModuleName="InvokeBuild"; ModuleVersion="5.14.23" }
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
