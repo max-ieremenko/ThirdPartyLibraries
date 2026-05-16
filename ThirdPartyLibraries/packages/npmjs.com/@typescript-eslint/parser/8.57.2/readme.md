@@ -1,4 +1,4 @@
-@typescript-eslint/parser [8.47.0](https://www.npmjs.com/package/%40typescript-eslint%2Fparser/v/8.47.0)
+@typescript-eslint/parser [8.57.2](https://www.npmjs.com/package/%40typescript-eslint%2Fparser/v/8.57.2)
 --------------------
 
 Used by: ThirdPartyLibraries internal
