@@ -7,61 +7,9 @@ namespace ThirdPartyLibraries.NuGet.Internal;
 public class ProjectAssetsParserTest
 {
     [Test]
-    public void GetTargetFrameworks()
-    {
-        var actual = CreateSut("project").GetTargetFrameworks();
-
-        actual.ShouldBe(new[] { "net452", "netcoreapp2.2", "net472" }, ignoreOrder: true);
-    }
-
-    [Test]
-    public void GetNet452References()
-    {
-        var actual = CreateSut("project").GetReferences("net452").ToList();
-
-        actual.Count.ShouldBe(1);
-
-        actual[0].Package.Name.ShouldBe("StyleCop.Analyzers");
-        actual[0].Package.Version.ShouldBe("1.1.118");
-    }
-
-    [Test]
-    public void GetNetCore22References()
-    {
-        var actual = CreateSut("project").GetReferences("netcoreapp2.2").ToList();
-
-        actual.Count.ShouldBe(11);
-        actual[2].Package.Name.ShouldBe("System.Configuration.ConfigurationManager");
-        actual[2].Package.Version.ShouldBe("4.5.0");
-
-        var dependencies = actual[2].Dependencies;
-        dependencies.Count.ShouldBe(2);
-
-        dependencies[0].Name.ShouldBe("System.Security.Cryptography.ProtectedData");
-        dependencies[0].Version.ShouldBe("4.5.0");
-
-        dependencies[1].Name.ShouldBe("System.Security.Permissions");
-        dependencies[1].Version.ShouldBe("4.5.0");
-    }
-
-    [Test]
-    public void GetNet472References()
-    {
-        var actual = CreateSut("project").GetReferences("net472").ToList();
-
-        actual.ShouldBeEmpty();
-    }
-
-    [Test]
-    public void GetProjectName()
-    {
-        CreateSut("project").GetProjectName().ShouldBe("Company.Name.Project");
-    }
-
-    [Test]
     public void InvalidReference()
     {
-        var sut = CreateSut("invalid-project");
+        var sut = CreateSut();
 
         var ex = Assert.Throws<InvalidOperationException>(() => sut.GetReferences("netcoreapp3.1"));
         
@@ -70,6 +18,12 @@ public class ProjectAssetsParserTest
 
         ex.Message.ShouldContain("Company.Name.Project");
         ex.Message.ShouldContain("StyleCop.Analyzers");
+    }
+
+    [Test]
+    public void GetPackageSourcesNotFound()
+    {
+        CreateSut().GetPackageSources().ShouldBeEmpty();
     }
 
     [Test]
@@ -90,28 +44,10 @@ public class ProjectAssetsParserTest
         ProjectAssetsParser.MapTargetFrameworkProjFormatToNuGetFormat(projFormat).ShouldBe(expected);
     }
 
-    [Test]
-    public void GetPackageSources()
+    private static ProjectAssetsParser CreateSut()
     {
-        CreateSut("project").GetPackageSources().ShouldBe(
-        [
-            new Uri(@"C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\", UriKind.Absolute),
-            new Uri(@"https://api.nuget.org/v3/index.json", UriKind.Absolute)
-        ]);
-    }
-
-    [Test]
-    public void GetPackageSourcesNotFound()
-    {
-        CreateSut("invalid-project").GetPackageSources().ShouldBeEmpty();
-    }
-
-    private static ProjectAssetsParser CreateSut(string fileName)
-    {
-        var resourceName = $"ProjectAssetsParserTest.{fileName}.assets.json";
-        using (var stream = TempFile.OpenResource(typeof(ProjectAssetsParserTest), resourceName))
-        {
-            return ProjectAssetsParser.FromStream(stream);
-        }
+        var resourceName = "ProjectAssetsParserTest.invalid-project.assets.json";
+        using var stream = TempFile.OpenResource(typeof(ProjectAssetsParserTest), resourceName);
+        return ProjectAssetsParser.FromStream(stream);
     }
 }

@@ -12,7 +12,7 @@ internal readonly struct ProjectAssetsParser
 
     public ProjectAssetsParser(ProjectAssetsJson content)
     {
-        if (content.Version != 3)
+        if (content.Version < 3 || content.Version > 4)
         {
             throw new NotSupportedException($"{FileName} version {content.Version} is not supported");
         }
@@ -46,26 +46,22 @@ internal readonly struct ProjectAssetsParser
 
     public IEnumerable<(LibraryId Package, List<LibraryId> Dependencies)> GetReferences(string targetFramework)
     {
-        var framework = MapTargetFrameworkProjFormatToNuGetFormat(targetFramework);
-
-        var projectFrameworks = Content.Project.Frameworks;
-        if (!projectFrameworks.TryGetProperty(targetFramework, out var projectFramework))
-        {
-            var frameworks = projectFrameworks.EnumerateObject().Select(i => i.Name);
-            var frameworksText = string.Join(", ", frameworks);
-            throw new InvalidOperationException($"project/frameworks/{targetFramework} not found in {frameworksText}.");
-        }
-
-        if (!projectFramework.TryGetProperty("dependencies", out var projectDependencies))
+        var projectFramework = Content.Project.FindFramework(targetFramework);
+        if (projectFramework.Dependencies.ValueKind == JsonValueKind.Undefined)
         {
             return [];
         }
 
-        var targetPackageByName = ParseTarget(framework);
-        foreach (var row in projectDependencies.EnumerateObject())
+        // v3 and v4: project/frameworks/netstandard2.1 { targetAlias:netstandard2.1 }
+        // v3: targets/.NETStandard,Version=v2.1
+        // v4: targets/netstandard2.1
+        var frameworkName = MapTargetFrameworkProjFormatToNuGetFormat(targetFramework);
+        var frameworkAlternativeName = projectFramework.TargetAlias;
+
+        var targetPackageByName = ParseTarget(frameworkName, frameworkAlternativeName);
+        foreach (var row in projectFramework.EnumerateDependencies())
         {
-            var targetName = row.Value.GetProperty("target").GetString();
-            if (!"package".Equals(targetName, StringComparison.OrdinalIgnoreCase))
+            if (!"package".Equals(row.Target, StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
@@ -138,20 +134,13 @@ internal readonly struct ProjectAssetsParser
         }
     }
 
-    private IDictionary<string, TargetPackage> ParseTarget(string frameworkName)
+    private IDictionary<string, TargetPackage> ParseTarget(string frameworkName, string? frameworkAlternativeName)
     {
-        var targets = Content.Targets;
-        var target = targets.EnumerateObject().FirstOrDefault(i => i.Name.Equals(frameworkName, StringComparison.OrdinalIgnoreCase));
-        if (target.Value.ValueKind != JsonValueKind.Object)
-        {
-            var frameworks = targets.EnumerateObject().Select(i => i.Name);
-            var frameworksText = string.Join(", ", frameworks);
-            throw new InvalidOperationException($"Target {frameworkName} not found in {frameworksText}.");
-        }
+        var targetItems = Content.EnumerateTargetItems(frameworkName, frameworkAlternativeName);
 
         var result = new Dictionary<string, TargetPackage>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var row in target.Value.EnumerateObject())
+        foreach (var row in targetItems)
         {
             var type = row.Value.GetProperty("type").GetString();
             if ("package".Equals(type, StringComparison.OrdinalIgnoreCase))

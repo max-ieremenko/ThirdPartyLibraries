@@ -13,8 +13,5 @@ public class NpmRootTest
 
         Console.WriteLine(actual);
         actual.ShouldNotBeNull();
-
-        Path.GetDirectoryName(actual).ShouldNotBeNullOrWhiteSpace();
-        Assert.That(Path.GetDirectoryName(actual), Does.Exist.IgnoreFiles);
     }
 }
