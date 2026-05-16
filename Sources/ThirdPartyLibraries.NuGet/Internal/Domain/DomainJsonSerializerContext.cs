@@ -4,5 +4,7 @@ using System.Text.Json.Serialization;
 namespace ThirdPartyLibraries.NuGet.Internal.Domain;
 
 [JsonSerializable(typeof(ProjectAssetsJson))]
+[JsonSerializable(typeof(ProjectAssetsProjectFrameworkJson))]
+[JsonSerializable(typeof(ProjectAssetsProjectFrameworkDependencyJson))]
 [JsonSourceGenerationOptions(JsonSerializerDefaults.Web, AllowTrailingCommas = true, NumberHandling = JsonNumberHandling.AllowReadingFromString)]
 internal sealed partial class DomainJsonSerializerContext : JsonSerializerContext;
